@@ -1,0 +1,538 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Avatud ja suletud küttesüsteemid Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Avatud ja suletud küttesüsteemid Tallinnas: toruabi 24/7, küttesüsteemi paigaldus, remont ja hooldus. Avatud küttesüsteem, suletud küttesüsteem. Professionaalne küttesüsteemi torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Küttesüsteemide erinevused, eelised, puudused, valik eramajale.';
+const titleRu =
+  'Открытая и закрытая системы отопления – отличия и выбор | toruabii.ee';
+const descRu =
+  'Открытая и закрытая системы отопления отличаются по конструкции и принципу работы. Рассказываем об основных отличиях, какая система наиболее распространена, принцип работы и всю необходимую информацию в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/avatud-ja-suletud-kuttesusteemid';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Avatud ja suletud küttesüsteemid</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Avatud ja suletud küttesüsteemid Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate küttesüsteemi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub küttesüsteemi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Avatud ja suletud küttesüsteemid erinevad konstruktsiooni ja tööpõhimõtte poolest. Selgitame peamised erinevused, milline süsteem on kõige levinum, tööpõhimõte ja kogu vajaliku teabe Tallinnas ja Harjumaal.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2022-12-09').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Открытая и закрытая системы отопления</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Открытая и закрытая системы отопления: отличия и выбор
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Открытая и закрытая системы отопления отличаются по конструкции и принципу работы. Рассказываем об основных отличиях, какая система наиболее распространена, принцип работы и всю необходимую информацию в Таллине и Харьюмаа.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2022-12-09').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Avatud ja suletud küttesüsteemid Tallinnas – professionaalne nõustamine"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on avatud küttesüsteem?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Avatud küttesüsteem on süsteem, kus on otsene kontakt atmosfääriõhuga. Tavaliselt on avatud laienduspaak süsteemi kõrgeimas punktis, mis võimaldab õhul vabalt süsteemi siseneda ja välja tulla.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Eelised:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Lihtsam konstruktsioon</li>
+          <li>Odavam paigaldus</li>
+          <li>Looduslik õhu eemaldamine</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Puudused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Võimalus korrosioonile</li>
+          <li>Võimalus hapniku sisenemisele süsteemi</li>
+          <li>Võib olla vähem efektiivne</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Mis on suletud küttesüsteem?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Suletud küttesüsteem on hermeetiliselt suletud süsteem, kus ei ole otsest kontakti atmosfääriõhuga. Rõhu kompenseerimiseks kasutatakse membraaniga laienduspaaki.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Eelised:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Vähem korrosiooni – õhk ei pääse süsteemi</li>
+          <li>Parem efektiivsus</li>
+          <li>Võimalus kasutada antifriisi</li>
+          <li>Lihtsam hooldus</li>
+          <li>Võimalus kasutada tsirkulatsioonipumpa</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Puudused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Kallim paigaldus</li>
+          <li>Nõuab täpsemat rõhu kontrolli</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Milline süsteem on kõige levinum?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Tänapäeval on <strong>suletud küttesüsteem</strong> kõige levinum, eriti uutes eramajades. See on tõhusam, lihtsam hooldada ja võimaldab kasutada kaasaegseid tehnoloogiaid nagu tsirkulatsioonipumbad ja automaatne reguleerimine.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Avatud süsteemid on veel levinud vanemates majades, aga uutel paigaldustel eelistatakse suletud süsteeme.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Kuidas valida õige süsteem?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Valik sõltub mitmest tegurist:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Uus või vana maja</strong> – uutel majadel soovitatakse suletud süsteemi</li>
+          <li><strong>Eelarve</strong> – suletud süsteem on kallim, aga tõhusam</li>
+          <li><strong>Hooldus</strong> – suletud süsteem nõuab vähem hooldust</li>
+          <li><strong>Soojusallikas</strong> – mõned kütteallikad töötavad paremini suletud süsteemidega</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused avatud ja suletud küttesüsteemide kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis vahe on avatud ja suletud küttesüsteemil?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Avatud küttesüsteem on ühendatud atmosfääriga ja kasutab avatud laienduspaaki. Suletud küttesüsteem on suletud ja kasutab membraaniga laienduspaaki. Suletud süsteemid on tänapäeval populaarsemad, kuna need on efektiivsemad ja nõuavad vähem hooldust.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Milline süsteem on parem – avatud või suletud?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Suletud küttesüsteemid on tänapäeval parem valik uutele majadele, kuna need on efektiivsemad, nõuavad vähem hooldust ja võimaldavad paremat kontrolli. Avatud süsteemid on veel levinud vanemates majades, aga uutel paigaldustel eelistatakse suletud süsteeme.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas saab avatud süsteemi muuta suletud süsteemiks?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Jah, avatud süsteemi saab muuta suletud süsteemiks, kuid see nõuab professionaalset paigaldust. See hõlmab avatud laienduspaagi asendamist membraaniga laienduspaagiga ja süsteemi sulgemist. Meie torumees aitab teil teha selle ülemineku Tallinnas.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab suletud küttesüsteemi paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Suletud küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi suurusest ja keerukusest. Väiksem süsteem võib maksta 3000-6000€, suurem süsteem 8000-15000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millised on suletud küttesüsteemi peamised eelised?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Suletud küttesüsteemi peamised eelised on parem energiatõhusus, vähem hooldust, parem kontroll, võimalus kasutada erinevaid soojusallikaid ja parem korrosioonikaitse. See on tänapäeval standardne valik uutele küttesüsteemidele Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid küttesüsteemi kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/elektrikatla-ulehendamine" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Elektrikatla ühendamine</h3>
+            <p class="text-sm text-gray-600">Kuidas ühendada elektrikatla küttesüsteemiga.</p>
+          </a>
+          <a href="/blog/laienduspaak-kutte-ja-gvs" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Laienduspaak küttesüsteemi ja soojavee jaoks</h3>
+            <p class="text-sm text-gray-600">Erinevused küttesüsteemi ja soojaveevarustuse laienduspaakide vahel.</p>
+          </a>
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Küttesüsteemi toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub küttesüsteemi paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Küttesüsteemi toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Küttesüsteemi avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile küttesüsteemi paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud nii avatud kui ka suletud küttesüsteemide paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni küttesüsteemi valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja küttesüsteemi toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate küttesüsteemi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub küttesüsteemi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame küttesüsteemi valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Küttesüsteemi toruabi Tallinnas 24/7 | Küttesüsteemi paigaldus | Küttesüsteemi remont | Küttesüsteemi hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Открытая и закрытая системы отопления в Таллине – профессиональная консультация"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое открытая система отопления?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Открытая система отопления – это система, где есть прямой контакт с атмосферным воздухом. Обычно открытый расширительный бак находится в самой высокой точке системы, что позволяет воздуху свободно входить и выходить из системы.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Преимущества:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Проще конструкция</li>
+          <li>Дешевле установка</li>
+          <li>Естественное удаление воздуха</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Недостатки:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Возможность коррозии</li>
+          <li>Возможность попадания кислорода в систему</li>
+          <li>Может быть менее эффективной</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Что такое закрытая система отопления?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Закрытая система отопления – это герметично закрытая система, где нет прямого контакта с атмосферным воздухом. Для компенсации давления используется мембранный расширительный бак.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Преимущества:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Меньше коррозии – воздух не попадает в систему</li>
+          <li>Лучшая эффективность</li>
+          <li>Возможность использования антифриза</li>
+          <li>Проще обслуживание</li>
+          <li>Возможность использования циркуляционного насоса</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Недостатки:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Дороже установка</li>
+          <li>Требует более точного контроля давления</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Какая система наиболее распространена?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Сегодня <strong>закрытая система отопления</strong> является наиболее распространенной, особенно в новых частных домах. Она более эффективна, проще в обслуживании и позволяет использовать современные технологии, такие как циркуляционные насосы и автоматическое регулирование.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Открытые системы все еще распространены в старых домах, но при новых установках предпочитают закрытые системы.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Как выбрать правильную систему?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Выбор зависит от нескольких факторов:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Новый или старый дом</strong> – для новых домов рекомендуется закрытая система</li>
+          <li><strong>Бюджет</strong> – закрытая система дороже, но эффективнее</li>
+          <li><strong>Обслуживание</strong> – закрытая система требует меньше обслуживания</li>
+          <li><strong>Источник тепла</strong> – некоторые источники тепла работают лучше с закрытыми системами</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание системы отопления в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке систем отопления.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между открытой и закрытой системой отопления?' : 'Mis vahe on avatud ja suletud küttesüsteemil?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Открытая система отопления соединена с атмосферой и использует открытый расширительный бак. Закрытая система отопления закрыта и использует расширительный бак с мембраной.'
+            : 'Avatud küttesüsteem on ühendatud atmosfääriga ja kasutab avatud laienduspaaki. Suletud küttesüsteem on suletud ja kasutab membraaniga laienduspaaki.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какая система лучше – открытая или закрытая?' : 'Milline süsteem on parem – avatud või suletud?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Закрытые системы отопления сегодня являются лучшим выбором для новых домов, так как они более эффективны, требуют меньше обслуживания и обеспечивают лучший контроль.'
+            : 'Suletud küttesüsteemid on tänapäeval parem valik uutele majadele, kuna need on efektiivsemad, nõuavad vähem hooldust ja võimaldavad paremat kontrolli.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Можно ли преобразовать открытую систему в закрытую?' : 'Kas saab avatud süsteemi muuta suletud süsteemiks?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Да, открытую систему можно преобразовать в закрытую, но это требует профессиональной установки. Это включает замену открытого расширительного бака на расширительный бак с мембраной и закрытие системы.'
+            : 'Jah, avatud süsteemi saab muuta suletud süsteemiks, kuid see nõuab professionaalset paigaldust. See hõlmab avatud laienduspaagi asendamist membraaniga laienduspaagiga ja süsteemi sulgemist.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка закрытой системы отопления в Таллине?' : 'Kui palju maksab suletud küttesüsteemi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки закрытой системы отопления в Таллине зависит от размера системы и сложности. Небольшая система может стоить 3000-6000€, большая система 8000-15000€.'
+            : 'Suletud küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi suurusest ja keerukusest. Väiksem süsteem võib maksta 3000-6000€, suurem süsteem 8000-15000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Каковы основные преимущества закрытой системы отопления?' : 'Millised on suletud küttesüsteemi peamised eelised?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Основные преимущества закрытой системы отопления: лучшая энергоэффективность, меньше обслуживания, лучший контроль, возможность использования различных источников тепла и лучшая защита от коррозии.'
+            : 'Suletud küttesüsteemi peamised eelised on parem energiatõhusus, vähem hooldust, parem kontroll, võimalus kasutada erinevaid soojusallikaid ja parem korrosioonikaitse.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Открытая и закрытая системы отопления'
+          : 'Avatud ja suletud küttesüsteemid',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/avatud-ja-suletud-kuttesusteemid' : 'https://toruabii.ee/blog/avatud-ja-suletud-kuttesusteemid',
+      },
+    ],
+  })}
+/>

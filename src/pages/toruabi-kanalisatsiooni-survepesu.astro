@@ -1,0 +1,318 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import { ruPath } from '../utils/i18n-paths';
+import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { serviceLandingSeo } from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const pagePath = '/toruabi-kanalisatsiooni-survepesu';
+const landing = serviceLandingSeo['kanalisatsiooni-survepesu'];
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = landing.titleEt;
+const descEt = landing.descriptionEt;
+const titleRu = landing.titleRu;
+const descRu = landing.descriptionRu;
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const faqEt = [
+  {
+    q: 'Mis on kanalisatsiooni survepesu ja millal seda vajatakse?',
+    a: 'Survepesu on toruabi meetod, kus kanalisatsiooni torusid puhastatakse kõrgsurve veejuga setetest, rasvast ja pehmetest ummistustest. Sobib eriti pikemate trasside, restoranide ja korterelamute ühistorustiku puhul, kui mehaaniline puhastus ei anna stabiilset tulemust.',
+  },
+  {
+    q: 'Kas toruabi survepesu kahjustab vanu torusid?',
+    a: 'Toruabi meeskond hindab enne tööd torustiku seisundi ja valib surve ning otsikud vastavalt materjalile. Vanades hoonetes kombineerime sageli videouuringut ja ettevaatlikku survepesu, et toruabi oleks ohutu.',
+  },
+  {
+    q: 'Kui kaua võtab kanalisatsiooni survepesu aega?',
+    a: 'Lihtsamatel objektidel võib toruabi survepesu kesta ühest mõnist tunni, keerukamatel trassidel või mitme süvendiga hoones kauem. Täpne aeg selgub pärast objekti ülevaatust.',
+  },
+  {
+    q: 'Mis vahe on toruabi ummistuse likvideerimisel ja survepesul?',
+    a: 'Ummistuste likvideerimine keskendub kiirele läbipääsu taastamisele (sh mehaaniliselt). Survepesu puhastab toru seinu laiemalt ja aitab vältida korduvaid ummistusi. Vajadusel soovitame mõlemat – vaata <a href="/toruabi-ummistuste-likvideerimine">ummistuste likvideerimine</a>.',
+  },
+  {
+    q: 'Kust leian toruabi survepesu hinnad?',
+    a: 'Hinnad sõltuvad töö kestusest, ajast ja objektist. Vaata täielikku hinnakirja toruabii.ee hinnakiri lehelt või helista – toruabi dispetšer annab orienteeruva hinna.',
+  },
+];
+
+const faqRu = [
+  {
+    q: 'Что такое гидродинамическая промывка канализации и когда она нужна?',
+    a: 'Это метод торуаби: трубы промываются струёй воды под давлением для удаления жира, осадка и мягких засоров. Подходит для длинных трасс, ресторанов и стояков в многоквартирных домах, если механической прочистки недостаточно.',
+  },
+  {
+    q: 'Повреждает ли гидродинамическая промывка старые трубы?',
+    a: 'Перед работой торуаби оценивает состояние труб и подбирает давление и насадки. В старых зданиях часто совмещают видеообследование и аккуратную промывку.',
+  },
+  {
+    q: 'Сколько по времени длится промывка канализации?',
+    a: 'На простых объектах торуаби может уложиться в десятки минут или час, на сложных трассах дольше. Точнее после осмотра.',
+  },
+  {
+    q: 'Чем отличается устранение засора от гидродинамической промывки?',
+    a: 'Устранение засора нацелено на быстрый проход (в том числе механикой). Промывка очищает стенки трубы шире и снижает риск повторных засоров. Часто нужны оба этапа – см. <a href="/ru/toruabi-ummistuste-likvideerimine">устранение засоров</a>.',
+  },
+  {
+    q: 'Где цены на торуаби и промывку?',
+    a: 'Стоимость зависит от объёма и времени. Полный прайс на сайте toruabii.ee, уточнить можно по телефону у диспетчера торуаби.',
+  },
+];
+
+const faqForLd = currentLang === 'ru' ? faqRu : faqEt;
+const crumbHomeName = currentLang === 'ru' ? 'Главная' : 'Avaleht';
+const crumbServiceEt = 'Kanalisatsiooni survepesu (toruabi)';
+const crumbServiceRu = 'Гидродинамическая промывка (торуаби)';
+const crumbServiceName = currentLang === 'ru' ? crumbServiceRu : crumbServiceEt;
+const pageCanonicalUrl = currentLang === 'ru' ? `${siteUrl}${ruPath(pagePath)}` : `${siteUrl}${pagePath}`;
+const breadcrumbJsonLdOverride = serviceLandingBreadcrumbJsonLd(pagePath, currentLang, crumbServiceEt, crumbServiceRu);
+
+const plumbingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PlumbingService',
+  '@id': `${pageCanonicalUrl}#plumbing`,
+  name: 'toruabii.ee – Toruabi kanalisatsiooni survepesu',
+  alternateName: 'Kanalisatsiooni survepesu Tallinnas',
+  url: pageCanonicalUrl,
+  logo: `${siteUrl}/photos/toruabii.webp`,
+  image: `${siteUrl}/photos/maintoruabii.webp`,
+  description: pageDescription,
+  telephone: '+3725181112',
+  priceRange: '€€',
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
+  currenciesAccepted: 'EUR',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tallinn',
+    addressRegion: 'Harjumaa',
+    addressCountry: 'EE',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Tallinn' },
+    { '@type': 'AdministrativeArea', name: 'Harjumaa' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Kanalisatsiooni survepesu',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Survepesu ja hüdrodünaamiline puhastus',
+          description: 'Kanalisatsiooni torustiku survepesu Tallinnas ja Harjumaal',
+        },
+      },
+    ],
+  },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqForLd.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={`${siteUrl}${pagePath}`}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(plumbingLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />
+  
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: crumbHomeName, url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          { name: crumbServiceName, url: pageCanonicalUrl },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">
+        Toruabi kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve kanalisatsiooni toruabi
+      </h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">
+        Торуаби гидродинамическая промывка канализации в Таллине и Харьюмаа
+      </h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">
+        Kanalisatsiooni survepesu eemaldab setted ja rasva trassidest — teenindame kortermaju, äripindu ja eramuid. Vajadusel ühendame videouuringu ja ummistuste likvideerimise, et toruabi tulemus kestaks.
+      </p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">
+        Гидропромывка канализации удаляет отложения и жир из линий — обслуживаем МКД, бизнес и частные дома. При необходимости совмещаем с видеодиагностикой и прочисткой, чтобы результат торуаби держался дольше.
+      </p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+      <figure class="rounded-xl overflow-hidden shadow-xl bg-white">
+        <img
+          src="/photos/maintoruabii.webp"
+          alt={currentLang === 'ru'
+            ? 'Гидродинамическая промывка канализации в Таллине и Харьюмаа – торуаби под высоким давлением'
+            : 'Kanalisatsiooni survepesu Tallinnas ja Harjumaal – toruabi kõrgsurve seadmega'}
+          class="w-full h-auto max-h-[min(420px,50vh)] object-cover object-center"
+          loading="eager"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+        <figcaption class="px-4 py-3 text-sm text-gray-600 text-center border-t border-gray-100">
+          <span class="blog-et">Toruabi kanalisatsiooni survepesu – professionaalne hüdrodünaamiline puhastus</span>
+          <span class="blog-ru">Гидродинамическая промывка канализации — профессиональный торуаби</span>
+        </figcaption>
+      </figure>
+
+      <CallStripCta variant="page" />
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Miks tellida kanalisatsiooni survepesu toruabi kaudu?</h2>
+        <p class="text-gray-700 mb-4">
+          Survepesu nõuab õiget seadistust, surve reguleerimist ja kogemust, et toruabi töö oleks tõhus ja turvaline. Meie toruabi meeskond töötab Tallinnas ja Harjumaal ning tunneb tüüpilisi hooneid – vanalinna korterid, paneelmajad, ärikeskused ja toitlustusettevõtted.
+        </p>
+        <h3 class="text-xl font-semibold text-trust-blue mb-2">Kus survepesu toruabi kõige sagedamini vajalik on?</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Köögi- ja vannitoa kanalisatsiooni harud ja põrandatrassid</li>
+          <li>Korteriühistute vertikaal- ja horisontaaltrassid</li>
+          <li>Restoranid, kohvikud ja tootmishooned (koos rasvapüüduriga)</li>
+          <li>Majapidamised väljaspool kesklinna, kus toru pikkus on suurem</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Зачем заказывать промывку канализации у торуаби?</h2>
+        <p class="text-gray-700 mb-4">
+          Нужны опыт, подбор давления и правильные насадки. Наш торуаби в Таллине и Харьюмаа знает типичные объекты: старый фонд, панельные дома, бизнес-центры и HoReCa.
+        </p>
+        <h3 class="text-xl font-semibold text-trust-blue mb-2">Где чаще всего нужна промывка?</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Ветки кухни и ванной, трассы в полу</li>
+          <li>Стояки и горизонтали в многоквартирных домах</li>
+          <li>Рестораны и кафе (часто вместе с жироуловителем)</li>
+          <li>Длинные придомовые и приусадебные линии</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Toruabi teenuste kombinatsioon</h2>
+        <p class="text-gray-700 mb-4">
+          Enne survepesu võib toruabi soovitada <strong>tehnosüsteemide videouuringut</strong>, et määrata ummistuse või sette täpne asukoht. Kiireloomuliste üleujutuste korral vaata ka{' '}
+          <a href="/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">toruabi avarii väljakutse</a> ja{' '}
+          <a href="/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">ummistuste likvideerimine</a>.
+        </p>
+        <p class="text-gray-700">
+          Tehnilisest küljest: blogis on ülevaade pumpadest —{' '}
+          <a href="/blog/pump-margi-ja-kuiva-rootoriga" class="text-trust-blue font-semibold hover:underline">pump margi ja kuiva rootoriga</a>. Täielikud hinnad:{' '}
+          <a href="/hinnakiri" class="text-trust-blue font-semibold hover:underline">hinnakiri</a>, üldised küsimused:{' '}
+          <a href="/faq" class="text-trust-blue font-semibold hover:underline">KKK</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Сочетание услуг торуаби</h2>
+        <p class="text-gray-700 mb-4">
+          Перед промывкой торуаби может рекомендовать <strong>видеообследование</strong>. При срочных ситуациях см. также{' '}
+          <a href="/ru/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">аварийный выезд торуаби</a> и{' '}
+          <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">устранение засоров</a>.
+        </p>
+        <p class="text-gray-700">
+          В блоге — материал о насосах:{' '}
+          <a href="/ru/blog/pump-margi-ja-kuiva-rootoriga" class="text-trust-blue font-semibold hover:underline">насос с мокрым и сухим ротором</a>. Цены:{' '}
+          <a href="/ru/hinnakiri" class="text-trust-blue font-semibold hover:underline">прайс</a>, общие вопросы:{' '}
+          <a href="/ru/faq" class="text-trust-blue font-semibold hover:underline">FAQ</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Korduma kippuvad küsimused – toruabi survepesu</h2>
+        <div class="space-y-4">
+          {faqEt.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2" set:html={item.a} />
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Частые вопросы – торуаби и промывка</h2>
+        <div class="space-y-4">
+          {faqRu.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2" set:html={item.a} />
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath={pagePath} />
+
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Broneeri toruabi kanalisatsiooni survepesuks</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Закажите торуаби для промывки канализации</h2>
+        <p class="text-lg mb-6 blog-et">Toruabi Tallinnas ja Harjumaal – helista või küsi nõu.</p>
+        <p class="text-lg mb-6 blog-ru">Торуаби в Таллине и Харьюмаа — звоните для консультации.</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

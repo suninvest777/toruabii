@@ -1,0 +1,518 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Laienduspaak küttesüsteemi ja soojavee jaoks Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Laienduspaak küttesüsteemi ja soojaveevarustuse jaoks Tallinnas: toruabi 24/7, laienduspaagi paigaldus, remont ja hooldus. Küttesüsteemi laienduspaak, soojaveevarustuse laienduspaak. Professionaalne laienduspaagi torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Laienduspaagi valik, rõhk, maht.';
+const titleRu =
+  'Расширительный бак для отопления и ГВС – отличия и выбор | toruabii.ee';
+const descRu =
+  'Расширительный бак является важным элементом систем отопления и горячего водоснабжения. Он предназначен для компенсации теплового расширения теплоносителя и поддержания стабильного давления в системе. Рассказываем об отличиях баков для отопления и ГВС в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/laienduspaak-kutte-ja-gvs';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Laienduspaak</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Laienduspaak küttesüsteemi ja soojavee jaoks Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate laienduspaagi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub laienduspaagi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Laienduspaak koosneb hermeetilisest mahutist, mis on täidetud vedelikuga, ja elastsest membraanist, mis eraldab vedeliku ja õhu. Kuumutamisel paisub soojuskandja ja täidab membraani taga olevat ruumi, mis kompenseerib rõhu tõusu süsteemis.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2023-10-03').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Расширительный бак</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Расширительный бак для отопления и ГВС: отличия и выбор
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Бак состоит из герметичной емкости, заполненной жидкостью, и эластичной мембраны, разделяющей жидкость и воздух. При нагревании теплоноситель расширяется и заполняет пространство за мембраной, что компенсирует повышение давления в системе.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2023-10-03').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Laienduspaak küttesüsteemis Tallinnas – professionaalne paigaldus"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Laienduspaak küttesüsteemi jaoks
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Küttesüsteemi laienduspaak on mõeldud kompenseerima vee või soojuskandja soojuspaisumist küttesüsteemis. Kui vesi kuumutamisel paisub, võtab laienduspaak ülejääva vee vastu, säilitades süsteemi rõhu stabiilsena.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Omadused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Mõeldud suletud küttesüsteemidele</li>
+          <li>Kompenseerib soojuskandja soojuspaisumist</li>
+          <li>Säilitab stabiilse rõhu süsteemis</li>
+          <li>Võib olla punase või sinise värviga (tavaliselt punane)</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Laienduspaak soojaveevarustuse jaoks
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Soojaveevarustuse laienduspaak on mõeldud kompenseerima sooja vee soojuspaisumist boileris või soojaveesüsteemis. See tagab, et rõhk ei tõuse liiga kõrgeks ja ohutusklapp ei avane.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Omadused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Mõeldud soojaveesüsteemidele</li>
+          <li>Kompenseerib sooja vee paisumist</li>
+          <li>Vähendab ohutusklapi avamise sagedust</li>
+          <li>Tavaliselt sinise värviga</li>
+          <li>Peab vastama toitlusveega kokkupuutele</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Peamised erinevused
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Otstarve</strong> – küttesüsteemi paak on mõeldud küttesüsteemile, soojavee paak soojaveevarustusele</li>
+          <li><strong>Materjal</strong> – soojavee paak peab vastama toitlusveega kokkupuutele (toiduklassi materjal)</li>
+          <li><strong>Värv</strong> – küttesüsteemi paak on tavaliselt punane, soojavee paak sinine</li>
+          <li><strong>Membraan</strong> – mõlemal on membraan, aga soojavee paagil peab see olema toiduklassi materjalist</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Kuidas valida õige laienduspaak?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Laienduspaagi valik sõltub süsteemi mahust ja rõhust. Oluline on:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Arvutada õige maht süsteemi jaoks</li>
+          <li>Valida sobiv rõhk</li>
+          <li>Kasutada õiget tüüpi (küttesüsteem või soojaveevarustus)</li>
+          <li>Kontrollida membraani kvaliteeti</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused laienduspaagi kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis vahe on küttesüsteemi ja soojaveevarustuse laienduspaagil?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Küttesüsteemi laienduspaak on mõeldud kompenseerima soojusülekande paisumist küttesüsteemis. Soojaveevarustuse laienduspaak on mõeldud kompenseerima vee paisumist soojaveevarustuse süsteemis. Need on erinevad konstruktsioonilt ja mõeldud erinevateks otstarveteks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab laienduspaagi paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Laienduspaagi paigalduse hind Tallinnas sõltub paagi mahust ja süsteemi keerukusest. Väiksem laienduspaak (10-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja laienduspaaki?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis. Ilma laienduspaagita võib süsteemi rõhk liiga kõrgeks minna ja põhjustada kahjustusi.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui suur laienduspaak on vajalik?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Laienduspaagi suurus sõltub süsteemi mahust. Üldreegel: umbes 10% süsteemi mahust. Näiteks 100-liitrise süsteemi jaoks vajate umbes 10-liitrist laienduspaaki. Meie torumees aitab valida õige mahu teie süsteemi jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas laienduspaak nõuab hooldust?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Laienduspaak nõuab minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui laienduspaak on õigesti paigaldatud, võib see töötada aastaid ilma erilise hoolduseta. Meie torumees pakub laienduspaagi hooldust Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid laienduspaakide kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/hudroakumulaatorid-ja-laienduspaagid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Hüdroakumulaatorid ja laienduspaagid</h3>
+            <p class="text-sm text-gray-600">Erinevused hüdroakumulaatorite ja laienduspaakide vahel.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Laienduspaagi toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub laienduspaagi paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Laienduspaagi toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Laienduspaagi avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile laienduspaagi paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud laienduspaakide paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni laienduspaagi valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja laienduspaagi toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate laienduspaagi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub laienduspaagi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame laienduspaakide valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Laienduspaagi toruabi Tallinnas 24/7 | Laienduspaagi paigaldus | Laienduspaagi remont | Laienduspaagi hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Расширительный бак в системе отопления в Таллине – профессиональная установка"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Расширительный бак для отопления
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Расширительный бак для системы отопления предназначен для компенсации теплового расширения воды или теплоносителя в системе отопления. Когда вода расширяется при нагревании, расширительный бак принимает избыточную воду, поддерживая стабильное давление в системе.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Особенности:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Предназначен для закрытых систем отопления</li>
+          <li>Компенсирует тепловое расширение теплоносителя</li>
+          <li>Поддерживает стабильное давление в системе</li>
+          <li>Может быть красного или синего цвета (обычно красный)</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Расширительный бак для ГВС
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Расширительный бак для горячего водоснабжения предназначен для компенсации теплового расширения горячей воды в бойлере или системе ГВС. Это обеспечивает, что давление не поднимается слишком высоко и предохранительный клапан не открывается.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Особенности:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Предназначен для систем горячего водоснабжения</li>
+          <li>Компенсирует расширение горячей воды</li>
+          <li>Уменьшает частоту открытия предохранительного клапана</li>
+          <li>Обычно синего цвета</li>
+          <li>Должен соответствовать контакту с питьевой водой</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Основные отличия
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Назначение</strong> – бак для отопления предназначен для системы отопления, бак для ГВС для горячего водоснабжения</li>
+          <li><strong>Материал</strong> – бак для ГВС должен соответствовать контакту с питьевой водой (материал пищевого класса)</li>
+          <li><strong>Цвет</strong> – бак для отопления обычно красный, бак для ГВС синий</li>
+          <li><strong>Мембрана</strong> – у обоих есть мембрана, но у бака для ГВС она должна быть из материала пищевого класса</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Как выбрать правильный расширительный бак?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Выбор расширительного бака зависит от объема системы и давления. Важно:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Рассчитать правильный объем для системы</li>
+          <li>Выбрать подходящее давление</li>
+          <li>Использовать правильный тип (отопление или ГВС)</li>
+          <li>Проверить качество мембраны</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание расширительного бака в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке расширительных баков.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между расширительным баком для отопления и ГВС?' : 'Mis vahe on küttesüsteemi ja soojaveevarustuse laienduspaagil?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак для отопления предназначен для компенсации расширения теплоносителя в системе отопления. Расширительный бак для ГВС предназначен для компенсации расширения горячей воды в системе горячего водоснабжения и должен соответствовать контакту с питьевой водой.'
+            : 'Küttesüsteemi laienduspaak on mõeldud kompenseerima soojusülekande paisumist küttesüsteemis. Soojaveevarustuse laienduspaak on mõeldud kompenseerima vee paisumist soojaveevarustuse süsteemis ja peab vastama joogiveega kokkupuute nõuetele.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка расширительного бака в Таллине?' : 'Kui palju maksab laienduspaagi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки расширительного бака в Таллине зависит от объема бака и сложности системы. Небольшой расширительный бак (10-50 литров) может стоить 200-500€, большой (100+ литров) 500-1500€.'
+            : 'Laienduspaagi paigalduse hind Tallinnas sõltub paagi mahust ja süsteemi keerukusest. Väiksem laienduspaak (10-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен расширительный бак?' : 'Millal on vaja laienduspaaki?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак необходим для всех закрытых систем отопления и систем горячего водоснабжения. Он компенсирует расширение воды при нагревании и обеспечивает стабильное давление в системе.'
+            : 'Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какого размера нужен расширительный бак?' : 'Kui suur laienduspaak on vajalik?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Размер расширительного бака зависит от объема системы. Общее правило: примерно 10% от объема системы. Например, для системы объемом 100 литров нужно около 10 литров расширительного бака.'
+            : 'Laienduspaagi suurus sõltub süsteemi mahust. Üldreegel: umbes 10% süsteemi mahust. Näiteks 100-liitrise süsteemi jaoks vajate umbes 10-liitrist laienduspaaki.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Требует ли расширительный бак обслуживания?' : 'Kas laienduspaak nõuab hooldust?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак требует минимального обслуживания. Рекомендуем проверять давление и состояние мембраны раз в год. Если расширительный бак правильно установлен, он может работать годами без особого обслуживания.'
+            : 'Laienduspaak nõuab minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui laienduspaak on õigesti paigaldatud, võib see töötada aastaid ilma erilise hoolduseta.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Расширительный бак для отопления и ГВС'
+          : 'Laienduspaak küttesüsteemi ja soojavee jaoks',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/laienduspaak-kutte-ja-gvs' : 'https://toruabii.ee/blog/laienduspaak-kutte-ja-gvs',
+      },
+    ],
+  })}
+/>

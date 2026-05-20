@@ -1,0 +1,57 @@
+---
+/**
+ * Conversion-focused phone CTA — uses home-ssr-* or blog-* visibility with existing language CSS.
+ */
+interface Props {
+  variant?: 'home' | 'page';
+  size?: 'default' | 'compact';
+}
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const { variant = 'page', size = 'default' } = Astro.props;
+const ec = variant === 'home' ? 'home-ssr-et' : 'blog-et';
+const rc = variant === 'home' ? 'home-ssr-ru' : 'blog-ru';
+const pad = size === 'compact' ? 'p-4 md:p-5' : 'p-5 md:p-6';
+
+const shellClass =
+  variant === 'home'
+    ? 'call-strip-cta rounded-2xl border border-brand-blue/20 bg-white text-gray-900 shadow-md text-center'
+    : 'call-strip-cta rounded-2xl border-2 border-white/25 bg-gradient-to-br from-trust-blue via-trust-blue to-slate-900 text-white shadow-xl text-center';
+
+const leadClass =
+  variant === 'home'
+    ? 'font-semibold text-gray-800'
+    : 'font-semibold text-white';
+
+const phoneBtnClass =
+  variant === 'home'
+    ? 'inline-flex min-h-[52px] md:min-h-[56px] w-full max-w-md mx-auto flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 rounded-xl bg-white border-2 border-brand-blue px-5 py-3 text-lg font-extrabold text-brand-blue shadow-sm transition-colors hover:bg-brand-blue-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue'
+    : 'inline-flex min-h-[52px] md:min-h-[56px] w-full max-w-md mx-auto flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 rounded-xl bg-emergency-red px-5 py-3 text-lg font-extrabold text-white shadow-lg transition-colors hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+
+const hintClass = variant === 'home' ? 'mt-3 text-xs text-gray-600' : 'mt-3 text-xs text-white/80';
+const hintClassRu = variant === 'home' ? 'mt-1 text-xs text-gray-600' : 'mt-1 text-xs text-white/80';
+---
+
+<div class:list={[shellClass, pad]}>
+  <p class:list={[leadClass, size === 'compact' ? 'text-sm md:text-base mb-1' : 'text-base md:text-lg mb-2', ec]}>
+    Ummistus, leke või boileri rike? Helista — avarii toruabi Tallinnas ja Harjumaal.
+  </p>
+  <p class:list={[leadClass, size === 'compact' ? 'text-sm md:text-base mb-3' : 'text-base md:text-lg mb-4', rc]}>
+    Засор, протечка или бойлер? Звоните — аварийный сантехник в Таллинне и Харьюмаа.
+  </p>
+  <a
+    href={`tel:${phoneLink}`}
+    class={phoneBtnClass}
+    aria-label={`Helista ${phoneNumber}`}
+  >
+    <span class="flex items-baseline gap-2 flex-wrap justify-center">
+      <span class:list={[ec, 'uppercase tracking-wide text-sm sm:text-base']}>Helista</span>
+      <span class:list={[rc, 'uppercase tracking-wide text-sm sm:text-base']}>Позвонить</span>
+      <span class="tabular-nums text-xl sm:text-2xl">{phoneNumber}</span>
+    </span>
+  </a>
+  <p class:list={[hintClass, ec]}>Väljasõit 0 € Tallinna piires · tavaliselt kohal 30–60 min</p>
+  <p class:list={[hintClassRu, rc]}>Выезд 0 € в Таллине · обычно приезд за 30–60 мин</p>
+</div>

@@ -1,0 +1,466 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import { homeHref, ruPath } from '../utils/i18n-paths';
+import { faqJsonLdMainEntityEt, faqJsonLdMainEntityRu } from '../data/faq-jsonld';
+import { seoInnerDescription, seoInnerTitle } from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = seoInnerTitle('Toruabi KKK', 'et');
+const descEt = seoInnerDescription({
+  pageLabel: 'Toruabi KKK',
+  lang: 'et',
+  extra: 'Vastused hindade, garantii, toruabi 24/7 ja avarii toruabi reageerimisaja kohta.',
+});
+const titleRu = seoInnerTitle('Торуаби FAQ', 'ru');
+const descRu = seoInnerDescription({
+  pageLabel: 'FAQ по торуаби',
+  lang: 'ru',
+  extra: 'Цены, гарантия, торуаби 24/7 и сроки аварийного выезда.',
+});
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+const keywordsEt =
+  'toruabi, ummistuste likvideerimine, toruabi KKK, toruabi küsimused, avarii toruabi, toruabi hinnad, toruabi Tallinnas';
+const keywordsRu =
+  'торуаби, устранение засоров, торуаби FAQ, торуаби Таллинн, аварийная сантехника, торуаби цены, сантехник Харьюмаа';
+
+const faqPath = '/faq';
+const canonicalUrl =
+  currentLang === 'ru' ? `${siteUrl}${ruPath(faqPath)}` : `${siteUrl}${faqPath}`;
+const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={currentLang === 'ru' ? keywordsRu : keywordsEt}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/toruabii.webp"
+>
+<!-- Header -->
+  <header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: crumbHomeUrl },
+          { name: currentLang === 'ru' ? 'FAQ' : 'KKK', url: canonicalUrl },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href={homeHref(currentLang)} class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold" data-lang="backToHome">← Tagasi avalehele</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang="faqTitle">Toruabi KKK – korduma kippuvad küsimused</h1>
+      <p class="text-gray-200" data-lang="faqSubtitle">Praktilised vastused toruabi, hindade ja reageerimisaja kohta Tallinnas ja Harjumaal</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- FAQ Items -->
+      <div class="space-y-4">
+        
+        <!-- FAQ 1 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+            <span data-lang="faq1Question">Kui kiiresti saab toruabi kohale jõuda?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq1Answer">
+            Avariikõnedele reageerime tavaliselt 30–60 minutiga. Toruabi väljasõit on tasuta Tallinna piires; väljaspool linna täpsustab dispetšer. Planeeritud tööde aja lepime eraldi kokku. Meister tegeleb kanalisatsiooni, boileri ja muude toruabi töödega.
+          </p>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+            <span data-lang="faq2Question">Millised on teie toruabi hinnad?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq2Answer">
+            Töö hind algab hinnakirja järgi (orienteeruvalt alates 25 €/h, sõltuvalt teenusest). Väljasõit Tallinna piires on 0 €. Lõplik summa sõltub töö mahust — täielik hinnakiri on <a href="/hinnakiri" class="text-emergency-red hover:underline">siin</a>. Kehtib kanalisatsiooni, boileri ja muude toruabi tööde kohta.
+          </p>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq3Question">Kas teil on garantii?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq3Answer">
+            Jah — anname töödele 2-aastase garantii. Kui viga kordub garantiiperioodil, tuleme parandama ilma lisatasuta. Kehtib nii kiire väljakutse, kanalisatsiooni kui ka üldiste sanitaartööde puhul.
+          </p>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq4Question">Millised piirkonnad teid teenindavad?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <div class="text-gray-700 mt-4 space-y-3 blog-et">
+            <p>
+              Pakume toruabi Tallinnas ja kogu Harjumaal, sealhulgas
+              <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Lasnamäel</a>,
+              <a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Mustamäel</a>,
+              <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Kesklinnas</a>,
+              <a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Piritas</a>,
+              <a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Viimsis</a>,
+              Maardus, Keilas, Sauel ja teistes piirkondades.
+            </p>
+            <p class="text-sm">
+              <a href="/hinnakiri" class="text-emergency-red hover:underline font-semibold">Hinnakiri</a>
+              ·
+              <a href="/blog" class="text-emergency-red hover:underline font-semibold">Blogi</a>
+            </p>
+          </div>
+          <div class="text-gray-700 mt-4 space-y-3 blog-ru">
+            <p>
+              Мы обслуживаем Таллинн и весь Харьюмаа, включая
+              <a href="/ru/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Ласнамяэ</a>,
+              <a href="/ru/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Мустамяэ</a>,
+              <a href="/ru/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Кесклинн</a>,
+              <a href="/ru/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Пирита</a>,
+              <a href="/ru/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Виймси</a>,
+              Маарду, Кейла, Сауэ и другие районы.
+            </p>
+            <p class="text-sm">
+              <a href="/ru/hinnakiri" class="text-emergency-red hover:underline font-semibold">Прайс-лист</a>
+              ·
+              <a href="/ru/blog" class="text-emergency-red hover:underline font-semibold">Блог</a>
+            </p>
+          </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq5Question">Kas töötate ööpäevaringselt?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq5Answer">
+            Jah — avariikõnedele oleme kättesaadavad ööpäevaringselt. Planeeritud torutööde jaoks töötame tavaliselt kell 8–20. Kehtib kanalisatsiooni, boileri ja muude toruabi tööde kohta.
+          </p>
+        </details>
+
+        <!-- FAQ 6 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq6Question">Millised makseviisid on aktsepteeritud?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq6Answer">
+            Võtame vastu sularaha, pangakaarte ja ülekannet. Suuremate objektide puhul saab makse tingimused dispetšeriga kokku leppida.
+          </p>
+        </details>
+
+        <!-- FAQ 7 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq7Question">Kas teete tasuta hindamistööd?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq7Answer">
+            Jah — meister saab kohale tulla, hinnata olukorda ja anda orienteeruva hinna ilma tellimuskohustuseta. Sobib kanalisatsiooni, boileri ja muude toruabi küsimuste jaoks.
+          </p>
+        </details>
+
+        <!-- FAQ 8 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq8Question">Kas teil on kindlustus?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq8Answer">
+            Jah — tööd on kaetud töökindlustusega, mis kaitseb nii klienti kui objekti toruabi tööde ajal.
+          </p>
+        </details>
+
+        <!-- FAQ 9 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq9Question">Kuidas tellida toruabi Lasnamäel, Mustamäel või Kesklinnas?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq9Answer">
+            Toruabi tellimiseks helistage meile telefonil <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a>. Pakume toruabi teenuseid <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline">Lasnamäel</a>, <a href="/toruabi-mustamae" class="text-emergency-red hover:underline">Mustamäel</a> ja <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline">Kesklinnas</a>. Meie torumees jõuab kohale 30-60 minutiga. Väljasõit on tasuta Tallinna piires.
+          </p>
+        </details>
+
+        <!-- FAQ 10 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq10Question">Milline on keskmine toruabi töö kestus?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq10Answer">
+            Keskmine toruabi töö kestus sõltub probleemi tüübist. Lihtsad toruabi tööd (näiteks kraanide remont) võivad võtta 30-60 minutit. Kanalisatsiooni toruabi ja ummistuste likvideerimine võib võtta 1-3 tundi. Suuremad toruabi projektid (näiteks boileri paigaldus või küttesüsteemi renoveerimine) võivad võtta mitu tundi või päeva. Meie torumees annab täpse hinnangu enne töö alustamist.
+          </p>
+        </details>
+
+        <!-- FAQ 11 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq11Question">Kas teete toruabi töid ka öösel?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq11Answer">
+            Jah, pakume 24/7 avarii toruabi teenuseid, sealhulgas öösel. Kui teil on avarii olukord (näiteks veeleke, kanalisatsiooni ummistus või boileri rike), võime tulla kohale ka öösel. Öösel toruabi tööd on kättesaadavad kõigis Tallinna piirkondades, sealhulgas Lasnamäel, Mustamäel ja Kesklinnas. Helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me reageerime kohe.
+          </p>
+        </details>
+
+        <!-- FAQ 12 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq12Question">Millised on kõige levinumad toruabi probleemid Tallinnas?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq12Answer">
+            Kõige levinumad toruabi probleemid Tallinnas on kanalisatsiooni ummistused, boileri rikked, kraanide lekked ja küttesüsteemide probleemid. Vanades hoonetes (eriti paneelmajades Lasnamäel) on levinud vananenud torustikud, mis vajavad remonti. Uusarendustes Mustamäel ja Kesklinnas on sagedased probleemid seotud boileri hoolduse ja kanalisatsiooni survepesuga. Meie torumees on kogenud kõigi nende probleemide lahendamisel. Vaata rohkem infot meie <a href="/blog" class="text-emergency-red hover:underline">blogis</a>.
+          </p>
+        </details>
+
+        <!-- FAQ 13 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq13Question">Kas pakute toruabi teenuseid ka ettevõtetele?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq13Answer">
+            Jah, pakume toruabi teenuseid nii eraisikutele kui ka ettevõtetele. Meie torumees tegeleb kommertsobjektide toruabi töödega, sealhulgas restoranide, kohvikute, kontorite ja tootmisettevõtete toruabi teenustega. Pakume ka hoolduslepinguid KÜ-dele ja ettevõtetele. Kõik tööd on dokumenteeritud ja saate arve kohe kohapeal. Helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me koostame teile sobiva pakkumise.
+          </p>
+        </details>
+
+        <!-- FAQ 14 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq14Question">Kuidas valida õige torumees?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq14Answer">
+            Õige torumehe valimisel tasub tähelepanu pöörata järgmistele asjadele: kogemus ja kvalifikatsioon, garantii pakkumine (meil on 2 aastat garantii), kiire reageerimisaeg (meil 30-60 minutit), mõistlikud hinnad ja positiivsed kliendiarvustused. Meie torumees on kogenud ja kvalifitseeritud, pakub 2 aastat garantiid ja on kättesaadav 24/7. Vaata meie <a href="/#teenused" class="text-emergency-red hover:underline">teenuseid</a> ja <a href="/hinnakiri" class="text-emergency-red hover:underline">hinnakirja</a>.
+          </p>
+        </details>
+
+        <!-- FAQ 16 – Lasnamäe intent -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer blog-et">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span>Kus tellida toruabi Lasnamäes?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4">
+            Toruabi Lasnamäes tellite helistades <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a>
+            või lehelt <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">toruabi Lasnamäe</a>.
+            Avarii toruabi on saadaval 24/7; väljasõit Tallinna piires on 0 €.
+          </p>
+        </details>
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer blog-ru">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span>Где заказать торуаби в Ласнамяэ?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4">
+            Позвоните <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a>
+            или откройте <a href="/ru/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">торуаби Ласнамяэ</a>.
+            Аварийный выезд 24/7; в пределах Таллина выезд 0 €.
+          </p>
+        </details>
+
+        <!-- FAQ 17 – pricing intent -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer blog-et">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span>Toruabi hind Tallinn – kust vaadata?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4">
+            Toruabi hind Tallinnas sõltub töö mahust. Orienteeruvad hinnad on
+            <a href="/hinnakiri" class="text-emergency-red hover:underline font-semibold">hinnakirjas</a>;
+            täpse pakkumise annab meister kohapeal. Väljasõit Tallinna piires on 0 €.
+          </p>
+        </details>
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer blog-ru">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span>Цена торуаби в Таллине — где смотреть?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4">
+            Стоимость зависит от объёма. Ориентиры — в
+            <a href="/ru/hinnakiri" class="text-emergency-red hover:underline font-semibold">прайсе</a>;
+            точную сумму мастер назовёт на месте. Выезд в Таллине — 0 €.
+          </p>
+        </details>
+
+        <!-- FAQ 15 -->
+        <details class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span data-lang="faq15Question">Kas teete toruabi töid ka vanades hoonetes?</span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="text-gray-700 mt-4" data-lang="faq15Answer">
+            Jah, meie torumees on spetsialiseerunud töötamisele nii vanades kui ka uutes hoonetes. Vanades hoonetes (eriti paneelmajades Lasnamäel) on meil suur kogemus vananenud torustike remondiga. Teame, kuidas töötada vanade torustikega ilma suuremate remontideta. Pakume ka konsultatsiooni vanade hoonete torustike renoveerimiseks. Meie toruabi teenused hõlmavad nii avarii toruabi kui ka planeeritud remonditöid vanades hoonetes.
+          </p>
+        </details>
+
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mt-12 bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4" data-lang="faqCtaTitle">Kas teie küsimust ei leidnud?</h2>
+        <p class="text-lg mb-6" data-lang="faqCtaText">Helistage meile ja me vastame kõigile teie küsimustele!</p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-trust-blue text-white py-8 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="mb-2">
+        <a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red hover:text-red-400">
+          {phoneNumber}
+        </a>
+      </p>
+      <!-- Districts Links -->
+      <div class="mb-4 pt-4 border-t border-white/20">
+        <div class="text-sm font-bold mb-3 blog-et" data-lang="serviceAreas">Toruabi piirkondades:</div>
+        <div class="text-sm font-bold mb-3 blog-ru">Торуаби по районам:</div>
+        <div class="flex flex-wrap justify-center gap-3 text-xs blog-et">
+          <a href="/toruabi-lasnamae" class="text-white/80 hover:text-white hover:underline transition-colors">Lasnamäe</a>
+          <a href="/toruabi-mustamae" class="text-white/80 hover:text-white hover:underline transition-colors">Mustamäe</a>
+          <a href="/toruabi-kesklinn" class="text-white/80 hover:text-white hover:underline transition-colors">Kesklinn</a>
+        </div>
+        <div class="flex flex-wrap justify-center gap-3 text-xs blog-ru">
+          <a href="/ru/toruabi-lasnamae" class="text-white/80 hover:text-white hover:underline transition-colors">Ласнамяэ</a>
+          <a href="/ru/toruabi-mustamae" class="text-white/80 hover:text-white hover:underline transition-colors">Мустамяэ</a>
+          <a href="/ru/toruabi-kesklinn" class="text-white/80 hover:text-white hover:underline transition-colors">Центр</a>
+        </div>
+      </div>
+      <p class="text-xs text-gray-400 max-w-2xl mx-auto mb-3 leading-relaxed">
+        <span data-lang="footerTrust"
+          >Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112</span
+        >
+      </p>
+      <FooterLegal variant="switcher" />
+      <p class="text-sm text-gray-300">
+        <span data-lang="copyright">© 2026 toruabii.ee - Kõik õigused kaitstud</span>
+      </p>
+      <p class="text-xs text-gray-400 mt-2">
+        <span data-lang="lastUpdate">Info uuendatud:</span>
+        <time datetime="2026-04-01">aprill 2026</time>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile CTA -->
+  <StickyCTA />
+
+  <!-- Scripts -->
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonicalUrl}#faq`,
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: currentLang === 'ru' ? faqJsonLdMainEntityRu : faqJsonLdMainEntityEt,
+  })}
+/>

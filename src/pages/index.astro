@@ -1,0 +1,30 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomePageIndex from '../components/home/HomePageIndex.astro';
+import {
+  seoHomeDescription,
+  seoHomeKeywords,
+  seoHomeOgDescription,
+  seoHomeTitle,
+} from '../data/seo-keywords';
+
+const homeTitle = seoHomeTitle('et');
+const homeDescription = seoHomeDescription('et');
+const homeOgDescription = seoHomeOgDescription('et');
+const homeKeywords = seoHomeKeywords('et');
+---
+
+<BaseLayout
+  title={homeTitle}
+  description={homeDescription}
+  ogDescription={homeOgDescription}
+  keywords={homeKeywords}
+  lang="et"
+  canonical="https://toruabii.ee/"
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  homeTheme
+>
+  <HomePageIndex lang="et" />
+</BaseLayout>

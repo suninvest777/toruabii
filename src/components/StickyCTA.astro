@@ -1,0 +1,17 @@
+---
+// Sticky Mobile CTA Bar - Always visible on mobile
+const phoneNumber = '+372 5181 112';
+---
+
+<div class="sticky-cta md:hidden">
+  <a
+    href={`tel:${phoneNumber.replace(/\s/g, '')}`}
+    class="sticky-cta-link flex w-full flex-col items-center justify-center gap-0.5 rounded-lg bg-brand-blue px-3 py-3 text-center text-white shadow-md transition-colors hover:bg-brand-blue-dark min-h-[48px]"
+    aria-label="Helista kohe"
+  >
+    <span class="text-xs font-extrabold uppercase leading-tight tracking-wide sm:text-sm">
+      <span class="home-ssr-et">HELISTA KOHE</span><span class="home-ssr-ru">ПОЗВОНИТЬ СЕЙЧАС</span>
+    </span>
+    <span class="text-sm font-bold tabular-nums leading-none sm:text-base">{phoneNumber}</span>
+  </a>
+</div>

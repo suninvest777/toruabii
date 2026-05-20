@@ -1,0 +1,167 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import { homeHref, ruPath } from '../utils/i18n-paths';
+import { seoInnerDescription, seoInnerTitle } from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+// Runtime env first (Render), then build-time Vite define.
+const rawReview =
+  (typeof process !== 'undefined' && process.env.PUBLIC_GOOGLE_REVIEW_URL?.trim()) ||
+  (import.meta.env.PUBLIC_GOOGLE_REVIEW_URL as string | undefined)?.trim() ||
+  '';
+const envReviewUrl = /^https?:\/\//i.test(rawReview) ? rawReview : '';
+const reviewCtaUrl = envReviewUrl || 'https://shorturl.at/2NJBf';
+
+const titleEt = seoInnerTitle("Toruabi tagasiside", 'et');
+const descEt = seoInnerDescription({
+  pageLabel: "Google'i tagasiside ja soodustus",
+  lang: 'et',
+  extra: '10% soodustus järgmistele toruabi tellimustele pärast ausat arvustust.',
+});
+const titleRu = seoInnerTitle('Торуаби отзыв', 'ru');
+const descRu = seoInnerDescription({
+  pageLabel: 'Отзыв в Google и скидка',
+  lang: 'ru',
+  extra: 'Скидка 10% на следующие заказы торуаби после честного отзыва.',
+});
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+const pagePath = '/tagasiside-soodus';
+const canonicalUrl =
+  currentLang === 'ru' ? `${siteUrl}${ruPath(pagePath)}` : `${siteUrl}${pagePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={currentLang === 'ru' ? 'торуаби, отзыв Google, скидка, toruabii' : 'toruabi, tagasiside, Google arvustus, toruabii'}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/toruabii.webp"
+>
+<header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: 'Avaleht', url: siteUrl + '/' },
+          { name: 'Google\'i tagasiside', url: siteUrl + '/tagasiside-soodus' },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href={homeHref(currentLang)} class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold" data-lang="backToHome">← Tagasi avalehele</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang="reviewBonusTitle">Jäta Google'is arvustus</h1>
+      <p class="text-gray-200 text-lg max-w-3xl" data-lang="reviewBonusSubtitle">
+        Sinu tagasiside aitab teistel klientidel meid leida. Pärast meie tööl käiku ja avaldatud ausa Google'i arvustust kehtib 10% soodustus kõigile järgnevatele tellimustele (tellimuste arv ei ole piiratud) — maini seda iga broneeringu juures (+372 5181 112). Allpool avad arvustuse lingi.
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <div class="max-w-3xl mx-auto space-y-8">
+      <section
+        class="rounded-2xl border-2 border-amber-400/90 bg-gradient-to-br from-amber-50 via-yellow-50/90 to-amber-100/40 p-5 shadow-md ring-1 ring-amber-200/70 md:p-6"
+        aria-labelledby="review-promo-heading"
+      >
+        <p class="text-center text-4xl font-black leading-none text-emergency-red md:text-5xl" aria-hidden="true">
+          10%
+        </p>
+        <p class="sr-only" data-lang="reviewBonusPromoSrOnly">
+          Kümne protsendi soodustus kõigile järgnevatele tellimustele pärast ausa Google'i arvustuse avaldamist ja teostatud tööd.
+        </p>
+        <h2
+          id="review-promo-heading"
+          class="mt-2 text-center text-xl font-extrabold leading-snug text-trust-blue md:text-2xl"
+          data-lang="reviewBonusPromoHeading"
+        >
+          Google'i arvustuse eest: 10% kõigile järgnevatele tellimustele
+        </h2>
+        <p
+          class="mt-4 text-center text-base leading-relaxed text-gray-800 md:text-lg"
+          data-lang="reviewBonusPromoBody"
+        >
+          Pärast meie teenuse kasutamist (väljakutse/töö) ja ausa arvustuse avaldamist Google'is kehtib 10% allahindlus kõigile järgnevatele tellimustele — tellimuste arv ei ole piiratud. Broneerides maini alati telefonil +372 5181 112 või kodulehe kaudu, et oled arvustuse jätanud; kinnitab dispetšer.
+        </p>
+      </section>
+
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200/90 p-6 md:p-8 space-y-6">
+        <h2 class="text-xl font-bold text-trust-blue sr-only">Sammud</h2>
+        <ol class="list-decimal list-inside space-y-4 text-gray-800 leading-relaxed">
+          <li class="pl-1" data-lang="reviewBonusStep1">
+            Oluline: tingimuseks on teostatud töö ja avaldatud aus Google'i arvustus. Seejärel kehtib 10% soodustus kõigile edaspidistele tellimustele piiramatus ulatuses — maini soodustusest alati broneerides. Klõpsa all olevat nuppu ja jätka arvustuse Google'is (logi sisse oma Google'i kontoga, kui vaja).
+          </li>
+          <li class="pl-1" data-lang="reviewBonusStep2">
+            Pärast avaldamist salvesta ekraanitõmmis või pea meeles, et arvustus on üleval.
+          </li>
+          <li class="pl-1" data-lang="reviewBonusStep3">
+            Iga uue töö broneerides helista +372 5181 112 või kasuta vormi — ütle, et oled Google'is arvustuse jätanud, et rakendada 10% soodustust (kehtib kõigile tellimustele pärast vastavat arvustust; täpsustab dispetšer).
+          </li>
+        </ol>
+
+        <a
+          href={reviewCtaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl bg-trust-blue px-6 py-4 text-center text-base font-bold text-white shadow-md transition-colors hover:bg-blue-900 focus-visible:outline focus-visible:ring-2 focus-visible:ring-trust-blue focus-visible:ring-offset-2"
+        >
+          <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+          <span data-lang="reviewBonusCtaGoogle">Ava Google'i arvustused</span>
+        </a>
+
+        <p class="text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4" data-lang="reviewBonusDisclaimer">
+          Arvustus on vabatahtlik. 10% soodustus kehtib kõigile tellimustele pärast teostatud tööd ja avaldatud Google'i arvustust, kui klient soodustusest broneerides teatab (täpsustab dispetšer). Lõplik hind ja töö ulatus sõltuvad objektist.
+        </p>
+      </div>
+
+      <div class="rounded-2xl bg-trust-blue px-6 py-8 text-center text-white shadow-lg">
+        <p class="text-lg mb-4" data-lang="reviewBonusCtaCallIntro">Küsimused? Helista kohe:</p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex min-h-[56px] items-center justify-center rounded-xl bg-white px-8 py-4 text-xl font-bold text-emergency-red transition-colors hover:bg-gray-100"
+        >
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="mb-2">
+        <a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red hover:text-red-400">
+          {phoneNumber}
+        </a>
+      </p>
+      <p class="text-xs text-gray-400 max-w-2xl mx-auto mb-3 leading-relaxed">
+        <span data-lang="footerTrust"
+          >Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112</span
+        >
+      </p>
+      <FooterLegal variant="switcher" />
+      <p class="text-sm text-gray-300">
+        <span data-lang="copyright">© 2026 toruabii.ee - Kõik õigused kaitstud</span>
+      </p>
+      <p class="text-xs text-gray-400 mt-2">
+        <span data-lang="lastUpdate">Info uuendatud:</span>
+        <time datetime="2026-04-04">aprill 2026</time>
+      </p>
+      <p class="text-xs text-gray-400 mt-1">
+        <a href="/privacy" class="hover:underline">Privaatsuspoliitika</a>
+      </p>
+    </div>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

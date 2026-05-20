@@ -1,0 +1,534 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Boileri toruabi ja hooldus Tallinnas – kuidas pikendada soojaveeboileri eluiga | toruabii.ee';
+const descEt =
+  'Selgitame, miks on oluline regulaarselt teha boileri toruabi ja hooldust Tallinnas ja Harjumaal, kui tihti boilerit loputada ja millised on levinumad vead, mis võivad boileri enneaegselt rikkuda.';
+const titleRu =
+  'Обслуживание и промывка бойлера – как продлить срок службы бойлера | toruabii.ee';
+const descRu =
+  'Рассказываем, почему важно регулярно обслуживать и промывать бойлер в Таллине и Харьюмаа, как часто это делать и какие ошибки чаще всего приводят к поломкам.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/boileri-hooldus-ja-loputus';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/toruabii.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/toruabii.webp"
+  />
+<!-- Estonian version -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/" class="hover:text-white">Avaleht</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/blog" class="hover:text-white">Blogi</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Boileri hooldus ja läbipesu
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Tagasi blogisse
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Boileri toruabi ja läbipesu Tallinnas: miks regulaarne hooldus on oluline?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Katlakivi, muda ja õhu taskud vähendavad boileri efektiivsust ja
+        võivad põhjustada enneaegseid rikkeid. Regulaarne hooldus hoiab
+        soojaveesüsteemi töökindla ja säästab raha.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud:{' '}
+        {new Date('2026-02-10').toLocaleDateString('et-EE', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/ru" class="hover:text-white">Главная</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/ru/blog" class="hover:text-white">Блог</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Обслуживание и промывка бойлера
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/ru/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Назад в блог
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Обслуживание и промывка бойлера: почему это важно в Таллине и Харьюмаа?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Накипь, ил и воздушные пробки снижают эффективность бойлера и
+        приводят к преждевременным поломкам. Регулярное обслуживание
+        сохраняет стабильную подачу горячей воды и экономит ваши деньги.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано:{' '}
+        {new Date('2026-02-10').toLocaleDateString('ru-RU', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/blog/procistka-boilera-est.webp"
+          alt="Boileri hooldus ja toruabi Tallinnas – professionaalne torumees puhastab boilerit"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Miks vajab boiler regulaarset hooldust?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Eesti vesi sisaldab sageli palju mineraale, mis kuumutamisel
+          sadestuvad katlakivina boileri sees. Aastate jooksul tekib paks
+          kiht setteid, mis:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>vähendab soojusülekannet ja tõstab elektrikulu,</li>
+          <li>kuumutab küttekeha üle ning lühendab selle eluiga,</li>
+          <li>võib tekitada müra (keemine, plagin) ja ebastabiilset temperatuuri.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Regulaarne hooldus ja läbipesu eemaldab katlakivi ning pikendab nii
+          küttekeha kui ka boileri enda eluiga.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Kui tihti tuleks boilerit Tallinnas hooldada?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Soovitame Tallinnas ja Harjumaal teha boilerile{' '}
+          <strong>põhjalik hooldus iga 1–2 aasta järel</strong>, sõltuvalt
+          vee kvaliteedist, kasutuskoormusest ja boileri mahust.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Väiksemad kodused boilerid (50–100 l): iga 1–2 aasta järel.</li>
+          <li>Suuremad boilerid ja soojaveesüsteemid: 1 kord aastas.</li>
+          <li>
+            Toitlustus- ja majutusasutused: vastavalt tootja juhendile, tihti
+            isegi sagedamini.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Kui märkad, et <strong>sooja vett tuleb vähem</strong>, see
+          lõpeb kiiresti või arved on tõusnud, võib see olla esimene märk,
+          et hooldus on edasi lükatud.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Mida sisaldab professionaalne boileri hooldus?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Boileri hooldus ei ole ainult “vee välja laskmine”. Meie tüüpiline
+          hooldus Tallinnas ja Harjumaal sisaldab:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Boileri tühjendamine ja setete eemaldamine</strong> –
+            avame boileri ja eemaldame põhjas oleva muda ning katlakivi.
+          </li>
+          <li>
+            <strong>Küttekeha kontroll ja vajadusel vahetus</strong> – kui
+            element on tugevalt korrodeerunud või ülekuumenenud.
+          </li>
+          <li>
+            <strong>Ohutusklapi ja tihendite kontroll</strong> – lekked ja
+            kinni jäänud klapid võivad olla ohtlikud.
+          </li>
+          <li>
+            <strong>Süsteemi läbipesu</strong> – vajadusel loputame
+            torustikku, et eemaldada ringluses olevad setted.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Levinumad vead, mida ise tehes tehakse
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Kodune katsetamine ilma kogemuseta võib põhjustada rohkem kahju kui
+          kasu. Levinumad vead:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Boileri avamine ilma vooluvõrgust lahutamata</strong> –
+            reaalne elektrilöögi oht.
+          </li>
+          <li>
+            <strong>Valede tihendite ja materjalide kasutamine,</strong> mis
+            ei talu temperatuuri ja rõhku.
+          </li>
+          <li>
+            <strong>Õhu mitte väljajuhtimine süsteemist,</strong> mille
+            tagajärjeks on halb tsirkulatsioon ja “plärisev” heli.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Kui sul puudub kogemus, on ohutum ja sageli ka odavam kutsuda
+          professionaalne sanitaartehnik, kes tunneb erinevaid boileri
+          tüüpe ja tootjate eripärasid.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Boileri toruabi, hooldus ja läbipesu hinnad
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Boileri hoolduse maksumus sõltub mahust, seisukorrast ja ligipääsust.
+          Täpsemad hinnad leiad{' '}
+          <a href="/hinnakiri" class="text-emergency-red hover:underline">
+            hinnakirjast
+          </a>
+          , kuid üldjoontes:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>väiksemad kodused boilerid – orienteeruvalt alates 48€ / tund,</li>
+          <li>keerukamad tööd ja süsteemi läbipesu – vastavalt kokkuleppele.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Boileri toruabi väljasõit Tallinnas ja Harjumaal on 0€ Tallinna piires (väljaspool
+          kokkuleppel dispetšeriga) ning enne töö algust selgitame alati, milline
+          on töö maht ja orienteeruv hind.
+        </p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Millal kindlasti toruabi või torumehele helistada?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Kui boiler lekib või selle alt tilgub vesi.</li>
+          <li>Kui boiler teeb ebatavalist häält (plagin, kolin, vilin).</li>
+          <li>Kui soojas vees on roostene või must toon.</li>
+          <li>Kui kaitseautomaat lööb pidevalt välja boileri töö ajal.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Need sümptomid viitavad tihti sellele, et sisemised osad on juba
+          tugevalt kulunud või sete on liigselt kogunenud. Õigeaegne
+          sekkumine hoiab ära suuremad kulud ja võimaliku veekahju.
+        </p>
+      </section>
+
+      <!-- Districts Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Boileri toruabi piirkondades</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Обслуживание бойлеров в районах</h2>
+        <p class="text-gray-700 mb-4 blog-et">Me pakume boileri hooldust ja loputust kõigis Tallinna piirkondades:</p>
+        <p class="text-gray-700 mb-4 blog-ru">Мы предоставляем обслуживание и промывку бойлеров во всех районах Таллинна:</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Boileri toruabi Lasnamäes</a>
+          <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Обслуживание бойлеров в Ласнамяэ</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Boileri toruabi Mustamäel</a>
+          <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Обслуживание бойлеров в Мустамяэ</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Boileri toruabi Kesklinnas</a>
+          <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Обслуживание бойлеров в центре</a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja boileri toruabi, hooldust või läbipesu Tallinnas?
+        </h2>
+        <p class="text-lg mb-6">
+          Helista meile – nõustame telefoni teel ja lepime sobiva aja
+          hoolduseks või avarii väljakutseks.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Helista boileri hoolduseks"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/blog/procistka-boilera-rus.webp"
+          alt="Обслуживание бойлера в Таллине – сантехник выполняет промывку"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Почему бойлер нуждается в регулярном обслуживании?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Вода в Эстонии часто содержит много минералов, которые при нагреве
+          оседают в виде накипи внутри бойлера. Со временем образуется плотный
+          слой отложений, который:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>ухудшает теплообмен и увеличивает расход электроэнергии;</li>
+          <li>перегревает ТЭН и сокращает срок его службы;</li>
+          <li>вызывает шум (кипение, треск) и нестабильную температуру воды.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Регулярная промывка и чистка удаляет накипь и продлевает срок службы
+          как ТЭНа, так и всего бойлера.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Как часто нужно обслуживать бойлер в Таллине?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Мы рекомендуем в Таллине и Харьюмаа проводить{' '}
+          <strong>полное обслуживание бойлера каждые 1–2 года</strong> – в
+          зависимости от качества воды, интенсивности использования и объёма
+          бойлера.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Маленькие бытовые бойлеры (50–100 л): раз в 1–2 года.</li>
+          <li>Большие бойлеры и системы ГВС: примерно раз в год.</li>
+          <li>
+            Кафе, рестораны, отели – согласно инструкции производителя, нередко
+            чаще одного раза в год.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Если вы замечаете, что <strong>горячей воды стало меньше</strong>,
+          она быстро заканчивается или счета за электричество растут – это
+          первый сигнал, что обслуживание уже пора сделать.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Что входит в профессиональное обслуживание бойлера?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Обслуживание бойлера – это не просто “слить воду”. Типичная услуга у
+          наших клиентов в Таллине и Харьюмаа включает:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Слив воды и удаление осадка</strong> – открываем бойлер и
+            удаляем ил и накипь со дна.
+          </li>
+          <li>
+            <strong>Проверку и при необходимости замену ТЭНа</strong> – если
+            элемент сильно корродирован или перегревался.
+          </li>
+          <li>
+            <strong>Проверку предохранительного клапана и уплотнений</strong> –
+            протечки и “залипшие” клапаны опасны.
+          </li>
+          <li>
+            <strong>Промывку системы</strong> – при необходимости промываем
+            трубопроводы, чтобы удалить взвешенные отложения.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Частые ошибки при самостоятельной чистке бойлера
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Попытки “сделать самому” без опыта часто заканчиваются дополнительными
+          расходами. Типичные ошибки:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Разборка бойлера без отключения от сети</strong> – прямой
+            риск поражения электрическим током.
+          </li>
+          <li>
+            <strong>Использование неподходящих уплотнителей и материалов,</strong>
+            которые не выдерживают температуру и давление.
+          </li>
+          <li>
+            <strong>Неудаление воздуха из системы,</strong> что приводит к
+            плохой циркуляции и “булькающим” звукам.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Если у вас нет опыта, безопаснее и выгоднее вызвать профессионального
+          сантехника, который знает особенности разных типов бойлеров и
+          производителей.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Сколько стоит обслуживание и промывка бойлера?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Стоимость зависит от объёма, состояния и доступности бойлера. Точные
+          цены вы найдёте в{' '}
+          <a href="/hinnakiri" class="text-emergency-red hover:underline">
+            прайс-листе
+          </a>
+          , но в общем случае:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>маленькие домашние бойлеры – примерно от 48€ / час,</li>
+          <li>сложные работы и промывка системы – по договорённости.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Выезд по Таллину и Харьюмаа – 0€, перед началом работ мы всегда
+          объясняем объём и ориентировочную стоимость.
+        </p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Когда обязательно нужно звонить мастеру?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Если бойлер течёт или снизу появляется вода.</li>
+          <li>Если бойлер издаёт необычные звуки (треск, гул, свист).</li>
+          <li>Если горячая вода имеет ржавый или тёмный оттенок.</li>
+          <li>Если автомат защиты постоянно выбивает при работе бойлера.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Всё это признаки того, что внутренние элементы уже сильно изношены
+          или отложений слишком много. Своевременный вызов мастера помогает
+          избежать серьёзных повреждений и затопления.
+        </p>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна чистка или обслуживание бойлера в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – мы проконсультируем по телефону и договоримся о
+          времени обслуживания или аварийного выезда.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Позвонить для обслуживания бойлера"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Бойлер' : 'Boiler',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/boiler'
+          : 'https://toruabii.ee/blog/kategoria/boiler',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Обслуживание и промывка бойлера'
+          : 'Boileri hooldus ja läbipesu',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/boileri-hooldus-ja-loputus' : 'https://toruabii.ee/blog/boileri-hooldus-ja-loputus',
+      },
+    ],
+  })}
+/>

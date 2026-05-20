@@ -1,0 +1,516 @@
+---
+import CookieBanner from '../components/CookieBanner.astro';
+import PromotionBanner from '../components/PromotionBanner.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { SITE_IDENTITY } from '../data/site-identity';
+import { buildPlumbingServiceSchema } from '../data/plumbing-service-schema';
+import { seoHomeDescription, seoHomeKeywords } from '../data/seo-keywords';
+import '../styles/home-theme.css';
+import { etPath as pathnameToEt } from '../utils/i18n-paths';
+
+type BreadcrumbJsonLdItem = { name: string; item: string };
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogDescription?: string;
+  noindex?: boolean;
+  keywords?: string;
+  /** When set, replaces auto-generated BreadcrumbList (avoids duplicate JSON-LD). */
+  breadcrumbJsonLdOverride?: BreadcrumbJsonLdItem[];
+  /** Local landing pages emit their own PlumbingService — skip global duplicate. */
+  suppressPlumbingJsonLd?: boolean;
+  /** ET/RU homepage: dark theme + toruabi-style layout tokens */
+  homeTheme?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  lang = 'et',
+  canonical,
+  ogImage = 'https://toruabii.ee/photos/toruabii.webp',
+  ogImageWidth: ogImageWidthProp,
+  ogImageHeight: ogImageHeightProp,
+  ogDescription,
+  noindex = false,
+  keywords,
+  breadcrumbJsonLdOverride,
+  suppressPlumbingJsonLd = false,
+  homeTheme = false,
+} = Astro.props;
+
+const socialDescription = ogDescription || description;
+
+const siteUrl = 'https://toruabii.ee';
+const cleanPathname = Astro.url.pathname;
+const queryLang = Astro.url.searchParams.get('lang');
+const pageEtPath = pathnameToEt(cleanPathname);
+const isRuPath = cleanPathname === '/ru' || cleanPathname.startsWith('/ru/');
+const canonicalBase = canonical || `${siteUrl}${cleanPathname}`;
+const isRuLocale = lang === 'ru' || queryLang === 'ru';
+const canonicalUrlObj = new URL(canonicalBase);
+if (isRuPath) {
+  // Force self-canonical on RU-prefixed routes even if page passed ET canonical.
+  canonicalUrlObj.pathname = cleanPathname;
+} else if (isRuLocale && cleanPathname !== '/' && cleanPathname !== '/ru') {
+  // Internal /ru/* rewrite: public canonical uses /ru path (matches middleware 301 targets).
+  canonicalUrlObj.pathname = pageEtPath === '/' ? '/ru' : `/ru${pageEtPath}`;
+}
+if (cleanPathname !== '/' && cleanPathname !== '/ru') {
+  canonicalUrlObj.searchParams.delete('lang');
+}
+const canonicalUrl = canonicalUrlObj.toString();
+const currentUrl = canonicalUrl;
+const phoneNumber = SITE_IDENTITY.phoneDisplay;
+
+let resolvedOgW = ogImageWidthProp;
+let resolvedOgH = ogImageHeightProp;
+if (resolvedOgW == null) {
+  if (ogImage.includes('maintoruabii')) {
+    resolvedOgW = 1920;
+    resolvedOgH = 1080;
+  } else if (ogImage.includes('toruabii.webp')) {
+    resolvedOgW = 1226;
+    resolvedOgH = 257;
+  }
+}
+
+const pathNorm = cleanPathname.replace(/\/$/, '') || '/';
+const isRuHome = pathNorm === '/ru';
+const isEtHome = pathNorm === '/';
+const defaultKeywords =
+  keywords ?? (isEtHome || isRuHome ? seoHomeKeywords(lang === 'ru' ? 'ru' : 'et') : undefined);
+const etPath = pageEtPath;
+const secPathNorm = etPath.replace(/\/$/, '') || '/';
+const etAltUrlObj = new URL(canonicalBase);
+etAltUrlObj.pathname = etPath;
+etAltUrlObj.searchParams.delete('lang');
+const etAltUrl = etAltUrlObj.toString();
+const ruPath = etPath === '/' ? '/ru' : `/ru${etPath}`;
+const ruAltUrlObj = new URL(canonicalBase);
+ruAltUrlObj.pathname = ruPath;
+ruAltUrlObj.searchParams.delete('lang');
+const ruAltUrl = ruAltUrlObj.toString();
+
+const ogAspect =
+  resolvedOgW != null && resolvedOgH != null && resolvedOgH > 0
+    ? resolvedOgW / resolvedOgH
+    : null;
+const twitterCard =
+  ogAspect != null && ogAspect >= 1.2 ? 'summary_large_image' : 'summary';
+
+/** Full offer catalog + full area list only on main ET/RU entry points */
+const showFullPlumbingSchema = pathNorm === '/' || pathNorm === '/ru';
+
+const breadcrumbPageTitle = title.replace(/\s*\|\s*toruabii\.ee\s*$/i, '').trim();
+const crumbHome = lang === 'ru' ? 'Главная' : 'Avaleht';
+const crumbBlog = lang === 'ru' ? 'Блог' : 'Blogi';
+const crumbHomeItem = isRuPath ? `${siteUrl}/ru` : `${siteUrl}/`;
+const crumbBlogItem = isRuPath ? `${siteUrl}/ru/blog` : `${siteUrl}/blog`;
+
+type Crumb = { name: string; item: string };
+let breadcrumbItems: Crumb[];
+if (breadcrumbJsonLdOverride?.length) {
+  breadcrumbItems = breadcrumbJsonLdOverride;
+} else if (pathNorm === '/' || pathNorm === '/ru') {
+  breadcrumbItems = [];
+} else if (secPathNorm === '/blog' || secPathNorm.startsWith('/blog/')) {
+  if (secPathNorm === '/blog') {
+    breadcrumbItems = [
+      { name: crumbHome, item: crumbHomeItem },
+      { name: breadcrumbPageTitle, item: currentUrl },
+    ];
+  } else {
+    breadcrumbItems = [
+      { name: crumbHome, item: crumbHomeItem },
+      { name: crumbBlog, item: crumbBlogItem },
+      { name: breadcrumbPageTitle, item: currentUrl },
+    ];
+  }
+} else {
+  breadcrumbItems = [
+    { name: crumbHome, item: crumbHomeItem },
+    { name: breadcrumbPageTitle, item: currentUrl },
+  ];
+}
+
+const plumbingJsonLd = buildPlumbingServiceSchema({
+  siteUrl,
+  full: showFullPlumbingSchema,
+});
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: 'toruabii.ee',
+  url: siteUrl,
+  logo: `${siteUrl}/photos/toruabii.webp`,
+  email: 'info@toruabii.ee',
+  telephone: '+3725181112',
+};
+---
+
+<!doctype html>
+<html lang={lang} data-site="toruabii" class:list={[{ 'home-theme': homeTheme, 'site-header-theme': !homeTheme }]}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- TODO(toruabii): Add NEW Google Analytics 4 property (do not reuse 24toruabi G-Z19PJ8JWD8)
+    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+    <!-- TODO(toruabii): Add NEW Ahrefs Analytics key (do not reuse 24toruabi data-key)
+    <script type="text/partytown" src="https://analytics.ahrefs.com/analytics.js" data-key="YOUR_NEW_KEY" async></script>
+    -->
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    {defaultKeywords ? <meta name="keywords" content={defaultKeywords} /> : null}
+    <meta name="author" content={lang === 'ru' ? 'Торуаби toruabii.ee' : 'Toruabi toruabii.ee'} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="language" content={lang === 'et' ? 'Estonian' : 'Russian'} />
+    <meta name="geo.region" content="EE-37" />
+    <meta name="geo.placename" content="Tallinn, Harjumaa" />
+    <meta name="geo.position" content="59.4370;24.7536" />
+    <meta name="ICBM" content="59.4370, 24.7536" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={currentUrl} />
+
+    {/* AI / LLM discovery (external assistants — not on-site chat): llms.txt, .well-known/llm.txt, ai-context.json */}
+    {pathNorm === '/' || pathNorm === '/ru' ? (
+      <link rel="alternate" type="text/plain" href={`${siteUrl}/llms.txt`} title="LLM site summary" />
+    ) : null}
+    
+    <!-- LCP: hero on ET/RU home; logo preload elsewhere (nav logo, no competing hero) -->
+    {pathNorm === '/' && (
+      <>
+        <link rel="preload" as="image" href="/photos/mobileversion-main.webp" media="(max-width: 767px)" fetchpriority="high" />
+        <link rel="preload" as="image" href="/photos/maintoruabii.webp" media="(min-width: 768px)" fetchpriority="high" />
+      </>
+    )}
+    {pathNorm === '/ru' && (
+      <>
+        <link rel="preload" as="image" href="/photos/mobileversion-main.webp" media="(max-width: 767px)" fetchpriority="high" />
+        <link rel="preload" as="image" href="/photos/maintoruabii.webp" media="(min-width: 768px)" fetchpriority="high" />
+      </>
+    )}
+    {pathNorm !== '/' && pathNorm !== '/ru' && (
+      <link rel="preload" as="image" href="/photos/toruabii.webp" fetchpriority="high" />
+    )}
+    
+    <!-- Alternate languages: canonical ET/RU path pairs -->
+    {isEtHome ? (
+      <>
+        <link rel="alternate" hreflang="et" href={`${siteUrl}/`} />
+        <link rel="alternate" hreflang="ru" href={`${siteUrl}/ru`} />
+        <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+      </>
+    ) : isRuHome ? (
+      <>
+        <link rel="alternate" hreflang="et" href={`${siteUrl}/`} />
+        <link rel="alternate" hreflang="ru" href={`${siteUrl}/ru`} />
+        <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+      </>
+    ) : lang === 'et' ? (
+      <>
+        <link rel="alternate" hreflang="et" href={etAltUrl} />
+        <link rel="alternate" hreflang="ru" href={ruAltUrl} />
+        <link rel="alternate" hreflang="x-default" href={etAltUrl} />
+      </>
+    ) : (
+      <>
+        <link rel="alternate" hreflang="ru" href={ruAltUrl} />
+        <link rel="alternate" hreflang="et" href={etAltUrl} />
+        <link rel="alternate" hreflang="x-default" href={etAltUrl} />
+      </>
+    )}
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={socialDescription} />
+    <meta property="og:image" content={ogImage} />
+    {resolvedOgW != null && resolvedOgH != null ? (
+      <>
+        <meta property="og:image:width" content={String(resolvedOgW)} />
+        <meta property="og:image:height" content={String(resolvedOgH)} />
+      </>
+    ) : null}
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content={lang === 'et' ? 'et_EE' : 'ru_EE'} />
+    <meta property="og:locale:alternate" content={lang === 'et' ? 'ru_EE' : 'et_EE'} />
+    <meta property="og:site_name" content="toruabii.ee" />
+    <meta property="og:image:type" content={ogImage.endsWith('.png') ? 'image/png' : ogImage.endsWith('.jpg') || ogImage.endsWith('.jpeg') ? 'image/jpeg' : 'image/webp'} />
+    <meta property="og:phone_number" content="+3725181112" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={socialDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
+    <meta name="twitter:site" content="@toruabii" />
+    <meta name="twitter:creator" content="@toruabii" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#007eb8" />
+    <meta name="msapplication-TileColor" content="#0a2540" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <slot name="head" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
+    
+    <!-- Performance: Preconnect & DNS Prefetch -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Nunito+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/scripts/mobile-menu.js" as="script" />
+    <link rel="preload" href="/scripts/time-display.js" as="script" />
+    
+    <!-- Inline script: /ru and ?lang= win over localStorage (aligns with SSR head) -->
+    <script is:inline>
+      (function() {
+        'use strict';
+        var pathNorm = window.location.pathname.replace(/\/$/, '') || '/';
+        var urlLang = new URLSearchParams(window.location.search).get('lang');
+        var effectiveLang;
+        if (pathNorm === '/ru' || pathNorm.startsWith('/ru/')) {
+          effectiveLang = 'ru';
+        } else if (pathNorm === '/') {
+          effectiveLang = 'et';
+        } else {
+          effectiveLang = 'et';
+        }
+        document.documentElement.lang = effectiveLang;
+      })();
+    </script>
+    
+    <!-- Schema.org: global business (compact off home; local landings may suppress — they emit area-specific JSON-LD) -->
+    {!suppressPlumbingJsonLd ? (
+      <script type="application/ld+json" set:html={JSON.stringify(plumbingJsonLd)} />
+    ) : null}
+
+    {pathNorm !== '/' && pathNorm !== '/ru' ? (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": `${siteUrl}#website`,
+        "url": siteUrl,
+        "name": "toruabii.ee",
+        "description": lang === 'ru'
+          ? seoHomeDescription('ru')
+          : seoHomeDescription('et'),
+        "inLanguage": ["et", "ru"],
+        "publisher": {
+          "@type": "Organization",
+          "@id": `${siteUrl}#organization`,
+          "name": "toruabii.ee",
+          "url": siteUrl,
+          "logo": { "@type": "ImageObject", "url": `${siteUrl}/photos/toruabii.webp`, "width": 1226, "height": 257 }
+        }
+      })} />
+    ) : null}
+    
+    <!-- Breadcrumb Schema -->
+    {breadcrumbItems.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbItems.map((c, idx) => ({
+          "@type": "ListItem",
+          "position": idx + 1,
+          "name": c.name,
+          "item": c.item
+        }))
+      })} />
+    )}
+  </head>
+  <body class:list={[{ 'layout-home': homeTheme }]}>
+    {!homeTheme && <SiteHeader variant="inner" lang={lang === 'ru' ? 'ru' : 'et'} />}
+    <main>
+      <div
+        class:list={[
+          'promo-banner-mount',
+          homeTheme ? 'promo-banner-mount--home' : 'promo-banner-mount--inner',
+        ]}
+      >
+        <PromotionBanner variant={homeTheme ? 'home' : 'inner'} />
+      </div>
+      <slot />
+    </main>
+  <CookieBanner />
+  <!-- Language switcher (bundled & minified) -->
+  <script>
+    import '../scripts/language-switcher';
+  </script>
+  {!homeTheme && <script src="/scripts/mobile-menu.js" is:inline />}
+  <!-- Call tracking script -->
+  <script src="/scripts/track-call-clicks.js" is:inline></script>
+  </body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+    font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.65;
+    /* Mobile: clearance for fixed bottom call bar */
+    --mobile-sticky-clearance: 0px;
+    padding-bottom: 0;
+  }
+
+  @media (max-width: 767px) {
+    body:not(.layout-home) {
+      --mobile-sticky-clearance: max(5rem, calc(4rem + env(safe-area-inset-bottom, 0px)));
+      padding-bottom: var(--mobile-sticky-clearance);
+    }
+  }
+
+  /* Homepage: toruabi-style Header.astro only — no global blue nav or bottom call bar */
+  html.home-theme .sticky-cta {
+    display: none !important;
+  }
+
+  html.home-theme body.layout-home {
+    --mobile-sticky-clearance: 0px;
+    padding-bottom: 0;
+  }
+
+  .promo-banner-mount--inner {
+    padding-top: 0;
+  }
+
+  html.site-header-theme .promotion-banner--inner {
+    padding-top: 0;
+  }
+
+  html.home-theme .home-theme-page {
+    padding-top: var(--header-height, 56px);
+  }
+
+  @media (min-width: 768px) {
+    html.home-theme .home-theme-page {
+      padding-top: 3.5rem;
+    }
+  }
+
+  /* Blog language visibility */
+  html[lang="et"] .blog-ru {
+    display: none;
+  }
+
+  html[lang="ru"] .blog-et {
+    display: none;
+  }
+
+  /* Avaleht: keelepaarid ilma JS (ET avaleht /, RU avaleht /ru) */
+  html[lang="et"] .home-ssr-ru {
+    display: none;
+  }
+
+  html[lang="ru"] .home-ssr-et {
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    body {
+      --mobile-sticky-clearance: 0px;
+      padding-bottom: 0; /* No padding needed on desktop */
+    }
+  }
+  
+  /* Critical CSS for above-the-fold */
+  .hero-section {
+    color: white;
+  }
+  
+  .cta-button {
+    display: inline-block;
+    background: #007eb8;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: background 0.2s;
+  }
+  
+  .cta-button:hover {
+    background: #006a9a;
+  }
+  
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #007eb8;
+    padding: 0.375rem 0.625rem max(0.375rem, env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.22);
+  }
+  
+  /* Performance: Reduce layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Accessibility */
+  :focus-visible {
+    outline: 2px solid #007eb8;
+    outline-offset: 2px;
+  }
+</style>

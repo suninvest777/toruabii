@@ -1,0 +1,83 @@
+---
+import ContactForm from './ContactForm.astro';
+import FooterLegal from '../FooterLegal.astro';
+import { SITE_IDENTITY, footerTrustLineEt, footerTrustLineRu } from '../../data/site-identity';
+import { ruPath } from '../../utils/i18n-paths';
+
+interface Props {
+  lang: 'et' | 'ru';
+}
+
+const { lang } = Astro.props;
+const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
+const phoneLink = SITE_IDENTITY.phoneTel;
+---
+
+<footer id="kontaktivorm" class="footer-gradient text-white py-16 px-4 font-body">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+      <div>
+        <img
+          src="/photos/toruabii.webp"
+          alt="toruabii.ee"
+          class="h-12 md:h-14 w-auto max-w-[260px] object-contain mb-6 rounded-lg bg-white p-2 shadow-sm"
+          width="1226"
+          height="257"
+          loading="lazy"
+          decoding="async"
+        />
+        <p class="text-white/90 mb-4 text-lg">
+          <span class="home-ssr-et">Toruabi ja kiire väljakutse 24/7 Tallinnas ja Harjumaal</span>
+          <span class="home-ssr-ru">Торуаби и срочный выезд 24/7 в Таллинне и Харьюмаа</span>
+        </p>
+        <p class="mb-2">
+          <a href={`tel:${phoneLink}`} class="text-2xl font-bold hover:text-white/90 tabular-nums">
+            {SITE_IDENTITY.phoneDisplay}
+          </a>
+        </p>
+        <p class="text-white/80 text-sm mb-4">
+          <a href={`mailto:${SITE_IDENTITY.email}`} class="hover:underline">{SITE_IDENTITY.email}</a>
+        </p>
+        <p class="text-white/70 text-sm mb-6">
+          <span class="home-ssr-et">{footerTrustLineEt()}</span>
+          <span class="home-ssr-ru">{footerTrustLineRu()}</span>
+        </p>
+        {lang === 'et' ? (
+          <a href="/ru" class="text-white/90 hover:text-white underline text-sm">Русская версия сайта</a>
+        ) : (
+          <a href="/" class="text-white/90 hover:text-white underline text-sm">Eesti keeles — avaleht</a>
+        )}
+
+        <div class="mt-8 pt-6 border-t border-white/20">
+          <p class="text-sm font-semibold mb-3">
+            <span class="home-ssr-et">Teeninduspiirkonnad</span>
+            <span class="home-ssr-ru">Районы</span>
+          </p>
+          <div class="flex flex-wrap gap-3 text-sm">
+            <a href={H('/toruabi-lasnamae')} class="text-white/80 hover:text-white hover:underline">Lasnamäe</a>
+            <a href={H('/toruabi-mustamae')} class="text-white/80 hover:text-white hover:underline">Mustamäe</a>
+            <a href={H('/toruabi-kesklinn')} class="text-white/80 hover:text-white hover:underline">Kesklinn</a>
+            <a href={H('/toruabi-pirita')} class="text-white/80 hover:text-white hover:underline">Pirita</a>
+            <a href={H('/toruabi-viimsi')} class="text-white/80 hover:text-white hover:underline">Viimsi</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8">
+        <h3 class="font-display text-xl font-bold mb-6">
+          <span class="home-ssr-et">Kontaktivorm</span>
+          <span class="home-ssr-ru">Форма связи</span>
+        </h3>
+        <ContactForm />
+      </div>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-white/20 text-center text-sm text-white/70 [&_#footer-legal-line]:text-white/60">
+      <FooterLegal variant="switcher" />
+      <p class="mt-3">
+        <span class="home-ssr-et">© 2026 toruabii.ee — kõik autoriõigused on kaitstud</span>
+        <span class="home-ssr-ru">© 2026 toruabii.ee — все права защищены</span>
+      </p>
+    </div>
+  </div>
+</footer>

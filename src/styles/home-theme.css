@@ -1,0 +1,306 @@
+:root {
+  --brand-blue: #007eb8;
+  --brand-blue-dark: #006a9a;
+  --brand-blue-light: #e6f4fa;
+  --brand-navy: #0d517c;
+  --brand-red: #ec2028;
+  --text-dark: #000000;
+  --text-muted: #5c6b7a;
+  --surface: #ffffff;
+  --surface-alt: #eff8fd;
+  --surface-elevated: #ffffff;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --gradient-stats: linear-gradient(180deg, #0d517c 0%, #007eb8 100%);
+  --gradient-footer: linear-gradient(160deg, #0d517c 0%, #007eb8 55%, #006a9a 100%);
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-card: 20px;
+  --shadow-card: 0 4px 24px rgba(0, 126, 184, 0.08);
+  --header-height: 56px;
+  --brand-blue-cta: #66b2d2;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 148px;
+  }
+}
+
+html.home-theme body {
+  background-color: var(--surface);
+  color: var(--text-dark);
+}
+
+.home-surface {
+  background-color: var(--surface);
+}
+
+.home-surface-alt {
+  background-color: var(--surface-alt);
+}
+
+.home-surface-elevated {
+  background-color: var(--surface-elevated);
+}
+
+.home-text {
+  color: var(--text-dark);
+}
+
+.home-text-muted {
+  color: var(--text-muted);
+}
+
+.home-card {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.home-border {
+  border-color: var(--border-subtle);
+}
+
+/* Hero — readable white copy on bright photo (toruabi.ee-style, subtle) */
+.hero-section .hero-overlay {
+  background: linear-gradient(
+    to right,
+    rgba(13, 81, 124, 0.68) 0%,
+    rgba(13, 81, 124, 0.48) 28%,
+    rgba(0, 126, 184, 0.26) 48%,
+    rgba(0, 126, 184, 0.08) 62%,
+    transparent 78%
+  );
+}
+
+.hero-section .hero-copy h1,
+.hero-section .hero-copy > p {
+  text-shadow:
+    0 1px 2px rgba(13, 81, 124, 0.45),
+    0 2px 14px rgba(13, 81, 124, 0.28);
+}
+
+.hero-section .hero-copy {
+  padding: 0.75rem 0;
+  margin-left: -0.25rem;
+  padding-left: 0.75rem;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  background: linear-gradient(90deg, rgba(13, 81, 124, 0.1) 0%, rgba(13, 81, 124, 0.03) 50%, transparent 100%);
+}
+
+@media (min-width: 768px) {
+  .hero-section .hero-copy {
+    padding: 1rem 1.5rem 1rem 1.25rem;
+    margin-left: -0.5rem;
+  }
+}
+
+/* Service cards — toruabi-style bottom overlay */
+.service-card {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease;
+}
+
+.service-card:hover,
+.service-card:focus-within {
+  box-shadow: 0 8px 32px rgba(0, 126, 184, 0.15);
+}
+
+.service-card-media {
+  background-color: var(--brand-blue);
+}
+
+.service-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.88);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-card-overlay,
+.service-card:focus-within .service-card-overlay {
+  transform: translateY(-0.5rem);
+}
+
+.service-card-icon-circle {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--brand-blue);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.service-card-icon-circle img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Stats bar — overlaps hero, rounded top only */
+.home-stats-overlap {
+  margin-top: -2.5rem;
+}
+
+@media (min-width: 768px) {
+  .home-stats-overlap {
+    margin-top: -3.5rem;
+  }
+}
+
+/* Single stats strip overlapping hero (toruabi.ee) */
+.stats-bar-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--gradient-stats);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 126, 184, 0.25);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .stats-bar-shell {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stats-bar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  padding: 1.25rem 1.5rem;
+}
+
+.stats-bar-item + .stats-bar-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (min-width: 768px) {
+  .stats-bar-item + .stats-bar-item {
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.stats-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+  background: var(--gradient-stats);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 126, 184, 0.25);
+}
+
+.trust-gradient {
+  background: var(--gradient-stats);
+}
+
+.stats-card-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brand-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * Home header colors (toruabi.ee): red #EC2028 only on "24/7 kontakt:" label.
+ * Phone numbers and nav links are dark; hover blue. CTA pill uses --brand-blue-cta.
+ * Inner pages (faq, landings, etc.) use their own nav with emergency-red HELISTA — not home-theme.
+ */
+
+.home-header-contact-label {
+  color: var(--brand-red);
+}
+
+.home-header-nav-link {
+  color: var(--text-dark);
+}
+
+.home-header-nav-link:hover {
+  color: var(--brand-blue);
+  background-color: transparent;
+}
+
+.home-header-phones a {
+  color: var(--text-dark);
+  text-decoration: none;
+}
+
+.home-header-phones a:hover {
+  color: var(--brand-blue);
+}
+
+.home-header-phone-mobile {
+  color: var(--text-dark);
+}
+
+.home-header-cta {
+  background-color: var(--brand-blue-cta);
+  color: #fff;
+}
+
+.home-header-cta:hover {
+  background-color: var(--brand-blue);
+  color: #fff;
+}
+
+.footer-gradient {
+  background: var(--gradient-footer);
+}
+
+.partners-track {
+  display: flex;
+  gap: 2rem;
+  animation: partners-scroll 40s linear infinite;
+  width: max-content;
+}
+
+.partners-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes partners-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}

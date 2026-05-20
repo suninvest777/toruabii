@@ -1,0 +1,100 @@
+---
+import { tallinnDistrictPageUrl } from '../../utils/district-tallinn-jsonld';
+
+const siteUrl = 'https://toruabii.ee';
+
+interface FaqPair {
+  q: string;
+  a: string;
+}
+
+interface OfferLine {
+  nameEt: string;
+  descEt: string;
+}
+
+interface Props {
+  districtPath: string;
+  currentLang: 'et' | 'ru';
+  pageDescription: string;
+  addressLocality: string;
+  areaServedName: string;
+  plumbingDisplayNameEt: string;
+  plumbingDisplayNameRu: string;
+  offerCatalogNameEt: string;
+  offers: [OfferLine, OfferLine, OfferLine];
+  faqEt: FaqPair[];
+}
+
+const {
+  districtPath,
+  currentLang,
+  pageDescription,
+  addressLocality,
+  areaServedName,
+  plumbingDisplayNameEt,
+  plumbingDisplayNameRu,
+  offerCatalogNameEt,
+  offers,
+  faqEt,
+} = Astro.props;
+
+const pageLocUrl = tallinnDistrictPageUrl(districtPath, currentLang);
+
+const plumbingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PlumbingService',
+  '@id': `${pageLocUrl}#plumbing`,
+  name: currentLang === 'ru' ? plumbingDisplayNameRu : plumbingDisplayNameEt,
+  alternateName: currentLang === 'ru' ? plumbingDisplayNameRu : plumbingDisplayNameEt,
+  url: pageLocUrl,
+  logo: `${siteUrl}/photos/toruabii.webp`,
+  image: `${siteUrl}/photos/maintoruabii.webp`,
+  description: pageDescription,
+  telephone: '+3725181112',
+  priceRange: '€€',
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
+  currenciesAccepted: 'EUR',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality,
+    addressRegion: 'Harjumaa',
+    addressCountry: 'EE',
+  },
+  areaServed: {
+    '@type': 'City',
+    name: areaServedName,
+    containedIn: { '@type': 'City', name: 'Tallinn' },
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: 59.437, longitude: 24.7536 },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: offerCatalogNameEt,
+    itemListElement: offers.map((o) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: o.nameEt, description: o.descEt },
+    })),
+  },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqEt.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<script type="application/ld+json" slot="head" set:html={JSON.stringify(plumbingLd)} />
+<script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />

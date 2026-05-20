@@ -1,0 +1,28 @@
+{
+  "name": "toruabii.ee",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "wrangler pages dev dist",
+    "build": "astro build",
+    "deploy": "npm run build && npx wrangler deploy",
+    "preview": "astro preview",
+    "astro": "astro",
+    "photo:webp": "node scripts/jpg-to-webp.mjs",
+    "photo:compress": "node scripts/compress-webp.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/partytown": "^2.1.4",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^5.17.1",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "sharp": "^0.34.5",
+    "vitest": "^3.2.4"
+  }
+}

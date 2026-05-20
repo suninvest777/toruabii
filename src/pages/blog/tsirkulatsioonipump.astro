@@ -1,0 +1,514 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Tsirkulatsioonipump küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Tsirkulatsioonipump küttesüsteemis Tallinnas: toruabi 24/7, tsirkulatsioonipumba paigaldus, remont ja hooldus. Pump margi ja kuiva rootoriga. Professionaalne tsirkulatsioonipumba torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Tsirkulatsioonipumba valik, võimsus, rõhk.';
+const titleRu =
+  'Циркуляционный насос в системе отопления – устройство и назначение | toruabii.ee';
+const descRu =
+  'Циркуляционный насос - это устройство, используемое в системах отопления и горячего водоснабжения для обеспечения принудительной циркуляции теплоносителя. Рассказываем, как работает циркуляционный насос и каково его назначение в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/tsirkulatsioonipump';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Tsirkulatsioonipump</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Tsirkulatsioonipump küttesüsteemis Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate tsirkulatsioonipumba paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub tsirkulatsioonipumba toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Tsirkulatsioonipump tagab pideva vedeliku (vee või antifriisi) liikumise süsteemis, mis võimaldab ühtlaselt jaotada soojust ja tagada mugava temperatuuri ruumides. Ilma tsirkulatsioonipumbata võib küttesüsteem töötada ebaefektiivselt.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2023-09-28').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Циркуляционный насос</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Циркуляционный насос в системе отопления: устройство и назначение
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Циркуляционный насос обеспечивает постоянное движение жидкости (воды или антифриза) через систему, что позволяет равномерно распределять тепло и обеспечивать комфортную температуру в помещениях. Без циркуляционного насоса система отопления может работать неэффективно.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2023-09-28').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Tsirkulatsioonipump küttesüsteemis Tallinnas – professionaalne paigaldus"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on tsirkulatsioonipump?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Tsirkulatsioonipump on elektripump, mis surub soojuskandja (vee või antifriisi) liikuma küttesüsteemis. See tagab, et kuumutatud vesi jõuab kõikidesse radiaatoritesse või põrandakütte kontuuridesse ühtlaselt ja kiiresti.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Ilma tsirkulatsioonipumbata sõltub vee liikumine ainult looduslikust konvektsioonist, mis võib olla aeglane ja ebaühtlane, eriti suuremates süsteemides.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Kuidas tsirkulatsioonipump töötab?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Tsirkulatsioonipump koosneb:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Elektromootorist</strong> – mis toodab pöörlevat liikumist</li>
+          <li><strong>Rootorist</strong> – mis pöörleb ja surub vedeliku liikuma</li>
+          <li><strong>Korpussest</strong> – mis suunab vedeliku voolu</li>
+          <li><strong>Reguleerimissüsteemist</strong> – mis võimaldab muuta vooluhulka</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Pump võtab vee sisse ja surub selle välja, tagades pideva tsirkulatsiooni süsteemis.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Millised on tsirkulatsioonipumba eelised?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Ühtlane soojusjaotus</strong> – kõik radiaatorid kuumenevad ühtlaselt</li>
+          <li><strong>Kiirem kuumutamine</strong> – ruumid kuumenevad kiiremini</li>
+          <li><strong>Energiatõhusus</strong> – võimaldab kasutada väiksemaid torusid</li>
+          <li><strong>Võimalus kasutada põrandakütet</strong> – põrandaküte vajab tsirkulatsioonipumpa</li>
+          <li><strong>Paremaid reguleerimisvõimalusi</strong> – saate kontrollida temperatuuri igas ruumis</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Kuidas valida tsirkulatsioonipumpa?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Tsirkulatsioonipumba valik sõltub:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Süsteemi mahust</strong> – mida suurem süsteem, seda võimsam pump</li>
+          <li><strong>Torustiku pikkusest</strong> – pikem torustik nõuab suuremat rõhku</li>
+          <li><strong>Radiaatorite arvust</strong> – rohkem radiaatoreid nõuab suuremat vooluhulka</li>
+          <li><strong>Põrandakütte olemasolust</strong> – põrandaküte nõuab spetsiaalseid pumpe</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused tsirkulatsioonipumba kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis on tsirkulatsioonipump ja miks see on vajalik?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Tsirkulatsioonipump tagab pideva vee liikumise küttesüsteemis, võimaldades ühtlast soojusjaotust kõigis ruumides. Ilma tsirkulatsioonipumbata võib küttesüsteem töötada ebaefektiivselt, eriti suuremates majades. Pump tagab, et soe vesi jõuab kõikidesse radiaatoritesse ja põrandakütte kontuuridesse.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab tsirkulatsioonipumba paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Tsirkulatsioonipumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja tsirkulatsioonipumpa?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Tsirkulatsioonipump on vajalik kõigile suletud küttesüsteemidele, eriti suurematele eramajadele ja põrandakütte süsteemidele. See tagab ühtlase soojusjaotuse ja parema energiatõhususe. Avatud küttesüsteemides võib pump olla valikuline, kuid soovitame seda siiski kasutada.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kuidas valida õige tsirkulatsioonipump?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Tsirkulatsioonipumba valik sõltub süsteemi mahust, torustiku pikkusest, radiaatorite arvust ja põrandakütte olemasolust. Meie torumees aitab valida õige pumba teie süsteemi jaoks, arvestades kõiki tegureid ja tagades optimaalse töö.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui tihti peaks tsirkulatsioonipumpa hooldama?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Tsirkulatsioonipumba hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab kontrollimist, puhastamist ja vajadusel remonti. Regulaarne hooldus pikendab pumba eluiga ja tagab optimaalse töö.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid pumpade kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/pump-margi-ja-kuiva-rootoriga" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Pump margi ja kuiva rootoriga</h3>
+            <p class="text-sm text-gray-600">Erinevused pumpade vahel margi ja kuiva rootoriga Tallinnas.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/kollektorigrupp" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Kollektorigrupp küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kollektorsüsteemi eelised ja paigaldus.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Tsirkulatsioonipumba toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub tsirkulatsioonipumba paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Tsirkulatsioonipumba toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Tsirkulatsioonipumba avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile tsirkulatsioonipumba paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud tsirkulatsioonipumpade paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni tsirkulatsioonipumba valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja tsirkulatsioonipumba toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate tsirkulatsioonipumba paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub tsirkulatsioonipumba toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame tsirkulatsioonipumpade valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Tsirkulatsioonipumba toruabi Tallinnas 24/7 | Tsirkulatsioonipumba paigaldus | Tsirkulatsioonipumba remont | Tsirkulatsioonipumba hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Циркуляционный насос в системе отопления в Таллине – профессиональная установка"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое циркуляционный насос?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Циркуляционный насос – это электрический насос, который заставляет теплоноситель (воду или антифриз) двигаться в системе отопления. Это обеспечивает, что нагретая вода достигает всех радиаторов или контуров теплого пола равномерно и быстро.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Без циркуляционного насоса движение воды зависит только от естественной конвекции, что может быть медленным и неравномерным, особенно в больших системах.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Как работает циркуляционный насос?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Циркуляционный насос состоит из:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Электродвигателя</strong> – который создает вращательное движение</li>
+          <li><strong>Ротора</strong> – который вращается и заставляет жидкость двигаться</li>
+          <li><strong>Корпуса</strong> – который направляет поток жидкости</li>
+          <li><strong>Системы регулирования</strong> – которая позволяет изменять расход</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Насос всасывает воду и выталкивает её, обеспечивая постоянную циркуляцию в системе.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Каковы преимущества циркуляционного насоса?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Равномерное распределение тепла</strong> – все радиаторы нагреваются равномерно</li>
+          <li><strong>Быстрее нагревание</strong> – помещения нагреваются быстрее</li>
+          <li><strong>Энергоэффективность</strong> – позволяет использовать меньшие трубы</li>
+          <li><strong>Возможность использования теплого пола</strong> – теплый пол требует циркуляционного насоса</li>
+          <li><strong>Лучшие возможности регулирования</strong> – вы можете контролировать температуру в каждой комнате</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Как выбрать циркуляционный насос?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Выбор циркуляционного насоса зависит от:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Объема системы</strong> – чем больше система, тем мощнее насос</li>
+          <li><strong>Длины трубопровода</strong> – более длинный трубопровод требует большего давления</li>
+          <li><strong>Количества радиаторов</strong> – больше радиаторов требует большего расхода</li>
+          <li><strong>Наличия теплого пола</strong> – теплый пол требует специальных насосов</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание циркуляционного насоса в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке циркуляционных насосов.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Что такое циркуляционный насос и зачем он нужен?' : 'Mis on tsirkulatsioonipump ja miks see on vajalik?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Циркуляционный насос обеспечивает постоянное движение воды в системе отопления, позволяя равномерно распределять тепло во всех помещениях. Без циркуляционного насоса система отопления может работать неэффективно.'
+            : 'Tsirkulatsioonipump tagab pideva vee liikumise küttesüsteemis, võimaldades ühtlast soojusjaotust kõigis ruumides. Ilma tsirkulatsioonipumbata võib küttesüsteem töötada ebaefektiivselt.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка циркуляционного насоса в Таллине?' : 'Kui palju maksab tsirkulatsioonipumba paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки циркуляционного насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
+            : 'Tsirkulatsioonipumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен циркуляционный насос?' : 'Millal on vaja tsirkulatsioonipumpa?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Циркуляционный насос необходим для всех закрытых систем отопления, особенно для больших частных домов и систем теплого пола. Он обеспечивает равномерное распределение тепла и лучшую энергоэффективность.'
+            : 'Tsirkulatsioonipump on vajalik kõigile suletud küttesüsteemidele, eriti suurematele eramajadele ja põrandakütte süsteemidele. See tagab ühtlase soojusjaotuse ja parema energiatõhususe.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как выбрать правильный циркуляционный насос?' : 'Kuidas valida õige tsirkulatsioonipump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Выбор циркуляционного насоса зависит от объема системы, длины трубопровода, количества радиаторов и наличия теплого пола. Наш мастер поможет выбрать правильный насос для вашей системы.'
+            : 'Tsirkulatsioonipumba valik sõltub süsteemi mahust, torustiku pikkusest, radiaatorite arvust ja põrandakütte olemasolust. Meie torumees aitab valida õige pumba teie süsteemi jaoks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать циркуляционный насос?' : 'Kui tihti peaks tsirkulatsioonipumpa hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание циркуляционного насоса раз в год, желательно перед началом отопительного сезона. Это включает проверку, очистку и при необходимости ремонт.'
+            : 'Tsirkulatsioonipumba hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab kontrollimist, puhastamist ja vajadusel remonti.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Циркуляционный насос в системе отопления'
+          : 'Tsirkulatsioonipump küttesüsteemis',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/tsirkulatsioonipump' : 'https://toruabii.ee/blog/tsirkulatsioonipump',
+      },
+    ],
+  })}
+/>

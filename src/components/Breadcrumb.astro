@@ -1,0 +1,44 @@
+---
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  /** Optional: CSS class for the nav wrapper (e.g. for dark/light context) */
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+---
+
+<nav class={`text-sm ${className}`} aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+  <ol class="flex items-center gap-1 flex-wrap">
+    {items.map((item, i) => {
+      const isLast = i === items.length - 1;
+      const href = item.url.startsWith('http') ? item.url : item.url;
+      return (
+        <li
+          itemprop="itemListElement"
+          itemscope
+          itemtype="https://schema.org/ListItem"
+          class="flex items-center gap-1"
+        >
+          {i > 0 && <span aria-hidden="true" class="opacity-70">›</span>}
+          {!isLast ? (
+            <a href={href} itemprop="item" class="hover:underline">
+              <span itemprop="name">{item.name}</span>
+            </a>
+          ) : (
+            <>
+              <span itemprop="name" class="opacity-90">{item.name}</span>
+              <link itemprop="item" href={href} />
+            </>
+          )}
+          <meta itemprop="position" content={String(i + 1)} />
+        </li>
+      );
+    })}
+  </ol>
+</nav>

@@ -1,0 +1,67 @@
+---
+import { HOME_SERVICES } from '../../data/home-services';
+import { ruPath } from '../../utils/i18n-paths';
+
+interface Props {
+  lang: 'et' | 'ru';
+}
+
+const { lang } = Astro.props;
+const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
+---
+
+<section id="teenused" class="py-16 md:py-20 px-4 home-surface-alt font-body">
+  <div class="max-w-7xl mx-auto">
+    <p class="text-base font-semibold uppercase tracking-widest text-brand-blue mb-2 font-display text-center">
+      <span class="home-ssr-et">teenused</span>
+      <span class="home-ssr-ru">услуги</span>
+    </p>
+    <h2 class="font-display text-[2rem] md:text-[2.5rem] font-semibold home-text text-center mb-12 leading-tight">
+      <span class="home-ssr-et">Hooldus, remont ja avariitööd</span>
+      <span class="home-ssr-ru">Обслуживание, ремонт и аварийные работы</span>
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {HOME_SERVICES.map((service) => (
+        <a
+          href={H(service.path)}
+          class="service-card group block no-underline text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue focus-visible:ring-offset-2"
+        >
+          <div class="service-card-media aspect-[4/3] overflow-hidden">
+            <img
+              src={service.image}
+              alt=""
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="300"
+            />
+          </div>
+          <div class="service-card-overlay">
+            <span class="service-card-icon-circle" aria-hidden="true">
+              <img src={service.icon} alt="" width="28" height="28" loading="lazy" />
+            </span>
+            <div class="min-w-0 flex-1">
+              <h3 class="font-display font-bold text-base home-text mb-1 leading-snug">
+                <span class="home-ssr-et">{service.titleEt}</span>
+                <span class="home-ssr-ru">{service.titleRu}</span>
+              </h3>
+              <p class="text-sm home-text-muted leading-relaxed">
+                <span class="home-ssr-et">{service.descEt}</span>
+                <span class="home-ssr-ru">{service.descRu}</span>
+              </p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <p class="text-center mt-10">
+      <a href={H('/hinnakiri')} class="text-brand-blue font-semibold hover:underline">
+        <span class="home-ssr-et">Vaata täielikku hinnakirja →</span>
+        <span class="home-ssr-ru">Полный прайс-лист →</span>
+      </a>
+    </p>
+  </div>
+</section>

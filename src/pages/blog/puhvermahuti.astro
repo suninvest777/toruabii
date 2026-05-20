@@ -1,0 +1,514 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Puhvermahuti küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Puhvermahuti küttesüsteemis Tallinnas: toruabi 24/7, puhvermahuti paigaldus, remont ja hooldus. Soojusakumulaator, puhvermahuti tahkekütusekatla jaoks. Professionaalne puhvermahuti torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Puhvermahuti eelised, energiatõhusus, paigaldus.';
+const titleRu =
+  'Буферная емкость в системе отопления – назначение и преимущества | toruabii.ee';
+const descRu =
+  'Буферная емкость (теплоаккумулятор) - это важный элемент системы отопления, который обеспечивает равномерное распределение тепла и эффективное использование энергетических ресурсов. Рассказываем о назначении и преимуществах в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/puhvermahuti';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Puhvermahuti</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Puhvermahuti küttesüsteemis Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate puhvermahuti paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub puhvermahuti toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Puhvermahuti (soojusakumulaator) on oluline küttesüsteemi element, mis tagab ühtlase soojusjaotuse ja tõhusa energiakasutuse. Selle põhifunktsioon on soojusenergia kogumine ja ratsionaalne kasutamine.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2024-07-04').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Буферная емкость</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Буферная емкость в системе отопления: назначение и преимущества
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Буферная емкость (теплоаккумулятор) - это важный элемент системы отопления, который обеспечивает равномерное распределение тепла и эффективное использование энергетических ресурсов. Её основная функция заключается в накоплении тепловой энергии и рациональном использовании выработанных ресурсов.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2024-07-04').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Puhvermahuti küttesüsteemis Tallinnas – professionaalne paigaldus"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on puhvermahuti?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti ehk soojusakumulaator on suur mahuti, mis salvestab soojusenergiat. See võimaldab koguda soojust siis, kui see on odavam või kättesaadav (näiteks päeval päikeseenergia või odava elektri korral), ja kasutada seda hiljem, kui vajadus on suurem.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti töötab nagu suur soojendatud vee paak, mis säilitab soojust pikema aja jooksul.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Millised on puhvermahuti eelised?
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Energiatõhusus</h3>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti võimaldab kasutada odavamat energiat (näiteks öise elektrihinda) ja säilitada soojust päevaks. See võib oluliselt vähendada kütekulusid.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Ühtlane soojusjaotus</h3>
+        <p class="text-gray-700 mb-3">
+          Tänu puhvermahutile on küttesüsteem võimeline tagama ühtlase temperatuuri isegi siis, kui katel töötab vahelduvalt.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Pikendatud katla eluiga</h3>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti vähendab katla sisselülitamiste arvu, mis pikendab selle eluiga ja vähendab kulumist.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Kombineerimine erinevate soojusallikatega</h3>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti võimaldab kombineerida erinevaid soojusallikaid, näiteks päikeseenergiat, tahkekütust ja elektrit.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Kuidas puhvermahuti töötab?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti on ühendatud küttesüsteemiga. Kui katel toodab soojust, kuumutab see vett puhvermahutis. See soe vesi säilitab soojust ja vabastab seda järk-järgult küttesüsteemi, kui vaja.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Puhvermahuti võimaldab katlal töötada optimaalsel võimsusel pikema aja jooksul, mitte sisse-välja lülitamise režiimis.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Millal on puhvermahuti kasulik?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Tahkekütusekatlad – puhvermahuti võimaldab katlal põleda täielikult, mitte sisse-välja lülitamise režiimis</li>
+          <li>Päikeseenergia süsteemid – salvestab päikeseenergiast saadud soojust</li>
+          <li>Öise elektrihinnaga süsteemid – võimaldab kasutada odavamat öist elektrit</li>
+          <li>Suured küttesüsteemid – tagab ühtlase soojusjaotuse</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused puhvermahuti kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab puhvermahuti paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Puhvermahuti paigalduse hind Tallinnas sõltub mahuti mahust ja süsteemi keerukusest. Väiksem puhvermahuti (200-500 liitrit) võib maksta 1500-3000€, suurem (1000+ liitrit) 3000-8000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet. Pakume puhvermahuti toruabi Lasnamäes, Mustamäel, Kesklinnas, Piritas ja Viimsis 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja puhvermahutit?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Puhvermahuti on kasulik tahkekütusekatla jaoks, päikeseenergia süsteemide jaoks ning öise elektrihinnaga süsteemide jaoks. See võimaldab kasutada odavamat energiat ja säilitada soojust päevaks. Puhvermahuti vähendab katla sisselülitamiste arvu ja pikendab selle eluiga.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis on puhvermahuti peamised eelised?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Puhvermahuti peamised eelised on energiatõhusus (võimaldab kasutada odavamat energiat), ühtlane soojusjaotus, pikendatud katla eluiga ja võimalus kombineerida erinevaid soojusallikaid. See võib oluliselt vähendada kütekulusid.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui suur puhvermahuti on vajalik?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Puhvermahuti suurus sõltub küttesüsteemi mahust ja katla võimsusest. Üldreegel: umbes 50-100 liitrit 1 kW katla võimsuse kohta. Näiteks 20 kW katla jaoks vajate umbes 1000-2000 liitrit puhvermahutit. Meie torumees aitab valida õige mahu teie süsteemi jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas puhvermahuti nõuab hooldust?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Puhvermahuti nõuab minimaalset hooldust. Soovitame kontrollida isolatsiooni ja temperatuuri kord aastas. Kui puhvermahuti on õigesti paigaldatud ja isolatsioon on hea, võib see töötada aastaid ilma erilise hoolduseta. Meie torumees pakub puhvermahuti hooldust Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid küttesüsteemi kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/kollektorigrupp" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Kollektorigrupp küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kollektorsüsteemi eelised ja paigaldus.</p>
+          </a>
+          <a href="/blog/elektrikatla-ulehendamine" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Elektrikatla ühendamine</h3>
+            <p class="text-sm text-gray-600">Kuidas ühendada elektrikatla küttesüsteemiga.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Puhvermahuti toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub puhvermahuti paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Puhvermahuti toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Puhvermahuti avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile puhvermahuti paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud puhvermahutite paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni puhvermahuti valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja puhvermahuti toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate puhvermahuti paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub puhvermahuti toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame puhvermahutite valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Puhvermahuti toruabi Tallinnas 24/7 | Puhvermahuti paigaldus | Puhvermahuti remont | Soojusakumulaator</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Буферная емкость в системе отопления в Таллине – профессиональная установка"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое буферная емкость?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость или теплоаккумулятор – это большой резервуар, который накапливает тепловую энергию. Он позволяет собирать тепло, когда оно дешевле или доступно (например, днем от солнечной энергии или дешевого электричества), и использовать его позже, когда потребность больше.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость работает как большой нагретый резервуар с водой, который сохраняет тепло в течение длительного времени.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Каковы преимущества буферной емкости?
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Энергоэффективность</h3>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость позволяет использовать более дешевую энергию (например, ночной тариф на электричество) и сохранять тепло на день. Это может значительно снизить расходы на отопление.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Равномерное распределение тепла</h3>
+        <p class="text-gray-700 mb-3">
+          Благодаря буферной емкости система отопления способна обеспечивать равномерную температуру даже когда котел работает периодически.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Продленный срок службы котла</h3>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость уменьшает количество включений котла, что продлевает его срок службы и снижает износ.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Комбинирование с различными источниками тепла</h3>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость позволяет комбинировать различные источники тепла, например, солнечную энергию, твердое топливо и электричество.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Как работает буферная емкость?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость подключена к системе отопления. Когда котел производит тепло, он нагревает воду в буферной емкости. Эта горячая вода сохраняет тепло и постепенно отдает его системе отопления по мере необходимости.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Буферная емкость позволяет котлу работать на оптимальной мощности в течение более длительного времени, а не в режиме включения-выключения.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Когда буферная емкость полезна?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Котлы на твердом топливе – буферная емкость позволяет котлу гореть полностью, а не в режиме включения-выключения</li>
+          <li>Солнечные энергетические системы – сохраняет тепло от солнечной энергии</li>
+          <li>Системы с ночным тарифом на электричество – позволяет использовать более дешевое ночное электричество</li>
+          <li>Большие системы отопления – обеспечивает равномерное распределение тепла</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание буферной емкости в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке буферных емкостей.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка буферной емкости в Таллине?' : 'Kui palju maksab puhvermahuti paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки буферной емкости в Таллине зависит от объема емкости и сложности системы. Небольшая буферная емкость (200-500 литров) может стоить 1500-3000€, большая (1000+ литров) 3000-8000€.'
+            : 'Puhvermahuti paigalduse hind Tallinnas sõltub mahuti mahust ja süsteemi keerukusest. Väiksem puhvermahuti (200-500 liitrit) võib maksta 1500-3000€, suurem (1000+ liitrit) 3000-8000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужна буферная емкость?' : 'Millal on vaja puhvermahutit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Буферная емкость полезна для котлов на твердом топливе, солнечных энергетических систем и систем с ночным тарифом на электричество. Она позволяет использовать более дешевую энергию и сохранять тепло на день.'
+            : 'Puhvermahuti on kasulik tahkekütusekatla jaoks, päikeseenergia süsteemide jaoks ning öise elektrihinnaga süsteemide jaoks. See võimaldab kasutada odavamat energiat ja säilitada soojust päevaks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Каковы основные преимущества буферной емкости?' : 'Mis on puhvermahuti peamised eelised?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Основные преимущества буферной емкости: энергоэффективность (позволяет использовать более дешевую энергию), равномерное распределение тепла, продленный срок службы котла и возможность комбинировать различные источники тепла.'
+            : 'Puhvermahuti peamised eelised on energiatõhusus (võimaldab kasutada odavamat energiat), ühtlane soojusjaotus, pikendatud katla eluiga ja võimalus kombineerida erinevaid soojusallikaid.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какого размера нужна буферная емкость?' : 'Kui suur puhvermahuti on vajalik?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Размер буферной емкости зависит от объема системы отопления и мощности котла. Общее правило: примерно 50-100 литров на 1 кВт мощности котла. Например, для котла 20 кВт нужно около 1000-2000 литров буферной емкости.'
+            : 'Puhvermahuti suurus sõltub küttesüsteemi mahust ja katla võimsusest. Üldreegel: umbes 50-100 liitrit 1 kW katla võimsuse kohta. Näiteks 20 kW katla jaoks vajate umbes 1000-2000 liitrit puhvermahutit.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Требует ли буферная емкость обслуживания?' : 'Kas puhvermahuti nõuab hooldust?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Буферная емкость требует минимального обслуживания. Рекомендуем проверять изоляцию и температуру раз в год. Если буферная емкость правильно установлена и изоляция хорошая, она может работать годами без особого обслуживания.'
+            : 'Puhvermahuti nõuab minimaalset hooldust. Soovitame kontrollida isolatsiooni ja temperatuuri kord aastas. Kui puhvermahuti on õigesti paigaldatud ja isolatsioon on hea, võib see töötada aastaid ilma erilise hoolduseta.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Буферная емкость в системе отопления'
+          : 'Puhvermahuti küttesüsteemis',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/puhvermahuti' : 'https://toruabii.ee/blog/puhvermahuti',
+      },
+    ],
+  })}
+/>

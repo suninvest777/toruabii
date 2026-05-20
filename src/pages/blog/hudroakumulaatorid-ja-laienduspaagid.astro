@@ -1,0 +1,522 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Hüdroakumulaatorid ja laienduspaagid Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Hüdroakumulaatorid ja laienduspaagid Tallinnas: toruabi 24/7, paigaldus, remont ja hooldus. Laienduspaak küttesüsteemi jaoks, soojaveevarustuse jaoks, hüdroakumulaatorid. Professionaalne hüdroakumulaatorite ja laienduspaakide torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Erinevused, konstruktsioon, paigaldusreeglid.';
+const titleRu =
+  'Гидроаккумуляторы и расширительные баки – в чем разница? | toruabii.ee';
+const descRu =
+  'Разновидности расширительных баков: для отопления, для ГВС, гидроаккумуляторы. Конструктивные особенности. Принцип работы. Основное отличие гидроаккумулятора и расширительного бака. Правила установки в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/hudroakumulaatorid-ja-laienduspaagid';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Hüdroakumulaatorid ja laienduspaagid</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Hüdroakumulaatorid ja laienduspaagid Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate hüdroakumulaatorite või laienduspaakide paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub hüdroakumulaatorite ja laienduspaakide toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Laienduspaagid ja hüdroakumulaatorid on sarnased seadmed, aga neil on erinevad otstarbed. Selgitame erinevused, konstruktsioonieripärad ja paigaldusreeglid Tallinnas ja Harjumaal.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2023-07-04').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Гидроаккумуляторы и расширительные баки</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Гидроаккумуляторы и расширительные баки: в чем разница?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Расширительные баки и гидроаккумуляторы – похожие устройства, но у них разные назначения. Рассказываем об отличиях, конструктивных особенностях и правилах установки в Таллине и Харьюмаа.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2023-07-04').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Hüdroakumulaatorid ja laienduspaagid küttesüsteemis Tallinnas"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on laienduspaak?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Laienduspaak on mõeldud kompenseerima vedeliku soojuspaisumist küttesüsteemis või soojaveesüsteemis. See koosneb hermeetilisest mahutist, mis on täidetud vedelikuga, ja elastsest membraanist.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Laienduspaakide tüübid:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Küttesüsteemi laienduspaak</strong> – kompenseerib soojuskandja paisumist</li>
+          <li><strong>Soojaveevarustuse laienduspaak</strong> – kompenseerib sooja vee paisumist boileris</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Mis on hüdroakumulaator?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Hüdroakumulaator on mõeldud veevarustussüsteemidele. See säilitab vee rõhku ja vähendab pumba töötsüklite arvu. Hüdroakumulaator tagab stabiilse veevoolu ja kaitseb pumpa liigselt sisse-välja lülitamise eest.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Hüdroakumulaator töötab sarnaselt laienduspaagiga, aga on mõeldud külma vee jaoks, mitte soojuskandja jaoks.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Peamised erinevused
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Otstarve</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Laienduspaak</strong> – küttesüsteem või soojaveevarustus</li>
+          <li><strong>Hüdroakumulaator</strong> – külma veevarustussüsteem</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Temperatuur</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Laienduspaak</strong> – töötab kõrgetel temperatuuridel (kuni 90°C)</li>
+          <li><strong>Hüdroakumulaator</strong> – töötab toatemperatuuril</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Materjal</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Laienduspaak</strong> – membraan võib olla erinevatest materjalidest</li>
+          <li><strong>Hüdroakumulaator</strong> – membraan peab olema toiduklassi materjalist</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Paigaldusreeglid
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Mõlemad seadmed peavad olema paigaldatud professionaalse torumehe poolt:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Õiges kohas süsteemis</li>
+          <li>Õige rõhuga</li>
+          <li>Kontrollitud membraaniga</li>
+          <li>Vastavalt tootja juhendile</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused hüdroakumulaatorite ja laienduspaakide kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis vahe on hüdroakumulaatoril ja laienduspaagil?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Hüdroakumulaator on mõeldud veevarustuse süsteemidele ja tagab stabiilse rõhu. Laienduspaak on mõeldud küttesüsteemidele või soojaveevarustuse süsteemidele ja kompenseerib vee paisumist kuumutamisel. Mõlemad on olulised komponendid, kuid neil on erinevad otstarbed.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab hüdroakumulaatori või laienduspaagi paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Hüdroakumulaatori või laienduspaagi paigalduse hind Tallinnas sõltub seadme mahust ja süsteemi keerukusest. Väiksem seade (20-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja hüdroakumulaatorit?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Hüdroakumulaator on vajalik veevarustuse süsteemides, kus on vaja tagada stabiilne rõhk ja vähendada pumba töötsükleid. See pikendab pumba eluiga ja tagab ühtlase veevarustuse. Hüdroakumulaator on eriti kasulik kõrgete majade jaoks või kui on probleeme veevarustuse rõhuga.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja laienduspaaki?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis. Ilma laienduspaagita võib süsteemi rõhk liiga kõrgeks minna ja põhjustada kahjustusi.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas hüdroakumulaatorid ja laienduspaagid nõuavad hooldust?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Mõlemad seadmed nõuavad minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui seadmed on õigesti paigaldatud, võivad need töötada aastaid ilma erilise hoolduseta. Meie torumees pakub hüdroakumulaatorite ja laienduspaakide hooldust Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid laienduspaakide kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/laienduspaak-kutte-ja-gvs" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Laienduspaak küttesüsteemi ja soojavee jaoks</h3>
+            <p class="text-sm text-gray-600">Erinevused küttesüsteemi ja soojaveevarustuse laienduspaakide vahel.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Hüdroakumulaatorite ja laienduspaakide toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub hüdroakumulaatorite ja laienduspaakide paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Hüdroakumulaatorite ja laienduspaakide toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Hüdroakumulaatori või laienduspaagi avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile hüdroakumulaatorite ja laienduspaakide paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud hüdroakumulaatorite ja laienduspaakide paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni hüdroakumulaatorite ja laienduspaakide valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja hüdroakumulaatorite või laienduspaakide toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate hüdroakumulaatorite või laienduspaakide paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub hüdroakumulaatorite ja laienduspaakide toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame hüdroakumulaatorite ja laienduspaakide valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Hüdroakumulaatorite toruabi Tallinnas 24/7 | Laienduspaakide toruabi | Hüdroakumulaatorite paigaldus | Laienduspaakide paigaldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Гидроаккумуляторы и расширительные баки в системе отопления в Таллине"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое расширительный бак?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Расширительный бак предназначен для компенсации теплового расширения жидкости в системе отопления или горячего водоснабжения. Он состоит из герметичной емкости, заполненной жидкостью, и эластичной мембраны.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Типы расширительных баков:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Расширительный бак для отопления</strong> – компенсирует расширение теплоносителя</li>
+          <li><strong>Расширительный бак для ГВС</strong> – компенсирует расширение горячей воды в бойлере</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Что такое гидроаккумулятор?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Гидроаккумулятор предназначен для систем водоснабжения. Он поддерживает давление воды и уменьшает количество рабочих циклов насоса. Гидроаккумулятор обеспечивает стабильный поток воды и защищает насос от чрезмерного включения-выключения.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Гидроаккумулятор работает аналогично расширительному баку, но предназначен для холодной воды, а не для теплоносителя.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Основные отличия
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Назначение</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Расширительный бак</strong> – система отопления или горячее водоснабжение</li>
+          <li><strong>Гидроаккумулятор</strong> – система холодного водоснабжения</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Температура</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Расширительный бак</strong> – работает при высоких температурах (до 90°C)</li>
+          <li><strong>Гидроаккумулятор</strong> – работает при комнатной температуре</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Материал</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Расширительный бак</strong> – мембрана может быть из различных материалов</li>
+          <li><strong>Гидроаккумулятор</strong> – мембрана должна быть из материала пищевого класса</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Правила установки
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Оба устройства должны быть установлены профессиональным сантехником:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>В правильном месте системы</li>
+          <li>С правильным давлением</li>
+          <li>С проверенной мембраной</li>
+          <li>Согласно инструкции производителя</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка гидроаккумулятора или расширительного бака в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке гидроаккумуляторов и расширительных баков.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между гидроаккумулятором и расширительным баком?' : 'Mis vahe on hüdroakumulaatoril ja laienduspaagil?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Гидроаккумулятор предназначен для систем водоснабжения и обеспечивает стабильное давление. Расширительный бак предназначен для систем отопления или горячего водоснабжения и компенсирует расширение воды при нагревании.'
+            : 'Hüdroakumulaator on mõeldud veevarustuse süsteemidele ja tagab stabiilse rõhu. Laienduspaak on mõeldud küttesüsteemidele või soojaveevarustuse süsteemidele ja kompenseerib vee paisumist kuumutamisel.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка гидроаккумулятора или расширительного бака в Таллине?' : 'Kui palju maksab hüdroakumulaatori või laienduspaagi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки гидроаккумулятора или расширительного бака в Таллине зависит от объема устройства и сложности системы. Небольшое устройство (20-50 литров) может стоить 200-500€, большое (100+ литров) 500-1500€.'
+            : 'Hüdroakumulaatori või laienduspaagi paigalduse hind Tallinnas sõltub seadme mahust ja süsteemi keerukusest. Väiksem seade (20-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен гидроаккумулятор?' : 'Millal on vaja hüdroakumulaatorit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Гидроаккумулятор необходим для систем водоснабжения, где нужно обеспечить стабильное давление и уменьшить количество циклов работы насоса. Он продлевает срок службы насоса и обеспечивает равномерное водоснабжение.'
+            : 'Hüdroakumulaator on vajalik veevarustuse süsteemides, kus on vaja tagada stabiilne rõhk ja vähendada pumba töötsükleid. See pikendab pumba eluiga ja tagab ühtlase veevarustuse.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен расширительный бак?' : 'Millal on vaja laienduspaaki?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак необходим для всех закрытых систем отопления и систем горячего водоснабжения. Он компенсирует расширение воды при нагревании и обеспечивает стабильное давление в системе.'
+            : 'Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Требуют ли гидроаккумуляторы и расширительные баки обслуживания?' : 'Kas hüdroakumulaatorid ja laienduspaagid nõuavad hooldust?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Оба устройства требуют минимального обслуживания. Рекомендуем проверять давление и состояние мембраны раз в год. Если устройства правильно установлены, они могут работать годами без особого обслуживания.'
+            : 'Mõlemad seadmed nõuavad minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui seadmed on õigesti paigaldatud, võivad need töötada aastaid ilma erilise hoolduseta.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Гидроаккумуляторы и расширительные баки'
+          : 'Hüdroakumulaatorid ja laienduspaagid',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/hudroakumulaatorid-ja-laienduspaagid' : 'https://toruabii.ee/blog/hudroakumulaatorid-ja-laienduspaagid',
+      },
+    ],
+  })}
+/>

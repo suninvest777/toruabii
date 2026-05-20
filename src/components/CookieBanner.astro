@@ -1,0 +1,132 @@
+---
+// Cookie Consent Banner Component
+---
+
+<div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 bg-brand-blue text-white shadow-2xl z-[1100] p-4 md:p-6">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex-1">
+      <p class="text-sm md:text-base mb-2" data-lang="cookieText">
+        Me kasutame küpsiseid, et parandada teie kasutajakogemust. Jätkates meie veebilehe kasutamist, nõustute küpsiste kasutamisega.
+      </p>
+      <p class="text-xs text-gray-300">
+        <a href="/privacy" class="underline hover:text-white" data-lang="cookiePolicy">Privaatsuspoliitika</a>
+      </p>
+    </div>
+    <div class="flex gap-3 flex-shrink-0">
+      <button
+        id="cookie-accept"
+        class="bg-white text-brand-blue hover:bg-brand-blue-light font-bold py-3 px-4 md:py-3 md:px-6 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap min-h-[44px] flex items-center justify-center"
+        data-lang="cookieAccept"
+      >
+        Nõustun
+      </button>
+      <button
+        id="cookie-decline"
+        class="bg-white/20 hover:bg-white/30 text-white font-medium py-3 px-4 md:py-3 md:px-6 rounded-lg transition-colors text-sm md:text-base whitespace-nowrap min-h-[44px] flex items-center justify-center"
+        data-lang="cookieDecline"
+      >
+        Keeldun
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    'use strict';
+    
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const declineBtn = document.getElementById('cookie-decline');
+    
+    if (!cookieBanner || !acceptBtn || !declineBtn) return;
+    
+    // Function to hide/show sticky CTA
+    function toggleStickyCTA(hide) {
+      const stickyCTA = document.querySelector('.sticky-cta');
+      if (stickyCTA) {
+        if (hide) {
+          stickyCTA.style.display = 'none';
+        } else {
+          stickyCTA.style.display = '';
+        }
+      }
+    }
+    
+    // Check if user has already made a choice
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    
+    if (!cookieConsent) {
+      // Show banner after a short delay
+      setTimeout(() => {
+        cookieBanner.classList.remove('hidden');
+        cookieBanner.classList.add('animate-slide-up');
+        // Hide sticky CTA when banner is shown
+        toggleStickyCTA(true);
+      }, 1000);
+    }
+    
+    // Accept cookies
+    acceptBtn.addEventListener('click', function() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      localStorage.setItem('cookieConsentDate', new Date().toISOString());
+      hideBanner();
+    });
+    
+    // Decline cookies
+    declineBtn.addEventListener('click', function() {
+      localStorage.setItem('cookieConsent', 'declined');
+      localStorage.setItem('cookieConsentDate', new Date().toISOString());
+      hideBanner();
+    });
+    
+    function hideBanner() {
+      cookieBanner.classList.add('animate-slide-down');
+      setTimeout(() => {
+        cookieBanner.classList.add('hidden');
+        cookieBanner.classList.remove('animate-slide-up', 'animate-slide-down');
+        // Show sticky CTA when banner is hidden
+        toggleStickyCTA(false);
+      }, 300);
+    }
+  })();
+</script>
+
+<style>
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-down {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slide-down 0.3s ease-out;
+  }
+  
+  /* Ensure cookie banner is above sticky CTA on mobile */
+  @media (max-width: 767px) {
+    #cookie-banner {
+      z-index: 1100 !important;
+    }
+  }
+</style>

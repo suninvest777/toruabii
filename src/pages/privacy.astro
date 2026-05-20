@@ -1,0 +1,206 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import { homeHref, ruPath } from '../utils/i18n-paths';
+
+const siteUrl = 'https://toruabii.ee';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = 'Toruabi privaatsuspoliitika | toruabii.ee';
+const descEt =
+  'Privaatsuspoliitika: kuidas toruabii.ee kogub ja kaitseb isikuandmeid toruabi teenuste pakkumisel Tallinnas ja Harjumaal.';
+const titleRu = 'Политика конфиденциальности торуаби | toruabii.ee';
+const descRu =
+  'Политика конфиденциальности: как toruabii.ee обрабатывает персональные данные при оказании торуаби в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+const privacyPath = '/privacy';
+const canonicalUrl =
+  currentLang === 'ru' ? `${siteUrl}${ruPath(privacyPath)}` : `${siteUrl}${privacyPath}`;
+---
+
+<BaseLayout 
+  title={pageTitle}
+  description={pageDescription}
+  keywords={currentLang === 'ru' ? 'торуаби, политика конфиденциальности, toruabii.ee' : 'toruabi, privaatsuspoliitika, toruabii.ee'}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/toruabii.webp"
+>
+<!-- Header -->
+  <header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: 'Avaleht', url: siteUrl + '/' },
+          { name: 'Privaatsuspoliitika', url: siteUrl + '/privacy' }
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href={homeHref(currentLang)} class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold" data-lang="backToHome">← Tagasi avalehele</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang="privacyTitle">Privaatsuspoliitika</h1>
+      <p class="text-gray-200" data-lang="privacySubtitle">Kuidas me kaitse teie isikuandmeid</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <div class="max-w-4xl mx-auto">
+      
+      <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 space-y-6">
+        
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection1Title">1. Üldinfo</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>toruabii.ee (edaspidi "meie", "me", "meie veebileht") pakub toruabi ja avarii toruabi teenuseid Tallinnas ja Harjumaal ning kaitseb teie privaatsust ja isikuandmeid. See privaatsuspoliitika selgitab, kuidas me kogume, kasutame, säilitame ja avaldame teie isikuandmeid, kui te kasutate meie toruabi teenuseid ja veebilehte.</p>
+            <p>Meie veebileht on valduses ja juhitakse toruabii.ee poolt. Meie kontaktandmed on saadaval veebilehel.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection2Title">2. Kogutavad andmed</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Me kogume järgmist tüüpi andmeid:</p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li><strong>Kontaktandmed:</strong> nimi, telefoninumber, e-posti aadress (kui te esitate need tagasiside vormi kaudu)</li>
+              <li><strong>Tehnilised andmed:</strong> IP-aadress, brauseri tüüp, seadme teave, külastatud lehed, külastamise aeg ja kuupäev</li>
+              <li><strong>Küpsised:</strong> meie veebileht kasutab küpsiseid, et parandada kasutajakogemust ja analüüsida veebilehe kasutamist</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection3Title">3. Andmete kasutamine</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Me kasutame kogutud andmeid järgmistel eesmärkidel:</p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li>Teie päringute ja tagasiside käsitlemine</li>
+              <li>Teenuste pakkumine ja täiustamine</li>
+              <li>Kommunikatsioon teiega teenuste kohta</li>
+              <li>Veebilehe analüüsimine ja parandamine</li>
+              <li>Juriidiliste kohustuste täitmine</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection4Title">4. Andmete säilitamine</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Me säilitame teie isikuandmeid ainult nii kaua, kui see on vajalik eesmärkide saavutamiseks, milleks andmed koguti, või nii kaua, kui see on nõutav seadusega.</p>
+            <p>Kui te soovite, et me kustutaksime teie andmed, võtke meiega ühendust.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection5Title">5. Andmete jagamine</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Me ei müü, ei rendi ega jaga teie isikuandmeid kolmandate osapooltega, välja arvatud:</p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li>Kui see on nõutav seadusega</li>
+              <li>Kui see on vajalik meie teenuste osutamiseks (nt andmekaitse teenused)</li>
+              <li>Teie selgesõnalise nõusolekuga</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection6Title">6. Teie õigused</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Teil on õigus:</p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li>Juurdepääs oma isikuandmetele</li>
+              <li>Nõuda oma andmete parandamist või kustutamist</li>
+              <li>Vastu vaielda oma andmete töötlemisega</li>
+              <li>Andmete portatiivsus</li>
+              <li>Tagasi võtta nõusolek andmete töötlemiseks</li>
+            </ul>
+            <p>Nende õiguste kasutamiseks võtke meiega ühendust.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection7Title">7. Küpsised</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Meie veebileht kasutab küpsiseid, et parandada kasutajakogemust. Küpsised on väikesed tekstifailid, mis salvestatakse teie seadmesse.</p>
+            <p>Te saate kontrollida või kustutada küpsiseid oma brauseri seadetes. Pange tähele, et mõned veebilehe funktsioonid ei pruugi töötada korralikult, kui küpsised on keelatud.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection8Title">8. Muudatused privaatsuspoliitikas</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Meil on õigus muuta seda privaatsuspoliitikat igal ajal. Muudatused jõustuvad kohe pärast nende avaldamist veebilehel.</p>
+            <p>Soovitame teil perioodiliselt seda lehte vaadata, et olla kursis meie privaatsuspoliitika muudatustega.</p>
+            <p>Viimati uuendatud: {new Date().toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="privacySection9Title">9. Kontakt</h2>
+          <div class="text-gray-700 space-y-3">
+            <p>Kui teil on küsimusi selle privaatsuspoliitika kohta või soovite kasutada oma õigusi, võtke meiega ühendust:</p>
+            <p>
+              <strong>Telefon:</strong> <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline">{phoneNumber}</a><br />
+              <strong>E-post:</strong> <a href="mailto:info@toruabii.ee" class="text-emergency-red hover:underline">info@toruabii.ee</a>
+            </p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- CTA Section -->
+      <div class="mt-12 bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4" data-lang="privacyCtaTitle">Vajate abi?</h2>
+        <p class="text-lg mb-6" data-lang="privacyCtaText">Võtke meiega ühendust, kui teil on küsimusi privaatsuspoliitika kohta!</p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-trust-blue text-white py-8 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="mb-2">
+        <a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red hover:text-red-400">
+          {phoneNumber}
+        </a>
+      </p>
+      <p class="text-xs text-gray-400 max-w-2xl mx-auto mb-3 leading-relaxed">
+        <span data-lang="footerTrust"
+          >Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112</span
+        >
+      </p>
+      <FooterLegal variant="switcher" />
+      <p class="text-sm text-gray-300">
+        <span data-lang="copyright">© 2026 toruabii.ee - Kõik õigused kaitstud</span>
+      </p>
+      <p class="text-xs text-gray-400 mt-2">
+        <span data-lang="lastUpdate">Info uuendatud:</span>
+        <time datetime="2026-04-01">aprill 2026</time>
+      </p>
+      <p class="text-xs text-gray-400 mt-1">
+        <a href="/privacy" class="hover:underline">Privaatsuspoliitika</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Sticky Mobile CTA -->
+  <StickyCTA />
+
+  <!-- Scripts -->
+</BaseLayout>

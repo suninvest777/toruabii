@@ -1,0 +1,545 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Kanalisatsiooni ummistus Tallinnas – toruabi ja ummistuste likvideerimine | toruabii.ee';
+const descEt =
+  'Tõsine kanalisatsiooni ummistus Tallinnas või Harjumaal? Vaata, mida teha ise, mida kindlasti mitte teha, ja millal kutsuda toruabi ja 24/7 avarii toruabi numbril +372 5181 112.';
+const titleRu =
+  'Засор канализации в Таллине – прочистка и устранение засоров | toruabii.ee';
+const descRu =
+  'Серьёзный засор канализации в Таллине или Харьюмаа? Узнайте, что делать самостоятельно, каких ошибок избегать и когда вызывать аварийного сантехника 24/7 по номеру +372 5181 112.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/kanalisatsiooni-ummistus-mida-teha';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/maintoruabii.webp"
+  />
+<!-- Estonian version -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/" class="hover:text-white">Avaleht</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/blog" class="hover:text-white">Blogi</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Kanalisatsiooni ummistus Tallinnas
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Tagasi blogisse
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Kanalisatsiooni ummistus Tallinnas: millal ja kuidas kutsuda toruabi?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Ummistus WC-s, vannitoas või köögis võib tekkida ootamatult. Õiged
+        esimesed sammud aitavad vältida üleujutust ja kallimat remonti.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud:{' '}
+        {new Date('2026-02-10').toLocaleDateString('et-EE', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/ru" class="hover:text-white">Главная</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/ru/blog" class="hover:text-white">Блог</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Засор канализации в Таллине
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/ru/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Назад в блог
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Засор канализации в Таллине: что делать до и после приезда мастера
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Засор в унитазе, ванной или кухне всегда возникает неожиданно. Правильные
+        первые действия помогают избежать потопа и дорогого ремонта.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано:{' '}
+        {new Date('2026-02-10').toLocaleDateString('ru-RU', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/blog/zasor-kanalizacii-blog-est.webp"
+          alt="Kanalisatsiooni ummistus Tallinnas – avarii toruabi ja kanalisatsiooni toruabi meister puhastab torustikku"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mida teha kohe, kui märkad ummistust?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Esimene reegel – <strong>ära kasuta enam vett</strong> selles
+          äravoolus (WC, valamu, dušš), kus ummistus on tekkinud. Mida rohkem
+          vett sisse lased, seda suurem on oht, et kanalisatsioon ajab tagasi
+          ja uputab korteri või keldri.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Lõpeta hetkeks WC, valamu ja duši kasutamine.</li>
+          <li>Vaata, kas probleem on ühes punktis või mitmes (näiteks korraga WC ja köök).</li>
+          <li>Teavita naabreid, kui tegemist on kortermaja püstaku ummistusega.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Levinumad vead, mida kindlasti mitte teha
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Internet on täis koduseid “nippe”, mis tegelikult võivad olukorda
+          hullemaks teha või torusid kahjustada.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Ära vala torusse liiga palju keemiat.</strong> Odavad
+            keemilised vahendid võivad koguneda lõksudesse ja reageerida
+            rasva või teiste ainetega, põhjustades veelgi tugevama ummistuse
+            või torude kahjustuse.
+          </li>
+          <li>
+            <strong>Ära kasuta jõuga WC pumpa,</strong> kui vesi juba seisab
+            väga kõrgel – surve võib suruda mustuse sügavamale süsteemi või
+            tekitada tagasivoolu teistes korterites.
+          </li>
+          <li>
+            <strong>Ära kasuta isetehtud metalltraate,</strong> mis võivad
+            toru seina kriimustada või isegi katki teha.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Millal piisab kodusest lahendusest?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Väiksemate ummistuste puhul (köögivalamu, vannitoa kraanikauss)
+          võib aidata lihtne mehaaniline puhastus.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            Eemalda ja puhasta <strong>sifoon</strong> (valamu all olev
+            lõks).
+          </li>
+          <li>
+            Kasuta tavalist <strong>kummipumpa</strong>, hoides teised
+            äravoolud samal püstakul kinni.
+          </li>
+          <li>
+            Loputa mõõduka kuuma veega, mitte keeva veega (eriti plasttorude
+            puhul).
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Kui ummistus tuleb <strong>korduvalt tagasi</strong> või probleem on
+          korraga mitmes äravoolus, on see märk sügavamast
+          kanalisatsiooniprobleemist ning on mõistlik kohe kutsuda
+          spetsialist.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Millal kutsuda toruabi ja avarii toruabi?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Soovitame kutsuda <strong>toruabi või 24/7 avarii toruabi</strong>, kui:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>WC vesi tõuseb üles ja ei kao isegi mõne aja pärast.</li>
+          <li>Ummistus mõjutab korraga mitut ruumi (köök + vannituba).</li>
+          <li>Kanalisatsioon ajab tagasi keldris või põrandalohkudes.</li>
+          <li>Tunned tugevat kanalisatsiooni lõhna ja mullitust torudes.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Tallinnas ja Harjumaal jõuab meie toruabi tavaliselt kohale{' '}
+          <strong>30–60 minuti jooksul</strong>. Toruabi väljasõit on 0€ Tallinna piires
+          (väljaspool kokkuleppel dispetšeriga) – maksad ainult tehtud töö eest vastavalt{' '}
+          <a href="/hinnakiri" class="text-emergency-red hover:underline">
+            hinnakirjale
+          </a>
+          .
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Kuidas me ummistusi professionaalselt eemaldame?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Avarii toruabi ei tähenda ainult “trossiga torkimist”. Kasutame
+          kaasaegseid seadmeid, mis säästavad torustikku ja annavad püsiva
+          tulemuse:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Rothenberger 16/22 mm masinad,</strong> millega saame
+            eemaldada keerulised ummistused torustiku sügavusest.
+          </li>
+          <li>
+            <strong>Survepesu,</strong> millega puhastame rasva, setteid ja
+            kivi jääke kanalisatsioonisüsteemidest.
+          </li>
+          <li>
+            <strong>Videouuring,</strong> mis võimaldab täpselt näha, kus
+            toru on vajunud, pragunenud või sisse langenud.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Selline lähenemine aitab vältida korduvaid ummistusi ja annab
+          objektiivse pildi torustiku seisukorrast.
+        </p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Ennetus: kuidas toruabi abil ummistusi tulevikus vältida?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Ära viska WC-sse niiskeid salvrätikuid, hügieenitooteid ega rasva.</li>
+          <li>Kasuta köögis rasvapüüdjat või kogumisnõud, mitte kraanikaussi.</li>
+          <li>Lase teatud aja tagant torusid professionaalselt loputada, eriti toitlustuskohtades.</li>
+          <li>
+            Kui oled ostnud vana maja või korteri, lase teha{' '}
+            <strong>videouuring</strong>, et välistada varjatud probleemid.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Districts Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Toruabi piirkondades</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Торуаби в районах</h2>
+        <p class="text-gray-700 mb-4 blog-et">Me pakume kanalisatsiooni toruabi teenuseid kõigis Tallinna piirkondades:</p>
+        <p class="text-gray-700 mb-4 blog-ru">Мы предоставляем услуги прочистки канализации во всех районах Таллинна:</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Lasnamäes</a>
+          <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Ласнамяэ</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Mustamäel</a>
+          <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Мустамяэ</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Kesklinnas</a>
+          <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в центре</a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja kiiresti kanalisatsiooni toruabi Tallinnas?
+        </h2>
+        <p class="text-lg mb-6">
+          Helista kohe – reageerime 30–60 minutiga ja leiame sinu olukorrale
+          parima lahenduse.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Helista avarii toruabile"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/blog/zasor-kanalizacii-blog-rus.webp"
+          alt="Засор канализации в Таллине – аварийный сантехник прочищает трубу"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что делать сразу, как только вы заметили засор?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Первое правило – <strong>перестаньте пользоваться водой</strong> в этом
+          сливе (унитаз, раковина, душ), где появился засор. Чем больше воды вы
+          льёте, тем выше риск, что канализация пойдёт обратно и зальёт квартиру
+          или подвал.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Временно прекратите пользоваться унитазом, раковиной и душем.</li>
+          <li>
+            Посмотрите, проблема только в одной точке или сразу в нескольких (например,
+            унитаз и кухня одновременно).
+          </li>
+          <li>
+            Сообщите соседям или управляющему, если это общедомовой стояк в
+            многоквартирном доме.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Распространённые ошибки, которых нужно избегать
+        </h2>
+        <p class="text-gray-700 mb-3">
+          В интернете много “лайфхаков”, которые на практике часто только
+          ухудшают ситуацию или повреждают трубы.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Не заливайте слишком много химии.</strong> Дешёвые
+            средства могут скапливаться в сифонах и реагировать с жиром и
+            другими веществами, создавая ещё более плотный засор или даже
+            повреждая трубы.
+          </li>
+          <li>
+            <strong>Не пользуйтесь вантузом “изо всех сил”,</strong> если вода
+            уже стоит высоко – давление может протолкнуть грязь глубже в
+            систему или вызвать обратный выброс в других квартирах.
+          </li>
+          <li>
+            <strong>Не используйте самодельные металлические крюки,</strong>
+            которые царапают внутреннюю поверхность трубы и могут её
+            повредить.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Когда можно обойтись домашними способами?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          При небольших засорах (кухонная мойка, умывальник в ванной) иногда
+          помогает простая механическая чистка.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            Снимите и прочистите <strong>сифон</strong> (колено под раковиной).
+          </li>
+          <li>
+            Используйте обычный <strong>резиновый вантуз</strong>, при этом
+            другие сливы на этом же стояке должны быть закрыты.
+          </li>
+          <li>
+            Промойте тёплой, но не кипящей водой (особенно важно для
+            пластиковых труб).
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Если засор <strong>постоянно возвращается</strong> или проблема
+          проявляется сразу в нескольких точках, это уже признак серьёзной
+          проблемы в системе, и лучше сразу вызвать специалиста.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Когда нужно вызывать аварийного сантехника 24/7?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Рекомендуем вызывать <strong>аварийного сантехника 24/7</strong>,
+          если:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>вода в унитазе поднимается и не уходит даже спустя время;</li>
+          <li>засор влияет сразу на несколько помещений (кухня + ванная);</li>
+          <li>канализация поднимается в подвале или по полу в трапах;</li>
+          <li>слышны характерные звуки и чувствуется сильный запах канализации.</li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          В Таллине и Харьюмаа мы обычно приезжаем в течение{' '}
+          <strong>30–60 минут</strong>. Выезд стоит 0€ – вы платите только за
+          выполненную работу согласно{' '}
+          <a href="/hinnakiri" class="text-emergency-red hover:underline">
+            прайс-листу
+          </a>
+          .
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Как мы профессионально устраняем засоры?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Аварийная помощь по канализации – это гораздо больше, чем “потыкав
+          тросом”. Мы используем современное оборудование, которое бережёт
+          трубы и даёт долговременный результат:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Машины Rothenberger 16/22 мм,</strong> с помощью которых мы
+            удаляем сложные засоры глубоко в системе.
+          </li>
+          <li>
+            <strong>Гидродинамическая промывка,</strong> которая очищает жир,
+            отложения и песок в канализационных трубах.
+          </li>
+          <li>
+            <strong>Видеообследование,</strong> позволяющее увидеть, где труба
+            просела, треснула или завалилась.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Такой подход помогает избежать повторных засоров и даёт объективную
+          картину состояния канализационной системы.
+        </p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Профилактика: как избежать засоров в будущем?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Не выбрасывайте во внешний туалет влажные салфетки и гигиену.</li>
+          <li>Не сливайте жир и масло в кухонную мойку – используйте ёмкость.</li>
+          <li>
+            Периодически заказывайте профессиональную промывку, особенно в
+            кафе и ресторанах.
+          </li>
+          <li>
+            Если вы купили старый дом или квартиру, сделайте{' '}
+            <strong>видеообследование</strong>, чтобы исключить скрытые
+            проблемы.
+          </li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна срочная помощь при засоре канализации в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – реагируем за 30–60 минут и подберём лучшее решение
+          именно для вашей ситуации.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Позвонить в аварийную службу сантехника"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+  <!-- Language switcher scripts -->
+</BaseLayout>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Канализация' : 'Kanalisatsioon',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/kanalizacija'
+          : 'https://toruabii.ee/blog/kategoria/kanalisatsioon',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Засор канализации - что делать?'
+          : 'Kanalisatsiooni ummistus - mida teha?',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kanalisatsiooni-ummistus-mida-teha' : 'https://toruabii.ee/blog/kanalisatsiooni-ummistus-mida-teha',
+      },
+    ],
+  })}
+/>

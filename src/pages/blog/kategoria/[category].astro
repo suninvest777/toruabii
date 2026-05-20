@@ -1,0 +1,348 @@
+---
+export const prerender = true;
+
+export function getStaticPaths() {
+  return [
+    { params: { category: 'kuttesusteem' } },
+    { params: { category: 'otoplenije' } },
+  ];
+}
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { blogCategoryPath, ruPath } from '../../../utils/i18n-paths';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const { category } = Astro.params;
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+// All blog posts with categories
+const blogPosts = [
+  {
+    slug: 'kuttesusteemi-hooldus-radiaatorite-tyhjendamine',
+    title: 'Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas: kuidas ja millal?',
+    titleRu: 'Обслуживание системы отопления и слив воды с радиаторов в Таллине: как и когда?',
+    description:
+      'Praktiline juhend radiaatorite tühjendamise kohta: miks see on oluline, kui tihti seda teha, kuidas õigesti vett radiaatoritest välja lasta ja millal kutsuda professionaalne küttesüsteemi toruabi.',
+    descriptionRu:
+      'Практическое руководство по сливу воды с радиаторов: зачем это нужно, как часто делать, как правильно слить воду и когда вызывать профессионального сантехника по отоплению.',
+    date: '2026-03-06',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/otoplenije-batarei-liking.webp',
+    imageAlt: 'Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas – professionaalne torumees töötab radiaatoritega',
+    imageRu: '/photos/otoplenije-batarei-liking.webp',
+    imageAltRu: 'Обслуживание системы отопления и слив воды с радиаторов в Таллине – профессиональный сантехник работает с радиаторами',
+  },
+  {
+    slug: 'kanalisatsiooni-ummistus-mida-teha',
+    title: 'Kanalisatsiooni ummistus Tallinnas: mida teha enne ja pärast meistri saabumist',
+    titleRu: 'Засор канализации в Таллине: что делать до и после приезда мастера',
+    description:
+      'Praktiline juhend, mida teha kanalisatsiooni ummistuse korral Tallinnas ja Harjumaal: esmaabi, mida kindlasti mitte teha ja millal kutsuda avarii toruabi.',
+    descriptionRu:
+      'Практическое руководство, что делать при серьёзном засоре канализации в Таллине и Харьюмаа: первая помощь, чего нельзя делать и когда нужно вызывать аварийного сантехника 24/7.',
+    date: '2026-02-10',
+    category: 'kanalisatsioon',
+    categoryRu: 'kanalizacija',
+    image: '/photos/blog/zasor-kanalizacii-blog-est.webp',
+    imageAlt: 'Kanalisatsiooni ummistus Tallinnas – avarii torumees tööl',
+    imageRu: '/photos/blog/zasor-kanalizacii-blog-rus.webp',
+    imageAltRu: 'Засор канализации в Таллине – аварийный сантехник за работой',
+  },
+  {
+    slug: 'boileri-hooldus-ja-loputus',
+    title: 'Boileri hooldus ja läbipesu: kuidas pikendada soojaveeboileri eluiga',
+    titleRu: 'Обслуживание и промывка бойлера: почему это важно в Таллине и Харьюмаа?',
+    description:
+      'Selgitus, miks on oluline regulaarselt hooldada ja loputada boilerit, kui tihti seda teha ning millised on levinumad vead, mida Tallinnas ja Harjumaal nähakse.',
+    descriptionRu:
+      'Объясняем, почему важно регулярно обслуживать и промывать бойлер, как часто это делать и какие типичные ошибки встречаются у клиентов в Таллине и Харьюмаа.',
+    date: '2026-02-10',
+    category: 'boiler',
+    categoryRu: 'boiler',
+    image: '/photos/blog/procistka-boilera-est.webp',
+    imageAlt: 'Boileri hooldus ja läbipesu Tallinnas – sanitaartehnik tööl',
+    imageRu: '/photos/blog/procistka-boilera-rus.webp',
+    imageAltRu: 'Обслуживание и промывка бойлера в Таллине – мастер за работой',
+  },
+];
+
+// Categories configuration
+const categories = {
+  kuttesusteem: {
+    name: 'Küttesüsteem',
+    nameRu: 'Отопление',
+    slug: 'kuttesusteem',
+    slugRu: 'otoplenije',
+    description: 'Artiklid küttesüsteemi hoolduse, remondi ja radiaatorite kohta',
+    descriptionRu: 'Статьи об обслуживании, ремонте систем отопления и радиаторов',
+  },
+  otoplenije: {
+    name: 'Küttesüsteem',
+    nameRu: 'Отопление',
+    slug: 'kuttesusteem',
+    slugRu: 'otoplenije',
+    description: 'Artiklid küttesüsteemi hoolduse, remondi ja radiaatorite kohta',
+    descriptionRu: 'Статьи об обслуживании, ремонте систем отопления и радиаторов',
+  },
+  kanalisatsioon: {
+    name: 'Kanalisatsioon',
+    nameRu: 'Канализация',
+    slug: 'kanalisatsioon',
+    slugRu: 'kanalizacija',
+    description: 'Artiklid kanalisatsiooni ummistuste ja remondi kohta',
+    descriptionRu: 'Статьи о засорах и ремонте канализации',
+  },
+  kanalizacija: {
+    name: 'Kanalisatsioon',
+    nameRu: 'Канализация',
+    slug: 'kanalisatsioon',
+    slugRu: 'kanalizacija',
+    description: 'Artiklid kanalisatsiooni ummistuste ja remondi kohta',
+    descriptionRu: 'Статьи о засорах и ремонте канализации',
+  },
+  boiler: {
+    name: 'Boiler',
+    nameRu: 'Бойлер',
+    slug: 'boiler',
+    slugRu: 'boiler',
+    description: 'Artiklid boileri hoolduse ja läbipese kohta',
+    descriptionRu: 'Статьи об обслуживании и промывке бойлеров',
+  },
+};
+
+// Find category by slug
+const currentCategory = categories[category || ''] || categories.kuttesusteem;
+
+// Filter posts by category
+const categoryPosts = blogPosts.filter((post) => {
+  if (currentLang === 'ru') {
+    return post.categoryRu === category || post.category === category;
+  }
+  return post.category === category || post.categoryRu === category;
+});
+
+const pageTitleEt = `${currentCategory.name} – artiklid küttesüsteemi, kanalisatsiooni ja boileri kohta | toruabii.ee`;
+const pageDescEt = currentCategory.description;
+const pageTitleRu = `${currentCategory.nameRu} – статьи об отоплении, канализации и бойлерах | toruabii.ee`;
+const pageDescRu = currentCategory.descriptionRu;
+
+const pageTitle = currentLang === 'ru' ? pageTitleRu : pageTitleEt;
+const pageDescription = currentLang === 'ru' ? pageDescRu : pageDescEt;
+
+const siteOrigin = 'https://toruabii.ee';
+const categoryPath = blogCategoryPath(category || 'kuttesusteem', currentLang);
+const canonicalUrl =
+  currentLang === 'ru' ? `${siteOrigin}${ruPath(categoryPath)}` : `${siteOrigin}${categoryPath}`;
+---
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+>
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/" class="hover:text-white">Avaleht</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/blog" class="hover:text-white">Blogi</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">{currentCategory.name}</li>
+        </ol>
+      </nav>
+      <a
+        href="/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Tagasi blogisse
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        {currentCategory.name}: kasulikud nõuanded ja teave
+      </h1>
+      <p class="text-gray-200 max-w-2xl">{currentCategory.description}</p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/ru" class="hover:text-white">Главная</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/ru/blog" class="hover:text-white">Блог</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">{currentCategory.nameRu}</li>
+        </ol>
+      </nav>
+      <a
+        href="/ru/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Назад в блог
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        {currentCategory.nameRu}: полезные советы, обзоры и информация для выбора
+      </h1>
+      <p class="text-gray-200 max-w-2xl">{currentCategory.descriptionRu}</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <!-- Estonian list -->
+    <div class="max-w-5xl mx-auto space-y-8 blog-et">
+      {categoryPosts.length > 0 ? (
+        categoryPosts.map((post) => (
+          <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img
+              src={post.image}
+              alt={post.imageAlt}
+              class="w-full h-56 md:h-64 object-cover"
+              loading="lazy"
+              width="800"
+              height="450"
+            />
+            <div class="p-6 md:p-8">
+              <header class="mb-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+                  <a
+                    href={`/blog/${post.slug}`}
+                    class="hover:text-emergency-red transition-colors"
+                  >
+                    {post.title}
+                  </a>
+                </h2>
+                <p class="text-sm text-gray-500">
+                  Avaldatud:{' '}
+                  {new Date(post.date).toLocaleDateString('et-EE', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+              </header>
+              <p class="text-gray-700 mb-4">{post.description}</p>
+              <a
+                href={`/blog/${post.slug}`}
+                class="inline-flex items-center text-emergency-red font-semibold hover:underline"
+              >
+                Loe edasi
+                <svg
+                  class="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+          <p class="text-gray-700 text-lg">
+            Selles kategoorias pole veel artikleid.
+          </p>
+          <a
+            href="/blog"
+            class="inline-block mt-4 text-emergency-red hover:underline font-semibold"
+          >
+            ← Tagasi blogisse
+          </a>
+        </div>
+      )}
+    </div>
+
+    <!-- Russian list -->
+    <div class="max-w-5xl mx-auto space-y-8 blog-ru">
+      {categoryPosts.length > 0 ? (
+        categoryPosts.map((post) => (
+          <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img
+              src={post.imageRu}
+              alt={post.imageAltRu}
+              class="w-full h-56 md:h-64 object-cover"
+              loading="lazy"
+              width="800"
+              height="450"
+            />
+            <div class="p-6 md:p-8">
+              <header class="mb-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+                  <a
+                    href={ruPath(`/blog/${post.slug}`)}
+                    class="hover:text-emergency-red transition-colors"
+                  >
+                    {post.titleRu}
+                  </a>
+                </h2>
+                <p class="text-sm text-gray-500">
+                  Опубликовано:{' '}
+                  {new Date(post.date).toLocaleDateString('ru-RU', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+              </header>
+              <p class="text-gray-700 mb-4">{post.descriptionRu}</p>
+              <a
+                href={ruPath(`/blog/${post.slug}`)}
+                class="inline-flex items-center text-emergency-red font-semibold hover:underline"
+              >
+                Читать далее
+                <svg
+                  class="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      ) : (
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+          <p class="text-gray-700 text-lg">
+            В этой категории пока нет статей.
+          </p>
+          <a
+            href="/ru/blog"
+            class="inline-block mt-4 text-emergency-red hover:underline font-semibold"
+          >
+            ← Назад в блог
+          </a>
+        </div>
+      )}
+    </div>
+  </main>
+</BaseLayout>
+

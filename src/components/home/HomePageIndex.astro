@@ -1,0 +1,635 @@
+---
+import CallbackForm from '../CallbackForm.astro';
+import Gallery from '../Gallery.astro';
+import CallStripCta from '../CallStripCta.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import HomeToruabiIntro from './HomeToruabiIntro.astro';
+import StatsBar from './StatsBar.astro';
+import ServicesGrid from './ServicesGrid.astro';
+import AboutSection from './AboutSection.astro';
+import PartnersCarousel from './PartnersCarousel.astro';
+import ContactSteps from './ContactSteps.astro';
+import HomeFooter from './HomeFooter.astro';
+import { SERVICE_IMAGE_SCHEMA_ITEMS } from '../../data/service-icons';
+import { ruPath } from '../../utils/i18n-paths';
+
+interface Props {
+  lang: 'et' | 'ru';
+}
+
+const { lang } = Astro.props;
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+const siteUrl = 'https://toruabii.ee';
+const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
+
+const faqJsonLd =
+  lang === 'ru'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${siteUrl}/ru#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'Насколько быстро может приехать торуаби?', acceptedAnswer: { '@type': 'Answer', text: 'Реагируем на заявки по торуаби и авариям за 30–60 минут в Таллине и Харьюмаа. Выезд для торуаби — бесплатно в пределах Таллина (за городом — по договорённости с диспетчером). Для плановых работ согласуем время.' } },
+          { '@type': 'Question', name: 'Какие у вас цены на торуаби?', acceptedAnswer: { '@type': 'Answer', text: 'Цены на торуаби от 25 € за час (в зависимости от услуги). Выезд по Таллину — 0 €. Точная стоимость зависит от объёма работ. Полный прайс на сайте.' } },
+          { '@type': 'Question', name: 'Есть ли гарантия?', acceptedAnswer: { '@type': 'Answer', text: 'Да, на все работы — 2 года гарантии. Если проблема повторится, приедем и устраним бесплатно. Это касается аварийного торуаби, канализации и всех сантехработ.' } },
+          { '@type': 'Question', name: 'Какие районы вы обслуживаете?', acceptedAnswer: { '@type': 'Answer', text: 'Работаем в Таллине и по всему Харьюмаа: Ласнамяэ, Мустамяэ, Кесклинн, Пирита, Виймси, Маарду, Кейла, Сауэ и другие. Канализация и бойлеры во всех этих зонах.' } },
+          { '@type': 'Question', name: 'Работаете ли вы круглосуточно?', acceptedAnswer: { '@type': 'Answer', text: 'Да, торуаби доступен 24/7 для аварийных вызовов. Для плановых работ обычно с 8:00 до 20:00. То же касается канализации и бойлера.' } },
+          { '@type': 'Question', name: 'Какие способы оплаты принимаете?', acceptedAnswer: { '@type': 'Answer', text: 'Принимаем наличные, банковские карты и переводы. Оплата безопасная, мастер всегда оформит документ.' } },
+          { '@type': 'Question', name: 'Когда звонить в аварийный торуаби?', acceptedAnswer: { '@type': 'Answer', text: 'Звоните сразу при протечках, засорах, проблемах с бойлером или других срочных сантехнических ситуациях. Аварийный торуаби 24/7, выезд за 30–60 минут.' } },
+        ],
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${siteUrl}/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'Kui kiiresti saab toruabi kohale jõuda?', acceptedAnswer: { '@type': 'Answer', text: 'Reageerime toruabi, ummistuste likvideerimise ja avariikõnedele 30–60 minutiga Tallinnas ja Harjumaal. Väljasõit toruabi jaoks on tasuta Tallinna piires (väljaspool kokkuleppel dispetšeriga). Planeeritud torutööde puhul kokkulepime sobiva aja.' } },
+          { '@type': 'Question', name: 'Millised on teie toruabi hinnad?', acceptedAnswer: { '@type': 'Answer', text: 'Meie toruabi hinnad algavad 25 € tunnist (sõltuvalt teenusest). Toruabi väljasõit on tasuta Tallinna piires. Täpsed toruabi hinnad sõltuvad töö ulatusest. Vaata täielikku toruabi hinnakirja siit.' } },
+          { '@type': 'Question', name: 'Kas teil on garantii?', acceptedAnswer: { '@type': 'Answer', text: 'Jah, pakume 2 aastat garantiid kõigile oma töödele. Kui probleem tekib, tuleme tasuta parandama. See kehtib nii avarii toruabi, kanalisatsiooni toruabi kui ka kõigi sanitaartehniliste tööde kohta.' } },
+          { '@type': 'Question', name: 'Millised piirkonnad teid teenindavad?', acceptedAnswer: { '@type': 'Answer', text: 'Pakume toruabi Tallinnas ja kogu Harjumaal, sealhulgas Lasnamäel, Mustamäel, Kesklinnas, Piritas, Viimsis, Maardus, Keilas, Sauel ja teistes piirkondades. Meie torumees pakub nii kanalisatsiooni toruabi kui ka boileri toruabi teenuseid kõigis nendes piirkondades.' } },
+          { '@type': 'Question', name: 'Kas töötate ööpäevaringselt?', acceptedAnswer: { '@type': 'Answer', text: 'Jah, meie toruabi on kättesaadav 24/7 avariikõnedele. Planeeritud torutööde jaoks töötame tavapäraselt kella 8–20 vahel. See hõlmab nii avarii toruabi, kanalisatsiooni toruabi kui ka boileri toruabi teenuseid.' } },
+          { '@type': 'Question', name: 'Millised makseviisid on aktsepteeritud?', acceptedAnswer: { '@type': 'Answer', text: 'Võtame vastu sularaha, pangakaardid ja pangaülekandeid. Kõik makseviisid on turvalised ja meie torumees annab alati arve.' } },
+          { '@type': 'Question', name: 'Millal peaksin helistama avarii toruabi?', acceptedAnswer: { '@type': 'Answer', text: 'Helista kohe, kui on lekkeid, ummistusi, boileri probleeme või muid sanitaartehnilisi häireid, mis vajavad kiiret lahendust. Meie avarii toruabi on kättesaadav 24/7 ja reageerime 30–60 minutiga.' } },
+        ],
+      };
+
+const websiteJson = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: lang === 'ru' ? 'toruabii.ee — торуаби и аварийная сантехника' : 'toruabii.ee — toruabi ja ummistuste likvideerimine',
+  alternateName: lang === 'ru' ? 'Торуаби, устранение засоров' : 'Toruabi, ummistuste likvideerimine',
+  description:
+    lang === 'ru'
+      ? 'Торуаби и сантехник tallinn 24/7: аварийный торуаби, прочистка канализации, бойлер в Таллине и Харьюмаа.'
+      : 'Toruabi ja avarii toruabi 24/7: toruabi tallinn, toruabi harjumaa, kanalisatsiooni ummistuste likvideerimine, lekked, boiler.',
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${siteUrl}#organization`,
+    name: 'toruabii.ee',
+    url: siteUrl,
+    logo: { '@type': 'ImageObject', url: `${siteUrl}/photos/toruabii.webp`, width: 1226, height: 257 },
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: { '@type': 'EntryPoint', urlTemplate: `${siteUrl}/blog?q={search_term_string}` },
+    'query-input': 'required name=search_term_string',
+  },
+  inLanguage: ['et', 'ru'],
+};
+---
+
+<div class="home-theme-page">
+  <Header lang={lang} />
+  <Hero />
+  <StatsBar />
+  <HomeToruabiIntro lang={lang} />
+  <ServicesGrid lang={lang} />
+  <AboutSection />
+  <PartnersCarousel />
+
+  <section class="py-10 px-4 home-surface-alt border-y home-border">
+    <div class="max-w-3xl mx-auto">
+      <CallStripCta variant="home" />
+    </div>
+  </section>
+
+  <!-- Gallery of Completed Works -->
+  <section class="py-16 px-4 home-surface">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-trust-blue text-center mb-4">
+        <span class="home-ssr-et">Tehtud tööd</span><span class="home-ssr-ru">Выполненные работы</span>
+      </h2>
+      <h3 class="text-xl font-bold text-trust-blue text-center mb-3">
+        <span class="home-ssr-et">Fotod toruabi ja sanitaartehnilistest töödest</span><span class="home-ssr-ru">Фото работ по сантехнике и торуаби</span>
+      </h3>
+      <p class="text-center home-text-muted mb-4 max-w-2xl mx-auto">
+        <span class="home-ssr-et">Vaadake meie hiljuti tehtud töid Tallinnas ja Harjumaal. Professionaalne kvaliteet ja täpne täitmine. Kõik tööd on tehtud meie kogenud torumeeste poolt, kes tegelevad nii avarii toruabi, kanalisatsiooni toruabi kui ka sanitaartehniliste töödega.</span><span class="home-ssr-ru">Посмотрите наши недавно выполненные работы в Таллинне и Харьюмаа. Профессиональное качество и точное выполнение. Все работы выполняют наши опытные мастера: аварийный торуаби, канализация и сантехника.</span>
+      </p>
+      <p class="text-center home-text-muted mb-12 max-w-2xl mx-auto">
+        <span class="home-ssr-et">Meie galerii näitab erinevaid toruabi projekte: kanalisatsiooni ummistuste likvideerimist, boileri paigaldust ja remonti, küttesüsteemide hooldust ning sanitaarseadmete paigaldust. Iga töö on tehtud professionaalselt ja vastavalt kõrgeimale kvaliteedile.</span><span class="home-ssr-ru">В галерее — разные проекты: устранение засоров канализации, установка и ремонт бойлеров, обслуживание отопления и монтаж сантехники. Каждая работа выполнена профессионально и с высоким качеством.</span>
+      </p>
+
+      <a
+        href={H('/toruabi-kanalisatsiooni-survepesu')}
+        class="group block max-w-5xl mx-auto mb-10 rounded-xl overflow-hidden shadow-xl border-2 border-trust-blue/25 hover:border-trust-blue/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-trust-blue focus-visible:ring-offset-2 transition-colors no-underline text-inherit"
+      >
+        <div class="grid md:grid-cols-2 gap-0 home-surface-elevated">
+          <div class="relative min-h-[220px] md:min-h-[280px]">
+            <img
+              src="/photos/maintoruabii.webp"
+              alt="Kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve toruabi"
+              title="Kanalisatsiooni survepesu"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
+          </div>
+          <div class="p-6 md:p-8 flex flex-col justify-center bg-surface-soft">
+            <p class="text-sm font-semibold uppercase tracking-wide text-trust-blue mb-2">
+              <span class="home-ssr-et">Toruabi teenus</span><span class="home-ssr-ru">Услуга торуаби</span>
+            </p>
+            <h3 class="text-2xl md:text-3xl font-bold text-trust-blue mb-3">
+              <span class="home-ssr-et">Kanalisatsiooni survepesu</span><span class="home-ssr-ru">Гидродинамическая промывка канализации</span>
+            </h3>
+            <p class="home-text-muted mb-4">
+              <span class="home-ssr-et">Hüdrodünaamiline puhastus trassidele ja kaevudele – professionaalne toruabi seadmetega. Vaata teenuse kirjeldust, hindu ja KKK.</span><span class="home-ssr-ru">Промывка линий и колодцев под давлением профессиональным оборудованием торуаби. Описание услуги, цены и ответы на вопросы — на отдельной странице.</span>
+            </p>
+            <span class="inline-flex items-center gap-2 font-semibold text-trust-blue group-hover:gap-3 transition-all">
+              <span class="home-ssr-et">Vaata lähemalt</span><span class="home-ssr-ru">Подробнее</span>
+              <span aria-hidden="true">→</span>
+            </span>
+          </div>
+        </div>
+      </a>
+      
+      <div class="gallery-wrapper relative px-4 md:px-8 lg:px-12">
+        <Gallery />
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing & Callback Section -->
+  <section id="hinnad" class="py-16 px-4 home-surface">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-trust-blue text-center mb-4">
+          <span class="home-ssr-et">Toruabi hinnad ja tagasiside</span><span class="home-ssr-ru">Цены и обратная связь</span>
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue text-center mb-3">
+          <span class="home-ssr-et">Hinnad, helistamine ja tagasiside</span><span class="home-ssr-ru">Цены, звонок и заявка</span>
+        </h3>
+        <p class="text-center home-text-muted mb-6 max-w-2xl mx-auto">
+          <span class="home-ssr-et">Meie toruabi hinnad on konkurentsivõimelised ja läbipaistvad. Väljasõit on tasuta Tallinna piires, ja meie torumees annab alati selge hinnangu enne töö algust. Vaata <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">hinnakirja</a>, helista +372 5181 112 või jätke tagasiside — võtame ühendust.</span><span class="home-ssr-ru">Наши цены конкурентные и прозрачные. Выезд по Таллину — 0 €. Смотрите <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">прайс</a>, звоните +372 5181 112 или оставьте заявку — перезвоним.</span>
+        </p>
+      </div>
+      <CallbackForm variant="home" />
+    </div>
+  </section>
+
+  <!-- How We Work & Guarantees (E-E-A-T) -->
+  <section class="py-16 px-4 home-surface">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- How We Work -->
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-trust-blue mb-6">
+          <span class="home-ssr-et">Kuidas töötab toruabi ja avarii toruabi 24/7?</span><span class="home-ssr-ru">Как работает торуаби и аварийный сантехник 24/7?</span>
+        </h2>
+        <ol class="space-y-4 home-text-muted">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">
+              <span class="home-ssr-et">1. Helista kohe või jäta tagasiside</span><span class="home-ssr-ru">1. Позвоните или оставьте заявку</span>
+            </h3>
+            <p class="home-text-muted">
+              <span class="home-ssr-et">Vastame kõnedele ja päringutele ööpäevaringselt. Kirjelda lühidalt probleemi (leke, ummistus, katki toru, boiler jms), et saaksime kohe hinnata olukorra tõsidust. Toruabi meeskond on alati valmis kiireks reageerimiseks. Meie torumees annab kiire hinnangu nii kanalisatsiooni toruabi kui ka boileri toruabi küsimustes.</span><span class="home-ssr-ru">Отвечаем на звонки и заявки круглосуточно. Кратко опишите проблему (протечка, засор, лопнувшая труба, бойлер и т.п.), чтобы мы сразу оценили срочность. Бригада готова к быстрому выезду; мастер оперативно оценит ситуацию по канализации и бойлеру.</span>
+            </p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">
+              <span class="home-ssr-et">2. Meister teel 30–60 minutiga</span><span class="home-ssr-ru">2. Мастер в пути за 30–60 минут</span>
+            </h3>
+            <p class="home-text-muted">
+              <span class="home-ssr-et">Avarii toruabi meeskond liigub välja kohe pärast kõnet. Enamiku Tallinna ja Harjumaa piirkondadesse jõuame 30–60 minuti jooksul, sõltuvalt liiklusest ja asukohast. Toruabi meister on teel kohe pärast avarii kõnet. Meie professionaalne torumees tegeleb nii kanalisatsiooni toruabi kui ka sanitaartehniliste töödega.</span><span class="home-ssr-ru">Аварийная бригада выезжает сразу после звонка. До большинства районов Таллина и Харьюмаа добираемся за 30–60 минут в зависимости от дороги. Мастер едет сразу после заявки и выполняет работы по канализации и сантехнике.</span>
+            </p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">
+              <span class="home-ssr-et">3. Kohapealne diagnostika ja läbipaistev hind</span><span class="home-ssr-ru">3. Диагностика на месте и прозрачная цена</span>
+            </h3>
+            <p class="home-text-muted">
+              <span class="home-ssr-et">Kontrollime lekke, ummistuse või muu probleemi täpse asukoha ja põhjuse, selgitame enne töö algust lahenduse variandid ja orienteeruva hinna ilma peidetud lisatasudeta. Toruabi meister annab täpse hinnangu enne töö algust. See kehtib nii kanalisatsiooni toruabi kui ka boileri toruabi tööde kohta.</span><span class="home-ssr-ru">На месте выявляем причину и место протечки, засора или другой неисправности, до начала работ объясняем варианты решения и ориентировочную стоимость без скрытых доплат. Это относится и к канализации, и к бойлеру.</span>
+            </p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">
+              <span class="home-ssr-et">4. Professionaalne remont ja koristus</span><span class="home-ssr-ru">4. Профессиональный ремонт и уборка</span>
+            </h3>
+            <p class="home-text-muted">
+              <span class="home-ssr-et">Kasutame kaasaegseid seadmeid (video-uuring, survepesu, spetsiaalsed rothenbergeri masinad), et toruabi tööd teha kiiresti ja kvaliteetselt. Peale töö lõppu jätame tööala puhtaks. Kõik toruabi tööd on kaetud 2-aastase garantiiga. See hõlmab nii avarii toruabi, kanalisatsiooni toruabi kui ka kõiki sanitaartehnilisi töid.</span><span class="home-ssr-ru">Используем современное оборудование (видеообследование, гидродинамика, машины Rothenberger) для быстрого и качественного ремонта. После работ убираем рабочую зону. На работы действует гарантия 2 года — аварийный выезд, канализация и вся сантехника.</span>
+            </p>
+          </li>
+        </ol>
+        <div class="mt-8">
+          <CallStripCta variant="home" size="compact" />
+        </div>
+      </div>
+
+      <!-- Experience, Guarantees & Trust -->
+      <div class="bg-white rounded-xl border border-gray-200 shadow-md p-6 md:p-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          <span class="home-ssr-et">Kogemus, garantii ja usaldus</span><span class="home-ssr-ru">Опыт, гарантия и доверие</span>
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mb-3 mt-4"><span class="home-ssr-et">10+ aastat toruabi kogemust</span><span class="home-ssr-ru">Более 10 лет опыта в торуаби</span></h3>
+        <p class="home-text-muted mb-4">
+          <span class="home-ssr-et">Meie meistritel on üle 10 aasta kogemust nii Eestis kui ka Skandinaavias. Oleme harjunud töötama kõrgete nõuete järgi, kasutades professionaalseid tööriistu ja lahendusi keerukate torustiku- ja küttesüsteemide probleemide lahendamiseks. Meie torumees on spetsialiseerunud nii kanalisatsiooni toruabi kui ka boileri toruabi teenustele.</span><span class="home-ssr-ru">Наши мастера имеют более 10 лет опыта в Эстонии и Скандинавии. Работаем по высоким стандартам с профессиональным инструментом и решениями для сложных задач с трубопроводом и отоплением. Специализируемся на канализации и бойлерах.</span>
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mb-3 mt-4"><span class="home-ssr-et">2-aastane garantii kõigile toruabi töödele</span><span class="home-ssr-ru">2 года гарантии на все работы по торуаби</span></h3>
+        <p class="home-text-muted mb-4">
+          <span class="home-ssr-et">Kõigile töödele anname 2-aastase garantii. Kui probleem kordub garantiiperioodi jooksul, tuleme kohale ja lahendame selle ilma lisatasuta.</span><span class="home-ssr-ru">На все работы — гарантия 2 года. Если проблема повторится в гарантийный срок, приедем и устраним без дополнительной оплаты.</span>
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mb-3 mt-4"><span class="home-ssr-et">Euroopa standardid toruabi töödel</span><span class="home-ssr-ru">Европейские стандарты сантехработ</span></h3>
+        <p class="home-text-muted mb-4">
+          <span class="home-ssr-et">Järgime Euroopa Liidu ja Eesti nõudeid vee-, kanalisatsiooni- ja küttesüsteemide töödel. Vajadusel teeme koostööd haldusfirmade ja korteriühistutega ning vormistame töö üleandmise aktid.</span><span class="home-ssr-ru">Соблюдаем требования ЕС и Эстонии к работам с водопроводом, канализацией и отоплением. При необходимости работаем с УК и ТСЖ, оформляем акты.</span>
+        </p>
+        <ul class="mt-4 space-y-2 home-text-muted">
+          <li><span class="home-ssr-et">• Avarii väljakutsed 24/7 Tallinnas ja terves Harjumaal</span><span class="home-ssr-ru">• Аварийные выезды 24/7 по Таллину и всему Харьюмаа</span></li>
+          <li><span class="home-ssr-et">• Tasuta väljasõit ja orienteeruv hinnang telefoni teel</span><span class="home-ssr-ru">• Бесплатный выезд и ориентировочная оценка по телефону</span></li>
+          <li><span class="home-ssr-et">• Kindel ja selge hinnastamine vastavalt hinnakirjale</span><span class="home-ssr-ru">• Понятное ценообразование по прайс-листу</span></li>
+          <li><span class="home-ssr-et">• Töökindlustus – kaitse nii kliendile kui ka objektile</span><span class="home-ssr-ru">• Страхование работ — защита клиента и объекта</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Block -->
+  <section class="py-16 px-4 trust-gradient text-white">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8"><span class="home-ssr-et">Meistrid on teel</span><span class="home-ssr-ru">Мастера в пути</span></h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <div class="text-4xl font-bold mb-2">10+</div>
+          <p class="text-gray-300"><span class="home-ssr-et">Aastat kogemust</span><span class="home-ssr-ru">Лет опыта</span></p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold mb-2">5000+</div>
+          <p class="text-gray-300"><span class="home-ssr-et">Rahulolu klienti</span><span class="home-ssr-ru">Довольных клиентов</span></p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold mb-2">24/7</div>
+          <p class="text-gray-300"><span class="home-ssr-et">Kättesaadavus</span><span class="home-ssr-ru">Доступность</span></p>
+        </div>
+      </div>
+      
+      <div class="mt-12">
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-brand-blue border-2 border-brand-blue hover:bg-brand-blue-light font-bold py-4 px-8 rounded-lg text-xl transition-colors min-h-[56px] shadow-md"
+        >
+          <span class="home-ssr-et">HELISTA KOHE</span><span class="home-ssr-ru">ПОЗВОНИТЬ СЕЙЧАС</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas (SEO Footer) -->
+  <section id="piirkonnad" class="py-16 px-4 home-surface-alt">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-trust-blue text-center mb-12">
+        <span class="home-ssr-et">Teeninduspiirkonnad</span><span class="home-ssr-ru">Районы обслуживания</span>
+      </h2>
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center">
+        <!-- Tallinn -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Tallinn</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li><a href={H('/toruabi-lasnamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Lasnamäes</a></li>
+            <li><a href={H('/toruabi-mustamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Mustamäel</a></li>
+            <li><a href={H('/toruabi-kesklinn')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Kesklinnas</a></li>
+            <li><a href={H('/toruabi-pirita')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Piritas</a></li>
+            <li><a href={H('/toruabi-viimsi')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Viimsis</a></li>
+            <li>Nõmme</li>
+            <li>Haabersti</li>
+            <li>Kristiine</li>
+            <li>Põhja-Tallinn</li>
+          </ul>
+        </div>
+        
+        <!-- Viimsi -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Viimsi</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li><a href={H('/toruabi-viimsi')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Toruabi Viimsis</a></li>
+            <li>Viimsi vald</li>
+            <li>Haabneeme</li>
+            <li>Lubja</li>
+            <li>Pringi</li>
+          </ul>
+        </div>
+        
+        <!-- Maardu -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Maardu</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-maardu')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Maardus</span><span class="home-ssr-ru">Торуаби в Маарду</span>
+              </a>
+            </li>
+            <li>Maardu linn</li>
+            <li>Kallavere</li>
+            <li>Kostivere</li>
+          </ul>
+        </div>
+        
+        <!-- Keila -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Keila</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-keila')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Keilas</span><span class="home-ssr-ru">Торуаби в Кейла</span>
+              </a>
+            </li>
+            <li>Keila linn</li>
+            <li>Keila vald</li>
+            <li>Klooga</li>
+          </ul>
+        </div>
+        
+        <!-- Saue -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Saue</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-saue')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Sauel</span><span class="home-ssr-ru">Торуаби в Сауэ</span>
+              </a>
+            </li>
+            <li>Saue vald</li>
+            <li>Saue linn</li>
+            <li>Laagri</li>
+          </ul>
+        </div>
+        
+        <!-- Rae -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Rae</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-rae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Rae piirkonnas</span><span class="home-ssr-ru">Торуаби в Раэ</span>
+              </a>
+            </li>
+            <li>Rae vald</li>
+            <li>Jüri</li>
+            <li>Lagedi</li>
+            <li>Vaida</li>
+          </ul>
+        </div>
+        
+        <!-- Saku -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Saku</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-saku')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Sakus</span><span class="home-ssr-ru">Торуаби в Саку</span>
+              </a>
+            </li>
+            <li>Saku vald</li>
+            <li>Saku alevik</li>
+            <li>Kiisa</li>
+          </ul>
+        </div>
+        
+        <!-- Harku -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Harku</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-harku')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Harkus</span><span class="home-ssr-ru">Торуаби в Харку</span>
+              </a>
+            </li>
+            <li>Harku vald</li>
+            <li>Tabasalu</li>
+            <li>Vääna-Jõesuu</li>
+          </ul>
+        </div>
+        
+        <!-- Jõelähtme -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Jõelähtme</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-joelahtme')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Jõelähtme vallas</span><span class="home-ssr-ru">Торуаби в Йыелахтме</span>
+              </a>
+            </li>
+            <li>Jõelähtme vald</li>
+            <li>Kostivere</li>
+            <li>Loo</li>
+          </ul>
+        </div>
+        
+        <!-- Kiili -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Kiili</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-kiili')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Kiilis</span><span class="home-ssr-ru">Торуаби в Кили</span>
+              </a>
+            </li>
+            <li>Kiili vald</li>
+            <li>Kiili alevik</li>
+            <li>Luige</li>
+          </ul>
+        </div>
+        
+        <!-- Kose -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Kose</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-kose')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Kose vallas</span><span class="home-ssr-ru">Торуаби в Косе</span>
+              </a>
+            </li>
+            <li>Kose vald</li>
+            <li>Kose alevik</li>
+            <li>Kose-Uuemõisa</li>
+          </ul>
+        </div>
+        
+        <!-- Anija -->
+        <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:border-brand-blue/30 hover:shadow-md transition-shadow">
+          <h3 class="font-bold text-lg text-trust-blue mb-3">Anija</h3>
+          <ul class="text-sm home-text-muted space-y-1">
+            <li>
+              <a href={H('/toruabi-anija')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">
+                <span class="home-ssr-et">Toruabi Anija vallas</span><span class="home-ssr-ru">Торуаби в Анижа</span>
+              </a>
+            </li>
+            <li>Anija vald</li>
+            <li>Kehra</li>
+            <li>Aegviidu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 px-4 home-surface">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-bold text-trust-blue text-center mb-12">
+        <span class="home-ssr-et">Korduma kippuvad küsimused toruabi kohta</span><span class="home-ssr-ru">Частые вопросы о торуаби</span>
+      </h2>
+      
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Kui kiiresti saab toruabi kohale jõuda?</span><span class="home-ssr-ru">Насколько быстро может приехать торуаби?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Reageerime toruabi ja avariikõnedele 30–60 minutiga Tallinnas ja Harjumaal. Väljasõit toruabi jaoks on tasuta Tallinna piires (väljaspool kokkuleppel dispetšeriga). Planeeritud torutööde puhul kokkulepime sobiva aja.</span><span class="home-ssr-ru">Реагируем на заявки по торуаби и авариям за 30–60 минут в Таллине и Харьюмаа. Выезд для торуаби — бесплатно в пределах Таллина (за городом — по договорённости с диспетчером). Для плановых работ согласуем время.</span>
+          </p>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Millised on teie toruabi hinnad?</span><span class="home-ssr-ru">Какие у вас цены на торуаби?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Meie toruabi hinnad algavad 25 € tunnist (sõltuvalt teenusest). Toruabi väljasõit on tasuta Tallinna piires. Täpsed toruabi hinnad sõltuvad töö ulatusest. Vaata täielikku toruabi hinnakirja <a href={H('/hinnakiri')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">siit</a>.</span><span class="home-ssr-ru">Цены на торуаби от 25 € за час (в зависимости от услуги). Выезд по Таллину — 0 €. Точная стоимость зависит от объёма работ. Полный прайс — <a href={H('/hinnakiri')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">здесь</a>.</span>
+          </p>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Kas teil on garantii?</span><span class="home-ssr-ru">Есть ли гарантия?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Jah, pakume 2 aastat garantiid kõigile oma töödele. Kui probleem tekib, tuleme tasuta parandama. See kehtib nii avarii toruabi, kanalisatsiooni toruabi kui ka kõigi sanitaartehniliste tööde kohta.</span><span class="home-ssr-ru">Да, на все работы — 2 года гарантии. Если проблема повторится, приедем и устраним бесплатно. Это касается аварийного торуаби, канализации и всех сантехработ.</span>
+          </p>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Millised piirkonnad teid teenindavad?</span><span class="home-ssr-ru">Какие районы вы обслуживаете?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Pakume toruabi Tallinnas ja kogu Harjumaal, sealhulgas Lasnamäel, Mustamäel, Kesklinnas, Piritas, Viimsis, Maardus, Keilas, Sauel ja teistes piirkondades. Meie torumees pakub nii kanalisatsiooni toruabi kui ka boileri toruabi teenuseid kõigis nendes piirkondades.</span><span class="home-ssr-ru">Работаем в Таллине и по всему Харьюмаа: Ласнамяэ, Мустамяэ, Кесклинн, Пирита, Виймси, Маарду, Кейла, Сауэ и другие. Канализация и бойлеры во всех этих зонах.</span>
+          </p>
+          <p class="home-text-muted mt-3 text-sm">
+            <span class="home-ssr-et">
+              Vaata eraldi lehti:
+              <a href={H('/toruabi-lasnamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Lasnamäe</a>,
+              <a href={H('/toruabi-mustamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Mustamäe</a>,
+              <a href={H('/toruabi-kesklinn')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Kesklinn</a>,
+              <a href={H('/toruabi-pirita')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Pirita</a>,
+              <a href={H('/toruabi-viimsi')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Viimsi</a>.
+            </span>
+            <span class="home-ssr-ru">
+              Отдельные страницы:
+              <a href={H('/toruabi-lasnamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Ласнамяэ</a>,
+              <a href={H('/toruabi-mustamae')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Мустамяэ</a>,
+              <a href={H('/toruabi-kesklinn')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Кесклинн</a>,
+              <a href={H('/toruabi-pirita')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Пирита</a>,
+              <a href={H('/toruabi-viimsi')} class="text-brand-blue hover:text-brand-blue-dark hover:underline font-semibold">Виймси</a>.
+            </span>
+          </p>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Kas töötate ööpäevaringselt?</span><span class="home-ssr-ru">Работаете ли вы круглосуточно?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Jah, meie toruabi on kättesaadav 24/7 avariikõnedele. Planeeritud torutööde jaoks töötame tavapäraselt kella 8–20 vahel. See hõlmab nii avarii toruabi, kanalisatsiooni toruabi kui ka boileri toruabi teenuseid.</span><span class="home-ssr-ru">Да, торуаби доступен 24/7 для аварийных вызовов. Для плановых работ обычно с 8:00 до 20:00. То же касается канализации и бойлера.</span>
+          </p>
+        </details>
+
+        <!-- FAQ 6 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Millised makseviisid on aktsepteeritud?</span><span class="home-ssr-ru">Какие способы оплаты принимаете?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Võtame vastu sularaha, pangakaardid ja pangaülekandeid. Kõik makseviisid on turvalised ja meie torumees annab alati arve.</span><span class="home-ssr-ru">Принимаем наличные, банковские карты и переводы. Оплата безопасная, мастер всегда оформит документ.</span>
+          </p>
+        </details>
+
+        <!-- FAQ 7 -->
+        <details class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 cursor-pointer hover:shadow-md hover:border-brand-blue/25 transition-shadow">
+          <summary class="font-bold text-lg text-trust-blue mb-2 list-none">
+            <span class="flex items-center justify-between">
+              <span><span class="home-ssr-et">Millal peaksin helistama avarii toruabi?</span><span class="home-ssr-ru">Когда звонить в аварийный торуаби?</span></span>
+              <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </summary>
+          <p class="home-text-muted mt-4">
+            <span class="home-ssr-et">Helista kohe, kui on lekkeid, ummistusi, boileri probleeme või muid sanitaartehnilisi häireid, mis vajavad kiiret lahendust. Meie avarii toruabi on kättesaadav 24/7 ja reageerime 30–60 minutiga.</span><span class="home-ssr-ru">Звоните сразу при протечках, засорах, проблемах с бойлером или других срочных сантехнических ситуациях. Аварийный торуаби 24/7, выезд за 30–60 минут.</span>
+          </p>
+        </details>
+      </div>
+
+      <div class="mt-8 text-center">
+        <a href={H('/faq')} class="inline-block bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-3 px-6 rounded-lg transition-colors">
+          <span class="home-ssr-et">Vaata kõiki küsimusi →</span><span class="home-ssr-ru">Смотреть все вопросы →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <ContactSteps />
+  <HomeFooter lang={lang} />
+
+  <!-- Scripts -->
+  <script src="/scripts/mobile-menu.js" is:inline></script>
+  <script src="/scripts/time-display.js" is:inline></script>
+
+
+  <!-- WebSite Schema with SearchAction -->
+  <script type="application/ld+json" set:html={JSON.stringify(websiteJson)} />
+
+  <!-- FAQPage Schema for Homepage -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <!-- ImageObject Schema for Service Images -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": SERVICE_IMAGE_SCHEMA_ITEMS.map((item) => ({
+      "@type": "ImageObject",
+      "contentUrl": item.contentUrl,
+      "description": item.description,
+      "name": item.name,
+    })),
+  })} />
+</div>

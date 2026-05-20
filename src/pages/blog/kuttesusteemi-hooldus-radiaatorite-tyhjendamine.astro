@@ -1,0 +1,847 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas – kuidas ja millal? | toruabii.ee';
+const descEt =
+  'Praktiline juhend radiaatorite tühjendamise kohta: miks see on oluline, kui tihti seda teha, kuidas õigesti vett radiaatoritest välja lasta ja millal kutsuda professionaalne küttesüsteemi toruabi Tallinnas ja Harjumaal.';
+const titleRu =
+  'Обслуживание системы отопления и слив воды с радиаторов в Таллине | toruabii.ee';
+const descRu =
+  'Практическое руководство по сливу воды с радиаторов: зачем это нужно, как часто делать, как правильно слить воду и когда вызывать профессионального сантехника по отоплению в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+  />
+<!-- Estonian version -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/" class="hover:text-white">Avaleht</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/blog" class="hover:text-white">Blogi</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Küttesüsteemi hooldus ja radiaatorite tühjendamine
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Tagasi blogisse
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas: kuidas ja millal?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Õigeaegne radiaatorite tühjendamine ja hooldus pikendab küttesüsteemi eluiga,
+        parandab soojusülekannet ja vähendab energiakulusid. Selgitame, kuidas seda
+        õigesti teha ja millal kutsuda professionaalne küttesüsteemi toruabi.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud:{' '}
+        {new Date('2026-03-06').toLocaleDateString('et-EE', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li>
+            <a href="/ru" class="hover:text-white">Главная</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li>
+            <a href="/ru/blog" class="hover:text-white">Блог</a>
+          </li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">
+            Обслуживание системы отопления и слив воды с радиаторов
+          </li>
+        </ol>
+      </nav>
+      <a
+        href="/ru/blog"
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        ← Назад в блог
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Обслуживание системы отопления и слив воды с радиаторов в Таллине: как и когда?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Своевременный слив воды с радиаторов и обслуживание системы отопления продлевает
+        срок службы, улучшает теплоотдачу и снижает расходы на отопление. Рассказываем,
+        как это делать правильно и когда вызывать профессионального сантехника.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано:{' '}
+        {new Date('2026-03-06').toLocaleDateString('ru-RU', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas – professionaalne torumees töötab radiaatoritega"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Miks on oluline regulaarselt radiaatoreid tühjendada?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Radiaatorite tühjendamine ja küttesüsteemi hooldus on oluline mitmel põhjusel:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Õhu eemaldamine</strong> – aja jooksul koguneb radiaatoritesse õhku,
+            mis halvendab soojusülekannet ja võib põhjustada "plärisevaid" helisid.
+          </li>
+          <li>
+            <strong>Sette eemaldamine</strong> – vee ringlus viib kaasa setteid, mis
+            võivad radiaatorite sees koguneda ja vähendada nende efektiivsust.
+          </li>
+          <li>
+            <strong>Parandatud soojusülekanne</strong> – õigeaegne hooldus tagab, et
+            radiaatorid töötavad maksimaalse efektiivsusega.
+          </li>
+          <li>
+            <strong>Energiakulude vähendamine</strong> – korralikult hooldatud
+            küttesüsteem kulutab vähem energiat sama temperatuuri saavutamiseks.
+          </li>
+          <li>
+            <strong>Pikendatud eluiga</strong> – regulaarne hooldus vähendab korrosiooni
+            ja pikendab nii radiaatorite kui ka kogu küttesüsteemi eluiga.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Millal tuleks radiaatoreid tühjendada?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Radiaatorite tühjendamine peaks toimuma kindlatel aegadel:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Enne küttehooaja algust</strong> – soovitatav on teha hooldus enne,
+            kui küttesüsteem käivitatakse. See tagab, et küttehooaja alguses kõik töötab
+            korralikult.
+          </li>
+          <li>
+            <strong>Pärast küttehooaja lõppu</strong> – mõned spetsialistid soovitavad
+            tühjendada radiaatorid ka pärast küttehooaja lõppu, et eemaldada kogunenud
+            seted ja õhk.
+          </li>
+          <li>
+            <strong>Kui märkad probleeme</strong> – kui radiaatorid ei kuumene ühtlaselt,
+            teevad müra või üks osa radiaatorist on külmem kui teine, on aeg hooldust
+            teha.
+          </li>
+          <li>
+            <strong>Pärast remonti</strong> – kui oled teinud muudatusi küttesüsteemis
+            (näiteks paigaldanud uusi radiaatoreid või muutnud torustikku), tuleb
+            süsteem õigesti tühjendada ja täita.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Kui tihti tuleks radiaatoreid tühjendada?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Soovitused sõltuvad küttesüsteemi tüübist ja kasutamisest:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Kodused küttesüsteemid</strong> – vähemalt kord aastas, eelistatavalt
+            enne küttehooaja algust.
+          </li>
+          <li>
+            <strong>Suuremad süsteemid</strong> – korterelamud või suuremad hooned võivad
+            vajada sagedasemat hooldust, eriti kui vesi on kõva või süsteemis on palju
+            radiaatoreid.
+          </li>
+          <li>
+            <strong>Vanad küttesüsteemid</strong> – kui süsteem on vana või on ajaloo
+            jooksul olnud probleeme, võib olla vaja hooldust kaks korda aastas.
+          </li>
+          <li>
+            <strong>Pärast uue süsteemi paigaldamist</strong> – esimesel aastal võib olla
+            vaja tühjendada mitu korda, kuni süsteem "istub" ja õhk eemaldatakse.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Üldiselt: kui radiaatorid töötavad korralikult ja ühtlaselt, piisab ühest
+          hooldusest aastas. Kui märkad probleeme, ärge oodake – kutsuge professionaalne
+          küttesüsteemi toruabi.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Kuidas õigesti radiaatoreid tühjendada?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          <strong>Oluline:</strong> Kui teil puudub kogemus, on ohutum kutsuda
+          professionaalne torumees. Siiski on kasulik teada põhiprotsessi:
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">
+          Sammud radiaatorite tühjendamiseks:
+        </h3>
+        <ol class="list-decimal list-inside text-gray-700 space-y-2 ml-4">
+          <li>
+            <strong>Lülitage küttesüsteem välja</strong> – oodake, kuni radiaatorid
+            jahtuvad. See võtab tavaliselt mitu tundi.
+          </li>
+          <li>
+            <strong>Leidke õhuklapp</strong> – see on väike klapp radiaatori ülaosas,
+            tavaliselt vastasküljel võrguühendusest.
+          </li>
+          <li>
+            <strong>Valmistage ette nõu</strong> – asetage nõu või kott õhuklapi alla,
+            et kinni püüda vett ja õhku.
+          </li>
+          <li>
+            <strong>Avage õhuklapp</strong> – kasutage spetsiaalset võtit või
+            kruvikeeretit. Avage aeglaselt ja laske õhul ja veel välja tulla.
+          </li>
+          <li>
+            <strong>Oodake, kuni vesi lakkab voolamast</strong> – kui vesi lakkab
+            voolamast, on õhk eemaldatud. Sulgege õhuklapp.
+          </li>
+          <li>
+            <strong>Kontrollige rõhku</strong> – pärast õhu eemaldamist kontrollige
+            küttesüsteemi rõhku ja vajadusel lisage vett.
+          </li>
+        </ol>
+        <p class="text-gray-700 mt-3">
+          <strong>Hoiatus:</strong> Ärge kunagi avage õhuklappi, kui radiaator on
+          kuum! See võib põhjustada tõsiseid põletusi. Samuti ärge avage õhuklappi
+          liiga kiiresti – see võib põhjustada vee väljavoolu.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Levinumad vead radiaatorite tühjendamisel
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Paljud inimesed teevad vigu, mis võivad kahjustada küttesüsteemi:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Õhuklapi avamine kuumal radiaatoril</strong> – see on ohtlik ja
+            võib põhjustada põletusi. Oodake alati, kuni radiaator on jahtunud.
+          </li>
+          <li>
+            <strong>Liiga kiire avamine</strong> – kui avate õhuklappi liiga kiiresti,
+            võib vesi välja purskuda ja kahjustada põrandat või mööblit.
+          </li>
+          <li>
+            <strong>Õhuklapi mitte sulgemine</strong> – kui unustate õhuklapi sulgeda,
+            võib vesi välja voolata ja kahjustada ruume.
+          </li>
+          <li>
+            <strong>Vale õhuklapi kasutamine</strong> – mõned radiaatorid vajavad
+            spetsiaalseid tööriistu. Vale tööriista kasutamine võib kahjustada klappi.
+          </li>
+          <li>
+            <strong>Rõhu mitte kontrollimine</strong> – pärast õhu eemaldamist tuleb
+            kontrollida süsteemi rõhku. Liiga madal rõhk võib kahjustada boilerit või
+            põhjustada ebaühtlast kuumutamist.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Kui teil on kahtlusi või puudub kogemus, on alati parem kutsuda professionaalne
+          küttesüsteemi toruabi. Meie meister teab, kuidas õigesti hooldada erinevaid
+          küttesüsteeme ja võib vältida kalleid vigu.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Millal kindlasti kutsuda küttesüsteemi toruabi?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Mõned olukorrad nõuavad professionaalse sekkumist:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            Kui radiaatorid ei kuumene üldse või kuumenevad väga ebaühtlaselt.
+          </li>
+          <li>
+            Kui kuuled pidevat müra (plärin, vilin, kolin) küttesüsteemist.
+          </li>
+          <li>
+            Kui radiaator lekib või näed niiskust radiaatori ümber.
+          </li>
+          <li>
+            Kui õhuklapp on kinni jäänud või ei tööta.
+          </li>
+          <li>
+            Kui küttesüsteemi rõhk on liiga madal või liiga kõrge.
+          </li>
+          <li>
+            Kui märkad korrosiooni märke radiaatoritel või torustikul.
+          </li>
+          <li>
+            Kui oled ostnud vana maja või korteri ja ei tea küttesüsteemi seisukorda.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Need sümptomid viitavad sellele, et küttesüsteem vajab professionaalset
+          hooldust või remonti. Õigeaegne sekkumine hoiab ära suuremad kulud ja võimaliku
+          veekahju.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          7. Ennetus: kuidas hoida küttesüsteemi korras?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Regulaarne hooldus</strong> – laske küttesüsteemil teha hooldust
+            vähemalt kord aastas professionaalse torumehe poolt.
+          </li>
+          <li>
+            <strong>Õhuklappide kontroll</strong> – kontrollige perioodiliselt, kas
+            õhuklapid töötavad korralikult.
+          </li>
+          <li>
+            <strong>Rõhu jälgimine</strong> – jälgige küttesüsteemi rõhku ja vajadusel
+            lisage vett.
+          </li>
+          <li>
+            <strong>Radiaatorite puhastamine</strong> – puhastage radiaatorite välispinda
+            regulaarselt, et tagada optimaalne soojusülekanne.
+          </li>
+          <li>
+            <strong>Vana süsteemi asendamine</strong> – kui küttesüsteem on väga vana ja
+            pidevalt probleeme tekitab, kaaluge selle osalist või täielikku renoveerimist.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <p class="text-gray-700 mb-4 blog-et">
+          Vaata kõiki meie artikleid küttesüsteemi hoolduse ja remondi kohta:
+        </p>
+        <p class="text-gray-700 mb-4 blog-ru">
+          Посмотрите все наши статьи об обслуживании и ремонте систем отопления:
+        </p>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- Districts Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Küttesüsteemi toruabi piirkondades</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Сантехник по отоплению в районах</h2>
+        <p class="text-gray-700 mb-4 blog-et">Me pakume küttesüsteemi hooldust ja remonti kõigis Tallinna piirkondades:</p>
+        <p class="text-gray-700 mb-4 blog-ru">Мы предоставляем обслуживание и ремонт систем отопления во всех районах Таллинна:</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Küttesüsteemi toruabi Lasnamäes</a>
+          <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Сантехник по отоплению в Ласнамяэ</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Küttesüsteemi toruabi Mustamäel</a>
+          <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Сантехник по отоплению в Мустамяэ</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Küttesüsteemi toruabi Kesklinnas</a>
+          <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Сантехник по отоплению в центре</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Küttesüsteemi toruabi Pirital</a>
+          <a href="/ru/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Сантехник по отоплению в Пирита</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Küttesüsteemi toruabi Viimsis</a>
+          <a href="/ru/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Сантехник по отоплению в Виймси</a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja küttesüsteemi toruabi või hooldust Tallinnas?
+        </h2>
+        <p class="text-lg mb-6">
+          Helista meile – nõustame telefoni teel ja lepime sobiva aja küttesüsteemi
+          hoolduseks või remondiks.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Helista küttesüsteemi hoolduseks"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Обслуживание системы отопления и слив воды с радиаторов в Таллине – профессиональный сантехник работает с радиаторами"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Почему важно регулярно сливать воду с радиаторов?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Слив воды с радиаторов и обслуживание системы отопления важны по нескольким причинам:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Удаление воздуха</strong> – со временем в радиаторах накапливается воздух,
+            который ухудшает теплоотдачу и может вызывать "булькающие" звуки.
+          </li>
+          <li>
+            <strong>Удаление осадка</strong> – циркуляция воды приводит к накоплению осадков,
+            которые могут скапливаться внутри радиаторов и снижать их эффективность.
+          </li>
+          <li>
+            <strong>Улучшенная теплоотдача</strong> – своевременное обслуживание обеспечивает
+            максимальную эффективность работы радиаторов.
+          </li>
+          <li>
+            <strong>Снижение расходов на отопление</strong> – правильно обслуживаемая система
+            отопления потребляет меньше энергии для достижения той же температуры.
+          </li>
+          <li>
+            <strong>Продленный срок службы</strong> – регулярное обслуживание снижает коррозию
+            и продлевает срок службы как радиаторов, так и всей системы отопления.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Когда нужно сливать воду с радиаторов?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Слив воды с радиаторов должен происходить в определенное время:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Перед началом отопительного сезона</strong> – рекомендуется провести
+            обслуживание до запуска системы отопления. Это обеспечит правильную работу в начале сезона.
+          </li>
+          <li>
+            <strong>После окончания отопительного сезона</strong> – некоторые специалисты
+            рекомендуют сливать воду с радиаторов и после окончания сезона, чтобы удалить
+            накопившиеся осадки и воздух.
+          </li>
+          <li>
+            <strong>При обнаружении проблем</strong> – если радиаторы нагреваются неравномерно,
+            издают шум или одна часть радиатора холоднее другой, пора провести обслуживание.
+          </li>
+          <li>
+            <strong>После ремонта</strong> – если вы внесли изменения в систему отопления
+            (например, установили новые радиаторы или изменили трубопровод), систему нужно
+            правильно слить и заполнить.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Как часто нужно сливать воду с радиаторов?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Рекомендации зависят от типа системы отопления и интенсивности использования:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Домашние системы отопления</strong> – минимум раз в год, предпочтительно
+            перед началом отопительного сезона.
+          </li>
+          <li>
+            <strong>Большие системы</strong> – многоквартирные дома или крупные здания могут
+            требовать более частого обслуживания, особенно если вода жесткая или в системе
+            много радиаторов.
+          </li>
+          <li>
+            <strong>Старые системы отопления</strong> – если система старая или в прошлом
+            были проблемы, может потребоваться обслуживание два раза в год.
+          </li>
+          <li>
+            <strong>После установки новой системы</strong> – в первый год может потребоваться
+            сливать воду несколько раз, пока система "усядется" и воздух будет удален.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          В целом: если радиаторы работают правильно и равномерно, достаточно одного
+          обслуживания в год. Если вы заметили проблемы, не ждите – вызовите профессионального
+          сантехника по отоплению.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Как правильно слить воду с радиаторов?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          <strong>Важно:</strong> Если у вас нет опыта, безопаснее вызвать профессионального
+          сантехника. Тем не менее, полезно знать основной процесс:
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">
+          Шаги для слива воды с радиаторов:
+        </h3>
+        <ol class="list-decimal list-inside text-gray-700 space-y-2 ml-4">
+          <li>
+            <strong>Выключите систему отопления</strong> – подождите, пока радиаторы остынут.
+            Обычно это занимает несколько часов.
+          </li>
+          <li>
+            <strong>Найдите воздушный клапан</strong> – это маленький клапан в верхней части
+            радиатора, обычно на противоположной стороне от подключения к сети.
+          </li>
+          <li>
+            <strong>Подготовьте емкость</strong> – поставьте ведро или пакет под воздушный
+            клапан, чтобы собрать воду и воздух.
+          </li>
+          <li>
+            <strong>Откройте воздушный клапан</strong> – используйте специальный ключ или
+            отвертку. Открывайте медленно и дайте воздуху и воде выйти.
+          </li>
+          <li>
+            <strong>Подождите, пока вода перестанет течь</strong> – когда вода перестанет
+            течь, воздух удален. Закройте воздушный клапан.
+          </li>
+          <li>
+            <strong>Проверьте давление</strong> – после удаления воздуха проверьте давление
+            в системе отопления и при необходимости добавьте воды.
+          </li>
+        </ol>
+        <p class="text-gray-700 mt-3">
+          <strong>Предупреждение:</strong> Никогда не открывайте воздушный клапан, если
+          радиатор горячий! Это может вызвать серьезные ожоги. Также не открывайте клапан
+          слишком быстро – это может вызвать выброс воды.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Распространенные ошибки при сливе воды с радиаторов
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Многие люди делают ошибки, которые могут повредить систему отопления:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Открытие воздушного клапана на горячем радиаторе</strong> – это опасно
+            и может вызвать ожоги. Всегда ждите, пока радиатор остынет.
+          </li>
+          <li>
+            <strong>Слишком быстрое открытие</strong> – если вы откроете воздушный клапан
+            слишком быстро, вода может выплеснуться и повредить пол или мебель.
+          </li>
+          <li>
+            <strong>Не закрытие воздушного клапана</strong> – если вы забудете закрыть
+            воздушный клапан, вода может вытечь и повредить помещения.
+          </li>
+          <li>
+            <strong>Использование неправильного воздушного клапана</strong> – некоторые
+            радиаторы требуют специальных инструментов. Использование неправильного инструмента
+            может повредить клапан.
+          </li>
+          <li>
+            <strong>Не проверка давления</strong> – после удаления воздуха необходимо проверить
+            давление в системе. Слишком низкое давление может повредить котел или вызвать
+            неравномерный нагрев.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Если у вас есть сомнения или нет опыта, всегда лучше вызвать профессионального
+          сантехника по отоплению. Наш мастер знает, как правильно обслуживать различные
+          системы отопления и может избежать дорогостоящих ошибок.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          6. Когда обязательно нужно вызывать сантехника по отоплению?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Некоторые ситуации требуют профессионального вмешательства:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            Если радиаторы вообще не нагреваются или нагреваются очень неравномерно.
+          </li>
+          <li>
+            Если вы слышите постоянный шум (бульканье, свист, стук) из системы отопления.
+          </li>
+          <li>
+            Если радиатор протекает или вы видите влагу вокруг радиатора.
+          </li>
+          <li>
+            Если воздушный клапан застрял или не работает.
+          </li>
+          <li>
+            Если давление в системе отопления слишком низкое или слишком высокое.
+          </li>
+          <li>
+            Если вы заметили признаки коррозии на радиаторах или трубопроводе.
+          </li>
+          <li>
+            Если вы купили старый дом или квартиру и не знаете состояние системы отопления.
+          </li>
+        </ul>
+        <p class="text-gray-700 mt-3">
+          Эти симптомы указывают на то, что система отопления нуждается в профессиональном
+          обслуживании или ремонте. Своевременное вмешательство помогает избежать серьезных
+          расходов и возможного ущерба от воды.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          7. Профилактика: как поддерживать систему отопления в порядке?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>
+            <strong>Регулярное обслуживание</strong> – проводите обслуживание системы отопления
+            профессиональным сантехником минимум раз в год.
+          </li>
+          <li>
+            <strong>Проверка воздушных клапанов</strong> – периодически проверяйте, работают
+            ли воздушные клапаны правильно.
+          </li>
+          <li>
+            <strong>Мониторинг давления</strong> – следите за давлением в системе отопления
+            и при необходимости добавляйте воду.
+          </li>
+          <li>
+            <strong>Очистка радиаторов</strong> – регулярно очищайте внешнюю поверхность
+            радиаторов для обеспечения оптимальной теплоотдачи.
+          </li>
+          <li>
+            <strong>Замена старой системы</strong> – если система отопления очень старая
+            и постоянно создает проблемы, рассмотрите возможность частичного или полного
+            ремонта.
+          </li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна помощь с системой отопления или обслуживанием в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – мы проконсультируем по телефону и договоримся о времени
+          обслуживания или ремонта системы отопления.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+          aria-label="Позвонить для обслуживания системы отопления"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<!-- HowTo Schema for step-by-step instructions -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': canonicalUrl + '#howto',
+    name: currentLang === 'ru'
+      ? 'Как правильно слить воду с радиаторов отопления'
+      : 'Kuidas õigesti radiaatoreid tühjendada',
+    description: currentLang === 'ru'
+      ? 'Пошаговая инструкция по сливу воды с радиаторов отопления: как безопасно удалить воздух и воду из системы отопления.'
+      : 'Samm-sammult juhend radiaatorite tühjendamiseks: kuidas ohutult eemaldada õhk ja vesi küttesüsteemist.',
+    image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+    totalTime: 'PT30M',
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'EUR',
+      value: '0',
+    },
+    tool: [
+      {
+        '@type': 'HowToTool',
+        name: currentLang === 'ru' ? 'Ключ для воздушного клапана' : 'Õhuklapi võti',
+      },
+      {
+        '@type': 'HowToTool',
+        name: currentLang === 'ru' ? 'Емкость для воды' : 'Vee nõu',
+      },
+    ],
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: currentLang === 'ru' ? 'Выключите систему отопления' : 'Lülitage küttesüsteem välja',
+        text: currentLang === 'ru'
+          ? 'Выключите систему отопления и подождите, пока радиаторы остынут. Это обычно занимает несколько часов.'
+          : 'Lülitage küttesüsteem välja ja oodake, kuni radiaatorid jahtuvad. See võtab tavaliselt mitu tundi.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: currentLang === 'ru' ? 'Найдите воздушный клапан' : 'Leidke õhuklapp',
+        text: currentLang === 'ru'
+          ? 'Найдите воздушный клапан в верхней части радиатора, обычно на противоположной стороне от подключения к сети.'
+          : 'Leidke õhuklapp radiaatori ülaosas, tavaliselt vastasküljel võrguühendusest.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: currentLang === 'ru' ? 'Подготовьте емкость' : 'Valmistage ette nõu',
+        text: currentLang === 'ru'
+          ? 'Поместите емкость или пакет под воздушный клапан, чтобы собрать воду и воздух.'
+          : 'Asetage nõu või kott õhuklapi alla, et kinni püüda vett ja õhku.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: currentLang === 'ru' ? 'Откройте воздушный клапан' : 'Avage õhuklapp',
+        text: currentLang === 'ru'
+          ? 'Используйте специальный ключ или отвертку. Откройте медленно и позвольте воздуху и воде выйти.'
+          : 'Kasutage spetsiaalset võtit või kruvikeeretit. Avage aeglaselt ja laske õhul ja veel välja tulla.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: currentLang === 'ru' ? 'Дождитесь прекращения потока воды' : 'Oodake, kuni vesi lakkab voolamast',
+        text: currentLang === 'ru'
+          ? 'Когда вода перестанет течь, воздух удален. Закройте воздушный клапан.'
+          : 'Kui vesi lakkab voolamast, on õhk eemaldatud. Sulgege õhuklapp.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 6,
+        name: currentLang === 'ru' ? 'Проверьте давление' : 'Kontrollige rõhku',
+        text: currentLang === 'ru'
+          ? 'После удаления воздуха проверьте давление в системе отопления и при необходимости добавьте воды.'
+          : 'Pärast õhu eemaldamist kontrollige küttesüsteemi rõhku ja vajadusel lisage vett.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Обслуживание системы отопления и слив воды с радиаторов'
+          : 'Küttesüsteemi hooldus ja radiaatorite tühjendamine',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine' : 'https://toruabii.ee/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine',
+      },
+    ],
+  })}
+/>

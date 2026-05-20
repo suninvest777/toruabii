@@ -1,0 +1,567 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Küttesüsteem eramajas Tallinnas 24/7 – toruabi, paigaldus, remont ja hooldus | toruabii.ee';
+const descEt =
+  'Küttesüsteem eramajas Tallinnas: toruabi 24/7, küttesüsteemi paigaldus, remont ja hooldus. Gaasiküte, elektriküte, tahkekütus. Vee- ja õhuküttesüsteemid. Ühe- ja kahetorulised süsteemid. Professionaalne küttesüsteemi torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis.';
+const titleRu =
+  'Система отопления частного дома в Таллине – выбор, установка и обслуживание | toruabii.ee';
+const descRu =
+  'Система отопления частного дома может быть основана на использовании различных видов топлива: газ, электричество или твердое топливо. Рассказываем о водяных и воздушных системах, однотрубных и двухтрубных системах и как выбрать правильное решение в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/kuttesusteem-eramaja';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Küttesüsteem eramajas</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Küttesüsteem eramajas Tallinnas: toruabi 24/7, paigaldus, remont ja hooldus
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate küttesüsteemi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub küttesüsteemi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Küttesüsteem eramajas võib põhineda erinevatel kütuseliikidel: gaasiküte, elektriküte või tahkekütus (puit, süsi, turvas, pelletid). Soojuskandja tüübi järgi jagunevad süsteemid vee- ja õhuküttesüsteemideks. Torustiku tüübi järgi on ühe- ja kahetorulised küttesüsteemid.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2025-01-27').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Система отопления частного дома</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Система отопления частного дома: выбор, установка и обслуживание в Таллине
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Система отопления частного дома может быть основана на использовании различных видов топлива, таких как газ, электричество или твердое топливо (уголь, дрова, торф, опилки). По типу теплоносителя системы делятся на водяные и воздушные. По виду разводки труб системы бывают однотрубные и двухтрубные.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2025-01-27').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Küttesüsteem eramajas Tallinnas – professionaalne paigaldus ja hooldus"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Küttesüsteemi tüübid kütuseliigi järgi Tallinnas
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Eramaja küttesüsteemi valik Tallinnas sõltub paljudest teguritest. Vajate küttesüsteemi toruabi, paigaldust või remonti? Meie professionaalne torumees aitab valida õige lahenduse teie eramaja jaoks. Vaatame peamisi kütuseliike:
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Gaasiküte Tallinnas – populaarne valik</h3>
+        <p class="text-gray-700 mb-3">
+          Gaasiküte on Eestis üks populaarsemaid lahendusi eramajadele. Gaasikatlad on tõhusad, keskkonnasõbralikud ja võimaldavad automaatseid temperatuuriregulaatoreid. Tallinnas ja Harjumaal on gaasivarustus laialt levinud. Vajate gaasikatla paigaldust või remonti? <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a>, <a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Mustamäel</a>, <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Kesklinnas</a>, <a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Piritas</a> või <a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Viimsis</a> – meie torumees on kohal 24/7.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Elektriküte eramajale – lihtne lahendus</h3>
+        <p class="text-gray-700 mb-3">
+          Elektriküttekatlad on lihtsad paigaldada ja hooldada, kuid elektrihind võib olla kõrge. Sobivad hästi väiksematele eramajadele Tallinnas või kui puudub gaasivarustus. Vajate elektrikatla ühendamist? Vaadake meie artiklit <a href="/blog/elektrikatla-ulehendamine" class="text-emergency-red hover:underline font-semibold">elektrikatla ühendamine küttesüsteemiga</a>.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Tahkekütus – traditsiooniline valik</h3>
+        <p class="text-gray-700 mb-3">
+          Tahkekütusekatlad (puit, süsi, turvas, pelletid) on hea valik maapiirkondades Tallinnas ja Harjumaal, kus on lihtne ligipääs kütusele. Nõuavad rohkem hooldust ja käsitsi laadimist. Vajate tahkekütusekatla paigaldust või remonti? Helistage meile – pakume küttesüsteemi toruabi 24/7.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Soojuskandja tüübi järgi: vee- ja õhuküttesüsteemid Tallinnas
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Vee küttesüsteem – kõige levinum Tallinnas</h3>
+        <p class="text-gray-700 mb-3">
+          Vee küttesüsteem on Eestis kõige levinum eramajadele. Vesi ringleb radiaatorites või põrandakütte torustikus. Eelised: ühtlane soojusjaotus, võimalus kombineerida erinevaid soojusallikaid, pikaajaline töökindlus. Vajate vee küttesüsteemi paigaldust, remonti või hooldust? Meie torumees pakub küttesüsteemi toruabi Tallinnas 24/7. Vaadake ka meie artiklit <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="text-emergency-red hover:underline font-semibold">avatud ja suletud küttesüsteemid</a>.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Õhu küttesüsteem – alternatiivne lahendus</h3>
+        <p class="text-gray-700 mb-3">
+          Õhu küttesüsteemid kasutavad kuumutatud õhku ruumide kütmiseks. Tavaliselt kasutatakse neid suuremates hoonetes Tallinnas või kui on vaja kiiresti temperatuuri muuta. Vajate õhu küttesüsteemi paigaldust või remonti? Helistage meile – pakume professionaalset küttesüsteemi toruabi.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Torustiku tüübid: ühe- ja kahetorulised süsteemid
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Ühetoruline süsteem</h3>
+        <p class="text-gray-700 mb-3">
+          Ühetorulises süsteemis liigub vesi ühe toru kaudu kõikidesse radiaatoritesse ja tagasi. Lihtsam paigaldada, aga võib olla vähem tõhus suuremates majades, kuna viimased radiaatorid võivad olla külmemad.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Kahetoruline süsteem</h3>
+        <p class="text-gray-700 mb-3">
+          Kahetorulises süsteemis on eraldi torud sooja vee jahtunud vee jaoks. Tagab ühtlasema temperatuuri kõigis radiaatorites, aga nõuab rohkem materjale ja keerukamat paigaldust.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Kuidas valida õige küttesüsteem Tallinnas?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Küttesüsteemi valik Tallinnas sõltub teie eelarvetest, maja suurusest, ligipääsust kütusele ja pikaajalisest planeerimisest. Meie professionaalne torumees aitab teil valida õige küttesüsteemi teie eramaja jaoks Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis või teistes Tallinna piirkondades:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Maja suurus</strong> – väiksematele majadele Tallinnas sobib elektriküte või gaasiküte, suurematele eramajadele tahkekütus või gaasiküte. Küttesüsteemi toruabi Tallinnas 24/7.</li>
+          <li><strong>Ligipääs kütusele</strong> – kui on gaasivarustus (mis on laialt levinud Tallinnas), on gaasiküte sageli parim valik. Küttesüsteemi paigaldus Tallinnas.</li>
+          <li><strong>Hooldus</strong> – elektriküte nõuab vähem hooldust kui tahkekütus. Küttesüsteemi hooldus Tallinnas ja Harjumaal.</li>
+          <li><strong>Keskkonnamõju</strong> – gaasiküte ja elektriküte on keskkonnasõbralikumad kui tahkekütus. Küttesüsteemi remont Tallinnas.</li>
+          <li><strong>Piirkond</strong> – Lasnamäes, Mustamäel, Kesklinnas, Piritas ja Viimsis on hea gaasivarustus, mis teeb gaasiküte populaarseks valikuks. Küttesüsteemi torumees Tallinnas.</li>
+        </ul>
+        <p class="text-gray-700 mt-4 mb-3">
+          Vajate küttesüsteemi valiku nõustamist? Meie torumees annab tasuta konsultatsiooni ja hinnapakkumise. Pakume küttesüsteemi toruabi Tallinnas 24/7 – helistage meile!
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Professionaalne küttesüsteemi toruabi Tallinnas 24/7
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Küttesüsteemi paigaldus, remont ja hooldus Tallinnas nõuab professionaalseid teadmisi ja kogemust. Meie kogenud torumees pakub küttesüsteemi toruabi 24/7 kõigis Tallinna piirkondades: <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Lasnamäes</a>, <a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Mustamäel</a>, <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Kesklinnas</a>, <a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Piritas</a>, <a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Viimsis</a> ja teistes Tallinna piirkondades. Meie meister aitab teil:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Küttesüsteemi valik</strong> – valida õige küttesüsteemi teie eramaja jaoks Tallinnas. Küttesüsteemi toruabi Lasnamäes, Mustamäel, Kesklinnas.</li>
+          <li><strong>Küttesüsteemi paigaldus</strong> – paigaldada küttesüsteem vastavalt standarditele ja ohutusnõuetele. Küttesüsteemi paigaldus Tallinnas 24/7.</li>
+          <li><strong>Küttesüsteemi hooldus</strong> – teha regulaarset hooldust ja remonti, et tagada optimaalne töö. Küttesüsteemi hooldus Piritas, Viimsis.</li>
+          <li><strong>Küttesüsteemi remont</strong> – lahendada probleeme, lekkeid ja rikkeid kiiresti ja professionaalselt. Küttesüsteemi remont Tallinnas.</li>
+          <li><strong>Radiaatorite remont</strong> – remontida või vahetada radiaatoreid vajadusel. Radiaatorite remont Lasnamäes, Mustamäel.</li>
+          <li><strong>Tsirkulatsioonipumba paigaldus</strong> – paigaldada või remontida tsirkulatsioonipumpa. Vaadake ka <a href="/blog/tsirkulatsioonipump" class="text-emergency-red hover:underline font-semibold">meie artiklit tsirkulatsioonipumba kohta</a>.</li>
+          <li><strong>Laienduspaagi paigaldus</strong> – paigaldada või vahetada laienduspaaki. Vaadake ka <a href="/blog/laienduspaak-kutte-ja-gvs" class="text-emergency-red hover:underline font-semibold">meie artiklit laienduspaagi kohta</a>.</li>
+          <li><strong>Kollektorigrupi paigaldus</strong> – paigaldada kollektorsüsteem põrandakütte või radiaatorite jaoks. Vaadake ka <a href="/blog/kollektorigrupp" class="text-emergency-red hover:underline font-semibold">meie artiklit kollektorigrupi kohta</a>.</li>
+        </ul>
+        <p class="text-gray-700 mt-4 mb-3">
+          Meie pakume küttesüsteemi toruabi Tallinnas ja Harjumaal 24/7. Kõik tööd tehakse professionaalselt, vastavalt standarditele ja ohutusnõuetele. Pakume 2 aastat garantiid kõigile oma töödele. Vaadake ka meie teisi artikleid küttesüsteemi kohta: <a href="/blog/tsirkulatsioonipump" class="text-emergency-red hover:underline font-semibold">tsirkulatsioonipump küttesüsteemis</a>, <a href="/blog/laienduspaak-kutte-ja-gvs" class="text-emergency-red hover:underline font-semibold">laienduspaak küttesüsteemi jaoks</a>, <a href="/blog/radiaatori-valik" class="text-emergency-red hover:underline font-semibold">radiaatori valik</a>, <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="text-emergency-red hover:underline font-semibold">avatud ja suletud küttesüsteemid</a>.
+        </p>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Küttesüsteemi toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Küttesüsteemi avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile küttesüsteemi paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud küttesüsteemide paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni küttesüsteemi valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused küttesüsteemi kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab küttesüsteemi paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi tüübist, maja suurusest ja komplekssusest. Gaasiküte eramajale võib maksta 3000-8000€, elektriküte 2000-5000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet. Pakume küttesüsteemi toruabi Lasnamäes, Mustamäel, Kesklinnas, Piritas ja Viimsis 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui kaua kestab küttesüsteemi paigaldus?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Küttesüsteemi paigaldus eramajale võtab tavaliselt 3-7 päeva, olenevalt süsteemi komplekssusest. Lihtsam elektriküte võib olla valmis 1-2 päevaga, samas kui gaasiküte koos torustikuga võib võtta kuni nädal. Meie professionaalne torumees töötab kiiresti ja efektiivselt, tagades kvaliteetse paigalduse.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Milline küttesüsteem on parim eramajale Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Parim küttesüsteem sõltub maja suurusest, isolatsioonist ja ligipääsust kütusele. Gaasiküte on populaarne valik Tallinnas tänu heale gaasivarustusele. Elektriküte sobib väiksematele majadele. Tahkekütus on hea valik maapiirkondades. Meie torumees aitab valida õige lahenduse teie eramaja jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui tihti peaks küttesüsteemi hooldama?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Küttesüsteemi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. Regulaarne hooldus pikendab süsteemi eluiga, tagab efektiivse töö ja võib vältida kalleid remonte. Meie torumees pakub küttesüsteemi hooldust Tallinnas ja Harjumaal.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas küttesüsteemi saab paigaldada ise?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Küttesüsteemi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada tuleohtu, gaasilekkeid või ebaefektiivset tööd. Soovitame alati kasutada professionaalse torumehe teenuseid. Meie pakume küttesüsteemi toruabi Tallinnas 24/7.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid küttesüsteemi kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve küttesüsteemis Tallinnas.</p>
+          </a>
+          <a href="/blog/laienduspaak-kutte-ja-gvs" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Laienduspaak küttesüsteemi jaoks</h3>
+            <p class="text-sm text-gray-600">Laienduspaagi erinevused küttesüsteemi ja soojaveevarustuse jaoks.</p>
+          </a>
+          <a href="/blog/radiaatori-valik" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Radiaatori valik küttesüsteemile</h3>
+            <p class="text-sm text-gray-600">Kuidas valida õige radiaator küttesüsteemile Tallinnas.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Küttesüsteemi toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub küttesüsteemi paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja küttesüsteemi toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate küttesüsteemi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub küttesüsteemi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame küttesüsteemi valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Küttesüsteemi toruabi Tallinnas 24/7 | Küttesüsteemi paigaldus | Küttesüsteemi remont | Küttesüsteemi hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Система отопления частного дома в Таллине – профессиональная установка и обслуживание"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Типы систем отопления по виду топлива
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Выбор системы отопления для частного дома зависит от многих факторов. Рассмотрим основные виды топлива:
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Газовое отопление</h3>
+        <p class="text-gray-700 mb-3">
+          Газовое отопление – одно из самых популярных решений в Эстонии. Газовые котлы эффективны, экологичны и позволяют использовать автоматические терморегуляторы. В Таллине и Харьюмаа газоснабжение широко распространено.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Электрическое отопление</h3>
+        <p class="text-gray-700 mb-3">
+          Электрические котлы просты в установке и обслуживании, но стоимость электроэнергии может быть высокой. Подходят для небольших частных домов или когда нет газоснабжения.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Твердое топливо</h3>
+        <p class="text-gray-700 mb-3">
+          Котлы на твердом топливе (дрова, уголь, торф, пеллеты) – хороший выбор для сельской местности, где есть легкий доступ к топливу. Требуют больше обслуживания и ручной загрузки.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. По типу теплоносителя: водяные и воздушные системы
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Водяная система отопления</h3>
+        <p class="text-gray-700 mb-3">
+          Водяная система отопления – самая распространенная в Эстонии. Вода циркулирует в радиаторах или трубах теплого пола. Преимущества: равномерное распределение тепла, возможность комбинировать различные источники тепла, долговечность.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Воздушная система отопления</h3>
+        <p class="text-gray-700 mb-3">
+          Воздушные системы отопления используют нагретый воздух для обогрева помещений. Обычно используются в больших зданиях или когда нужно быстро изменить температуру.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Типы трубопроводов: однотрубные и двухтрубные системы
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Однотрубная система</h3>
+        <p class="text-gray-700 mb-3">
+          В однотрубной системе вода движется по одной трубе ко всем радиаторам и обратно. Проще в установке, но может быть менее эффективна в больших домах, так как последние радиаторы могут быть холоднее.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Двухтрубная система</h3>
+        <p class="text-gray-700 mb-3">
+          В двухтрубной системе есть отдельные трубы для горячей и охлажденной воды. Обеспечивает более равномерную температуру во всех радиаторах, но требует больше материалов и более сложной установки.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Как выбрать правильную систему отопления?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Выбор системы отопления зависит от вашего бюджета, размера дома, доступа к топливу и долгосрочного планирования:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Размер дома</strong> – для небольших домов подходит электрическое или газовое отопление, для больших – твердое топливо или газ.</li>
+          <li><strong>Доступ к топливу</strong> – если есть газоснабжение, газовое отопление часто лучший выбор.</li>
+          <li><strong>Обслуживание</strong> – электрическое отопление требует меньше обслуживания, чем твердое топливо.</li>
+          <li><strong>Экологичность</strong> – газовое и электрическое отопление более экологичны, чем твердое топливо.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          5. Профессиональная установка и обслуживание в Таллине
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Установка и обслуживание системы отопления требует профессиональных знаний. Наш мастер поможет вам:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Выбрать правильную систему отопления для вашего дома</li>
+          <li>Установить систему отопления согласно стандартам</li>
+          <li>Проводить регулярное обслуживание и ремонт</li>
+          <li>Решать проблемы и утечки</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание системы отопления в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке системы отопления.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка системы отопления в Таллине?' : 'Kui palju maksab küttesüsteemi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru' 
+            ? 'Стоимость установки системы отопления в Таллине зависит от типа системы, размера дома и сложности. Газовое отопление для частного дома может стоить 3000-8000€, электрическое 2000-5000€. Наш мастер дает бесплатную оценку после первичного осмотра.'
+            : 'Küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi tüübist, maja suurusest ja komplekssusest. Gaasiküte eramajale võib maksta 3000-8000€, elektriküte 2000-5000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как долго длится установка системы отопления?' : 'Kui kaua kestab küttesüsteemi paigaldus?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка системы отопления в частном доме обычно занимает 3-7 дней, в зависимости от сложности системы. Простое электрическое отопление может быть готово за 1-2 дня, в то время как газовое отопление с трубопроводом может занять до недели.'
+            : 'Küttesüsteemi paigaldus eramajale võtab tavaliselt 3-7 päeva, olenevalt süsteemi komplekssusest. Lihtsam elektriküte võib olla valmis 1-2 päevaga, samas kui gaasiküte koos torustikuga võib võtta kuni nädal.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какая система отопления лучше для частного дома в Таллине?' : 'Milline küttesüsteem on parim eramajale Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Лучшая система отопления зависит от размера дома, изоляции и доступа к топливу. Газовое отопление популярно в Таллине благодаря хорошему газоснабжению. Электрическое отопление подходит для небольших домов. Твердое топливо - хороший выбор для сельской местности.'
+            : 'Parim küttesüsteem sõltub maja suurusest, isolatsioonist ja ligipääsust kütusele. Gaasiküte on populaarne valik Tallinnas tänu heale gaasivarustusele. Elektriküte sobib väiksematele majadele. Tahkekütus on hea valik maapiirkondades.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать систему отопления?' : 'Kui tihti peaks küttesüsteemi hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание системы отопления раз в год, желательно перед началом отопительного сезона. Регулярное обслуживание продлевает срок службы системы, обеспечивает эффективную работу и может предотвратить дорогостоящий ремонт.'
+            : 'Küttesüsteemi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. Regulaarne hooldus pikendab süsteemi eluiga, tagab efektiivse töö ja võib vältida kalleid remonte.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Можно ли установить систему отопления самостоятельно?' : 'Kas küttesüsteemi saab paigaldada ise?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка системы отопления требует профессиональных знаний и опыта. Неправильная установка может привести к пожару, утечкам газа или неэффективной работе. Рекомендуем всегда использовать услуги профессионального сантехника.'
+            : 'Küttesüsteemi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada tuleohtu, gaasilekkeid või ebaefektiivset tööd. Soovitame alati kasutada professionaalse torumehe teenuseid.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Система отопления частного дома'
+          : 'Küttesüsteem eramajas',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kuttesusteem-eramaja' : 'https://toruabii.ee/blog/kuttesusteem-eramaja',
+      },
+    ],
+  })}
+/>

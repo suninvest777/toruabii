@@ -1,0 +1,313 @@
+---
+import type { HarjuMunicipality, HarjuVisualPreset } from '../../data/harju-municipality-landings';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StickyCTA from '../StickyCTA.astro';
+import Breadcrumb from '../Breadcrumb.astro';
+import DistrictCrossLinks from '../DistrictCrossLinks.astro';
+import FooterLegal from '../FooterLegal.astro';
+import NavGoogleReviewLink from '../NavGoogleReviewLink.astro';
+import CallStripCta from '../CallStripCta.astro';
+import { ruPath } from '../../utils/i18n-paths';
+
+interface Props {
+  region: HarjuMunicipality;
+}
+
+const { region } = Astro.props;
+
+const siteUrl = 'https://toruabii.ee';
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const pageTitle = currentLang === 'ru' ? region.titleRu : region.titleEt;
+const pageDescription = currentLang === 'ru' ? region.descriptionRu : region.descriptionEt;
+const keywords = currentLang === 'ru' ? region.keywordsRu : region.keywordsEt;
+const crumbHomeName = currentLang === 'ru' ? 'Главная' : 'Avaleht';
+const crumbAreaEt =
+  region.schemaLocality === 'Jõelähtme'
+    ? 'Toruabi Jõelähtme vallas'
+    : `Toruabi ${region.schemaLocality} piirkonnas`;
+
+const crumbAreaRuMap: Record<string, string> = {
+  maardu: 'Торуаби в Маарду',
+  keila: 'Торуаби в Кейла',
+  saue: 'Торуаби в Сауэ',
+  rae: 'Торуаби в Раэ',
+  saku: 'Торуаби в Саку',
+  harku: 'Торуаби в Харку',
+  joelahtme: 'Торуаби в Йыелахтме',
+  kiili: 'Торуаби в Кили',
+  kose: 'Торуаби в Косе',
+  anija: 'Торуаби в Анижа',
+};
+const crumbAreaName = currentLang === 'ru' ? crumbAreaRuMap[region.id] ?? `Торуаби (${region.schemaLocality})` : crumbAreaEt;
+
+const pagePath = region.path;
+const pageCanonicalUrl = currentLang === 'ru' ? `${siteUrl}${ruPath(pagePath)}` : `${siteUrl}${pagePath}`;
+
+const faqForLd = currentLang === 'ru' ? region.faqRu : region.faqEt;
+const webPageName =
+  currentLang === 'ru'
+    ? `Торуаби ${region.schemaLocality}`
+    : `Toruabi ${region.schemaLocality}`;
+
+const heroPresetClasses: Record<HarjuVisualPreset, string> = {
+  industrial:
+    'bg-gradient-to-br from-slate-900 via-zinc-800 to-slate-950 border-l-[6px] border-amber-500 shadow-[inset_0_0_80px_rgba(0,0,0,0.35)]',
+  coastalWest:
+    'bg-gradient-to-br from-cyan-950 via-blue-950 to-slate-950 border-l-[6px] border-cyan-400 shadow-[inset_0_0_60px_rgba(8,47,73,0.5)]',
+  suburbWest:
+    'bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border-l-[6px] border-indigo-300 shadow-[inset_0_0_70px_rgba(30,27,75,0.4)]',
+  logisticsEast:
+    'bg-gradient-to-br from-orange-950 via-stone-900 to-slate-950 border-l-[6px] border-orange-400 shadow-[inset_0_0_60px_rgba(124,45,18,0.25)]',
+  forestSouth:
+    'bg-gradient-to-br from-emerald-950 via-green-950 to-slate-950 border-l-[6px] border-emerald-400 shadow-[inset_0_0_70px_rgba(6,78,59,0.35)]',
+  coastalNorthWest:
+    'bg-gradient-to-br from-sky-950 via-blue-950 to-indigo-950 border-l-[6px] border-sky-300 shadow-[inset_0_0_60px_rgba(12,74,110,0.35)]',
+  ruralEast:
+    'bg-gradient-to-br from-stone-900 via-amber-950/30 to-slate-950 border-l-[6px] border-amber-300 shadow-[inset_0_0_80px_rgba(0,0,0,0.4)]',
+  villageBelt:
+    'bg-gradient-to-br from-violet-950 via-slate-900 to-slate-950 border-l-[6px] border-violet-300 shadow-[inset_0_0_70px_rgba(76,29,149,0.25)]',
+  inlandSouth:
+    'bg-gradient-to-br from-teal-950 via-slate-900 to-zinc-950 border-l-[6px] border-teal-400 shadow-[inset_0_0_70px_rgba(15,118,110,0.25)]',
+  riverNorth:
+    'bg-gradient-to-br from-blue-950 via-cyan-900 to-slate-950 border-l-[6px] border-blue-300 shadow-[inset_0_0_65px_rgba(30,58,138,0.35)]',
+};
+
+const heroShellClass = heroPresetClasses[region.visualPreset];
+
+const breadcrumbJsonLdOverride = [
+  { name: crumbHomeName, item: currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/` },
+  { name: crumbAreaName, item: pageCanonicalUrl },
+];
+
+const webPageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${pageCanonicalUrl}#webpage`,
+  url: pageCanonicalUrl,
+  name: webPageName,
+  description: pageDescription,
+  inLanguage: currentLang === 'ru' ? 'ru-EE' : 'et-EE',
+  isPartOf: { '@type': 'WebSite', name: 'toruabii.ee', url: siteUrl },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    url: 'https://toruabii.ee/photos/maintoruabii.webp',
+  },
+};
+
+const plumbingHarjuLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PlumbingService',
+  '@id': `${pageCanonicalUrl}#plumbing`,
+  name: `toruabii.ee – Toruabi ${region.schemaLocality}`,
+  alternateName: `Avarii toruabi ${region.schemaLocality}`,
+  url: pageCanonicalUrl,
+  logo: 'https://toruabii.ee/photos/toruabii.webp',
+  image: 'https://toruabii.ee/photos/maintoruabii.webp',
+  description: pageDescription,
+  telephone: '+3725181112',
+  priceRange: '€€',
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
+  currenciesAccepted: 'EUR',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: region.schemaLocality,
+    addressRegion: 'Harjumaa',
+    addressCountry: 'EE',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: region.geo.latitude,
+    longitude: region.geo.longitude,
+  },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: region.schemaLocality },
+    { '@type': 'AdministrativeArea', name: 'Harjumaa' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `Toruabi ${region.schemaLocality}`,
+    itemListElement: region.servicesEt.slice(0, 3).map((name) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name,
+        description: pageDescription,
+      },
+    })),
+  },
+};
+
+const faqHarjuLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqForLd.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={pageCanonicalUrl}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={keywords}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(webPageLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(plumbingHarjuLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqHarjuLd)} />
+  
+  <header class:list={['text-white py-12 px-4 rounded-b-2xl md:rounded-b-3xl', heroShellClass]}>
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: crumbHomeName, url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          { name: crumbAreaName, url: pageCanonicalUrl },
+        ]}
+        class="text-white/70 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold blog-ru">← На главную</a>
+      <p class="text-sm uppercase tracking-widest text-white/60 mb-2 blog-et">Harjumaa · 24/7 toruabi</p>
+      <p class="text-sm uppercase tracking-widest text-white/60 mb-2 blog-ru">Харьюмаа · торуаби 24/7</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-sm blog-et">{region.h1Et}</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-sm blog-ru">{region.h1Ru}</h1>
+      <p class="text-xl text-white/90 mb-6 max-w-3xl blog-et">{region.heroLeadEt}</p>
+      <p class="text-xl text-white/90 mb-6 max-w-3xl blog-ru">{region.heroLeadRu}</p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl text-xl shadow-lg">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+      <CallStripCta variant="page" />
+
+      <section class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden blog-et">
+        <div class="h-1.5 bg-gradient-to-r from-trust-blue via-emergency-red to-trust-blue"></div>
+        <div class="p-8">
+          <h2 class="text-3xl font-bold text-trust-blue mb-4">Toruabi teenused piirkonnas</h2>
+          {region.bodyEt.map((p) => <p class="text-gray-700 mb-4 leading-relaxed">{p}</p>)}
+          <h3 class="text-lg font-semibold text-trust-blue mb-2">Asustatud punktid</h3>
+          <ul class="flex flex-wrap gap-2 mb-6">
+            {region.settlementsEt.map((s) => (
+              <li class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-800">{s}</li>
+            ))}
+          </ul>
+          <ul class="list-disc list-inside text-gray-700 space-y-2">
+            {region.servicesEt.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden blog-ru">
+        <div class="h-1.5 bg-gradient-to-r from-trust-blue via-emergency-red to-trust-blue"></div>
+        <div class="p-8">
+          <h2 class="text-3xl font-bold text-trust-blue mb-4">Услуги торуаби в районе</h2>
+          {region.bodyRu.map((p) => <p class="text-gray-700 mb-4 leading-relaxed">{p}</p>)}
+          <h3 class="text-lg font-semibold text-trust-blue mb-2">Населённые пункты</h3>
+          <ul class="flex flex-wrap gap-2 mb-6">
+            {region.settlementsRu.map((s) => (
+              <li class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-800">{s}</li>
+            ))}
+          </ul>
+          <ul class="list-disc list-inside text-gray-700 space-y-2">
+            {region.servicesRu.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl shadow-lg p-8 blog-et">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud toruabi lehed</h2>
+        <p class="text-gray-700 mb-4">
+          Kiire abi: <a href="/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">toruabi avarii väljakutse</a>. Ummistused:{' '}
+          <a href="/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">ummistuste likvideerimine</a>. Survepesu:{' '}
+          <a href="/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">kanalisatsiooni survepesu</a>. Hinnad:{' '}
+          <a href="/hinnakiri" class="text-trust-blue font-semibold hover:underline">hinnakiri</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-xl shadow-lg p-8 blog-ru">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Связанные страницы торуаби</h2>
+        <p class="text-gray-700 mb-4">
+          Срочно: <a href="/ru/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">аварийный выезд</a>. Засоры:{' '}
+          <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">устранение засоров</a>. Промывка:{' '}
+          <a href="/ru/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">гидродинамика</a>. Цены:{' '}
+          <a href="/ru/hinnakiri" class="text-trust-blue font-semibold hover:underline">прайс</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-xl shadow-lg p-8 blog-et">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Korduma kippuvad küsimused</h2>
+        <div class="space-y-4">
+          {region.faqEt.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-white rounded-xl shadow-lg p-8 blog-ru">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Частые вопросы</h2>
+        <div class="space-y-4">
+          {region.faqRu.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath={pagePath} />
+
+      <section class="bg-gradient-to-r from-emergency-red to-red-700 text-white rounded-xl p-8 text-center shadow-xl">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Toruabi Harjumaal – helista</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Торуаби в Харьюмаа — звоните</h2>
+        <p class="text-lg mb-6 opacity-95 blog-et">Vajad toruabi? Broneering ja nõustamine telefonis.</p>
+        <p class="text-lg mb-6 opacity-95 blog-ru">Нужен торуаби? Запись и консультация по телефону.</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-xl text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

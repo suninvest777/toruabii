@@ -1,0 +1,180 @@
+---
+export const prerender = true;
+
+// Test page for call button tracking — production: set PUBLIC_SHOW_TEST_PAGE=true or use dev server
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allowTestPage =
+  import.meta.env.DEV || import.meta.env.PUBLIC_SHOW_TEST_PAGE === 'true';
+if (!allowTestPage) {
+  return Astro.redirect('/', 302);
+}
+---
+
+<BaseLayout 
+  title="Тест кнопок вызова | toruabii.ee"
+  description="Тестовая страница для проверки отслеживания кнопок вызова"
+  lang="ru"
+  noindex={true}
+>
+  <div class="min-h-screen bg-gray-50 py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold text-trust-blue mb-8">🧪 Тест кнопок вызова</h1>
+      
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="text-2xl font-bold mb-4">Информация о тестировании</h2>
+        <p class="mb-4">Эта страница автоматически протестирует все кнопки вызова на странице.</p>
+        <p class="mb-4">Проверьте консоль браузера (F12) для просмотра результатов.</p>
+        <p class="mb-4">Проверьте Telegram — уведомления с <strong>синими маркерами 🟦 TORUABII.EE</strong> (отличие от старых лидов 24toruabi с 🟥).</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="text-2xl font-bold mb-4">Тестовые кнопки вызова</h2>
+        <div class="space-y-4">
+          <a href="tel:+3725181112" class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+            Тестовая кнопка 1: +372 5181 112
+          </a>
+          <br>
+          <a href="tel:+3725181112" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+            Тестовая кнопка 2: +372 5181 112
+          </a>
+          <br>
+          <a href="tel:+3725181112" class="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+            Тестовая кнопка 3: +372 5181 112
+          </a>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="text-2xl font-bold mb-4">Результаты теста</h2>
+        <div id="test-results" class="space-y-2">
+          <p class="text-gray-600">Тестирование запускается автоматически...</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-bold mb-4">Ручное тестирование</h2>
+        <button 
+          id="manual-test-btn"
+          class="bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl mb-4"
+        >
+          Запустить тест вручную
+        </button>
+        <p class="text-sm text-gray-600">Нажмите кнопку выше, чтобы протестировать все кнопки вызова на странице.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const resultsDiv = document.getElementById('test-results');
+      const manualTestBtn = document.getElementById('manual-test-btn');
+
+      function addResult(message, type = 'info') {
+        const p = document.createElement('p');
+        p.className = `p-2 rounded ${
+          type === 'success' ? 'bg-green-100 text-green-800' :
+          type === 'error' ? 'bg-red-100 text-red-800' :
+          'bg-blue-100 text-blue-800'
+        }`;
+        p.textContent = message;
+        resultsDiv.appendChild(p);
+      }
+
+      function runTest() {
+        resultsDiv.innerHTML = '';
+        addResult('🧪 Начинаю тестирование...', 'info');
+
+        // Find all tel: links
+        const telLinks = document.querySelectorAll('a[href^="tel:"]');
+        addResult(`📞 Найдено ${telLinks.length} кнопок вызова`, 'info');
+
+        if (telLinks.length === 0) {
+          addResult('⚠️ Кнопки вызова не найдены!', 'error');
+          return;
+        }
+
+        // Test each button
+        telLinks.forEach((link, index) => {
+          const href = link.getAttribute('href');
+          const text = link.textContent.trim() || link.innerText.trim();
+          
+          addResult(`🔘 Кнопка ${index + 1}: ${href} - "${text}"`, 'info');
+
+          // Simulate click
+          try {
+            const clickEvent = new MouseEvent('click', {
+              view: window,
+              bubbles: true,
+              cancelable: true
+            });
+            
+            link.dispatchEvent(clickEvent);
+            addResult(`   ✅ Событие клика отправлено`, 'success');
+          } catch (error) {
+            addResult(`   ❌ Ошибка: ${error.message}`, 'error');
+          }
+        });
+
+        // Test API directly
+        addResult('🌐 Тестирую API endpoint...', 'info');
+        
+        const testData = {
+          source: 'toruabii.ee',
+          url: window.location.href,
+          tel: 'tel:+3725181112',
+          userAgent: navigator.userAgent,
+          timestamp: new Date().toLocaleString('ru-RU', { 
+            timeZone: 'Europe/Tallinn',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          })
+        };
+
+        fetch('/api/track-call', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(testData),
+        })
+        .then(response => {
+          addResult(`   API Status: ${response.status}`, response.ok ? 'success' : 'error');
+          return response.json();
+        })
+        .then(data => {
+          if (data.success) {
+            addResult('   ✅ API тест успешен! В Telegram ожидайте 🟦 TORUABII.EE.', 'success');
+          } else {
+            addResult(`   ⚠️ API вернул: ${JSON.stringify(data)}`, 'error');
+          }
+        })
+        .catch(error => {
+          addResult(`   ❌ Ошибка API: ${error.message}`, 'error');
+        });
+
+        addResult('✅ Тестирование завершено! Проверьте Telegram бот.', 'success');
+      }
+
+      // Auto-run test on page load
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(runTest, 1000); // Wait 1 second for tracking script to initialize
+        });
+      } else {
+        setTimeout(runTest, 1000);
+      }
+
+      // Manual test button
+      if (manualTestBtn) {
+        manualTestBtn.addEventListener('click', runTest);
+      }
+    })();
+  </script>
+</BaseLayout>

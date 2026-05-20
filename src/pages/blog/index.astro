@@ -1,0 +1,580 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { homeHref, ruPath } from '../../utils/i18n-paths';
+
+const siteUrl = 'https://toruabii.ee';
+
+const blogPosts = [
+  {
+    slug: 'kuttesusteemi-hooldus-radiaatorite-tyhjendamine',
+    title: 'Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas: kuidas ja millal?',
+    titleRu: 'Обслуживание системы отопления и слив воды с радиаторов в Таллине: как и когда?',
+    description:
+      'Praktiline juhend radiaatorite tühjendamise kohta: miks see on oluline, kui tihti seda teha, kuidas õigesti vett radiaatoritest välja lasta ja millal kutsuda professionaalne küttesüsteemi toruabi.',
+    descriptionRu:
+      'Практическое руководство по сливу воды с радиаторов: зачем это нужно, как часто делать, как правильно слить воду и когда вызывать профессионального сантехника по отоплению.',
+    date: '2026-03-06',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/otoplenije-batarei-liking.webp',
+    imageAlt: 'Küttesüsteemi hooldus ja radiaatorite tühjendamine Tallinnas – professionaalne torumees töötab radiaatoritega',
+    imageRu: '/photos/otoplenije-batarei-liking.webp',
+    imageAltRu: 'Обслуживание системы отопления и слив воды с радиаторов в Таллине – профессиональный сантехник работает с радиаторами',
+  },
+  {
+    slug: 'kuttesusteem-eramaja',
+    title: 'Küttesüsteem eramajas Tallinnas – valik, paigaldus ja hooldus',
+    titleRu: 'Система отопления частного дома в Таллине – выбор, установка и обслуживание',
+    description:
+      'Küttesüsteem eramajas võib põhineda erinevatel kütuseliikidel: gaas, elektri või tahke kütus. Selgitame, millised on vee- ja õhuküttesüsteemid, ühe- ja kahetorulised süsteemid ning kuidas valida õige lahendus.',
+    descriptionRu:
+      'Система отопления частного дома может быть основана на использовании различных видов топлива: газ, электричество или твердое топливо. Рассказываем о водяных и воздушных системах, однотрубных и двухтрубных системах и как выбрать правильное решение.',
+    date: '2025-01-27',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Küttesüsteem eramajas Tallinnas – professionaalne paigaldus ja hooldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Система отопления частного дома в Таллине – профессиональная установка и обслуживание',
+  },
+  {
+    slug: 'kollektorigrupp',
+    title: 'Kollektorigrupp küttesüsteemis – mis see on ja millised on eelised?',
+    titleRu: 'Коллекторная группа в системе отопления – что это такое и в чем плюсы использования?',
+    description:
+      'Kollektorid on mõeldud transporditava keskkonna voo jaotamiseks tarbijate vahel. Selgitame, mis on kollektorigrupp, kuidas see töötab ja millised on selle eelised küttesüsteemis.',
+    descriptionRu:
+      'Коллекторы предназначены для распределения потока транспортируемой среды по потребителям. Рассказываем, что такое коллекторная группа, как она работает и каковы её преимущества в системе отопления.',
+    date: '2025-01-08',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Kollektorigrupp küttesüsteemis Tallinnas – professionaalne paigaldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Коллекторная группа в системе отопления в Таллине – профессиональная установка',
+  },
+  {
+    slug: 'puhvermahuti',
+    title: 'Puhvermahuti küttesüsteemis – otstarve ja eelised',
+    titleRu: 'Буферная емкость в системе отопления – назначение и преимущества',
+    description:
+      'Puhvermahuti (soojusakumulaator) on oluline küttesüsteemi element, mis tagab ühtlase soojusjaotuse ja tõhusa energiakasutuse. Selgitame, mis on puhvermahuti, kuidas see töötab ja millised on selle eelised.',
+    descriptionRu:
+      'Буферная емкость (теплоаккумулятор) - это важный элемент системы отопления, который обеспечивает равномерное распределение тепла и эффективное использование энергетических ресурсов. Рассказываем о назначении и преимуществах.',
+    date: '2024-07-04',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Puhvermahuti küttesüsteemis Tallinnas – professionaalne paigaldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Буферная емкость в системе отопления в Таллине – профессиональная установка',
+  },
+  {
+    slug: 'radiaatori-valik',
+    title: 'Radiaatori valik küttesüsteemile Tallinnas – nõuanded ja soovitused',
+    titleRu: 'Выбираем радиатор отопления в Таллине – советы и рекомендации',
+    description:
+      'Radiaatori valik on oluline etapp eramaja või korteri küttesüsteemi korraldamisel. Selgitame, millised radiaatorid on saadaval, kuidas valida õige radiaator ja millised on olulised tehnilised parameetrid.',
+    descriptionRu:
+      'Выбор радиатора отопления - важный этап в обустройстве системы отопления дома или квартиры. Рассказываем о типах радиаторов, как выбрать правильный радиатор и какие технические характеристики важны.',
+    date: '2024-03-20',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/otoplenije-batarei-liking.webp',
+    imageAlt: 'Radiaatori valik küttesüsteemile Tallinnas – professionaalne nõustamine',
+    imageRu: '/photos/otoplenije-batarei-liking.webp',
+    imageAltRu: 'Выбор радиатора отопления в Таллине – профессиональная консультация',
+  },
+  {
+    slug: 'bimetalliline-radiaator',
+    title: 'Bimetalliline radiaator küttesüsteemis – mis see on ja millised on eelised?',
+    titleRu: 'Биметаллический радиатор отопления – что это такое и в чем преимущества?',
+    description:
+      'Bimetallilised radiaatorid kombineerivad terase tugevuse ja alumiiniumi soojusülekande. Selgitame, mis on bimetalliline radiaator, millised on tehnilised erinevused ja kasutamise eripärad.',
+    descriptionRu:
+      'Биметаллические радиаторы отопления сочетают прочность стали и теплоотдачу алюминия. Рассказываем, что собой представляют биметаллические радиаторы, технические отличия и особенности эксплуатации.',
+    date: '2024-02-06',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/otoplenije-batarei-liking.webp',
+    imageAlt: 'Bimetalliline radiaator küttesüsteemis Tallinnas',
+    imageRu: '/photos/otoplenije-batarei-liking.webp',
+    imageAltRu: 'Биметаллический радиатор отопления в Таллине',
+  },
+  {
+    slug: 'pump-margi-ja-kuiva-rootoriga',
+    title: 'Pump margi ja kuiva rootoriga – erinevused ja valik',
+    titleRu: 'Насос с мокрым и сухим ротором – отличия и выбор',
+    description:
+      'Pumbad "märja" ja "kuiva" rootoriga erinevad konstruktsiooni, kasutuse ja tehniliste omaduste poolest. Selgitame peamised erinevused, eelised ja puudused.',
+    descriptionRu:
+      'Насосы с «сухим» и «мокрым» роторами отличаются по конструкции, применению и техническим характеристикам. Рассказываем об основных отличиях, преимуществах и недостатках.',
+    date: '2023-12-08',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Pump küttesüsteemis Tallinnas – margi ja kuiva rootoriga erinevused',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Насос в системе отопления в Таллине – различия между мокрым и сухим ротором',
+  },
+  {
+    slug: 'laienduspaak-kutte-ja-gvs',
+    title: 'Laienduspaak küttesüsteemi ja soojavee jaoks – erinevused ja valik',
+    titleRu: 'Расширительный бак для отопления и ГВС – отличия и выбор',
+    description:
+      'Laienduspaak on oluline küttesüsteemi ja soojaveevarustuse element, mis on mõeldud soojuskandja soojuspaisumise kompenseerimiseks ja stabiilse rõhu säilitamiseks süsteemis. Selgitame erinevused küttesüsteemi ja soojavee laienduspaakide vahel.',
+    descriptionRu:
+      'Расширительный бак является важным элементом систем отопления и горячего водоснабжения. Он предназначен для компенсации теплового расширения теплоносителя и поддержания стабильного давления в системе. Рассказываем об отличиях баков для отопления и ГВС.',
+    date: '2023-10-03',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Laienduspaak küttesüsteemis Tallinnas – professionaalne paigaldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Расширительный бак в системе отопления в Таллине – профессиональная установка',
+  },
+  {
+    slug: 'tsirkulatsioonipump',
+    title: 'Tsirkulatsioonipump küttesüsteemis – seade ja otstarve',
+    titleRu: 'Циркуляционный насос в системе отопления – устройство и назначение',
+    description:
+      'Tsirkulatsioonipump on seade, mida kasutatakse küttesüsteemides ja soojaveesüsteemides soojuskandja sunnitud tsirkulatsiooni tagamiseks. Selgitame, kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.',
+    descriptionRu:
+      'Циркуляционный насос - это устройство, используемое в системах отопления и горячего водоснабжения для обеспечения принудительной циркуляции теплоносителя. Рассказываем, как работает циркуляционный насос и каково его назначение.',
+    date: '2023-09-28',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Tsirkulatsioonipump küttesüsteemis Tallinnas – professionaalne paigaldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Циркуляционный насос в системе отопления в Таллине – профессиональная установка',
+  },
+  {
+    slug: 'hudroakumulaatorid-ja-laienduspaagid',
+    title: 'Hüdroakumulaatorid ja laienduspaagid – milles erinevus?',
+    titleRu: 'Гидроаккумуляторы и расширительные баки – в чем разница?',
+    description:
+      'Laienduspaakide liigid: küttesüsteemi jaoks, soojaveevarustuse jaoks, hüdroakumulaatorid. Konstruktsioonieripärad. Tööpõhimõte. Peamine erinevus hüdroakumulaatori ja laienduspaagi vahel. Paigaldusreeglid.',
+    descriptionRu:
+      'Разновидности расширительных баков: для отопления, для ГВС, гидроаккумуляторы. Конструктивные особенности. Принцип работы. Основное отличие гидроаккумулятора и расширительного бака. Правила установки.',
+    date: '2023-07-04',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Hüdroakumulaatorid ja laienduspaagid küttesüsteemis Tallinnas',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Гидроаккумуляторы и расширительные баки в системе отопления в Таллине',
+  },
+  {
+    slug: 'elektrikatla-ulehendamine',
+    title: 'Elektrikatla ühendamine küttesüsteemiga Tallinnas – juhend ja skeemid',
+    titleRu: 'Подключение электрокотла к системе отопления в Таллине – руководство и схемы',
+    description:
+      'Elektrikatla ühendamine küttesüsteemiga nõuab hoolikat planeerimist ja professionaalset paigaldust. Selgitame elektrikatla ehitust, ettevalmistust ja ühendamise skeeme.',
+    descriptionRu:
+      'Подключение электрокотла в систему отопления требует тщательного планирования и профессиональной установки. Рассказываем о строении, подготовке и выборе схемы подключения электрического котла.',
+    date: '2023-01-31',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Elektrikatla ühendamine küttesüsteemiga Tallinnas – professionaalne paigaldus',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Подключение электрокотла к системе отопления в Таллине – профессиональная установка',
+  },
+  {
+    slug: 'avatud-ja-suletud-kuttesusteemid',
+    title: 'Avatud ja suletud küttesüsteemid – erinevused ja valik',
+    titleRu: 'Открытая и закрытая системы отопления – отличия и выбор',
+    description:
+      'Avatud ja suletud küttesüsteemid erinevad konstruktsiooni ja tööpõhimõtte poolest. Selgitame peamised erinevused, milline süsteem on kõige levinum, tööpõhimõte ja kogu vajaliku teabe.',
+    descriptionRu:
+      'Открытая и закрытая системы отопления отличаются по конструкции и принципу работы. Рассказываем об основных отличиях, какая система наиболее распространена, принцип работы и всю необходимую информацию.',
+    date: '2022-12-09',
+    category: 'kuttesusteem',
+    categoryRu: 'otoplenije',
+    image: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAlt: 'Avatud ja suletud küttesüsteemid Tallinnas – professionaalne nõustamine',
+    imageRu: '/photos/sistema-otoplenija-connectors-liking.webp',
+    imageAltRu: 'Открытая и закрытая системы отопления в Таллине – профессиональная консультация',
+  },
+  {
+    slug: 'kanalisatsiooni-ummistus-mida-teha',
+    title: 'Kanalisatsiooni ummistus Tallinnas: mida teha enne ja pärast meistri saabumist',
+    titleRu: 'Засор канализации в Таллине: что делать до и после приезда мастера',
+    description:
+      'Praktiline juhend, mida teha kanalisatsiooni ummistuse korral Tallinnas ja Harjumaal: esmaabi, mida kindlasti mitte teha ja millal kutsuda avarii toruabi.',
+    descriptionRu:
+      'Практическое руководство, что делать при серьёзном засоре канализации в Таллине и Харьюмаа: первая помощь, чего нельзя делать и когда нужно вызывать аварийного сантехника 24/7.',
+    date: '2026-02-10',
+    category: 'kanalisatsioon',
+    categoryRu: 'kanalizacija',
+    image: '/photos/blog/zasor-kanalizacii-blog-est.webp',
+    imageAlt: 'Kanalisatsiooni ummistus Tallinnas – avarii torumees tööl',
+    imageRu: '/photos/blog/zasor-kanalizacii-blog-rus.webp',
+    imageAltRu: 'Засор канализации в Таллине – аварийный сантехник за работой',
+  },
+  {
+    slug: 'boileri-hooldus-ja-loputus',
+    title: 'Boileri hooldus ja läbipesu: kuidas pikendada soojaveeboileri eluiga',
+    titleRu: 'Обслуживание и промывка бойлера: почему это важно в Таллине и Харьюмаа?',
+    description:
+      'Selgitus, miks on oluline regulaarselt hooldada ja loputada boilerit, kui tihti seda teha ning millised on levinumad vead, mida Tallinnas ja Harjumaal nähakse.',
+    descriptionRu:
+      'Объясняем, почему важно регулярно обслуживать и промывать бойлер, как часто это делать и какие типичные ошибки встречаются у клиентов в Таллине и Харьюмаа.',
+    date: '2026-02-10',
+    category: 'boiler',
+    categoryRu: 'boiler',
+    image: '/photos/blog/procistka-boilera-est.webp',
+    imageAlt: 'Boileri hooldus ja läbipesu Tallinnas – sanitaartehnik tööl',
+    imageRu: '/photos/blog/procistka-boilera-rus.webp',
+    imageAltRu: 'Обслуживание и промывка бойлера в Таллине – мастер за работой',
+  },
+];
+
+// Categories configuration
+const categories = {
+  kuttesusteem: {
+    name: 'Küttesüsteem',
+    nameRu: 'Отопление',
+    slug: 'kuttesusteem',
+    slugRu: 'otoplenije',
+    description: 'Artiklid küttesüsteemi hoolduse, remondi ja radiaatorite kohta',
+    descriptionRu: 'Статьи об обслуживании, ремонте систем отопления и радиаторов',
+  },
+  kanalisatsioon: {
+    name: 'Kanalisatsioon',
+    nameRu: 'Канализация',
+    slug: 'kanalisatsioon',
+    slugRu: 'kanalizacija',
+    description: 'Artiklid kanalisatsiooni ummistuste ja remondi kohta',
+    descriptionRu: 'Статьи о засорах и ремонте канализации',
+  },
+  boiler: {
+    name: 'Boiler',
+    nameRu: 'Бойлер',
+    slug: 'boiler',
+    slugRu: 'boiler',
+    description: 'Artiklid boileri hoolduse ja läbipese kohta',
+    descriptionRu: 'Статьи об обслуживании и промывке бойлеров',
+  },
+};
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const pageTitleEt = 'Toruabi blogi – toruabi Tallinn, hooldus ja nõuanded | toruabii.ee';
+const pageDescEt =
+  'Toruabi blogi: artiklid toruabi, avarii toruabi, kanalisatsiooni toruabi, ummistuste likvideerimise ja küttesüsteemi hoolduse kohta Tallinnas ja Harjumaal.';
+const pageTitleRu =
+  'Торуаби блог – торуаби Таллин, обслуживание и советы | toruabii.ee';
+const pageDescRu =
+  'Торуаби блог: статьи о торуаби, аварийной сантехнике, засорах, обслуживании бойлеров и систем отопления в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? pageTitleRu : pageTitleEt;
+const pageDescription = currentLang === 'ru' ? pageDescRu : pageDescEt;
+
+const blogListPath = '/blog';
+const blogCanonical =
+  currentLang === 'ru' ? `${siteUrl}${ruPath(blogListPath)}` : `${siteUrl}${blogListPath}`;
+const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
+
+const blogJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${blogCanonical}#blog`,
+  url: blogCanonical,
+  name: 'toruabii.ee – Toruabi blogi',
+  description:
+    'Praktilised artiklid torutööde, kütte ja kanalisatsiooni teemadel Tallinnas ja Harjumaal.',
+  inLanguage: currentLang === 'ru' ? 'ru' : 'et',
+  publisher: { '@id': `${siteUrl}#organization` },
+};
+
+const blogFaqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Kas blogi artiklid asendavad professionaalset toruabi?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Ei. Blogi eesmärk on anda lühikesi ja selgeid soovitusi, mida teha enne meistri saabumist ja kuidas vältida tüüpvigu. Päris remondi, ummistuse või lekke korral soovitame alati kutsuda avarii toruabi.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Kui tihti lisatakse blogisse uusi artikleid?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Uusi artikleid lisame vastavalt hooajale ja korduvatele küsimustele klientidelt – näiteks enne küttehooaja algust või sagedaste ummistusjuhtumite põhjal.',
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={blogCanonical}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? "торуаби, торуаби блог, торуаби Таллинн, аварийная сантехника" : "toruabi, toruabi blogi, toruabi Tallinnas, avarii toruabi"}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogJsonLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogFaqJsonLd)} />
+  <!-- Header -->
+  <header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
+    <div class="max-w-6xl mx-auto">
+      <a
+        href={homeHref(currentLang)}
+        class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold"
+      >
+        <span data-lang="backToHome">← Tagasi avalehele</span>
+      </a>
+
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: crumbHomeUrl },
+          { name: currentLang === 'ru' ? 'Блог' : 'Blogi', url: blogCanonical },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+
+      <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang="blogPageTitle">
+        Toruabi blogi: praktilised toruabi nõuanded Tallinnas ja Harjumaal
+      </h1>
+      <p class="text-gray-200 max-w-2xl" data-lang="blogPageSubtitle">
+        Siit leiad lühikesed ja praktilised artiklid ummistuste, leketega,
+        boileri ja küttesüsteemi hoolduse kohta. Eesmärk on aidata sul teha
+        õiged otsused enne, kui meister kohale jõuab.
+      </p>
+</div>
+  </header>
+
+  <section class="bg-white border-b border-gray-200 py-6 px-4" aria-label="Piirkonnad">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center blog-et">Toruabi lehed Tallinna piirkondades</h2>
+      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center blog-ru">Торуаби по районам Таллина</h2>
+      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm blog-et">
+        <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-medium">Lasnamäe</a>
+        <a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-medium">Mustamäe</a>
+        <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-medium">Kesklinn</a>
+        <a href="/toruabi-pirita" class="text-emergency-red hover:underline font-medium">Pirita</a>
+        <a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-medium">Viimsi</a>
+        <a href="/hinnakiri" class="text-trust-blue hover:underline font-medium">Hinnakiri</a>
+        <a href="/faq" class="text-trust-blue hover:underline font-medium">KKK</a>
+      </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm blog-ru">
+        <a href="/ru/toruabi-lasnamae" class="text-emergency-red hover:underline font-medium">Ласнамяэ</a>
+        <a href="/ru/toruabi-mustamae" class="text-emergency-red hover:underline font-medium">Мустамяэ</a>
+        <a href="/ru/toruabi-kesklinn" class="text-emergency-red hover:underline font-medium">Кесклинн</a>
+        <a href="/ru/toruabi-pirita" class="text-emergency-red hover:underline font-medium">Пирита</a>
+        <a href="/ru/toruabi-viimsi" class="text-emergency-red hover:underline font-medium">Виймси</a>
+        <a href="/ru/hinnakiri" class="text-trust-blue hover:underline font-medium">Прайс</a>
+        <a href="/ru/faq" class="text-trust-blue hover:underline font-medium">FAQ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <!-- Categories Section -->
+    <section class="max-w-5xl mx-auto mb-12 blog-et">
+      <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Kategooriad</h2>
+      <div class="flex flex-wrap gap-4">
+        {Object.values(categories).map((cat) => (
+          <a
+            href={`/blog/kategoria/${cat.slug}`}
+            class="inline-block bg-white hover:bg-trust-blue hover:text-white text-trust-blue font-semibold py-3 px-6 rounded-lg shadow-md transition-colors border-2 border-trust-blue"
+          >
+            {cat.name}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="max-w-5xl mx-auto mb-12 blog-ru">
+      <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Категории</h2>
+      <div class="flex flex-wrap gap-4">
+        {Object.values(categories).map((cat) => (
+          <a
+            href={ruPath(`/blog/kategoria/${cat.slugRu}`)}
+            class="inline-block bg-white hover:bg-trust-blue hover:text-white text-trust-blue font-semibold py-3 px-6 rounded-lg shadow-md transition-colors border-2 border-trust-blue"
+          >
+            {cat.nameRu}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Estonian list -->
+    <div class="max-w-5xl mx-auto space-y-8 blog-et">
+      {blogPosts.map((post) => (
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img
+            src={post.image}
+            alt={post.imageAlt}
+            class="w-full h-56 md:h-64 object-cover"
+            loading="lazy"
+            width="800"
+            height="450"
+          />
+          <div class="p-6 md:p-8">
+            <header class="mb-4">
+              <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+                <a
+                  href={`/blog/${post.slug}`}
+                  class="hover:text-emergency-red transition-colors"
+                >
+                  {post.title}
+                </a>
+              </h2>
+              <p class="text-sm text-gray-500">
+                Avaldatud:{' '}
+                {new Date(post.date).toLocaleDateString('et-EE', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </p>
+            </header>
+            <p class="text-gray-700 mb-4">{post.description}</p>
+            <a
+              href={`/blog/${post.slug}`}
+              class="inline-flex items-center text-emergency-red font-semibold hover:underline"
+            >
+              <span data-lang="blogReadMore">Loe edasi</span>
+              <svg
+                class="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Russian list -->
+    <div class="max-w-5xl mx-auto space-y-8 blog-ru">
+      {blogPosts.map((post) => (
+        <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img
+            src={post.imageRu}
+            alt={post.imageAltRu}
+            class="w-full h-56 md:h-64 object-cover"
+            loading="lazy"
+            width="800"
+            height="450"
+          />
+          <div class="p-6 md:p-8">
+            <header class="mb-4">
+              <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+                <a
+                  href={ruPath(`/blog/${post.slug}`)}
+                  class="hover:text-emergency-red transition-colors"
+                >
+                  {post.titleRu}
+                </a>
+              </h2>
+              <p class="text-sm text-gray-500">
+                Опубликовано:{' '}
+                {new Date(post.date).toLocaleDateString('ru-RU', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </p>
+            </header>
+            <p class="text-gray-700 mb-4">{post.descriptionRu}</p>
+            <a
+              href={ruPath(`/blog/${post.slug}`)}
+              class="inline-flex items-center text-emergency-red font-semibold hover:underline"
+            >
+              <span data-lang="blogReadMore">Читать далее</span>
+              <svg
+                class="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- FAQ block for blog (ET) -->
+    <section class="max-w-5xl mx-auto mt-16 space-y-4 blog-et">
+      <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+        KKK blogi kohta
+      </h2>
+      <details class="bg-white rounded-lg shadow p-4 cursor-pointer">
+        <summary class="font-semibold text-trust-blue">
+          Kas blogi artiklid asendavad professionaalset toruabi?
+        </summary>
+        <p class="text-gray-700 mt-3">
+          Ei. Blogi eesmärk on anda lühikesi ja selgeid soovitusi, mida teha enne
+          meistri saabumist ja kuidas vältida tüüpvigu. Päris remondi, ummistuse
+          või lekke korral soovitame alati kutsuda avarii toruabi.
+        </p>
+      </details>
+      <details class="bg-white rounded-lg shadow p-4 cursor-pointer">
+        <summary class="font-semibold text-trust-blue">
+          Kui tihti lisatakse blogisse uusi artikleid?
+        </summary>
+        <p class="text-gray-700 mt-3">
+          Uusi artikleid lisame vastavalt hooajale ja korduvatele küsimustele
+          klientidelt – näiteks enne küttehooaja algust või sagedaste
+          ummistusjuhtumite põhjal.
+        </p>
+      </details>
+    </section>
+
+    <!-- FAQ block for blog (RU) -->
+    <section class="max-w-5xl mx-auto mt-16 space-y-4 blog-ru">
+      <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
+        Часто задаваемые вопросы о блоге
+      </h2>
+      <details class="bg-white rounded-lg shadow p-4 cursor-pointer">
+        <summary class="font-semibold text-trust-blue">
+          Заменяют ли статьи в блоге выезд сантехника?
+        </summary>
+        <p class="text-gray-700 mt-3">
+          Нет. Цель блога – дать понятные рекомендации, что делать до приезда
+          мастера и каких ошибок избегать. Для реального ремонта, засора или
+          протечки лучше сразу вызывать аварийного сантехника.
+        </p>
+      </details>
+      <details class="bg-white rounded-lg shadow p-4 cursor-pointer">
+        <summary class="font-semibold text-trust-blue">
+          Как часто появляются новые статьи?
+        </summary>
+        <p class="text-gray-700 mt-3">
+          Мы публикуем новые материалы по мере возникновения повторяющихся
+          вопросов клиентов и перед важными сезонами, например перед началом
+          отопительного периода.
+        </p>
+      </details>
+    </section>
+  </main>
+</BaseLayout>

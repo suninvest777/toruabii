@@ -1,0 +1,534 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Pump margi ja kuiva rootoriga Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Pump margi ja kuiva rootoriga Tallinnas: toruabi 24/7, pumba paigaldus, remont ja hooldus. Pump margi rootoriga, pump kuiva rootoriga. Professionaalne pumba torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Pumbade erinevused, eelised, puudused, valik küttesüsteemi jaoks.';
+const titleRu =
+  'Насос с мокрым и сухим ротором – отличия и выбор | toruabii.ee';
+const descRu =
+  'Насосы с «сухим» и «мокрым» роторами отличаются по конструкции, применению и техническим характеристикам. Рассказываем об основных отличиях, преимуществах и недостатках в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/pump-margi-ja-kuiva-rootoriga';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Pump margi ja kuiva rootoriga</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Pump margi ja kuiva rootoriga Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate pumba paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub pumba toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Pumbad "märja" ja "kuiva" rootoriga erinevad konstruktsiooni, kasutuse ja tehniliste omaduste poolest. Mõistmine nende erinevustest aitab valida õige pumba teie küttesüsteemi jaoks Tallinnas ja Harjumaal.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2023-12-08').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Насос с мокрым и сухим ротором</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Насос с мокрым и сухим ротором: отличия и выбор
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Насосы с «сухим» и «мокрым» роторами отличаются по конструкции, применению и техническим характеристикам. Понимание их различий поможет выбрать правильный насос для вашей системы отопления в Таллине и Харьюмаа.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2023-12-08').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Pump küttesüsteemis Tallinnas – margi ja kuiva rootoriga erinevused"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Pump märja rootoriga
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Pump märja rootoriga on konstruktsioon, kus rootor ja staator on otse kontaktis soojuskandjaga. See tähendab, et rootor on vees või muus vedelikus.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Eelised:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Vaikne töö – vedelik mõnedab müra</li>
+          <li>Kompaktne konstruktsioon</li>
+          <li>Vähem hooldust – vedelik mõnedab ka kulumist</li>
+          <li>Sobib hästi väiksematele süsteemidele</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Puudused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Madalam efektiivsus kui kuiva rootoriga pumpadel</li>
+          <li>Piiratud võimsus – tavaliselt kuni 3 kW</li>
+          <li>Nõuab puhta vedeliku kasutamist</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Pump kuiva rootoriga
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Pump kuiva rootoriga on konstruktsioon, kus rootor ja staator on eraldatud tihendiga. Rootor ei ole otse kontaktis soojuskandjaga.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Eelised:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Kõrge efektiivsus – kuni 80%</li>
+          <li>Suurem võimsus – sobib suurematele süsteemidele</li>
+          <li>Võib töötada erinevate vedelikega</li>
+          <li>Pikem eluiga suuremates süsteemides</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Puudused:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Valjem müra töö ajal</li>
+          <li>Nõuab rohkem hooldust – tihendid vajavad vahetamist</li>
+          <li>Suurem ja raskem</li>
+          <li>Kallim</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Millal valida millist?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          <strong>Märja rootoriga pump</strong> sobib hästi:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Väiksematele eramajade küttesüsteemidele</li>
+          <li>Kui on oluline vaikus</li>
+          <li>Kui võimsus on piisav (kuni 3 kW)</li>
+        </ul>
+        <p class="text-gray-700 mt-4 mb-3">
+          <strong>Kuiva rootoriga pump</strong> sobib hästi:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Suurematele süsteemidele</li>
+          <li>Kui on vaja kõrget efektiivsust</li>
+          <li>Kui müra ei ole probleemiks</li>
+          <li>Kui võimsus ületab 3 kW</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused pumpade kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis vahe on margi ja kuiva rootoriga pumpadel?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Märja rootoriga pump on vaiksem ja sobib väiksematele eramajade küttesüsteemidele. Kuiva rootoriga pump on võimsam ja sobib suurematele süsteemidele, kuid on valjem. Märja rootoriga pump on odavam hooldada, kuiva rootoriga pump on efektiivsem suuremate süsteemide jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab pumba paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Pumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal valida margi rootoriga pump?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Märja rootoriga pump on ideaalne valik väiksematele eramajade küttesüsteemidele, kui on oluline vaikus ja võimsus on piisav (kuni 3 kW). See on ka odavam hooldada ja sobib hästi eluruumides, kus müra on oluline tegur.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal valida kuiva rootoriga pump?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kuiva rootoriga pump sobib suurematele süsteemidele, kui on vaja kõrget efektiivsust ja võimsus ületab 3 kW. See on ideaalne valik suurematele eramajadele või kommertsehitistele, kus müra ei ole probleemiks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui tihti peaks pumba hooldama?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Märja rootoriga pump nõuab vähem hooldust – soovitame kontrollida kord aastas. Kuiva rootoriga pump vajab rohkem hooldust – soovitame kontrollida kaks korda aastas. Regulaarne hooldus pikendab pumba eluiga ja tagab optimaalse töö.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid pumpade kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/kollektorigrupp" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Kollektorigrupp küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kollektorsüsteemi eelised ja paigaldus.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Pumba toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub pumba paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Pumba toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Pumba avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile pumba paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud pumpade paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni pumba valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja pumba toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate pumba valikut, paigaldust või remonti Tallinnas? Meie professionaalne torumees pakub pumba toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame pumbade valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Pumba toruabi Tallinnas 24/7 | Pumba paigaldus | Pumba remont | Pumba hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Насос в системе отопления в Таллине – различия между мокрым и сухим ротором"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Насос с мокрым ротором
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Насос с мокрым ротором – это конструкция, где ротор и статор находятся в прямом контакте с теплоносителем. Это означает, что ротор находится в воде или другой жидкости.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Преимущества:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Тихая работа – жидкость поглощает шум</li>
+          <li>Компактная конструкция</li>
+          <li>Меньше обслуживания – жидкость также поглощает износ</li>
+          <li>Хорошо подходит для небольших систем</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Недостатки:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Ниже эффективность, чем у насосов с сухим ротором</li>
+          <li>Ограниченная мощность – обычно до 3 кВт</li>
+          <li>Требует использования чистой жидкости</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Насос с сухим ротором
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Насос с сухим ротором – это конструкция, где ротор и статор разделены уплотнением. Ротор не находится в прямом контакте с теплоносителем.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Преимущества:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Высокая эффективность – до 80%</li>
+          <li>Большая мощность – подходит для больших систем</li>
+          <li>Может работать с различными жидкостями</li>
+          <li>Долгий срок службы в больших системах</li>
+        </ul>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Недостатки:</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Более громкий шум при работе</li>
+          <li>Требует больше обслуживания – уплотнения требуют замены</li>
+          <li>Больше и тяжелее</li>
+          <li>Дороже</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Когда выбирать какой?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          <strong>Насос с мокрым ротором</strong> хорошо подходит:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Для небольших систем отопления частных домов</li>
+          <li>Когда важна тишина</li>
+          <li>Когда мощности достаточно (до 3 кВт)</li>
+        </ul>
+        <p class="text-gray-700 mt-4 mb-3">
+          <strong>Насос с сухим ротором</strong> хорошо подходит:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Для больших систем</li>
+          <li>Когда нужна высокая эффективность</li>
+          <li>Когда шум не является проблемой</li>
+          <li>Когда мощность превышает 3 кВт</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна помощь в выборе или установке насоса в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке насосов.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между насосами с мокрым и сухим ротором?' : 'Mis vahe on margi ja kuiva rootoriga pumpadel?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором тише и подходит для небольших систем отопления частных домов. Насос с сухим ротором мощнее и подходит для больших систем, но шумнее.'
+            : 'Märja rootoriga pump on vaiksem ja sobib väiksematele eramajade küttesüsteemidele. Kuiva rootoriga pump on võimsam ja sobib suurematele süsteemidele, kuid on valjem.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка насоса в Таллине?' : 'Kui palju maksab pumba paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
+            : 'Pumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда выбрать насос с мокрым ротором?' : 'Millal valida margi rootoriga pump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором идеален для небольших систем отопления частных домов, когда важна тишина и мощность достаточна (до 3 кВт). Он также дешевле в обслуживании.'
+            : 'Märja rootoriga pump on ideaalne valik väiksematele eramajade küttesüsteemidele, kui on oluline vaikus ja võimsus on piisav (kuni 3 kW). See on ka odavam hooldada.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда выбрать насос с сухим ротором?' : 'Millal valida kuiva rootoriga pump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с сухим ротором подходит для больших систем, когда нужна высокая эффективность и мощность превышает 3 кВт. Это идеальный выбор для больших частных домов или коммерческих зданий.'
+            : 'Kuiva rootoriga pump sobib suurematele süsteemidele, kui on vaja kõrget efektiivsust ja võimsus ületab 3 kW. See on ideaalne valik suurematele eramajadele või kommertsehitistele.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать насос?' : 'Kui tihti peaks pumba hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором требует меньше обслуживания – рекомендуем проверять раз в год. Насос с сухим ротором требует больше обслуживания – рекомендуем проверять два раза в год.'
+            : 'Märja rootoriga pump nõuab vähem hooldust – soovitame kontrollida kord aastas. Kuiva rootoriga pump vajab rohkem hooldust – soovitame kontrollida kaks korda aastas.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Насос с мокрым и сухим ротором'
+          : 'Pump margi ja kuiva rootoriga',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/pump-margi-ja-kuiva-rootoriga' : 'https://toruabii.ee/blog/pump-margi-ja-kuiva-rootoriga',
+      },
+    ],
+  })}
+/>

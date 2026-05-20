@@ -1,0 +1,477 @@
+---
+import NavGoogleReviewLink from './NavGoogleReviewLink.astro';
+import { HOME_SERVICES } from '../data/home-services';
+import { SITE_IDENTITY } from '../data/site-identity';
+import { alternateLangPath, ruPath } from '../utils/i18n-paths';
+
+interface Props {
+  variant?: 'home' | 'inner';
+  lang?: 'et' | 'ru';
+}
+
+const { variant = 'inner', lang = 'et' } = Astro.props;
+const isHome = variant === 'home';
+const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
+const phoneLink = SITE_IDENTITY.phoneTel;
+const phoneDisplay = SITE_IDENTITY.phoneDisplay;
+const langSwitchHref = alternateLangPath(Astro.url.pathname, lang);
+const langSwitchLabel = lang === 'ru' ? 'Eesti' : 'Русский';
+const langSwitchShort = lang === 'ru' ? 'ET' : 'RU';
+const langSwitchAria = lang === 'ru' ? 'Vaheta eesti keelele' : 'Переключить на русский';
+---
+
+<header class="site-header fixed top-0 left-0 right-0 z-50 home-surface-elevated border-b home-border">
+  <div class="max-w-7xl mx-auto px-4 lg:px-6">
+    <!-- Mobile: single compact row (logo | phone + menu) -->
+    <div class="flex md:hidden items-center justify-between gap-3 py-2 min-h-[48px]">
+      {isHome ? (
+        <a href={H('/')} class="flex-shrink-0 hover:opacity-90 transition-opacity" aria-label="toruabii.ee">
+          <img
+            src="/photos/toruabii.webp"
+            alt="toruabii.ee - Toruabi 24/7"
+            class="h-8 w-auto object-contain"
+            width="1226"
+            height="257"
+            loading="eager"
+            decoding="async"
+          />
+        </a>
+      ) : (
+        <div class="flex-shrink-0 min-w-0">
+          <a href="/" class="inline-flex hover:opacity-90 transition-opacity blog-et" aria-label="toruabii.ee">
+            <img
+              src="/photos/toruabii.webp"
+              alt="toruabii.ee - Avarii Toruabi"
+              class="h-8 w-auto object-contain"
+              width="1226"
+              height="257"
+              loading="eager"
+              decoding="async"
+            />
+          </a>
+          <a href="/ru" class="inline-flex hover:opacity-90 transition-opacity blog-ru" aria-label="toruabii.ee">
+            <img
+              src="/photos/toruabii.webp"
+              alt="toruabii.ee"
+              class="h-8 w-auto object-contain"
+              width="1226"
+              height="257"
+              loading="eager"
+              decoding="async"
+            />
+          </a>
+        </div>
+      )}
+
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <a
+          href={langSwitchHref}
+          hreflang={lang === 'ru' ? 'et' : 'ru'}
+          class="home-header-lang-mobile inline-flex items-center justify-center min-w-[2.5rem] h-10 px-2 rounded-lg text-sm font-semibold text-brand-navy border home-border hover:border-brand-blue hover:text-brand-blue transition-colors"
+          aria-label={langSwitchAria}
+        >
+          {langSwitchShort}
+        </a>
+        <a
+          href={`tel:${phoneLink}`}
+          class="home-header-phone-mobile inline-flex items-center justify-center w-10 h-10 rounded-lg text-black hover:text-brand-blue transition-colors"
+          aria-label={phoneDisplay}
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 320 512" aria-hidden="true">
+            <path
+              d="M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z"
+            />
+          </svg>
+        </a>
+        <button
+          id="mobile-menu-button"
+          type="button"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-brand-navy hover:text-brand-blue transition-colors"
+          aria-label="Menüü"
+          aria-expanded="false"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Desktop: logo + contact row -->
+    <div
+      class="hidden md:flex items-center justify-between gap-4 border-b home-border py-2.5 min-h-[64px]"
+    >
+      {isHome ? (
+        <a href={H('/')} class="flex-shrink-0 hover:opacity-90 transition-opacity" aria-label="toruabii.ee">
+          <img
+            src="/photos/toruabii.webp"
+            alt="toruabii.ee - Toruabi 24/7"
+            class="h-[52px] max-h-[52px] w-auto object-contain"
+            width="1226"
+            height="257"
+            loading="eager"
+            decoding="async"
+          />
+        </a>
+      ) : (
+        <div class="flex-shrink-0">
+          <a href="/" class="inline-flex hover:opacity-90 transition-opacity blog-et" aria-label="toruabii.ee">
+            <img
+              src="/photos/toruabii.webp"
+              alt="toruabii.ee - Avarii Toruabi"
+              class="h-[52px] max-h-[52px] w-auto object-contain"
+              width="1226"
+              height="257"
+              loading="eager"
+              decoding="async"
+            />
+          </a>
+          <a href="/ru" class="inline-flex hover:opacity-90 transition-opacity blog-ru" aria-label="toruabii.ee">
+            <img
+              src="/photos/toruabii.webp"
+              alt="toruabii.ee"
+              class="h-[52px] max-h-[52px] w-auto object-contain"
+              width="1226"
+              height="257"
+              loading="eager"
+              decoding="async"
+            />
+          </a>
+        </div>
+      )}
+
+      <div class="flex items-center gap-3 flex-shrink-0 ml-auto">
+        <a
+          href={langSwitchHref}
+          hreflang={lang === 'ru' ? 'et' : 'ru'}
+          class="home-header-lang-desktop inline-flex items-center justify-center min-h-[40px] px-3 rounded-lg text-sm font-semibold text-brand-navy border home-border hover:border-brand-blue hover:text-brand-blue transition-colors"
+          aria-label={langSwitchAria}
+        >
+          {langSwitchLabel}
+        </a>
+        <div class="flex flex-col items-end text-sm font-body leading-tight">
+          <span class="home-header-contact-label text-sm font-semibold">
+            {isHome ? (
+              <>
+                <span class="home-ssr-et">24/7 kontakt:</span>
+                <span class="home-ssr-ru">24/7 контакт:</span>
+              </>
+            ) : (
+              <>
+                <span class="blog-et">24/7 kontakt:</span>
+                <span class="blog-ru">24/7 контакт:</span>
+              </>
+            )}
+          </span>
+          <ul class="home-header-phones m-0 p-0 list-none flex items-center gap-1">
+            <li>
+              <a
+                href={`tel:${phoneLink}`}
+                class="inline-flex items-center gap-2 font-semibold text-black hover:text-brand-blue tabular-nums transition-colors"
+              >
+                <span class="inline-flex text-black" aria-hidden="true">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 320 512">
+                    <path
+                      d="M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z"
+                    />
+                  </svg>
+                </span>
+                <span>{phoneDisplay}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: nav + CTA row -->
+    <div class="hidden md:flex items-center justify-between gap-3 py-2 min-h-[56px]">
+      <nav
+        class="home-header-nav hidden md:flex flex-1 items-center gap-0 lg:gap-0.5 font-body text-[15px] font-medium text-gray-900"
+        aria-label="Peamenüü"
+      >
+        <div class="relative group">
+          {isHome ? (
+            <a
+              href="#teenused"
+              class="home-header-nav-link inline-flex items-center gap-1 px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors"
+            >
+              <span class="home-ssr-et">Teenused</span>
+              <span class="home-ssr-ru">Услуги</span>
+              <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+          ) : (
+            <span class="home-header-nav-link inline-flex items-center gap-1 px-3 lg:px-4 py-2 text-gray-900 cursor-default">
+              <span class="blog-et" data-lang="services">Teenused</span>
+              <span class="blog-ru">Услуги</span>
+              <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          )}
+          <ul class="absolute left-0 top-full pt-1 hidden group-hover:block group-focus-within:block min-w-[280px] z-50 list-none m-0 p-0">
+            <li class="home-surface-elevated rounded-xl shadow-xl border home-border py-2 max-h-[70vh] overflow-y-auto">
+              {HOME_SERVICES.map((s) =>
+                isHome ? (
+                  <a
+                    href={H(s.path)}
+                    class="block px-4 py-2.5 text-sm hover:bg-brand-blue-light hover:text-brand-blue transition-colors"
+                  >
+                    <span class="home-ssr-et">{s.titleEt}</span>
+                    <span class="home-ssr-ru">{s.titleRu}</span>
+                  </a>
+                ) : (
+                  <>
+                    <a
+                      href={s.path}
+                      class="blog-et block px-4 py-2.5 text-sm hover:bg-brand-blue-light hover:text-brand-blue transition-colors"
+                    >
+                      {s.titleEt}
+                    </a>
+                    <a
+                      href={ruPath(s.path)}
+                      class="blog-ru block px-4 py-2.5 text-sm hover:bg-brand-blue-light hover:text-brand-blue transition-colors"
+                    >
+                      {s.titleRu}
+                    </a>
+                  </>
+                )
+              )}
+            </li>
+          </ul>
+        </div>
+
+        {isHome ? (
+          <>
+            <a href="#ettevottest" class="home-header-nav-link px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
+              <span class="home-ssr-et">Ettevõttest</span>
+              <span class="home-ssr-ru">О компании</span>
+            </a>
+            <a href={H('/hinnakiri')} class="home-header-nav-link px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
+              <span class="home-ssr-et">Hinnakiri</span>
+              <span class="home-ssr-ru">Прайс</span>
+            </a>
+            <a href={H('/faq')} class="home-header-nav-link hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
+              <span class="home-ssr-et">KKK</span>
+              <span class="home-ssr-ru">FAQ</span>
+            </a>
+            <a href={H('/blog')} class="home-header-nav-link hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
+              <span class="home-ssr-et">Blogi</span>
+              <span class="home-ssr-ru">Блог</span>
+            </a>
+            <NavGoogleReviewLink variant="desktop" homeSsr homeNavInline />
+            <a href="#kontaktivorm" class="home-header-nav-link px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
+              <span class="home-ssr-et">Kontakt</span>
+              <span class="home-ssr-ru">Контакты</span>
+            </a>
+          </>
+        ) : (
+          <>
+            <a href="/hinnakiri" class="home-header-nav-link blog-et px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="pricing">Hinnakiri</a>
+            <a href="/ru/hinnakiri" class="home-header-nav-link blog-ru px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Прайс-лист</a>
+            <a href="/faq" class="home-header-nav-link blog-et hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="faq">KKK</a>
+            <a href="/ru/faq" class="home-header-nav-link blog-ru hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">FAQ</a>
+            <a href="/blog" class="home-header-nav-link blog-et hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="blog">Blogi</a>
+            <a href="/ru/blog" class="home-header-nav-link blog-ru hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Блог</a>
+            <NavGoogleReviewLink variant="desktop" />
+            <a href="/#piirkonnad" class="home-header-nav-link blog-et px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="areas">Piirkonnad</a>
+            <a href="/ru#piirkonnad" class="home-header-nav-link blog-ru px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Районы</a>
+            <a href="/#kontakt" class="home-header-nav-link blog-et px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="contact">Kontakt</a>
+            <a href="/ru#kontakt" class="home-header-nav-link blog-ru px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Контакты</a>
+          </>
+        )}
+
+        <a
+          id="lang-toggle"
+          href={langSwitchHref}
+          hreflang={lang === 'ru' ? 'et' : 'ru'}
+          rel="alternate"
+          class="home-header-nav-link home-header-lang-nav px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors"
+          aria-label={langSwitchAria}
+        >
+          {langSwitchLabel}
+        </a>
+      </nav>
+
+      <div class="flex items-center gap-2 ml-auto md:ml-0 flex-shrink-0">
+        {isHome ? (
+          <a
+            href="#kontaktivorm"
+            class="home-header-cta hidden md:inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors min-h-[40px] shadow-sm"
+          >
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
+            </svg>
+            <span class="home-ssr-et">Võta ühendust</span>
+            <span class="home-ssr-ru">Связаться</span>
+          </a>
+        ) : (
+          <a
+            href={`tel:${phoneLink}`}
+            class="home-header-cta hidden md:inline-flex items-center gap-2 text-white text-sm font-semibold px-5 py-2 rounded-full transition-colors min-h-[40px] shadow-sm"
+            data-lang="callNow"
+          >
+            HELISTA
+          </a>
+        )}
+
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav
+  id="mobile-menu"
+  class="hidden md:hidden fixed inset-x-4 top-[calc(var(--header-height)+0.5rem)] home-surface-elevated rounded-xl shadow-2xl z-40 p-4 max-h-[80vh] overflow-y-auto border home-border"
+  aria-label="Mobiilmenüü"
+>
+  <ul class="space-y-1 font-body home-text list-none m-0 p-0">
+    <li class="font-semibold text-brand-blue px-2 py-1 text-sm uppercase tracking-wide">
+      {isHome ? (
+        <>
+          <span class="home-ssr-et">Teenused</span>
+          <span class="home-ssr-ru">Услуги</span>
+        </>
+      ) : (
+        <>
+          <span class="blog-et" data-lang="services">Teenused</span>
+          <span class="blog-ru">Услуги</span>
+        </>
+      )}
+    </li>
+    {HOME_SERVICES.map((s) =>
+      isHome ? (
+        <li>
+          <a href={H(s.path)} class="block py-2 px-2 rounded-lg hover:bg-brand-blue-light text-sm">
+            <span class="home-ssr-et">{s.titleEt}</span>
+            <span class="home-ssr-ru">{s.titleRu}</span>
+          </a>
+        </li>
+      ) : (
+        <>
+          <li class="blog-et">
+            <a href={s.path} class="block py-2 px-2 rounded-lg hover:bg-brand-blue-light text-sm">{s.titleEt}</a>
+          </li>
+          <li class="blog-ru">
+            <a href={ruPath(s.path)} class="block py-2 px-2 rounded-lg hover:bg-brand-blue-light text-sm">{s.titleRu}</a>
+          </li>
+        </>
+      )
+    )}
+    {isHome ? (
+      <>
+        <li class="border-t home-border mt-2 pt-2">
+          <a href="#ettevottest" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
+            <span class="home-ssr-et">Ettevõttest</span>
+            <span class="home-ssr-ru">О компании</span>
+          </a>
+        </li>
+        <li>
+          <a href={H('/hinnakiri')} class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
+            <span class="home-ssr-et">Hinnakiri</span>
+            <span class="home-ssr-ru">Прайс</span>
+          </a>
+        </li>
+        <li>
+          <a href={H('/faq')} class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
+            <span class="home-ssr-et">KKK</span>
+            <span class="home-ssr-ru">FAQ</span>
+          </a>
+        </li>
+        <li>
+          <a href={H('/blog')} class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
+            <span class="home-ssr-et">Blogi</span>
+            <span class="home-ssr-ru">Блог</span>
+          </a>
+        </li>
+        <NavGoogleReviewLink variant="mobile" homeSsr />
+        <li>
+          <a href="#kontaktivorm" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
+            <span class="home-ssr-et">Kontakt</span>
+            <span class="home-ssr-ru">Контакты</span>
+          </a>
+        </li>
+      </>
+    ) : (
+      <>
+        <li class="border-t home-border mt-2 pt-2 blog-et">
+          <a href="/" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Avaleht</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Главная</a>
+        </li>
+        <li class="blog-et">
+          <a href="/hinnakiri" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="pricing">Hinnakiri</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru/hinnakiri" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Прайс-лист</a>
+        </li>
+        <li class="blog-et">
+          <a href="/faq" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="faq">KKK</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru/faq" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">FAQ</a>
+        </li>
+        <li class="blog-et">
+          <a href="/blog" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="blog">Blogi</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru/blog" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Блог</a>
+        </li>
+        <NavGoogleReviewLink variant="mobile" />
+        <li class="blog-et">
+          <a href="/#piirkonnad" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="areas">Piirkonnad</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru#piirkonnad" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Районы</a>
+        </li>
+        <li class="blog-et">
+          <a href="/#kontakt" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="contact">Kontakt</a>
+        </li>
+        <li class="blog-ru">
+          <a href="/ru#kontakt" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Контакты</a>
+        </li>
+      </>
+    )}
+    <li class="border-t home-border mt-2 pt-2">
+      <a
+        id="lang-toggle-mobile"
+        href={langSwitchHref}
+        hreflang={lang === 'ru' ? 'et' : 'ru'}
+        rel="alternate"
+        class="flex min-h-[44px] items-center justify-center rounded-lg border home-border font-medium hover:border-brand-blue hover:text-brand-blue transition-colors"
+        aria-label={langSwitchAria}
+      >
+        {langSwitchLabel}
+      </a>
+    </li>
+    <li class="pt-2">
+      <a
+        href={`tel:${phoneLink}`}
+        class="flex min-h-[48px] items-center justify-center rounded-lg bg-brand-blue text-white font-bold"
+      >
+        {phoneDisplay}
+      </a>
+    </li>
+    {isHome && (
+      <li>
+        <a
+          href="#kontaktivorm"
+          class="flex min-h-[48px] items-center justify-center rounded-lg border-2 border-brand-blue text-brand-blue font-semibold mt-1"
+        >
+          <span class="home-ssr-et">Võta ühendust</span>
+          <span class="home-ssr-ru">Связаться</span>
+        </a>
+      </li>
+    )}
+  </ul>
+</nav>
+
+<div class="h-[var(--header-height)]" aria-hidden="true"></div>

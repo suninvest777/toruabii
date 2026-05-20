@@ -1,0 +1,239 @@
+---
+// Gallery component with horizontal scroll and arrow navigation
+const photos = [
+  {
+    src: '/photos/prokladka1.webp',
+    alt: 'Toruühenduse tihend ja protseduur Tallinnas – lekke likvideerimine ja toruabi remont',
+    title: 'Toruühenduse tihend ja toruabi remont'
+  },
+  {
+    src: '/photos/sifon.webp',
+    alt: 'Valamu sifoon ja äravool – sanitaartehnilised tööd ja kanalisatsiooni toruabi Tallinnas',
+    title: 'Valamu sifoon ja äravool'
+  },
+  {
+    src: '/photos/photo_2_2026-01-12_17-17-35.webp',
+    alt: 'Toruabi tööd Tallinnas - Avarii toruabi ja sanitaartehnilised tööd remont',
+    title: 'Avarii toruabi remont Tallinnas'
+  },
+  {
+    src: '/photos/maintoruabii.webp',
+    alt: 'Kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve toruabi kanalisatsiooni puhastus',
+    title: 'Kanalisatsiooni survepesu – toruabi'
+  },
+  {
+    src: '/photos/photo_3_2026-01-12_17-17-35.webp',
+    alt: 'Sanitaartehnilised tööd ja toruabi Tallinnas - Torustike remont ja kanalisatsiooni toruabi',
+    title: 'Sanitaartehnilised tööd Tallinnas'
+  },
+  {
+    src: '/photos/photo_6_2026-01-12_17-17-35.webp',
+    alt: 'Küttesüsteemi paigaldus Tallinnas - Kütte remont',
+    title: 'Küttesüsteemi paigaldus Tallinnas'
+  },
+  {
+    src: '/photos/photo_7_2026-01-12_17-17-35.webp',
+    alt: 'Boileri paigaldus Tallinnas - Boileri remont',
+    title: 'Boileri paigaldus Tallinnas'
+  },
+  {
+    src: '/photos/photo_8_2026-01-12_17-17-35.webp',
+    alt: 'Kanalisatsiooni remont Tallinnas - Torustike avamine',
+    title: 'Kanalisatsiooni remont Tallinnas'
+  },
+  {
+    src: '/photos/photo_12_2026-01-12_17-17-35.webp',
+    alt: 'WC potipaigaldus Tallinnas - Sanitaarseadmete paigaldus',
+    title: 'WC potipaigaldus Tallinnas'
+  },
+  {
+    src: '/photos/photo_27_2026-01-12_17-17-35.webp',
+    alt: 'Küttesüsteemi renoveerimine Tallinnas - Kütte remont',
+    title: 'Küttesüsteemi renoveerimine Tallinnas'
+  },
+  {
+    src: '/photos/photo_30_2026-01-12_17-17-35.webp',
+    alt: 'Toruabi tööd Harjumaal - Avarii toruabi',
+    title: 'Toruabi tööd Harjumaal'
+  },
+  {
+    src: '/photos/photo_33_2026-01-12_17-17-35.webp',
+    alt: 'Rasvapüüduri puhastus Tallinnas - Torustike hooldus',
+    title: 'Rasvapüüduri puhastus Tallinnas'
+  },
+  {
+    src: '/photos/photo_34_2026-01-12_17-17-35.webp',
+    alt: 'Sanitaartehnilised tööd Harjumaal - Toruabi remont',
+    title: 'Sanitaartehnilised tööd Harjumaal'
+  },
+  {
+    src: '/photos/luk-na-ulice.webp',
+    alt: 'Küttesüsteemi lukustus Tallinnas - Kütte remont ja hooldus',
+    title: 'Küttesüsteemi lukustus Tallinnas'
+  },
+  {
+    src: '/photos/otoplenije-batarei-liking.webp',
+    alt: 'Küttepatareide paigaldus Tallinnas - Radiaatorite remont',
+    title: 'Küttepatareide paigaldus Tallinnas'
+  },
+  {
+    src: '/photos/sistema-otoplenija-connectors-liking.webp',
+    alt: 'Küttesüsteemi ühendused Tallinnas - Kütte torustiku remont',
+    title: 'Küttesüsteemi ühendused Tallinnas'
+  },
+  {
+    src: '/photos/spusknoj-klapan-na-radiatore.webp',
+    alt: 'Õhuklapi paigaldus radiaatorile Tallinnas - Kütte remont',
+    title: 'Õhuklapi paigaldus radiaatorile'
+  },
+  {
+    src: '/photos/spusknoj-na-radiatore-2.webp',
+    alt: 'Radiaatori õhuklapi remont Tallinnas - Kütte hooldus',
+    title: 'Radiaatori õhuklapi remont Tallinnas'
+  }
+];
+---
+
+<div class="gallery-container relative">
+  <!-- Left Arrow -->
+  <button
+    id="gallery-prev"
+    class="gallery-arrow gallery-arrow-left absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-trust-blue/90 hover:bg-trust-blue text-white p-3 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
+    aria-label="Eelmine foto"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
+
+  <!-- Gallery Scroll Container -->
+  <div 
+    id="gallery-scroll"
+    class="gallery-scroll flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+    style="scrollbar-width: none; -ms-overflow-style: none;"
+  >
+    {photos.map((photo) => (
+      <div class="gallery-item flex-shrink-0 w-80 md:w-96">
+        <div class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <img 
+            src={photo.src}
+            alt={photo.alt}
+            title={photo.title}
+            class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="400"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Right Arrow -->
+  <button
+    id="gallery-next"
+    class="gallery-arrow gallery-arrow-right absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-trust-blue/90 hover:bg-trust-blue text-white p-3 md:p-4 rounded-full shadow-lg transition-all"
+    aria-label="Järgmine foto"
+  >
+    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .gallery-container {
+    position: relative;
+  }
+  
+  .gallery-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .gallery-arrow {
+    transition: background-color 0.3s, transform 0.2s;
+    cursor: pointer;
+  }
+  
+  .gallery-arrow:hover {
+    transform: scale(1.1);
+  }
+  
+  .gallery-arrow:active {
+    transform: scale(0.95);
+  }
+  
+  @media (max-width: 768px) {
+    .gallery-arrow {
+      padding: 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    'use strict';
+    
+    const gallery = document.getElementById('gallery-scroll');
+    const prevBtn = document.getElementById('gallery-prev');
+    const nextBtn = document.getElementById('gallery-next');
+    
+    if (!gallery || !prevBtn || !nextBtn) return;
+    
+    const scrollAmount = 320; // Width of one item + gap
+    
+    function updateArrowVisibility() {
+      const { scrollLeft, scrollWidth, clientWidth } = gallery;
+      if (scrollLeft <= 5) {
+        prevBtn.style.opacity = '0.5';
+        prevBtn.style.pointerEvents = 'none';
+      } else {
+        prevBtn.style.opacity = '1';
+        prevBtn.style.pointerEvents = 'auto';
+      }
+      
+      if (scrollLeft >= scrollWidth - clientWidth - 5) {
+        nextBtn.style.opacity = '0.5';
+        nextBtn.style.pointerEvents = 'none';
+      } else {
+        nextBtn.style.opacity = '1';
+        nextBtn.style.pointerEvents = 'auto';
+      }
+    }
+    
+    prevBtn.addEventListener('click', function() {
+      gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    
+    nextBtn.addEventListener('click', function() {
+      gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+    
+    gallery.addEventListener('scroll', updateArrowVisibility);
+    
+    // Initial check
+    updateArrowVisibility();
+    
+    // Update on resize
+    window.addEventListener('resize', updateArrowVisibility);
+  })();
+</script>
+
+<!-- ImageObject Schema for Gallery Images -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": photos.map((photo, index) => ({
+    "@type": "ImageObject",
+    "position": index + 1,
+    "contentUrl": `https://toruabii.ee${photo.src}`,
+    "description": photo.alt,
+    "name": photo.title
+  }))
+})} />

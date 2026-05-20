@@ -1,0 +1,165 @@
+---
+/**
+ * Internal links: Tallinn district landings, Harju municipality landings, hinnakiri, FAQ, blog.
+ * Neighbor links use anchor text "toruabi [district]" / "торуаби [район]".
+ */
+import { ruPath } from '../utils/i18n-paths';
+import {
+  harjuMunicipalities,
+  getHarjuNeighborMunicipalities,
+  isHarjuMunicipalityPath,
+  isTallinnDistrictPath,
+  type HarjuMunicipalityId,
+} from '../data/harju-municipality-landings';
+import { getTallinnNeighborDistricts, tallinnDistrictSeo } from '../data/seo-keywords';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const allTallinn = Object.values(tallinnDistrictSeo);
+
+const currentTallinnId = allTallinn.find((d) => d.path === currentPath)?.id;
+const currentHarjuId = harjuMunicipalities.find((m) => m.path === currentPath)?.id;
+
+const isTallinnPage = isTallinnDistrictPath(currentPath);
+const isHarjuPage = isHarjuMunicipalityPath(currentPath);
+const isOtherLanding =
+  !isTallinnPage &&
+  !isHarjuPage &&
+  !allTallinn.some((d) => d.path === currentPath) &&
+  currentPath.startsWith('/toruabi-');
+
+const tallinnNeighborLinks = currentTallinnId
+  ? getTallinnNeighborDistricts(currentTallinnId)
+  : isTallinnPage
+    ? []
+    : allTallinn;
+
+const harjuNeighborLinks = currentHarjuId
+  ? getHarjuNeighborMunicipalities(currentHarjuId as HarjuMunicipalityId)
+  : isHarjuPage
+    ? []
+    : harjuMunicipalities;
+
+const tallinnHeadingEt = isTallinnPage
+  ? 'Toruabi naaberlinnaosades'
+  : 'Toruabi Tallinna piirkondades';
+const tallinnHeadingRu = isTallinnPage
+  ? 'Торуаби в соседних районах Таллина'
+  : 'Торуаби по районам Таллина';
+
+const harjuHeadingEt = isHarjuPage
+  ? 'Toruabi naabervaldades Harjumaal'
+  : 'Toruabi Harjumaal (vallad ja linnad)';
+const harjuHeadingRu = isHarjuPage
+  ? 'Торуаби в соседних волостях Харьюмаа'
+  : 'Торуаби в Харьюмаа (волости и города)';
+
+const showHarjuBlock = isTallinnPage || isHarjuPage || isOtherLanding;
+---
+
+<section class="bg-gray-50 rounded-lg p-8 mb-8">
+  <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-et">{tallinnHeadingEt}</h2>
+  <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-ru">{tallinnHeadingRu}</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+    {
+      tallinnNeighborLinks.map((d) => (
+        <div class="bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg h-full overflow-hidden">
+          <a
+            href={d.path}
+            class="block p-4 text-center no-underline text-inherit hover:bg-gray-50 transition-colors h-full blog-et"
+          >
+            <h3 class="font-bold text-trust-blue mb-2">{d.linkAnchorEt}</h3>
+            <p class="text-sm text-gray-600">{d.descriptionEt}</p>
+          </a>
+          <a
+            href={ruPath(d.path)}
+            class="block p-4 text-center no-underline text-inherit hover:bg-gray-50 transition-colors h-full blog-ru border-t border-gray-100"
+          >
+            <h3 class="font-bold text-trust-blue mb-2">{d.linkAnchorRu}</h3>
+            <p class="text-sm text-gray-600">{d.descriptionRu}</p>
+          </a>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    showHarjuBlock && (
+      <>
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 mt-12 text-center blog-et">{harjuHeadingEt}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 mt-12 text-center blog-ru">{harjuHeadingRu}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          {harjuNeighborLinks.map((m) => (
+            <div class="bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg h-full overflow-hidden border border-gray-100">
+              <a
+                href={m.path}
+                class="block p-4 text-center no-underline text-inherit hover:bg-slate-50 transition-colors h-full blog-et"
+              >
+                <h3 class="font-bold text-trust-blue mb-2">{m.linkAnchorEt}</h3>
+                <p class="text-sm text-gray-600 line-clamp-2">{m.descriptionEt}</p>
+              </a>
+              <a
+                href={ruPath(m.path)}
+                class="block p-4 text-center no-underline text-inherit hover:bg-slate-50 transition-colors h-full blog-ru border-t border-gray-100"
+              >
+                <h3 class="font-bold text-trust-blue mb-2">{m.linkAnchorRu}</h3>
+                <p class="text-sm text-gray-600 line-clamp-2">{m.descriptionRu}</p>
+              </a>
+            </div>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  <div class="mt-8 pt-6 border-t border-gray-200 max-w-3xl mx-auto">
+    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-et">Kasulikud lingid</h3>
+    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-ru">Полезные ссылки</h3>
+    <div class="flex flex-wrap gap-3 justify-center">
+      <a
+        href="/hinnakiri"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
+        >Hinnakiri</a
+      >
+      <a
+        href="/ru/hinnakiri"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
+        >Прайс-лист</a
+      >
+      <a
+        href="/faq"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
+        >KKK</a
+      >
+      <a
+        href="/ru/faq"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
+        >FAQ</a
+      >
+      <a
+        href="/blog"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
+        >Blogi</a
+      >
+      <a
+        href="/ru/blog"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
+        >Блог</a
+      >
+      <a
+        href="/"
+        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
+        >Avaleht</a
+      >
+      <a
+        href="/ru"
+        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
+        >Главная (RU)</a
+      >
+    </div>
+  </div>
+</section>

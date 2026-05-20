@@ -1,0 +1,43 @@
+# robots.txt for toruabii.ee
+# .well-known/ is allowed (security.txt, llm.txt, etc.)
+# LLM discovery: /llms.txt, /.well-known/llm.txt, /ai-context.json (all Allow: /)
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://toruabii.ee/sitemap.xml
+
+# Allow AI/LLM crawlers (for AIO/GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /photos/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# SEO tools (Site Audit needs crawl; Ahrefs Analytics is on-site)
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: MJ12bot
+Disallow: /

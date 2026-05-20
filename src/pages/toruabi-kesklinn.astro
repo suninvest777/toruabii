@@ -1,0 +1,609 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
+import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import {
+  getTallinnDistrict,
+  tallinnDistrictDescription,
+  tallinnDistrictH1,
+  tallinnDistrictIntro,
+  tallinnDistrictTitle,
+} from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const districtSeo = getTallinnDistrict('kesklinn');
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = tallinnDistrictTitle('kesklinn', 'et');
+const descEt = tallinnDistrictDescription('kesklinn', 'et');
+const titleRu = tallinnDistrictTitle('kesklinn', 'ru');
+const descRu = tallinnDistrictDescription('kesklinn', 'ru');
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const districtPath = '/toruabi-kesklinn';
+const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
+
+const kesklinnFaqEt = [
+  {
+    q: 'Kui kiiresti saab toruabi Kesklinnas?',
+    a: 'Kesklinnas jõuame tavaliselt 20-40 minutiga kohale. Avariikõnedele reageerime kohe.',
+  },
+  {
+    q: 'Millised on toruabi hinnad Kesklinnas?',
+    a: 'Toruabi hinnad Kesklinnas on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja meie veebilehelt.',
+  },
+  {
+    q: 'Kas toruabi töötab Kesklinnas ööpäevaringselt?',
+    a: 'Jah, oleme kättesaadavad 24/7 avariikõnedele Kesklinnas. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.',
+  },
+  {
+    q: 'Kas teil on kogemus Kesklinnas kommertsobjektidega?',
+    a: 'Jah, meil on pikk kogemus töötamisega Kesklinnas kohvikute, restoranide ja kontoritega. Tunneme nende objektide spetsiifikaid ja teame, kuidas kiiresti lahendada probleeme.',
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical="https://toruabii.ee/toruabi-kesklinn"
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <DistrictTallinnJsonLd
+    slot="head"
+    districtPath={districtPath}
+    currentLang={currentLang}
+    pageDescription={pageDescription}
+    addressLocality="Kesklinn"
+    areaServedName="Kesklinn"
+    plumbingDisplayNameEt="toruabii.ee - Toruabi Kesklinnas"
+    plumbingDisplayNameRu="toruabii.ee — торуаби в Кесклинне"
+    offerCatalogNameEt="Toruabi teenused Kesklinnas"
+    offers={[
+      {
+        nameEt: 'Toruabi Kesklinnas',
+        descEt: 'Avarii toruabi Tallinna kesklinna piirkonnas 24/7',
+      },
+      {
+        nameEt: 'Kanalisatsiooni toruabi Kesklinnas',
+        descEt: 'Kanalisatsiooni ummistuste likvideerimine ja hooldus kesklinnas',
+      },
+      {
+        nameEt: 'Boileri toruabi Kesklinnas',
+        descEt: 'Boileri hooldus ja remont kesklinna piirkonnas',
+      },
+    ]}
+    faqEt={kesklinnFaqEt}
+  />
+  <!-- Desktop Navigation -->
+  
+  <!-- Hero Section -->
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          { name: currentLang === 'ru' ? 'Торуаби по районам' : 'Toruabi piirkondades', url: siteUrl + '/#piirkonnad' },
+          { name: currentLang === 'ru' ? 'Торуаби в Кесклинне' : 'Toruabi Kesklinnas', url: siteUrl + '/toruabi-kesklinn' }
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('kesklinn', 'et')}</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('kesklinn', 'ru')}</h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('kesklinn', 'et')}</p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('kesklinn', 'ru')}</p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+
+      <CallStripCta variant="page" />
+      
+      <!-- Why Choose Toruabi Kesklinnas -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Miks valida toruabi Kesklinnas?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Peamised põhjused</h3>
+        <p class="text-gray-700 mb-4">Kesklinn on kontorite, restoranide ja vanade kivimajade segu, kus toruabi peab toimuma kiiresti ja diskreetselt. Meeskond tunneb Tallinna südame parkimispiiranguid ja lahendab lekked, ummistused ning kaubandusliku köögi torustiku rikked ööpäevaringselt.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kommertsobjektide kogemus:</strong> Meil on pikk kogemus töötamisega Kesklinnas kohvikute, restoranide ja kontoritega</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kiire reageerimine:</strong> Kesklinnas jõuame kohale tavaliselt 20-40 minutiga</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Vanade hoonete kogemus:</strong> Tunneme Kesklinnas vanade hoonete spetsiifikaid ja teame, kuidas kiiresti lahendada probleeme</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Toruabi Kesklinnas – meie statistikat</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">623+</div>
+              <p class="text-gray-200">Rahulolu klienti Kesklinnas</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">30 min</div>
+              <p class="text-gray-200">Keskmine reageerimisaeg</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">10+</div>
+              <p class="text-gray-200">Aastat kogemust Kesklinnas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Почему выбирают торуаби в Кесклинне?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Основные причины</h3>
+        <p class="text-gray-700 mb-4">Кесклинн – сердце Таллина, здесь много офисов, кафе, ресторанов и старых зданий. Наша команда хорошо знает центр и быстро реагирует на аварийные вызовы.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Опыт с коммерческими объектами:</strong> У нас большой опыт работы с кафе, ресторанами и офисами в центре</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Быстрое реагирование:</strong> В центре мы обычно приезжаем за 20-40 минут</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Опыт со старыми зданиями:</strong> Мы знаем специфику старых зданий в центре и умеем быстро решать проблемы</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Торуаби в Кесклинне – наша статистика</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">623+</div>
+              <p class="text-gray-200">Довольных клиентов в центре</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">30 мин</div>
+              <p class="text-gray-200">Среднее время реагирования</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">10+</div>
+              <p class="text-gray-200">Лет опыта в центре</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services in Kesklinn -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi teenused Kesklinnas</h2>
+        <p class="text-gray-700 mb-6">Kesklinnas pakume kõiki toruabi teenuseid, sealhulgas:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Kesklinnas kohvikutele ja restoranidele</h3>
+            <p class="text-gray-700 mb-3">Kesklinnas on palju kohvikuid ja restorane, kus kanalisatsioonisüsteemid töötavad intensiivselt. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset kanalisatsiooni toruabi ja hooldust kommertsobjektidele. Meie professionaalne santehnik ja avarii santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Kesklinnas.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Kanalisatsiooni toruabi kohvikutes ja restoranides</li>
+              <li>Rasvapüüduri puhastamine</li>
+              <li>Survepesu kanalisatsioonisüsteemidest</li>
+              <li>Regulaarne hooldus kommertsobjektidele</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Avarii toruabi Kesklinnas vanades hoonetes</h3>
+            <p class="text-gray-700 mb-3">Kesklinnas on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme vanades torustikes. Pakume professionaalset avarii toruabi, kanalisatsiooni toruabi ja boileri toruabi teenuseid Kesklinnas. Meie professionaalne santehnik on spetsialiseerunud töötamisele Kesklinnas vanades hoonetes.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Kanalisatsiooni toruabi vanades hoonetes</li>
+              <li>Küttesüsteemi toruabi ja renoveerimine</li>
+              <li>Boileri toruabi ja hooldus</li>
+              <li>Torustike remont ja renoveerimine</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Услуги торуаби в Кесклинне</h2>
+        <p class="text-gray-700 mb-6">В центре мы предлагаем все услуги торуаби, включая:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби для кафе и ресторанов в центре</h3>
+            <p class="text-gray-700 mb-3">В центре много кафе и ресторанов, где канализационные системы работают интенсивно. Наша команда предлагает профессиональную прочистку канализации и обслуживание коммерческих объектов.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Прочистка канализации в кафе и ресторанах</li>
+              <li>Очистка жироуловителей</li>
+              <li>Гидродинамическая промывка канализационных систем</li>
+              <li>Регулярное обслуживание коммерческих объектов</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Аварийная сантехника в старых зданиях центра</h3>
+            <p class="text-gray-700 mb-3">В центре много старых зданий, которые требуют особого ухода. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в старых коммуникациях.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Прочистка канализации в старых зданиях</li>
+              <li>Обслуживание и реконструкция систем отопления</li>
+              <li>Обслуживание бойлеров</li>
+              <li>Ремонт и реконструкция трубопроводов</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Kesklinnas – kliendiarvustused</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Tõnu R.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Suurepärane toruabi Kesklinnas! Restorani kanalisatsiooni ummistus lahendati kiiresti ja professionaalselt. Soovitan!"</p>
+            <p class="text-sm text-gray-500">20. detsember 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Liis K.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Vanas hoones Kesklinnas tehti torustike remont väga hästi. Meister oli professionaalne ja selgitas kõik selgelt. Garantii 2 aastat annab rahu."</p>
+            <p class="text-sm text-gray-500">30. november 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Keskmine hinnang: <span class="font-bold text-trust-blue">4.9/5</span> (623 arvustust)</p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Торуаби в Кесклинне – отзывы клиентов</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Тыну Р.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Отличная торуаби в центре! Засор канализации в ресторане решили быстро и профессионально. Рекомендую!"</p>
+            <p class="text-sm text-gray-500">20 декабря 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Лиис К.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"В старом здании в центре ремонт трубопроводов сделали очень хорошо. Мастер был профессионален и всё объяснил. Гарантия 2 года даёт спокойствие."</p>
+            <p class="text-sm text-gray-500">30 ноября 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Средняя оценка: <span class="font-bold text-trust-blue">4.9/5</span> (623 отзыва)</p>
+      </section>
+
+      <!-- Areas in Kesklinn -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Kesklinnas piirkonnad</h2>
+        <p class="text-gray-700 mb-4">Teenindame kõiki Kesklinnas piirkondi, sealhulgas:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Vanalinn</h3>
+            <p class="text-sm text-gray-600">Toruabi Vanalinnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Kadriorg</h3>
+            <p class="text-sm text-gray-600">Toruabi Kadriorgus</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Kalamaja</h3>
+            <p class="text-sm text-gray-600">Toruabi Kalamajas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Rotermanni</h3>
+            <p class="text-sm text-gray-600">Toruabi Rotermanni piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Telliskivi</h3>
+            <p class="text-sm text-gray-600">Toruabi Telliskivi piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Uus Maailm</h3>
+            <p class="text-sm text-gray-600">Toruabi Uues Maailmas</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi ka teistes Tallinna piirkondades</h3>
+          <p class="text-gray-200 mb-3">Teenindame ka teisi Tallinna piirkondi:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a> – kiire avarii toruabi ja kanalisatsiooni toruabi Lasnamäe piirkonnas</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Toruabi Mustamäel</a> – professionaalne avarii toruabi Mustamäe piirkonnas</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Toruabi Piritas</a> – professionaalne avarii toruabi Pirita piirkonnas 24/7</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Toruabi Viimsis</a> – professionaalne avarii toruabi Viimsi piirkonnas 24/7</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Районы обслуживания торуаби в Кесклинне</h2>
+        <p class="text-gray-700 mb-4">Мы обслуживаем все районы центра, включая:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Старый город</h3>
+            <p class="text-sm text-gray-600">Торуаби в Старом городе</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Кадриорг</h3>
+            <p class="text-sm text-gray-600">Торуаби в Кадриорге</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Каламая</h3>
+            <p class="text-sm text-gray-600">Торуаби в Каламая</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Ротерманни</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Ротерманни</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Телискиви</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Телискиви</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Уус Маайм</h3>
+            <p class="text-sm text-gray-600">Торуаби в Уус Маайм</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби также в других районах Таллина</h3>
+          <p class="text-gray-200 mb-3">Мы также обслуживаем другие районы Таллина:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Ласнамяэ</a> – быстрая аварийная сантехника и прочистка канализации в районе Ласнамяэ</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Мустамяэ</a> – профессиональная аварийная сантехника в районе Мустамяэ</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Торуаби в Пирита</a> – профессиональная аварийная сантехника в районе Пирита 24/7</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Торуаби в Виймси</a> – профессиональная аварийная сантехника в районе Виймси 24/7</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Typical Problems -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Kesklinnas</h2>
+        <p class="text-gray-700 mb-6">Kesklinnas on palju kohvikuid ja restorane, kus kanalisatsioonisüsteemid töötavad intensiivselt. Samuti on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset kanalisatsiooni toruabi ja hooldust kommertsobjektidele. Meie professionaalne santehnik ja avarii santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Kesklinnas.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused restoranides</h3>
+            <p class="text-gray-700 mb-3">Kesklinnas on palju restorane ja kohvikuid, kus kanalisatsioonisüsteemid töötavad intensiivselt. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees tegeleb kanalisatsiooni toruabi ja avarii toruabi teenustega Kesklinnas.</p>
+            <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Vanade hoonete torustike remont</h3>
+            <p class="text-gray-700 mb-3">Kesklinnas on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme vanades torustikes. Pakume professionaalset avarii toruabi, kanalisatsiooni toruabi ja boileri toruabi teenuseid Kesklinnas. Meie professionaalne santehnik on spetsialiseerunud töötamisele Kesklinnas vanades hoonetes.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Rasvapüüduri puhastus</h3>
+            <p class="text-gray-700 mb-3">Restoranides ja kohvikutes Kesklinnas on vaja regulaarset rasvapüüduri puhastust. Meie toruabi meeskond pakub professionaalset rasvapüüduri puhastust ja trasside survepesu. Meie kogenud torumees tegeleb rasvapüüduri puhastusega Kesklinnas.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Kommertsobjektide hooldus</h3>
+            <p class="text-gray-700 mb-3">Kesklinnas pakume ka hoolduslepinguid kommertsobjektidele. Meie toruabi meeskond tegeleb regulaarse hooldusega restoranide, kohvikute ja kontorite torustike jaoks. Meie professionaalne santehnik tegeleb kommertsobjektide toruabi teenustega Kesklinnas.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi Kesklinnas – meie lahendused</h3>
+          <p class="text-gray-200 mb-3">Meie toruabi meeskond on spetsialiseerunud Kesklinnas kommertsobjektide ja vanade hoonete toruabi probleemide lahendamisele. Kasutame professionaalseid seadmeid ja anname 2-aastase garantiid kõigile töödele. Kui teil on toruabi probleem Kesklinnas, helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me reageerime kohe.</p>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Кесклинне</h2>
+        <p class="text-gray-700 mb-6">В центре много кафе и ресторанов, где канализационные системы работают интенсивно. Также много старых зданий, требующих особого обслуживания. Наша команда предоставляет профессиональные услуги по канализации и обслуживанию коммерческих объектов.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Засоры канализации в ресторанах</h3>
+            <p class="text-gray-700 mb-3">В центре много ресторанов и кафе, где канализационные системы работают интенсивно. Наша команда использует профессиональное оборудование для устранения засоров.</p>
+            <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Засор канализации – что делать?</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Ремонт трубопроводов в старых зданиях</h3>
+            <p class="text-gray-700 mb-3">В центре много старых зданий, требующих особого обслуживания. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в старых коммуникациях.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Очистка жироуловителей</h3>
+            <p class="text-gray-700 mb-3">В ресторанах и кафе в центре требуется регулярная очистка жироуловителей. Наша команда предоставляет профессиональную очистку жироуловителей и гидродинамическую промывку трасс.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание коммерческих объектов</h3>
+            <p class="text-gray-700 mb-3">В центре мы также предлагаем договоры на обслуживание коммерческих объектов. Наша команда занимается регулярным обслуживанием трубопроводов ресторанов, кафе и офисов.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби в Кесклинне – наши решения</h3>
+          <p class="text-gray-200 mb-3">Наша команда специализируется на решении проблем сантехника в коммерческих объектах и старых зданиях в центре. Мы используем профессиональное оборудование и предоставляем 2 года гарантии на все работы. Если у вас проблема с сантехником в центре, позвоните нам <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> и мы отреагируем немедленно.</p>
+        </div>
+      </section>
+
+      <!-- Advantages -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Meie eelised töötamisel Kesklinnas</h2>
+        <p class="text-gray-700 mb-6">Meie toruabi meeskond on spetsialiseerunud töötamisele Kesklinnas. Meil on suur kogemus kommertsobjektide ja vanade hoonete toruabi probleemide lahendamisega ja me teame, kuidas kiiresti ja efektiivselt lahendada kõik toruabi probleemid.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kogemus kommertsobjektides</h3>
+            <p class="text-gray-200 mb-3">Meie torumees on töötanud Kesklinnas üle 12 aasta ja tunneb hästi kommertsobjektide spetsiifikaid. Meie professionaalne santehnik teab, kuidas töötada restoranide, kohvikute ja kontorite torustikega.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Töötame regulaarselt Kesklinnas</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tuneme hästi kommertsobjektide spetsiifikaid</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Hoolduslepingud kommertsobjektidele</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kiire reageerimine</h3>
+            <p class="text-gray-200 mb-3">Kesklinnas jõuame tavaliselt 25-40 minutiga kohale. Meie toruabi meeskond on alati valmis reageerima avarii olukordadele Kesklinnas.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Keskmine reageerimisaeg: 30 minutit</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> 24/7 avarii toruabi teenused</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tasuta väljasõit Tallinna piires</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Наши преимущества работы в Кесклинне</h2>
+        <p class="text-gray-700 mb-6">Наша команда специализируется на работе в центре. У нас большой опыт решения проблем сантехника в коммерческих объектах и старых зданиях, и мы знаем, как быстро и эффективно решить все проблемы с сантехником.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Опыт в коммерческих объектах</h3>
+            <p class="text-gray-200 mb-3">Наш сантехник работает в центре более 12 лет и хорошо знает специфику коммерческих объектов. Наш профессиональный сантехник знает, как работать с трубопроводами ресторанов, кафе и офисов.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Регулярно работаем в центре</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Хорошо знаем специфику коммерческих объектов</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Договоры на обслуживание коммерческих объектов</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Быстрое реагирование</h3>
+            <p class="text-gray-200 mb-3">В центре мы обычно приезжаем в течение 25-40 минут. Наша команда всегда готова реагировать на аварийные ситуации в центре.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Среднее время реагирования: 30 минут</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Услуги аварийного сантехника 24/7</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Бесплатный выезд в пределах Таллина</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Kuidas töötab toruabi Kesklinnas?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
+            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Kesklinnas</h3>
+            <p>Kesklinnas jõuame tavaliselt 20-40 minutiga kohale. Väljasõit on 0€ Tallinna piires.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Kohapealne diagnostika</h3>
+            <p>Meister kontrollib probleemi, selgitab lahenduse variandid ja annab täpse hinnangu.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Professionaalne remont</h3>
+            <p>Kasutame kaasaegseid seadmeid ja anname 2-aastase garantiid kõigile töödele.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Как работает торуаби в Кесклинне?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
+            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в центр</h3>
+            <p>В центре мы обычно приезжаем за 20-40 минут. Выезд стоит 0€ в пределах Таллина.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Диагностика на месте</h3>
+            <p>Мастер проверит проблему, объяснит варианты решения и даст точную оценку стоимости.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Профессиональный ремонт</h3>
+            <p>Мы используем современное оборудование и даём 2-летнюю гарантию на все работы.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Pricing -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Kesklinnas hinnad</h2>
+        <p class="text-gray-700 mb-4">Toruabi hinnad Kesklinnas on samad, mis kogu Tallinnas. Väljasõit on 0€ Kesklinnas piires.</p>
+        <p class="text-gray-700 mb-6">Vaata täielikku hinnakirja: <a href="/hinnakiri" class="text-emergency-red hover:underline font-bold">Toruabi hinnakiri</a></p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Цены на торуаби в Кесклинне</h2>
+        <p class="text-gray-700 mb-4">Цены на торуаби в центре такие же, как и во всём Таллине. Выезд стоит 0€ в пределах центра.</p>
+        <p class="text-gray-700 mb-6">Смотрите полный прайс-лист: <a href="/ru/hinnakiri" class="text-emergency-red hover:underline font-bold">Прайс-лист торуаби</a></p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">KKK toruabi Kesklinnas kohta</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kui kiiresti saab toruabi Kesklinnas?</summary>
+            <p class="text-gray-700 mt-2">Kesklinnas jõuame tavaliselt 20-40 minutiga kohale. Avariikõnedele reageerime kohe.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Millised on toruabi hinnad Kesklinnas?</summary>
+            <p class="text-gray-700 mt-2">Toruabi hinnad Kesklinnas on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja <a href="/hinnakiri" class="text-emergency-red hover:underline">siit</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas toruabi töötab Kesklinnas ööpäevaringselt?</summary>
+            <p class="text-gray-700 mt-2">Jah, oleme kättesaadavad 24/7 avariikõnedele Kesklinnas. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas teil on kogemus Kesklinnas kommertsobjektidega?</summary>
+            <p class="text-gray-700 mt-2">Jah, meil on pikk kogemus töötamisega Kesklinnas kohvikute, restoranide ja kontoritega. Tunneme nende objektide spetsiifikaid ja teame, kuidas kiiresti lahendada probleeme.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Часто задаваемые вопросы о торуаби в Кесклинне</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Как быстро приезжает торуаби в центр?</summary>
+            <p class="text-gray-700 mt-2">В центре мы обычно приезжаем за 20-40 минут. На аварийные вызовы реагируем сразу.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Какие цены на торуаби в центре?</summary>
+            <p class="text-gray-700 mt-2">Цены на торуаби в центре такие же, как и во всём Таллине. Выезд стоит 0€. Смотрите полный прайс-лист <a href="/ru/hinnakiri" class="text-emergency-red hover:underline">здесь</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Работает ли торуаби в центре круглосуточно?</summary>
+            <p class="text-gray-700 mt-2">Да, мы доступны 24/7 для аварийных вызовов в центре. Для плановых работ работаем обычно с 8 до 20.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Есть ли у вас опыт работы с коммерческими объектами в центре?</summary>
+            <p class="text-gray-700 mt-2">Да, у нас большой опыт работы с кафе, ресторанами и офисами в центре. Мы знаем специфику этих объектов и умеем быстро решать проблемы.</p>
+          </details>
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath="/toruabi-kesklinn" />
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Vaja toruabi Kesklinnas?</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Нужен торуаби в центре?</h2>
+        <p class="text-lg mb-6 blog-et">Helista kohe – reageerime 20-40 minutiga Kesklinnas!</p>
+        <p class="text-lg mb-6 blog-ru">Позвоните сейчас – реагируем за 20-40 минут в центре!</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

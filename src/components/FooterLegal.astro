@@ -1,0 +1,38 @@
+---
+import { footerLegalLineEt, footerLegalLineRu } from '../data/site-identity';
+
+export type FooterLegalVariant = 'switcher' | 'bilingual' | 'ru-only';
+
+interface Props {
+  variant?: FooterLegalVariant;
+}
+
+const { variant = 'switcher' } = Astro.props;
+const lineEt = footerLegalLineEt();
+const lineRu = footerLegalLineRu();
+const show = Boolean(lineEt);
+---
+
+{
+  show && variant === 'switcher' && (
+    <p
+      id="footer-legal-line"
+      class="text-xs text-gray-400 max-w-2xl mx-auto mb-2 leading-relaxed"
+    >
+      {lineEt}
+    </p>
+  )
+}
+{
+  show && variant === 'bilingual' && (
+    <>
+      <p class="text-xs text-gray-400 mb-1 max-w-xl mx-auto blog-et leading-relaxed">{lineEt}</p>
+      <p class="text-xs text-gray-400 mb-1 max-w-xl mx-auto blog-ru leading-relaxed">{lineRu}</p>
+    </>
+  )
+}
+{
+  show && variant === 'ru-only' && (
+    <p class="text-xs text-gray-400 mb-3 max-w-xl mx-auto leading-relaxed">{lineRu}</p>
+  )
+}

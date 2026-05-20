@@ -1,0 +1,369 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import { ruPath } from '../utils/i18n-paths';
+import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { serviceLandingSeo } from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const pagePath = '/toruabi-ummistuste-likvideerimine';
+const landing = serviceLandingSeo['ummistuste-likvideerimine'];
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = landing.titleEt;
+const descEt = landing.descriptionEt;
+const titleRu = landing.titleRu;
+const descRu = landing.descriptionRu;
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const faqEt = [
+  {
+    q: 'Kas toruabi aitab kõigi ummistuste korral?',
+    a: 'Enamiku elumajade ja äripindade kanalisatsiooni ummistuste puhul jah. Kui olukord on keeruline (nt süvatrass), selgitame pärast ülevaadust võimalused ja hind.',
+  },
+  {
+    q: 'Kui kiiresti toruabi ummistusele jõuab?',
+    a: 'Toruabi väljakutse Tallinnas ja Harjumaal on tavaliselt 30–60 minuti kaugusel, sõltuvalt asukohast.',
+  },
+  {
+    q: 'Mis maksab kanalisatsiooni ummistuse likvideerimine?',
+    a: 'Täpne hind sõltub töö keerukusest ja kestusest. Vaata <a href="/hinnakiri">hinnakirja</a> või küsi telefonis.',
+  },
+  {
+    q: 'Kas saan enne toruabi kutsumist ise midagi proovida?',
+    a: 'Kerged juhud võivad aidata plunger või kuum vesi, kuid ärge kasuta agressiivseid kemikaale ega torgi toru vigastades. Loe lähemalt meie <a href="/blog/kanalisatsiooni-ummistus-mida-teha">blogist</a>.',
+  },
+  {
+    q: 'Kust abi toru ummistuse korral Tallinnas?',
+    a: 'Helista toruabile numbril +372 5181 112 – toruabi ummistusele jõuab tavaliselt 30–60 minutiga. Teenindame kõiki Tallinna linnaosasid ja Harjumaad.',
+  },
+  {
+    q: 'Millal on vaja kanalisatsiooni survepesu, mitte ainult ummistuste likvideerimist?',
+    a: 'Kui ummistus kordub või tegemist on pika trassi või settega, soovitame <a href="/toruabi-kanalisatsiooni-survepesu">kanalisatsiooni survepesu</a>. Kiire läbipääsu taastamiseks piisab sageli toruabi ummistuste likvideerimisest.',
+  },
+];
+
+const faqRu = [
+  {
+    q: 'Помогает ли торуаби при любых засорах?',
+    a: 'В большинстве случаев в квартирах и на коммерческих объектах да. Если ситуация сложная (например, магистраль), после осмотра объясним варианты и стоимость.',
+  },
+  {
+    q: 'Как быстро приедет торуаби на засор?',
+    a: 'Выезд торуаби в Таллине и Харьюмаа обычно в течение 30–60 минут в зависимости от адреса.',
+  },
+  {
+    q: 'Сколько стоит устранение засора канализации?',
+    a: 'Точная цена зависит от сложности и времени работ. Смотрите <a href="/ru/hinnakiri">прайс</a> или уточните по телефону.',
+  },
+  {
+    q: 'Можно ли что-то сделать до приезда торуаби?',
+    a: 'Иногда помогает вантуз или горячая вода, но не используйте агрессивную химию и не протыкайте трубу насильно. Подробнее в <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha">статье блога</a>.',
+  },
+  {
+    q: 'Куда звонить при засоре трубы в Таллине?',
+    a: 'Позвоните торуаби по номеру +372 5181 112 — обычно приезд за 30–60 минут. Обслуживаем все районы Таллина и Харьюмаа.',
+  },
+  {
+    q: 'Когда нужна гидропромывка, а не только устранение засора?',
+    a: 'При повторных засорах или отложениях в длинных трассах рекомендуем <a href="/ru/toruabi-kanalisatsiooni-survepesu">промывку канализации</a>. Для быстрого восстановления прохода часто достаточно прочистки засоров торуаби.',
+  },
+];
+
+const faqForLd = currentLang === 'ru' ? faqRu : faqEt;
+const faqForLdPlain = faqForLd.map((item) => ({
+  q: item.q,
+  a: item.a.replace(/<[^>]+>/g, ''),
+}));
+const crumbHomeName = currentLang === 'ru' ? 'Главная' : 'Avaleht';
+const crumbServiceEt = 'Ummistuste likvideerimine (toruabi)';
+const crumbServiceRu = 'Устранение засоров (торуаби)';
+const crumbServiceName = currentLang === 'ru' ? crumbServiceRu : crumbServiceEt;
+const pageCanonicalUrl = currentLang === 'ru' ? `${siteUrl}${ruPath(pagePath)}` : `${siteUrl}${pagePath}`;
+const breadcrumbJsonLdOverride = serviceLandingBreadcrumbJsonLd(pagePath, currentLang, crumbServiceEt, crumbServiceRu);
+
+const plumbingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PlumbingService',
+  '@id': `${pageCanonicalUrl}#plumbing`,
+  name: 'toruabii.ee – Toruabi ummistuste likvideerimine',
+  alternateName: 'Kanalisatsiooni ummistuste likvideerimine',
+  url: pageCanonicalUrl,
+  logo: `${siteUrl}/photos/toruabii.webp`,
+  image: `${siteUrl}/photos/maintoruabii.webp`,
+  description: pageDescription,
+  telephone: '+3725181112',
+  priceRange: '€€',
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
+  currenciesAccepted: 'EUR',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tallinn',
+    addressRegion: 'Harjumaa',
+    addressCountry: 'EE',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Tallinn' },
+    { '@type': 'AdministrativeArea', name: 'Harjumaa' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Kanalisatsiooni ummistuste likvideerimine',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Ummistuste likvideerimine',
+          description: 'Kanalisatsiooni ummistuste likvideerimine Tallinnas ja Harjumaal',
+        },
+      },
+    ],
+  },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqForLdPlain.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={`${siteUrl}${pagePath}`}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(plumbingLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />
+  
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: crumbHomeName, url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          {
+            name: crumbServiceName,
+            url: pageCanonicalUrl,
+          },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{landing.h1Et}</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{landing.h1Ru}</h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">
+        Torude ummistuste likvideerimine vannitoas, köögis, WC-s ja peamistes liinides — kasutame professionaalset seadmet ja kogemust. Kiire toruabi on kättesaadav ööpäevaringselt; helista, kui vesi ei voola või kanalisatsioon on kinni.
+      </p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">
+        Устраняем засоры в ванной, кухне, унитазе и магистралях — с профессиональным оборудованием и опытом. Срочный торуаби доступен круглосуточно; звоните, если вода не уходит или канализация встала.
+      </p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+      <figure class="rounded-xl overflow-hidden shadow-xl bg-white">
+        <img
+          src="/photos/sifon.webp"
+          alt={currentLang === 'ru'
+            ? 'Устранение засоров в Таллине – торуаби очищает сифон и канализацию'
+            : 'Ummistuste likvideerimine Tallinnas – toruabi kanalisatsiooni ummistuse lahendamine'}
+          class="w-full h-auto max-h-[min(420px,50vh)] object-cover object-center"
+          loading="eager"
+          decoding="async"
+          width="1200"
+          height="630"
+        />
+        <figcaption class="px-4 py-3 text-sm text-gray-600 text-center border-t border-gray-100">
+          <span class="blog-et">Toruabi ummistuste likvideerimine – kanalisatsiooni toruabi Tallinnas</span>
+          <span class="blog-ru">Прочистка засоров и устранение засоров канализации в Таллине</span>
+        </figcaption>
+      </figure>
+
+      <CallStripCta variant="page" />
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Kanalisatsiooni ummistus ja toru ummistus Tallinnas</h2>
+        <p class="text-gray-700 mb-4">
+          <strong>Ummistuste likvideerimine</strong> on üks sagedasemaid toruabi väljakutseid Tallinnas ja Harjumaal. Olgu tegu köögivalamu, vannitoa äravoolu, WC või kortermaja vertikaaltrassiga – meie toruabi meeskond diagnoosib kanalisatsiooni ummistuse asukoha ja valib sobiva meetodi: mehaaniline puhastus, vaakum või vajadusel survepesu.
+        </p>
+        <p class="text-gray-700 mb-4">
+          <strong>Toru ummistus Tallinn</strong> piirkonnas lahendatakse tavaliselt 30–60 minutiga pärast kõnet. Toruabi ummistuste likvideerimine hõlmab nii eramaju, kortereid kui ka ärihooneid – restoranid, korteriühistud ja teenindusettevõtted. Väljasõit Tallinna piires on 0 €, töödele kehtib 2-aastane garantii.
+        </p>
+        <p class="text-gray-700 mb-4">
+          Kui probleem on korduv või kahtlustad sügavamat trassiviga, kombineerime toruabi ummistuse likvideerimise <a href="/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">kanalisatsiooni survepesuga</a> või videouuringuga. Täpsemad hinnad leiad <a href="/hinnakiri" class="text-trust-blue font-semibold hover:underline">hinnakirjast</a>; kiireloomulisel üleujutuse korral vaata ka <a href="/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">avariitoruabi väljakutset</a>.
+        </p>
+        <h3 class="text-xl font-semibold text-trust-blue mb-2">Kus toruabi ummistust kõige sagedamini lahendab?</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Köök ja vannituba – sifoonid, põrandasifoonid, valamud</li>
+          <li>WC ja dušš – pehmed ja rasvased ummistused</li>
+          <li>Korteriühistu vertikaalid ja horisontaaltrassid</li>
+          <li>Äriobjektid – toitlustus, HoReCa, teeninduspinnad</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Засор канализации и прочистка в Таллине</h2>
+        <p class="text-gray-700 mb-4">
+          <strong>Устранение засоров</strong> — одна из самых частых заявок к торуаби в Таллине и Харьюмаа. Кухня, ванная, унитаз или стояк в панельном доме — мастер определяет место засора и подбирает метод: механическая прочистка, вакуум или при необходимости гидродинамика.
+        </p>
+        <p class="text-gray-700 mb-4">
+          При <strong>засоре канализации в Таллине</strong> типичное время приезда 30–60 минут после звонка. Прочистка засоров выполняется в квартирах, частных домах и на коммерческих объектах. Выезд в пределах Таллина — 0 €, гарантия на работы 2 года.
+        </p>
+        <p class="text-gray-700 mb-4">
+          При повторных засорах сочетаем устранение засоров с <a href="/ru/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">промывкой канализации</a> или видеообследованием. Цены — в <a href="/ru/hinnakiri" class="text-trust-blue font-semibold hover:underline">прайсе</a>; при риске затопления см. <a href="/ru/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">аварийный выезд торуаби</a>.
+        </p>
+        <h3 class="text-xl font-semibold text-trust-blue mb-2">Где чаще всего нужна прочистка?</h3>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Кухня и ванная — сифоны, трапы, раковины</li>
+          <li>Унитаз и душ — жир и мягкие отложения</li>
+          <li>Стояки и горизонтали в МКД</li>
+          <li>HoReCa и коммерческие объекты</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Kuidas toimub toruabi ummistuste likvideerimine?</h2>
+        <p class="text-gray-700 mb-4">
+          Pärast väljakutset hindab toruabi olukorra: kas ummistus on kohalik (sifoon, valamu) või sügavam (põrandakanalisatsioon, vertikaal). Kasutame professionaalseid spiraale, vaakumit ja vajadusel survepesu seadmeid – alati vastavalt toru materjalile ja vanusele, et kanalisatsiooni toruabi oleks ohutu.
+        </p>
+        <p class="text-gray-700">
+          Töö lõpus kontrollime läbivust ja anname soovitused ennetuseks. Kui vajad enne meistri saabumist juhiseid, loe artiklit <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-trust-blue font-semibold hover:underline">Kanalisatsiooni ummistus – mida teha?</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Как проходит прочистка засоров у торуаби?</h2>
+        <p class="text-gray-700 mb-4">
+          После выезда мастер оценивает: локальный засор (сифон, раковина) или глубже (трап, стояк). Используем профессиональные спирали, вакуум и при необходимости гидромашину — с учётом материала и возраста труб.
+        </p>
+        <p class="text-gray-700">
+          По завершении проверяем проходимость и даём рекомендации. До приезда мастера — статья <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-trust-blue font-semibold hover:underline">Засор канализации: что делать?</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Millal valida toruabi ummistuste likvideerimiseks?</h2>
+        <p class="text-gray-700 mb-4">
+          Kui vesi ei lähe ära, tõuseb tagasi või on tugev lõhn, on mõistlik tellida toruabi. Meie toruabi meeskond diagnoosib ummistuse asukoha ja valib sobiva meetodi (mehaaniline, survepesu vastavalt olukorrale).
+        </p>
+        <p class="text-gray-700 mb-4">
+          Rohkem nõuandeid enne toruabi kutsumist leiad blogist:{' '}
+          <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-trust-blue font-semibold hover:underline">Kanalisatsiooni ummistus – mida teha?</a>
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Когда заказывать торуаби для устранения засора?</h2>
+        <p class="text-gray-700 mb-4">
+          Если вода не уходит, возвращается или появился сильный запах, лучше вызвать торуаби. Мы определим место засора и подберём метод (механическая прочистка, гидродинамика — по ситуации).
+        </p>
+        <p class="text-gray-700 mb-4">
+          Советы до приезда торуаби — в блоге:{' '}
+          <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-trust-blue font-semibold hover:underline">Засор канализации: что делать?</a>
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Toruabi ja avarii olukorrad</h2>
+        <p class="text-gray-700 mb-4">
+          Üleujutuse või reostuse ohu korral on oluline tegutseda kiiresti. Vaata ka lehte{' '}
+          <a href="/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">Toruabi avarii väljakutse</a> (24/7).
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Торуаби и аварийные ситуации</h2>
+        <p class="text-gray-700 mb-4">
+          При риске затопления или загрязнения важно действовать быстро. См. также{' '}
+          <a href="/ru/toruabi-avariiline-valjakutse" class="text-emergency-red font-semibold hover:underline">аварийный выезд торуаби</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Korduma kippuvad küsimused – toruabi ja ummistused</h2>
+        <div class="space-y-4">
+          {faqEt.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2" set:html={item.a} />
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Частые вопросы – торуаби и засоры</h2>
+        <div class="space-y-4">
+          {faqRu.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2" set:html={item.a} />
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath={pagePath} />
+
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Toruabi ummistuse likvideerimiseks – helista</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Торуаби для устранения засора — звоните</h2>
+        <p class="text-lg mb-6 blog-et">Kanalisatsiooni toruabi 24/7.</p>
+        <p class="text-lg mb-6 blog-ru">Прочистка канализации и торуаби 24/7.</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

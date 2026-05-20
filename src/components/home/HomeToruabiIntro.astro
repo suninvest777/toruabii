@@ -1,0 +1,74 @@
+---
+import { ruPath } from '../../utils/i18n-paths';
+
+interface Props {
+  lang: 'et' | 'ru';
+}
+
+const { lang } = Astro.props;
+const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
+
+const topLandings = [
+  { path: '/toruabi-avariiline-valjakutse', anchorEt: 'toruabi Tallinn', anchorRu: 'торуаби Таллин' },
+  { path: '/toruabi-ummistuste-likvideerimine', anchorEt: 'toruabi Tallinn', anchorRu: 'торуаби Таллин' },
+  { path: '/toruabi-lasnamae', anchorEt: 'toruabi Tallinn', anchorRu: 'торуаби Таллин' },
+  { path: '/toruabi-kesklinn', anchorEt: 'toruabi Tallinn', anchorRu: 'торуаби Таллин' },
+];
+---
+
+<section class="py-10 px-4 home-surface border-b home-border font-body" aria-labelledby="toruabi-intro-heading">
+  <div class="max-w-3xl mx-auto">
+    <h2 id="toruabi-intro-heading" class="sr-only">
+      <span class="home-ssr-et">Toruabi teenused Tallinnas ja Harjumaal</span>
+      <span class="home-ssr-ru">Торуаби в Таллине и Харьюмаа</span>
+    </h2>
+    <div class="home-text-muted text-base leading-relaxed space-y-4">
+      <p>
+        <span class="home-ssr-et">
+          Vajad <strong class="font-semibold home-text">toruabi</strong> kiiresti? toruabii.ee on sinu partner
+          <strong class="font-semibold home-text">toruabi tallinn</strong> ja kogu Harjumaa piirkonnas —
+          <strong class="font-semibold home-text">toruabi 24/7</strong> reageerib tavaliselt 30–60 minutiga.
+          Pakume professionaalset <strong class="font-semibold home-text">avarii toruabi</strong> lekete, ummistuste,
+          boileri ja kanalisatsiooni probleemide lahendamiseks nii korterites, eramutes kui ärihoonetes.
+        </span>
+        <span class="home-ssr-ru">
+          Нужен срочный <strong class="font-semibold home-text">торуаби</strong>? toruabii.ee — ваш
+          <strong class="font-semibold home-text">сантехник tallinn</strong> и по всему Харьюмаа:
+          <strong class="font-semibold home-text">торуаби 24/7</strong>, обычно приезд за 30–60 минут.
+          <strong class="font-semibold home-text">Аварийный торуаби</strong> устраняет протечки, засоры,
+          неисправности бойлера и канализации в квартирах, домах и на коммерческих объектах.
+        </span>
+      </p>
+      <p>
+        <span class="home-ssr-et">
+          Meie <strong class="font-semibold home-text">toruabi harjumaa</strong> meeskond katab Tallinna linnaosad
+          (Lasnamäe, Mustamäe, Kesklinn, Pirita, Viimsi) ja Harjumaa linnad — Maardu, Keila, Saue, Rae, Saku ja teised.
+          Väljasõit Tallinnas on tasuta; enne töö algust selgitame hinna ilma peidetud lisatasudeta. Iga tellimusele kehtib
+          2-aastane garantii. Helista <a href="tel:+3725181112" class="text-brand-blue font-semibold hover:underline">+372 5181 112</a>
+          või jätke tagasiside — avarii toruabi on valmis teele kohe pärast kõnet.
+        </span>
+        <span class="home-ssr-ru">
+          Бригада <strong class="font-semibold home-text">торуаби харьюмаа</strong> работает во всех районах Таллина
+          (Ласнамяэ, Мустамяэ, Кесклинн, Пирита, Виймси) и в городах уезда — Маарду, Кейла, Сауэ, Раэ, Саку и др.
+          Выезд в пределах Таллина бесплатный; стоимость согласуем до начала работ. Гарантия на все работы — 2 года.
+          Звоните <a href="tel:+3725181112" class="text-brand-blue font-semibold hover:underline">+372 5181 112</a>
+          или оставьте заявку — аварийный торуаби выезжает сразу после звонка.
+        </span>
+      </p>
+    </div>
+    <nav
+      class="mt-6 flex flex-wrap gap-3 justify-center"
+      aria-label={lang === 'ru' ? 'Популярные страницы торуаби' : 'Populaarsed toruabi lehed'}
+    >
+      {topLandings.map((item) => (
+        <a
+          href={H(item.path)}
+          class="inline-flex items-center px-4 py-2 rounded-lg border border-brand-blue/30 bg-surface-soft text-brand-blue font-semibold text-sm hover:bg-brand-blue-light hover:border-brand-blue/50 transition-colors no-underline"
+        >
+          <span class="home-ssr-et">{item.anchorEt}</span>
+          <span class="home-ssr-ru">{item.anchorRu}</span>
+        </a>
+      ))}
+    </nav>
+  </div>
+</section>

@@ -1,0 +1,471 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Radiaatori valik küttesüsteemile Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Radiaatori valik küttesüsteemile Tallinnas: toruabi 24/7, radiaatorite paigaldus, remont ja hooldus. Alumiiniumradiaatorid, bimetallilised radiaatorid, terasradiaatorid, malmiradiaatorid. Professionaalne radiaatorite torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Radiaatorite võimsus, sektsioonide arv, rõhk.';
+const titleRu =
+  'Выбираем радиатор отопления в Таллине – советы и рекомендации | toruabii.ee';
+const descRu =
+  'Выбор радиатора отопления - важный этап в обустройстве системы отопления дома или квартиры. Рассказываем о типах радиаторов, как выбрать правильный радиатор и какие технические характеристики важны в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/radiaatori-valik';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Radiaatori valik</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Radiaatori valik küttesüsteemile Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate radiaatorite valikut, paigaldust või remonti Tallinnas? Meie professionaalne torumees pakub radiaatorite toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Radiaatori valik on oluline etapp eramaja või korteri küttesüsteemi korraldamisel. Selle õigsusest sõltub kogu süsteemi efektiivsus ja elamise mugavus. Oluline on arvestada radiaatori tüüpi, tehnilisi parameetreid, nagu võimsus, sektsioonide arv ja muid komponente.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2024-03-20').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Выбираем радиатор отопления</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Выбираем радиатор отопления: советы и рекомендации
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Выбор радиатора отопления - важный этап в обустройстве системы отопления дома или квартиры. От его правильности зависит эффективность работы всей системы и комфорт проживания. Важно учитывать тип радиатора, его технические характеристики, такие как мощность, число секций и другие составляющие.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2024-03-20').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Radiaatori valik küttesüsteemile Tallinnas – professionaalne nõustamine"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Radiaatorite tüübid
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Alumiiniumradiaatorid</h3>
+        <p class="text-gray-700 mb-3">
+          Alumiiniumradiaatorid on kerged, kiiresti kuumenevad ja hea soojusülekandega. Sobivad hästi automaatse reguleerimisega süsteemidele. Ei sobi vanadele tsentraalkütte süsteemidele, kuna võivad korrodeeruda.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Bimetallilised radiaatorid</h3>
+        <p class="text-gray-700 mb-3">
+          Bimetallilised radiaatorid kombineerivad terase tugevuse ja alumiiniumi soojusülekande. Sobivad nii uutele kui vanadele küttesüsteemidele. Kõrge rõhu jaoks.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Terasradiaatorid</h3>
+        <p class="text-gray-700 mb-3">
+          Terasradiaatorid on vastupidavad ja töökindlad. Sobivad hästi eramajadele. Võivad olla paneel- või torutüüpi.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Malmiradiaatorid</h3>
+        <p class="text-gray-700 mb-3">
+          Malmiradiaatorid on traditsioonilised, vastupidavad ja pika elueaga. Aeglaselt kuumenevad, aga säilitavad soojust kaua. Sobivad vanadele süsteemidele.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Olulised tehnilised parameetrid
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Võimsus</h3>
+        <p class="text-gray-700 mb-3">
+          Radiaatori võimsus määratakse ruumi suuruse ja soojuskadude järgi. Üldreegel: umbes 100 W ruutmeetri kohta, aga see sõltub maja isolatsioonist ja akende kvaliteedist.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Sektsioonide arv</h3>
+        <p class="text-gray-700 mb-3">
+          Sektsioonide arv määrab radiaatori võimsuse. Mida rohkem sektsioone, seda suurem võimsus. Oluline on arvutada õige arv teie ruumi jaoks.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Rõhk</h3>
+        <p class="text-gray-700 mb-3">
+          Radiaator peab taluma süsteemi rõhku. Tsentraalkütte süsteemides võib rõhk olla kõrge, seega on oluline valida sobiv radiaator.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Kuidas valida õige radiaator?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Arvutage vajalik võimsus</strong> – võtke arvesse ruumi suurust, akende suurust ja isolatsiooni</li>
+          <li><strong>Mõelge süsteemi tüübile</strong> – kas tsentraalküte või eramaja süsteem</li>
+          <li><strong>Valige materjal</strong> – alumiinium, bimetalliline, teras või malm</li>
+          <li><strong>Mõelge disainile</strong> – radiaator peab sobima ruumi stiiliga</li>
+          <li><strong>Kontrollige garantii</strong> – valige tootjad, kes pakuvad pikka garantii</li>
+        </ul>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused radiaatorite kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab radiaatorite paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Radiaatorite paigalduse hind Tallinnas sõltub radiaatorite tüübist, arvust ja paigalduse keerukusest. Ühe radiaatori paigaldus võib maksta 150-300€, kogu maja radiaatorite paigaldus 1000-3000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet. Pakume radiaatorite toruabi Lasnamäes, Mustamäel, Kesklinnas, Piritas ja Viimsis 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Milline radiaator on parim Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Parim radiaator sõltub küttesüsteemi tüübist. Bimetallilised radiaatorid on populaarne valik Tallinnas, kuna need sobivad nii uutele kui vanadele süsteemidele. Alumiiniumradiaatorid on hea valik uutele eramajadele. Meie torumees aitab valida õige radiaatori teie küttesüsteemi jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju sektsioone radiaatoril peaks olema?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Sektsioonide arv sõltub ruumi suurusest ja soojuskadudest. Üldreegel: umbes 100 W ruutmeetri kohta. Näiteks 15 m² ruumi jaoks vajate umbes 1500 W võimsust. Meie torumees arvutab täpse vajaliku võimsuse ja sektsioonide arvu teie ruumi jaoks.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas radiaatoreid saab paigaldada ise?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Radiaatorite paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada lekkeid, ebaefektiivset tööd või kahjustusi. Soovitame alati kasutada professionaalse torumehe teenuseid. Meie pakume radiaatorite toruabi Tallinnas 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui tihti peaks radiaatoreid hooldama?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Radiaatorite hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab õhu eemaldamist, puhastamist ja kontrollimist. Regulaarne hooldus tagab optimaalse töö ja pikendab radiaatorite eluiga. Meie torumees pakub radiaatorite hooldust Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid radiaatorite kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/bimetalliline-radiaator" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Bimetalliline radiaator küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Mis on bimetalliline radiaator ja millised on selle eelised Tallinnas.</p>
+          </a>
+          <a href="/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Radiaatorite tühjendamine ja hooldus</h3>
+            <p class="text-sm text-gray-600">Kuidas tühjendada radiaatoreid ja miks see on oluline.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Radiaatorite toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub radiaatorite valikut, paigaldust ja remonti kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja radiaatorite toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate radiaatorite valikut, paigaldust või remonti Tallinnas? Meie professionaalne torumees pakub radiaatorite toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame radiaatorite valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Radiaatorite toruabi Tallinnas 24/7 | Radiaatorite paigaldus | Radiaatorite remont | Radiaatorite hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Выбор радиатора отопления в Таллине – профессиональная консультация"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Типы радиаторов
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Алюминиевые радиаторы</h3>
+        <p class="text-gray-700 mb-3">
+          Алюминиевые радиаторы легкие, быстро нагреваются и имеют хорошую теплоотдачу. Хорошо подходят для систем с автоматическим регулированием. Не подходят для старых центральных систем отопления, так как могут корродировать.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Биметаллические радиаторы</h3>
+        <p class="text-gray-700 mb-3">
+          Биметаллические радиаторы сочетают прочность стали и теплоотдачу алюминия. Подходят как для новых, так и для старых систем отопления. Для высокого давления.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Стальные радиаторы</h3>
+        <p class="text-gray-700 mb-3">
+          Стальные радиаторы прочные и надежные. Хорошо подходят для частных домов. Могут быть панельного или трубчатого типа.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Чугунные радиаторы</h3>
+        <p class="text-gray-700 mb-3">
+          Чугунные радиаторы традиционные, прочные и с долгим сроком службы. Медленно нагреваются, но долго сохраняют тепло. Подходят для старых систем.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Важные технические характеристики
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Мощность</h3>
+        <p class="text-gray-700 mb-3">
+          Мощность радиатора определяется размером помещения и теплопотерями. Общее правило: примерно 100 Вт на квадратный метр, но это зависит от изоляции дома и качества окон.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Количество секций</h3>
+        <p class="text-gray-700 mb-3">
+          Количество секций определяет мощность радиатора. Чем больше секций, тем больше мощность. Важно рассчитать правильное количество для вашего помещения.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Давление</h3>
+        <p class="text-gray-700 mb-3">
+          Радиатор должен выдерживать давление в системе. В центральных системах отопления давление может быть высоким, поэтому важно выбрать подходящий радиатор.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Как выбрать правильный радиатор?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Рассчитайте необходимую мощность</strong> – учитывайте размер помещения, размер окон и изоляцию</li>
+          <li><strong>Подумайте о типе системы</strong> – центральное отопление или система частного дома</li>
+          <li><strong>Выберите материал</strong> – алюминий, биметалл, сталь или чугун</li>
+          <li><strong>Подумайте о дизайне</strong> – радиатор должен соответствовать стилю помещения</li>
+          <li><strong>Проверьте гарантию</strong> – выбирайте производителей, которые предлагают длительную гарантию</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна помощь в выборе радиатора в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке радиаторов.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка радиаторов в Таллине?' : 'Kui palju maksab radiaatorite paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки радиаторов в Таллине зависит от типа радиаторов, количества и сложности установки. Установка одного радиатора может стоить 150-300€, установка всех радиаторов в доме 1000-3000€.'
+            : 'Radiaatorite paigalduse hind Tallinnas sõltub radiaatorite tüübist, arvust ja paigalduse keerukusest. Ühe radiaatori paigaldus võib maksta 150-300€, kogu maja radiaatorite paigaldus 1000-3000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какой радиатор лучше в Таллине?' : 'Milline radiaator on parim Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Лучший радиатор зависит от типа системы отопления. Биметаллические радиаторы - популярный выбор в Таллине, так как они подходят как для новых, так и для старых систем.'
+            : 'Parim radiaator sõltub küttesüsteemi tüübist. Bimetallilised radiaatorid on populaarne valik Tallinnas, kuna need sobivad nii uutele kui vanadele süsteemidele.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько секций должно быть у радиатора?' : 'Kui palju sektsioone radiaatoril peaks olema?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Количество секций зависит от размера помещения и теплопотерь. Общее правило: примерно 100 Вт на квадратный метр. Например, для комнаты 15 м² нужно около 1500 Вт мощности.'
+            : 'Sektsioonide arv sõltub ruumi suurusest ja soojuskadudest. Üldreegel: umbes 100 W ruutmeetri kohta. Näiteks 15 m² ruumi jaoks vajate umbes 1500 W võimsust.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Можно ли установить радиаторы самостоятельно?' : 'Kas radiaatoreid saab paigaldada ise?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка радиаторов требует профессиональных знаний и опыта. Неправильная установка может привести к утечкам, неэффективной работе или повреждениям. Рекомендуем всегда использовать услуги профессионального сантехника.'
+            : 'Radiaatorite paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada lekkeid, ebaefektiivset tööd või kahjustusi. Soovitame alati kasutada professionaalse torumehe teenuseid.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать радиаторы?' : 'Kui tihti peaks radiaatoreid hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание радиаторов раз в год, желательно перед началом отопительного сезона. Это включает удаление воздуха, очистку и проверку. Регулярное обслуживание обеспечивает оптимальную работу и продлевает срок службы радиаторов.'
+            : 'Radiaatorite hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab õhu eemaldamist, puhastamist ja kontrollimist. Regulaarne hooldus tagab optimaalse töö ja pikendab radiaatorite eluiga.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Выбираем радиатор отопления'
+          : 'Radiaatori valik küttesüsteemile',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/radiaatori-valik' : 'https://toruabii.ee/blog/radiaatori-valik',
+      },
+    ],
+  })}
+/>

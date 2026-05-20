@@ -1,0 +1,472 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Bimetalliline radiaator küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Bimetalliline radiaator küttesüsteemis Tallinnas: toruabi 24/7, bimetalliliste radiaatorite paigaldus, remont ja hooldus. Bimetallilised radiaatorid kombineerivad terase tugevuse ja alumiiniumi soojusülekande. Professionaalne bimetalliliste radiaatorite torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Bimetalliliste radiaatorite eelised, võimsus, sektsioonid.';
+const titleRu =
+  'Биметаллический радиатор отопления – что это такое и в чем преимущества? | toruabii.ee';
+const descRu =
+  'Биметаллические радиаторы отопления сочетают прочность стали и теплоотдачу алюминия. Рассказываем, что собой представляют биметаллические радиаторы, технические отличия и особенности эксплуатации в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/bimetalliline-radiaator';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Bimetalliline radiaator</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Bimetalliline radiaator küttesüsteemis Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate bimetalliliste radiaatorite paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub bimetalliliste radiaatorite toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Bimetallilised radiaatorid kombineerivad terase tugevuse ja alumiiniumi soojusülekande. Need on ideaalsed lahendused nii uutele kui vanadele küttesüsteemidele Tallinnas ja Harjumaal.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2024-02-06').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Биметаллический радиатор</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Биметаллический радиатор отопления: что это такое и в чем преимущества?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Биметаллические радиаторы отопления сочетают прочность стали и теплоотдачу алюминия. Это идеальное решение как для новых, так и для старых систем отопления в Таллине и Харьюмаа.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2024-02-06').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Bimetalliline radiaator küttesüsteemis Tallinnas"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on bimetalliline radiaator?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Bimetalliline radiaator on radiaator, mis koosneb kahest metallist: terasest ja alumiiniumist. Terasest torud tagavad tugevuse ja vastupidavuse, samas kui alumiiniumist ribid tagavad hea soojusülekande.
+        </p>
+        <p class="text-gray-700 mb-3">
+          See konstruktsioon võimaldab kombineerida parimaid omadusi mõlemast materjalist: terase vastupidavuse kõrge rõhu jaoks ja alumiiniumi kiire soojusülekande.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Millised on bimetalliliste radiaatorite eelised?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Kõrge rõhu vastupidavus</strong> – sobivad tsentraalkütte süsteemidele kõrge rõhuga</li>
+          <li><strong>Hea soojusülekanne</strong> – alumiiniumist osad tagavad kiire kuumutamise</li>
+          <li><strong>Korrosioonikindlus</strong> – terasest torud on kaetud kaitsva kihiga</li>
+          <li><strong>Kerge kaal</strong> – lihtsam transportida ja paigaldada kui malmiradiaatorid</li>
+          <li><strong>Kaasaegne disain</strong> – sobivad hästi kaasaegsete interjööridega</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Kuidas bimetalliline radiaator töötab?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Bimetallilises radiaatoris liigub soojuskandja (vesi) terasest torudes. Teras tagab vastupidavuse ja korrosioonikindluse. Alumiiniumist ribid võtavad soojust vastu ja kiiresti soojendavad ruumi.
+        </p>
+        <p class="text-gray-700 mb-3">
+          See konstruktsioon tagab nii töökindluse kui ka efektiivse soojusülekande.
+        </p>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused bimetalliliste radiaatorite kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis on bimetalliline radiaator ja miks see on populaarne Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Bimetalliline radiaator kombineerib terase tugevuse ja alumiiniumi soojusülekande. See on populaarne valik Tallinnas, kuna sobib nii uutele kui vanadele küttesüsteemidele ja talub kõrget rõhku. Bimetallilised radiaatorid on ideaalsed tsentraalkütte süsteemidele Lasnamäes, Mustamäel, Kesklinnas ja teistes Tallinna piirkondades.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab bimetalliliste radiaatorite paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Bimetalliliste radiaatorite paigalduse hind Tallinnas sõltub radiaatorite arvust ja paigalduse keerukusest. Ühe bimetallilise radiaatori paigaldus võib maksta 200-400€, kogu maja radiaatorite paigaldus 1500-4000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas bimetallilised radiaatorid sobivad vanadele küttesüsteemidele?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Jah, bimetallilised radiaatorid sobivad hästi nii uutele kui vanadele küttesüsteemidele Tallinnas. Terasest torud tagavad vastupidavuse vanade süsteemide kõrge rõhu jaoks, samas kui alumiiniumist ribid tagavad hea soojusülekande. See on üks peamisi põhjuseid, miks bimetallilised radiaatorid on nii populaarsed Tallinnas.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui kaua kestab bimetalliliste radiaatorite paigaldus?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Bimetalliliste radiaatorite paigaldus võtab tavaliselt 1-3 päeva, olenevalt radiaatorite arvust ja süsteemi keerukusest. Ühe radiaatori paigaldus võib võtta 2-4 tundi. Meie professionaalne torumees töötab kiiresti ja efektiivselt, tagades kvaliteetse paigalduse.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Milline on bimetalliliste radiaatorite eluiga?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Bimetalliliste radiaatorite eluiga on tavaliselt 20-30 aastat, kui need on õigesti paigaldatud ja hooldatud. Regulaarne hooldus ja õige kasutamine pikendab radiaatorite eluiga oluliselt. Meie torumees pakub bimetalliliste radiaatorite hooldust Tallinnas.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid radiaatorite kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/radiaatori-valik" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Radiaatori valik küttesüsteemile</h3>
+            <p class="text-sm text-gray-600">Kuidas valida õige radiaator küttesüsteemile Tallinnas.</p>
+          </a>
+          <a href="/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Radiaatorite tühjendamine ja hooldus</h3>
+            <p class="text-sm text-gray-600">Kuidas tühjendada radiaatoreid ja miks see on oluline.</p>
+          </a>
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Bimetalliliste radiaatorite toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub bimetalliliste radiaatorite paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Bimetalliliste radiaatorite toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Bimetalliliste radiaatorite avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile bimetalliliste radiaatorite paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud bimetalliliste radiaatorite paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni bimetalliliste radiaatorite valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja bimetalliliste radiaatorite toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate bimetalliliste radiaatorite paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub bimetalliliste radiaatorite toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame bimetalliliste radiaatorite valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Bimetalliliste radiaatorite toruabi Tallinnas 24/7 | Bimetalliliste radiaatorite paigaldus | Bimetalliliste radiaatorite remont | Bimetalliliste radiaatorite hooldus</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/otoplenije-batarei-liking.webp"
+          alt="Биметаллический радиатор отопления в Таллине"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое биметаллический радиатор?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Биметаллический радиатор – это радиатор, состоящий из двух металлов: стали и алюминия. Стальные трубы обеспечивают прочность и долговечность, в то время как алюминиевые ребра обеспечивают хорошую теплоотдачу.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Эта конструкция позволяет сочетать лучшие свойства обоих материалов: прочность стали для высокого давления и быструю теплоотдачу алюминия.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Каковы преимущества биметаллических радиаторов?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Высокая устойчивость к давлению</strong> – подходят для центральных систем отопления с высоким давлением</li>
+          <li><strong>Хорошая теплоотдача</strong> – алюминиевые части обеспечивают быстрое нагревание</li>
+          <li><strong>Коррозионная стойкость</strong> – стальные трубы покрыты защитным слоем</li>
+          <li><strong>Легкий вес</strong> – проще транспортировать и устанавливать, чем чугунные радиаторы</li>
+          <li><strong>Современный дизайн</strong> – хорошо подходят для современных интерьеров</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Как работает биметаллический радиатор?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          В биметаллическом радиаторе теплоноситель (вода) движется по стальным трубам. Сталь обеспечивает прочность и коррозионную стойкость. Алюминиевые ребра принимают тепло и быстро нагревают помещение.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Эта конструкция обеспечивает как надежность, так и эффективную теплоотдачу.
+        </p>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка биметаллических радиаторов в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке биметаллических радиаторов.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Что такое биметаллический радиатор и почему он популярен в Таллине?' : 'Mis on bimetalliline radiaator ja miks see on populaarne Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Биметаллический радиатор сочетает прочность стали и теплоотдачу алюминия. Это популярный выбор в Таллине, так как подходит как для новых, так и для старых систем отопления и выдерживает высокое давление.'
+            : 'Bimetalliline radiaator kombineerib terase tugevuse ja alumiiniumi soojusülekande. See on populaarne valik Tallinnas, kuna sobib nii uutele kui vanadele küttesüsteemidele ja talub kõrget rõhku.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка биметаллических радиаторов в Таллине?' : 'Kui palju maksab bimetalliliste radiaatorite paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки биметаллических радиаторов в Таллине зависит от количества радиаторов и сложности установки. Установка одного биметаллического радиатора может стоить 200-400€, установка всех радиаторов в доме 1500-4000€.'
+            : 'Bimetalliliste radiaatorite paigalduse hind Tallinnas sõltub radiaatorite arvust ja paigalduse keerukusest. Ühe bimetallilise radiaatori paigaldus võib maksta 200-400€, kogu maja radiaatorite paigaldus 1500-4000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Подходят ли биметаллические радиаторы для старых систем отопления?' : 'Kas bimetallilised radiaatorid sobivad vanadele küttesüsteemidele?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Да, биметаллические радиаторы хорошо подходят как для новых, так и для старых систем отопления в Таллине. Стальные трубы обеспечивают долговечность для старых систем с высоким давлением.'
+            : 'Jah, bimetallilised radiaatorid sobivad hästi nii uutele kui vanadele küttesüsteemidele Tallinnas. Terasest torud tagavad vastupidavuse vanade süsteemide kõrge rõhu jaoks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как долго длится установка биметаллических радиаторов?' : 'Kui kaua kestab bimetalliliste radiaatorite paigaldus?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка биметаллических радиаторов обычно занимает 1-3 дня, в зависимости от количества радиаторов и сложности системы. Установка одного радиатора может занять 2-4 часа.'
+            : 'Bimetalliliste radiaatorite paigaldus võtab tavaliselt 1-3 päeva, olenevalt radiaatorite arvust ja süsteemi keerukusest. Ühe radiaatori paigaldus võib võtta 2-4 tundi.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какой срок службы биметаллических радиаторов?' : 'Milline on bimetalliliste radiaatorite eluiga?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Срок службы биметаллических радиаторов обычно составляет 20-30 лет, если они правильно установлены и обслуживаются. Регулярное обслуживание и правильное использование значительно продлевает срок службы радиаторов.'
+            : 'Bimetalliliste radiaatorite eluiga on tavaliselt 20-30 aastat, kui need on õigesti paigaldatud ja hooldatud. Regulaarne hooldus ja õige kasutamine pikendab radiaatorite eluiga oluliselt.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Биметаллический радиатор отопления'
+          : 'Bimetalliline radiaator küttesüsteemis',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/bimetalliline-radiaator' : 'https://toruabii.ee/blog/bimetalliline-radiaator',
+      },
+    ],
+  })}
+/>

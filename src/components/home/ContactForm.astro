@@ -1,0 +1,182 @@
+---
+import { SITE_IDENTITY } from '../../data/site-identity';
+
+const formAction = '/api/callback';
+const phoneLink = SITE_IDENTITY.phoneTel;
+---
+
+<div class="contact-form-wrap font-body">
+  <form action={formAction} method="POST" class="space-y-4" id="home-contact-form">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="contact-name" class="block text-sm font-medium text-white/90 mb-1">
+          <span class="home-ssr-et">Eesnimi</span>
+          <span class="home-ssr-ru">Имя</span> *
+        </label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          required
+          class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50"
+        />
+      </div>
+      <div>
+        <label for="contact-surname" class="block text-sm font-medium text-white/90 mb-1">
+          <span class="home-ssr-et">Perekonnanimi</span>
+          <span class="home-ssr-ru">Фамилия</span>
+        </label>
+        <input
+          type="text"
+          id="contact-surname"
+          name="surname"
+          class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50"
+        />
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label for="contact-email" class="block text-sm font-medium text-white/90 mb-1">
+          <span class="home-ssr-et">E-post</span>
+          <span class="home-ssr-ru">E-mail</span>
+        </label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50"
+        />
+      </div>
+      <div>
+        <label for="contact-phone" class="block text-sm font-medium text-white/90 mb-1">
+          <span class="home-ssr-et">Telefon</span>
+          <span class="home-ssr-ru">Телефон</span> *
+        </label>
+        <input
+          type="tel"
+          id="contact-phone"
+          name="phone"
+          required
+          class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50"
+          placeholder={SITE_IDENTITY.phoneDisplay}
+        />
+      </div>
+    </div>
+    <div>
+      <label for="contact-address" class="block text-sm font-medium text-white/90 mb-1">
+        <span class="home-ssr-et">Aadress</span>
+        <span class="home-ssr-ru">Адрес</span>
+      </label>
+      <input
+        type="text"
+        id="contact-address"
+        name="address"
+        class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50"
+      />
+    </div>
+    <div>
+      <label for="contact-message" class="block text-sm font-medium text-white/90 mb-1">
+        <span class="home-ssr-et">Sõnum</span>
+        <span class="home-ssr-ru">Сообщение</span>
+      </label>
+      <textarea
+        id="contact-message"
+        name="message"
+        rows="4"
+        class="w-full px-4 py-2.5 rounded-lg border-0 text-gray-900 focus:ring-2 focus:ring-white/50 resize-y"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="w-full bg-white text-brand-blue hover:bg-brand-blue-light font-bold py-4 px-6 rounded-lg transition-colors min-h-[52px]"
+    >
+      <span class="home-ssr-et">Saada päring</span>
+      <span class="home-ssr-ru">Отправить запрос</span>
+    </button>
+  </form>
+
+  <p class="text-sm text-white/80 mt-4 text-center">
+    <span class="home-ssr-et">Või helista otse:</span>
+    <span class="home-ssr-ru">Или позвоните:</span>
+    <a href={`tel:${phoneLink}`} class="font-bold text-white underline ml-1">{SITE_IDENTITY.phoneDisplay}</a>
+  </p>
+
+  <div id="home-form-message" class="hidden mt-4 p-4 rounded-lg text-center font-medium text-gray-900 bg-white"></div>
+</div>
+
+<script>
+  import { submitCallbackRequest } from '../../scripts/callback-fetch';
+
+  (function () {
+    const form = document.getElementById('home-contact-form');
+    const messageDiv = document.getElementById('home-form-message');
+    if (!form || !messageDiv) return;
+
+    const lang = () => document.documentElement.lang || 'et';
+    const t = (key) => {
+      const map = {
+        et: {
+          success: 'Aitäh! Võtame teiega ühendust varsti.',
+          error: 'Viga saatmisel. Palun proovige uuesti või helistage otse.',
+          sending: 'Saadetakse...',
+        },
+        ru: {
+          success: 'Спасибо! Мы свяжемся с вами в ближайшее время.',
+          error: 'Ошибка при отправке. Пожалуйста, попробуйте снова или позвоните.',
+          sending: 'Отправляется...',
+        },
+      };
+      return map[lang()]?.[key] || map.et[key];
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalHtml = submitButton?.innerHTML;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = t('sending');
+      }
+      messageDiv.classList.add('hidden');
+
+      const fd = new FormData(form);
+      const name = [fd.get('name'), fd.get('surname')].filter(Boolean).join(' ').trim();
+      const phone = String(fd.get('phone') ?? '').trim();
+      const extra = [
+        fd.get('email') && `Email: ${fd.get('email')}`,
+        fd.get('address') && `Aadress: ${fd.get('address')}`,
+        fd.get('message') && `Sõnum: ${fd.get('message')}`,
+      ]
+        .filter(Boolean)
+        .join('\n');
+
+      try {
+        const result = await submitCallbackRequest({
+          name,
+          phone,
+          estimate_note: extra || undefined,
+        });
+
+        if (result.ok && result.data.success) {
+          messageDiv.classList.remove('hidden');
+          messageDiv.classList.add('bg-green-100', 'text-green-800');
+          messageDiv.textContent = t('success');
+          form.reset();
+        } else {
+          messageDiv.classList.remove('hidden');
+          messageDiv.classList.add('bg-red-100', 'text-red-800');
+          messageDiv.textContent = result.data.error?.trim() || t('error');
+        }
+      } catch {
+        messageDiv.classList.remove('hidden');
+        messageDiv.classList.add('bg-red-100', 'text-red-800');
+        messageDiv.textContent = t('error');
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalHtml || '';
+        }
+      }
+    });
+  })();
+</script>

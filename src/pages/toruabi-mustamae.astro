@@ -1,0 +1,609 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
+import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import {
+  getTallinnDistrict,
+  tallinnDistrictDescription,
+  tallinnDistrictH1,
+  tallinnDistrictIntro,
+  tallinnDistrictTitle,
+} from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const districtSeo = getTallinnDistrict('mustamae');
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = tallinnDistrictTitle('mustamae', 'et');
+const descEt = tallinnDistrictDescription('mustamae', 'et');
+const titleRu = tallinnDistrictTitle('mustamae', 'ru');
+const descRu = tallinnDistrictDescription('mustamae', 'ru');
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const districtPath = '/toruabi-mustamae';
+const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
+
+const mustamaeFaqEt = [
+  {
+    q: 'Kui kiiresti saab toruabi Mustamäesse?',
+    a: 'Mustamäe piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Avariikõnedele reageerime kohe.',
+  },
+  {
+    q: 'Millised on toruabi hinnad Mustamäel?',
+    a: 'Toruabi hinnad Mustamäel on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja meie veebilehelt.',
+  },
+  {
+    q: 'Kas toruabi töötab Mustamäel ööpäevaringselt?',
+    a: 'Jah, oleme kättesaadavad 24/7 avariikõnedele Mustamäel. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.',
+  },
+  {
+    q: 'Kas teil on kogemus Mustamäe uusarendustega?',
+    a: 'Jah, meil on pikk kogemus töötamisega Mustamäe uusarendustes. Tunneme nende hoonete spetsiifikaid ja teame, kuidas kiiresti lahendada probleeme uutes torustikes.',
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical="https://toruabii.ee/toruabi-mustamae"
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <DistrictTallinnJsonLd
+    slot="head"
+    districtPath={districtPath}
+    currentLang={currentLang}
+    pageDescription={pageDescription}
+    addressLocality="Mustamäe"
+    areaServedName="Mustamäe"
+    plumbingDisplayNameEt="toruabii.ee - Toruabi Mustamäel"
+    plumbingDisplayNameRu="toruabii.ee — торуаби в Мустамяэ"
+    offerCatalogNameEt="Toruabi teenused Mustamäel"
+    offers={[
+      {
+        nameEt: 'Toruabi Mustamäel',
+        descEt: 'Avarii toruabi ja sanitaartehnilised tööd Mustamäe piirkonnas 24/7',
+      },
+      {
+        nameEt: 'Kanalisatsiooni toruabi Mustamäel',
+        descEt: 'Ummistuste likvideerimine ja kanalisatsiooni hooldus Mustamäel',
+      },
+      {
+        nameEt: 'Boileri toruabi Mustamäel',
+        descEt: 'Boileri hooldus ja remont Mustamäe piirkonnas',
+      },
+    ]}
+    faqEt={mustamaeFaqEt}
+  />
+  <!-- Desktop Navigation -->
+  
+  <!-- Hero Section -->
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          { name: currentLang === 'ru' ? 'Торуаби по районам' : 'Toruabi piirkondades', url: siteUrl + '/#piirkonnad' },
+          { name: currentLang === 'ru' ? 'Торуаби в Мустамяэ' : 'Toruabi Mustamäel', url: siteUrl + '/toruabi-mustamae' }
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('mustamae', 'et')}</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('mustamae', 'ru')}</h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('mustamae', 'et')}</p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('mustamae', 'ru')}</p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+
+      <CallStripCta variant="page" />
+      
+      <!-- Why Choose Toruabi Mustamäel -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Miks valida toruabi Mustamäel?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Peamised põhjused</h3>
+        <p class="text-gray-700 mb-4">Mustamäe on lääne-Tallinna mikrorajoonide võrgustik, kus uued korterelamud ja 1980. aastate majad kasutavad erinevat torustikku. Brigaad lahendab Mustamäel nii küttekollektorite rikeid kui köögi- ja vannitoa ummistusi, arvestades objekti vanust ja ligipääsu parklatesse.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kogemus uusarendustega:</strong> Meil on pikk kogemus töötamisega Mustamäe uusarendustes ja teame nende spetsiifikaid</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kiire reageerimine:</strong> Mustamäe piirkonnas jõuame kohale tavaliselt 30-50 minutiga</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Boileri toruabi:</strong> Pakume professionaalset boileri hooldust ja läbipesu Mustamäel</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Toruabi Mustamäel – meie statistikat</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">432+</div>
+              <p class="text-gray-200">Rahulolu klienti Mustamäel</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">40 min</div>
+              <p class="text-gray-200">Keskmine reageerimisaeg</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">10+</div>
+              <p class="text-gray-200">Aastat kogemust Mustamäel</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Почему выбирают торуаби в Мустамяэ?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Основные причины</h3>
+        <p class="text-gray-700 mb-4">Мустамяэ – второй по величине район Таллина с более чем 70 000 жителей. Наша команда хорошо знает район и предлагает быструю помощь как в новостройках, так и в старых домах.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Опыт с новостройками:</strong> У нас большой опыт работы в новостройках Мустамяэ и мы знаем их специфику</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Быстрое реагирование:</strong> В районе Мустамяэ мы обычно приезжаем за 30-50 минут</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Обслуживание бойлеров:</strong> Предлагаем профессиональное обслуживание и промывку бойлеров в Мустамяэ</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Торуаби в Мустамяэ – наша статистика</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">432+</div>
+              <p class="text-gray-200">Довольных клиентов в Мустамяэ</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">40 мин</div>
+              <p class="text-gray-200">Среднее время реагирования</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">10+</div>
+              <p class="text-gray-200">Лет опыта в Мустамяэ</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services in Mustamäe -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi teenused Mustamäel</h2>
+        <p class="text-gray-700 mb-6">Mustamäe piirkonnas pakume kõiki toruabi teenuseid, sealhulgas:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Mustamäe uusarendustes</h3>
+            <p class="text-gray-700 mb-3">Mustamäes on palju uusi elamuid ja uusarendusi. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme uutes torustikes. Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Mustamäe uusarendustes. Meie professionaalne santehnik ja avarii santehnik on spetsialiseerunud töötamisele Mustamäe uusarendustes.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Sanitaarseadmete paigaldus ja remont</li>
+              <li>Kanalisatsiooni toruabi uusarendustes</li>
+              <li>Boileri toruabi ja hooldus</li>
+              <li>Küttesüsteemi toruabi</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri toruabi ja hooldus Mustamäel</h3>
+            <p class="text-gray-700 mb-3">Paljud Mustamäe elanikud kasutavad boilerit sooja vee jaoks. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset boileri hooldust, läbipesu ja remonti Mustamäel. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Mustamäel.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Boileri hooldus ja läbipesu</li>
+              <li>Boileri remont ja vahetus</li>
+              <li>Küttesüsteemi loputamine</li>
+              <li>Soojusvahetite puhastamine</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Услуги торуаби в Мустамяэ</h2>
+        <p class="text-gray-700 mb-6">В районе Мустамяэ мы предлагаем все услуги торуаби, включая:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби в новостройках Мустамяэ</h3>
+            <p class="text-gray-700 mb-3">В Мустамяэ много новых жилых домов и новостроек. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в новых коммуникациях.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Установка и ремонт сантехники</li>
+              <li>Прочистка канализации в новостройках</li>
+              <li>Обслуживание бойлеров</li>
+              <li>Обслуживание систем отопления</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание бойлеров в Мустамяэ</h3>
+            <p class="text-gray-700 mb-3">Многие жители Мустамяэ используют бойлеры для горячей воды. Наша команда предлагает профессиональное обслуживание, промывку и ремонт бойлеров в Мустамяэ.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Обслуживание и промывка бойлеров</li>
+              <li>Ремонт и замена бойлеров</li>
+              <li>Промывка систем отопления</li>
+              <li>Очистка теплообменников</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Mustamäel – kliendiarvustused</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Andres L.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Suurepärane toruabi Mustamäes! Uusarenduses tehti sanitaarseadmete paigaldus kiiresti ja kvaliteetselt. Soovitan!"</p>
+            <p class="text-sm text-gray-500">10. detsember 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Kadri M.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Boileri hooldus Mustamäes tehti väga professionaalselt. Meister selgitas kõik selgelt ja andis nõuandeid. Garantii 2 aastat annab rahu."</p>
+            <p class="text-sm text-gray-500">25. november 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Keskmine hinnang: <span class="font-bold text-trust-blue">4.9/5</span> (432 arvustust)</p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Торуаби в Мустамяэ – отзывы клиентов</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Андрес Л.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Отличная торуаби в Мустамяэ! В новостройке установку сантехники сделали быстро и качественно. Рекомендую!"</p>
+            <p class="text-sm text-gray-500">10 декабря 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Кадри М.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Обслуживание бойлера в Мустамяэ сделали очень профессионально. Мастер всё объяснил и дал советы. Гарантия 2 года даёт спокойствие."</p>
+            <p class="text-sm text-gray-500">25 ноября 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Средняя оценка: <span class="font-bold text-trust-blue">4.9/5</span> (432 отзыва)</p>
+      </section>
+
+      <!-- Areas in Mustamäe -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Mustamäe piirkonnad</h2>
+        <p class="text-gray-700 mb-4">Teenindame kõiki Mustamäe piirkondi, sealhulgas:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Mustamäe</h3>
+            <p class="text-sm text-gray-600">Toruabi Mustamäe piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Sääse</h3>
+            <p class="text-sm text-gray-600">Toruabi Sääse piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Kadaka</h3>
+            <p class="text-sm text-gray-600">Toruabi Kadaka piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Hiiu</h3>
+            <p class="text-sm text-gray-600">Toruabi Hiiu piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Männiku</h3>
+            <p class="text-sm text-gray-600">Toruabi Männiku piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Väike-Õismäe</h3>
+            <p class="text-sm text-gray-600">Toruabi Väike-Õismäe piirkonnas</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi ka teistes Tallinna piirkondades</h3>
+          <p class="text-gray-200 mb-3">Teenindame ka teisi Tallinna piirkondi:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a> – kiire avarii toruabi ja kanalisatsiooni toruabi Lasnamäe piirkonnas</li>
+            <li><a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Toruabi Kesklinnas</a> – kiire avarii toruabi Tallinna kesklinna piirkonnas</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Toruabi Piritas</a> – professionaalne avarii toruabi Pirita piirkonnas 24/7</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Toruabi Viimsis</a> – professionaalne avarii toruabi Viimsi piirkonnas 24/7</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Районы обслуживания торуаби в Мустамяэ</h2>
+        <p class="text-gray-700 mb-4">Мы обслуживаем все районы Мустамяэ, включая:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Мустамяэ</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Мустамяэ</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Сяэсе</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Сяэсе</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Кадака</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Кадака</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Хииу</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Хииу</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Мяннику</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Мяннику</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Вяйке-Ыйсмяэ</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Вяйке-Ыйсмяэ</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби также в других районах Таллина</h3>
+          <p class="text-gray-200 mb-3">Мы также обслуживаем другие районы Таллина:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Ласнамяэ</a> – быстрая аварийная сантехника и прочистка канализации в районе Ласнамяэ</li>
+            <li><a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Торуаби в Кесклинне</a> – быстрая аварийная сантехника в центре Таллина</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Торуаби в Пирита</a> – профессиональная аварийная сантехника в районе Пирита 24/7</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Торуаби в Виймси</a> – профессиональная аварийная сантехника в районе Виймси 24/7</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Typical Problems -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Mustamäel</h2>
+        <p class="text-gray-700 mb-6">Mustamäes on palju uusi elamuid ja uusarendusi, kus torustikud on uuemad kui Lasnamäes. Siiski tekivad ka siin toruabi probleemid, mis nõuavad professionaalset lahendust. Meie torumees ja professionaalne santehnik on spetsialiseerunud töötamisele Mustamäe uusarendustes.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri hooldus uusarendustes</h3>
+            <p class="text-gray-700 mb-3">Paljud Mustamäe elanikud kasutavad boilerit sooja vee jaoks. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset boileri hooldust, läbipesu ja remonti Mustamäel. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Mustamäel.</p>
+            <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Boileri hooldus ja läbipesu</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni survepesu</h3>
+            <p class="text-gray-700 mb-3">Mustamäe uusarendustes on vaja regulaarset kanalisatsiooni survepesu. Meie toruabi meeskond kasutab professionaalseid survepesu masinaid kanalisatsioonisüsteemide puhastamiseks. Meie kogenud torumees tegeleb kanalisatsiooni toruabi ja avarii toruabi teenustega Mustamäel.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Sanitaarseadmete paigaldus</h3>
+            <p class="text-gray-700 mb-3">Uusarendustes Mustamäel on sageli vaja sanitaarseadmete paigaldust. Meie toruabi meeskond pakub professionaalset sanitaarseadmete paigaldust, sealhulgas kraanikauside, segistite ja WC potide paigaldust. Meie professionaalne santehnik tegeleb sanitaarseadmete paigaldusega Mustamäel.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Küttesüsteemide hooldus</h3>
+            <p class="text-gray-700 mb-3">Mustamäe uusarendustes on kaasaegsed küttesüsteemid, mis vajavad regulaarset hooldust. Meie toruabi meeskond pakub professionaalset küttesüsteemi hooldust ja läbipesu. Meie kogenud torumees tegeleb küttesüsteemi toruabi ja renoveerimisega Mustamäel.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi Mustamäel – meie lahendused</h3>
+          <p class="text-gray-200 mb-3">Meie toruabi meeskond on spetsialiseerunud Mustamäe uusarenduste toruabi probleemide lahendamisele. Kasutame professionaalseid seadmeid ja anname 2-aastase garantiid kõigile töödele. Kui teil on toruabi probleem Mustamäel, helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me reageerime kohe.</p>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Мустамяэ</h2>
+        <p class="text-gray-700 mb-6">В Мустамяэ много новых жилых домов и новостроек, где коммуникации новее, чем в Ласнамяэ. Однако и здесь возникают проблемы с сантехником, требующие профессионального решения. Наш сантехник специализируется на работе в новостройках Мустамяэ.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание бойлеров в новостройках</h3>
+            <p class="text-gray-700 mb-3">Многие жители Мустамяэ используют бойлеры для горячей воды. Наша команда предоставляет профессиональное обслуживание, промывку и ремонт бойлеров в Мустамяэ.</p>
+            <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Обслуживание и промывка бойлера</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Гидродинамическая промывка канализации</h3>
+            <p class="text-gray-700 mb-3">В новостройках Мустамяэ требуется регулярная гидродинамическая промывка канализации. Наша команда использует профессиональные машины для промывки канализационных систем.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Установка сантехнического оборудования</h3>
+            <p class="text-gray-700 mb-3">В новостройках Мустамяэ часто требуется установка сантехнического оборудования. Наша команда предоставляет профессиональную установку сантехники, включая раковины, смесители и унитазы.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание систем отопления</h3>
+            <p class="text-gray-700 mb-3">В новостройках Мустамяэ современные системы отопления требуют регулярного обслуживания. Наша команда предоставляет профессиональное обслуживание и промывку систем отопления.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби в Мустамяэ – наши решения</h3>
+          <p class="text-gray-200 mb-3">Наша команда специализируется на решении проблем сантехника в новостройках Мустамяэ. Мы используем профессиональное оборудование и предоставляем 2 года гарантии на все работы. Если у вас проблема с сантехником в Мустамяэ, позвоните нам <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> и мы отреагируем немедленно.</p>
+        </div>
+      </section>
+
+      <!-- Advantages -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Meie eelised töötamisel Mustamäel</h2>
+        <p class="text-gray-700 mb-6">Meie toruabi meeskond on spetsialiseerunud töötamisele Mustamäe piirkonnas. Meil on suur kogemus Mustamäe uusarenduste toruabi probleemide lahendamisega ja me teame, kuidas kiiresti ja efektiivselt lahendada kõik toruabi probleemid.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kogemus uusarendustes</h3>
+            <p class="text-gray-200 mb-3">Meie torumees on töötanud Mustamäes üle 8 aasta ja tunneb hästi uusarenduste spetsiifikaid. Meie professionaalne santehnik teab, kuidas töötada Mustamäe uusarendustega.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Töötame regulaarselt Mustamäe piirkonnas</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tuneme hästi uusarenduste spetsiifikaid</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Kaasaegsed lahendused</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kiire reageerimine</h3>
+            <p class="text-gray-200 mb-3">Mustamäe piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Meie toruabi meeskond on alati valmis reageerima avarii olukordadele Mustamäel.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Keskmine reageerimisaeg: 40 minutit</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> 24/7 avarii toruabi teenused</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tasuta väljasõit Tallinna piires</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Наши преимущества работы в Мустамяэ</h2>
+        <p class="text-gray-700 mb-6">Наша команда специализируется на работе в районе Мустамяэ. У нас большой опыт решения проблем сантехника в новостройках Мустамяэ, и мы знаем, как быстро и эффективно решить все проблемы с сантехником.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Опыт в новостройках</h3>
+            <p class="text-gray-200 mb-3">Наш сантехник работает в Мустамяэ более 8 лет и хорошо знает специфику новостроек. Наш профессиональный сантехник знает, как работать с новостройками Мустамяэ.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Регулярно работаем в районе Мустамяэ</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Хорошо знаем специфику новостроек</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Современные решения</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Быстрое реагирование</h3>
+            <p class="text-gray-200 mb-3">В районе Мустамяэ мы обычно приезжаем в течение 30-50 минут. Наша команда всегда готова реагировать на аварийные ситуации в Мустамяэ.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Среднее время реагирования: 40 минут</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Услуги аварийного сантехника 24/7</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Бесплатный выезд в пределах Таллина</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Kuidas töötab toruabi Mustamäel?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
+            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Mustamäesse</h3>
+            <p>Mustamäe piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Väljasõit on 0€ Tallinna piires.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Kohapealne diagnostika</h3>
+            <p>Meister kontrollib probleemi, selgitab lahenduse variandid ja annab täpse hinnangu.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Professionaalne remont</h3>
+            <p>Kasutame kaasaegseid seadmeid ja anname 2-aastase garantiid kõigile töödele.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Как работает торуаби в Мустамяэ?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
+            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в Мустамяэ</h3>
+            <p>В районе Мустамяэ мы обычно приезжаем за 30-50 минут. Выезд стоит 0€ в пределах Таллина.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Диагностика на месте</h3>
+            <p>Мастер проверит проблему, объяснит варианты решения и даст точную оценку стоимости.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Профессиональный ремонт</h3>
+            <p>Мы используем современное оборудование и даём 2-летнюю гарантию на все работы.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Pricing -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Mustamäel hinnad</h2>
+        <p class="text-gray-700 mb-4">Toruabi hinnad Mustamäel on samad, mis kogu Tallinnas. Väljasõit on 0€ Mustamäe piires.</p>
+        <p class="text-gray-700 mb-6">Vaata täielikku hinnakirja: <a href="/hinnakiri" class="text-emergency-red hover:underline font-bold">Toruabi hinnakiri</a></p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Цены на торуаби в Мустамяэ</h2>
+        <p class="text-gray-700 mb-4">Цены на торуаби в Мустамяэ такие же, как и во всём Таллине. Выезд стоит 0€ в пределах Мустамяэ.</p>
+        <p class="text-gray-700 mb-6">Смотрите полный прайс-лист: <a href="/ru/hinnakiri" class="text-emergency-red hover:underline font-bold">Прайс-лист торуаби</a></p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">KKK toruabi Mustamäel kohta</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kui kiiresti saab toruabi Mustamäesse?</summary>
+            <p class="text-gray-700 mt-2">Mustamäe piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Avariikõnedele reageerime kohe.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Millised on toruabi hinnad Mustamäel?</summary>
+            <p class="text-gray-700 mt-2">Toruabi hinnad Mustamäel on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja <a href="/hinnakiri" class="text-emergency-red hover:underline">siit</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas toruabi töötab Mustamäel ööpäevaringselt?</summary>
+            <p class="text-gray-700 mt-2">Jah, oleme kättesaadavad 24/7 avariikõnedele Mustamäel. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas teil on kogemus Mustamäe uusarendustega?</summary>
+            <p class="text-gray-700 mt-2">Jah, meil on pikk kogemus töötamisega Mustamäe uusarendustes. Tunneme nende hoonete spetsiifikaid ja teame, kuidas kiiresti lahendada probleeme uutes torustikes.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Часто задаваемые вопросы о торуаби в Мустамяэ</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Как быстро приезжает торуаби в Мустамяэ?</summary>
+            <p class="text-gray-700 mt-2">В районе Мустамяэ мы обычно приезжаем за 30-50 минут. На аварийные вызовы реагируем сразу.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Какие цены на торуаби в Мустамяэ?</summary>
+            <p class="text-gray-700 mt-2">Цены на торуаби в Мустамяэ такие же, как и во всём Таллине. Выезд стоит 0€. Смотрите полный прайс-лист <a href="/ru/hinnakiri" class="text-emergency-red hover:underline">здесь</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Работает ли торуаби в Мустамяэ круглосуточно?</summary>
+            <p class="text-gray-700 mt-2">Да, мы доступны 24/7 для аварийных вызовов в Мустамяэ. Для плановых работ работаем обычно с 8 до 20.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Есть ли у вас опыт работы с новостройками Мустамяэ?</summary>
+            <p class="text-gray-700 mt-2">Да, у нас большой опыт работы с новостройками Мустамяэ. Мы знаем специфику этих зданий и умеем быстро решать проблемы в новых коммуникациях.</p>
+          </details>
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath="/toruabi-mustamae" />
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Vaja toruabi Mustamäel?</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Нужен торуаби в Мустамяэ?</h2>
+        <p class="text-lg mb-6 blog-et">Helista kohe – reageerime 30-50 minutiga Mustamäe piirkonnas!</p>
+        <p class="text-lg mb-6 blog-ru">Позвоните сейчас – реагируем за 30-50 минут в районе Мустамяэ!</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

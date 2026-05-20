@@ -1,0 +1,11 @@
+---
+import SiteHeader from '../SiteHeader.astro';
+
+interface Props {
+  lang: 'et' | 'ru';
+}
+
+const { lang } = Astro.props;
+---
+
+<SiteHeader variant="home" lang={lang} />

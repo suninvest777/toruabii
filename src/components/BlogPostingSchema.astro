@@ -1,0 +1,56 @@
+---
+import { ruPath } from '../utils/i18n-paths';
+
+/**
+ * JSON-LD BlogPosting for article pages (place as: <BlogPostingSchema slot="head" ... /> inside BaseLayout).
+ */
+interface Props {
+  lang: 'et' | 'ru';
+  headlineEt: string;
+  headlineRu: string;
+  descriptionEt: string;
+  descriptionRu: string;
+  canonicalPath: string;
+  datePublished: string;
+  dateModified?: string;
+  imageUrl: string;
+}
+
+const siteUrl = 'https://toruabii.ee';
+const {
+  lang,
+  headlineEt,
+  headlineRu,
+  descriptionEt,
+  descriptionRu,
+  canonicalPath,
+  datePublished,
+  dateModified = datePublished,
+  imageUrl,
+} = Astro.props;
+
+const stripBrand = (s: string) => s.replace(/\s*\|\s*toruabii\.ee\s*$/i, '').trim();
+const headline = stripBrand(lang === 'ru' ? headlineRu : headlineEt);
+const articleDescription = stripBrand(lang === 'ru' ? descriptionRu : descriptionEt);
+const canonicalNorm = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+const absUrl =
+  lang === 'ru' ? `${siteUrl}${ruPath(canonicalNorm)}` : `${siteUrl}${canonicalNorm}`;
+const absImage = imageUrl.startsWith('http') ? imageUrl : `${siteUrl}${imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline,
+  description: articleDescription,
+  inLanguage: lang,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': absUrl },
+  url: absUrl,
+  datePublished,
+  dateModified,
+  author: { '@id': `${siteUrl}#organization` },
+  publisher: { '@id': `${siteUrl}#organization` },
+  image: [absImage],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

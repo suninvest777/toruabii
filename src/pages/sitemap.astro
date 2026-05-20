@@ -1,0 +1,241 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { ruPath } from '../utils/i18n-paths';
+
+const siteUrl = 'https://toruabii.ee';
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = 'Toruabi sitemap – kõik lehed | toruabii.ee';
+const descEt =
+  'Sitemap: kõik lehed ja toruabi teenused toruabii.ee-l — avarii toruabi, ummistuste likvideerimine, hinnakiri, blogi, piirkondlikud lehed.';
+const titleRu = 'Торуаби карта сайта – все страницы | toruabii.ee';
+const descRu =
+  'Карта сайта: все страницы и услуги торуаби на toruabii.ee — аварийный торуаби, устранение засоров, прайс, блог, районы.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+const sitemapPath = '/sitemap';
+const canonicalUrl =
+  currentLang === 'ru' ? `${siteUrl}${ruPath(sitemapPath)}` : `${siteUrl}${sitemapPath}`;
+const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  keywords={currentLang === 'ru' ? "торуаби, торуаби карта сайта, торуаби Таллинн" : "toruabi, toruabi sitemap, toruabi Tallinnas"}
+>
+  <main class="min-h-screen bg-gray-50 pt-24 md:pt-32 pb-16">
+    <div class="max-w-6xl mx-auto px-4">
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: crumbHomeUrl },
+          { name: currentLang === 'ru' ? 'Карта сайта' : 'Sitemap', url: canonicalUrl },
+        ]}
+        class="text-gray-600 mb-6"
+      />
+      <h1 class="text-4xl md:text-5xl font-bold text-trust-blue mb-8 text-center">
+        <span class="blog-et">Sitemap</span>
+        <span class="blog-ru">Карта сайта</span>
+      </h1>
+
+      <!-- Main Pages -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Pealehed</span>
+          <span class="blog-ru">Главные страницы</span>
+        </h2>
+        <ul class="space-y-2">
+          <li><a href="/" class="text-trust-blue hover:underline">Toruabi 24/7 – Avarii toruabi Tallinnas ja Harjumaal</a></li>
+          <li><a href="/hinnakiri" class="text-trust-blue hover:underline">
+            <span class="blog-et">Hinnakiri</span>
+            <span class="blog-ru">Цены</span>
+          </a></li>
+          <li><a href="/faq" class="text-trust-blue hover:underline">
+            <span class="blog-et">Korduma kippuvad küsimused</span>
+            <span class="blog-ru">Часто задаваемые вопросы</span>
+          </a></li>
+        </ul>
+      </section>
+
+      <!-- Service intent landings -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Teenused (toruabi)</span>
+          <span class="blog-ru">Услуги (торуаби)</span>
+        </h2>
+        <ul class="space-y-2">
+          <li>
+            <a href="/toruabi-avariiline-valjakutse" class="text-trust-blue hover:underline blog-et">Toruabi avarii väljakutse 24/7</a>
+            <a href="/ru/toruabi-avariiline-valjakutse" class="text-trust-blue hover:underline blog-ru">Торуаби аварийный выезд 24/7</a>
+          </li>
+          <li>
+            <a href="/toruabi-ummistuste-likvideerimine" class="text-trust-blue hover:underline blog-et">Toruabi ummistuste likvideerimine</a>
+            <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-trust-blue hover:underline blog-ru">Торуаби устранение засоров</a>
+          </li>
+          <li>
+            <a href="/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue hover:underline blog-et">Toruabi kanalisatsiooni survepesu</a>
+            <a href="/ru/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue hover:underline blog-ru">Торуаби гидродинамическая промывка</a>
+          </li>
+          <li>
+            <a href="/toruabi-rasvapuuduri-puhastus" class="text-trust-blue hover:underline blog-et">Toruabi rasvapüüduri puhastus</a>
+            <a href="/ru/toruabi-rasvapuuduri-puhastus" class="text-trust-blue hover:underline blog-ru">Торуаби очистка жироуловителя</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Service Areas -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Teeninduspiirkonnad</span>
+          <span class="blog-ru">Районы обслуживания</span>
+        </h2>
+        <ul class="space-y-2">
+          <li><a href="/toruabi-lasnamae" class="text-trust-blue hover:underline">Toruabi Lasnamäes</a></li>
+          <li><a href="/toruabi-mustamae" class="text-trust-blue hover:underline">Toruabi Mustamäel</a></li>
+          <li><a href="/toruabi-kesklinn" class="text-trust-blue hover:underline">Toruabi Kesklinnas</a></li>
+          <li><a href="/toruabi-pirita" class="text-trust-blue hover:underline">Toruabi Piritas</a></li>
+          <li><a href="/toruabi-viimsi" class="text-trust-blue hover:underline">Toruabi Viimsis</a></li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Harjumaa (toruabi)</span>
+          <span class="blog-ru">Харьюмаа (торуаби)</span>
+        </h2>
+        <ul class="space-y-2">
+          <li>
+            <a href="/toruabi-maardu" class="text-trust-blue hover:underline blog-et">Toruabi Maardus</a>
+            <a href="/ru/toruabi-maardu" class="text-trust-blue hover:underline blog-ru">Торуаби в Маарду</a>
+          </li>
+          <li>
+            <a href="/toruabi-keila" class="text-trust-blue hover:underline blog-et">Toruabi Keilas</a>
+            <a href="/ru/toruabi-keila" class="text-trust-blue hover:underline blog-ru">Торуаби в Кейла</a>
+          </li>
+          <li>
+            <a href="/toruabi-saue" class="text-trust-blue hover:underline blog-et">Toruabi Sauel</a>
+            <a href="/ru/toruabi-saue" class="text-trust-blue hover:underline blog-ru">Торуаби в Сауэ</a>
+          </li>
+          <li>
+            <a href="/toruabi-rae" class="text-trust-blue hover:underline blog-et">Toruabi Rae piirkonnas</a>
+            <a href="/ru/toruabi-rae" class="text-trust-blue hover:underline blog-ru">Торуаби в Раэ</a>
+          </li>
+          <li>
+            <a href="/toruabi-saku" class="text-trust-blue hover:underline blog-et">Toruabi Sakus</a>
+            <a href="/ru/toruabi-saku" class="text-trust-blue hover:underline blog-ru">Торуаби в Саку</a>
+          </li>
+          <li>
+            <a href="/toruabi-harku" class="text-trust-blue hover:underline blog-et">Toruabi Harkus</a>
+            <a href="/ru/toruabi-harku" class="text-trust-blue hover:underline blog-ru">Торуаби в Харку</a>
+          </li>
+          <li>
+            <a href="/toruabi-joelahtme" class="text-trust-blue hover:underline blog-et">Toruabi Jõelähtme vallas</a>
+            <a href="/ru/toruabi-joelahtme" class="text-trust-blue hover:underline blog-ru">Торуаби в Йыелахтме</a>
+          </li>
+          <li>
+            <a href="/toruabi-kiili" class="text-trust-blue hover:underline blog-et">Toruabi Kiilis</a>
+            <a href="/ru/toruabi-kiili" class="text-trust-blue hover:underline blog-ru">Торуаби в Кили</a>
+          </li>
+          <li>
+            <a href="/toruabi-kose" class="text-trust-blue hover:underline blog-et">Toruabi Kose vallas</a>
+            <a href="/ru/toruabi-kose" class="text-trust-blue hover:underline blog-ru">Торуаби в Косе</a>
+          </li>
+          <li>
+            <a href="/toruabi-anija" class="text-trust-blue hover:underline blog-et">Toruabi Anija vallas</a>
+            <a href="/ru/toruabi-anija" class="text-trust-blue hover:underline blog-ru">Торуаби в Анижа</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Blog -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Blogi</span>
+          <span class="blog-ru">Блог</span>
+        </h2>
+        <ul class="space-y-2">
+          <li><a href="/blog" class="text-trust-blue hover:underline font-semibold">
+            <span class="blog-et">Kõik artiklid</span>
+            <span class="blog-ru">Все статьи</span>
+          </a></li>
+          <li>
+            <a href="/blog/kategoria/kuttesusteem" class="text-trust-blue hover:underline blog-et">Küttesüsteemi artiklid</a>
+            <a href="/ru/blog/kategoria/otoplenije" class="text-trust-blue hover:underline blog-ru">Статьи об отоплении</a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Blog Articles -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">
+          <span class="blog-et">Blogi artiklid</span>
+          <span class="blog-ru">Статьи блога</span>
+        </h2>
+        <ul class="space-y-2">
+          <li><a href="/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine" class="text-trust-blue hover:underline">
+            <span class="blog-et">Küttesüsteemi hooldus ja radiaatorite tühjendamine</span>
+            <span class="blog-ru">Обслуживание системы отопления и слив воды с радиаторов</span>
+          </a></li>
+          <li><a href="/blog/kuttesusteem-eramaja" class="text-trust-blue hover:underline">
+            <span class="blog-et">Küttesüsteem eramajas</span>
+            <span class="blog-ru">Система отопления частного дома</span>
+          </a></li>
+          <li><a href="/blog/kollektorigrupp" class="text-trust-blue hover:underline">
+            <span class="blog-et">Kollektorigrupp küttesüsteemis</span>
+            <span class="blog-ru">Коллекторная группа в системе отопления</span>
+          </a></li>
+          <li><a href="/blog/puhvermahuti" class="text-trust-blue hover:underline">
+            <span class="blog-et">Puhvermahuti küttesüsteemis</span>
+            <span class="blog-ru">Буферная емкость в системе отопления</span>
+          </a></li>
+          <li><a href="/blog/radiaatori-valik" class="text-trust-blue hover:underline">
+            <span class="blog-et">Radiaatori valik küttesüsteemile</span>
+            <span class="blog-ru">Выбор радиатора отопления</span>
+          </a></li>
+          <li><a href="/blog/bimetalliline-radiaator" class="text-trust-blue hover:underline">
+            <span class="blog-et">Bimetalliline radiaator küttesüsteemis</span>
+            <span class="blog-ru">Биметаллический радиатор отопления</span>
+          </a></li>
+          <li><a href="/blog/pump-margi-ja-kuiva-rootoriga" class="text-trust-blue hover:underline">
+            <span class="blog-et">Pump margi ja kuiva rootoriga</span>
+            <span class="blog-ru">Насос с мокрым и сухим ротором</span>
+          </a></li>
+          <li><a href="/blog/laienduspaak-kutte-ja-gvs" class="text-trust-blue hover:underline">
+            <span class="blog-et">Laienduspaak küttesüsteemi ja soojavee jaoks</span>
+            <span class="blog-ru">Расширительный бак для отопления и ГВС</span>
+          </a></li>
+          <li><a href="/blog/tsirkulatsioonipump" class="text-trust-blue hover:underline">
+            <span class="blog-et">Tsirkulatsioonipump küttesüsteemis</span>
+            <span class="blog-ru">Циркуляционный насос в системе отопления</span>
+          </a></li>
+          <li><a href="/blog/hudroakumulaatorid-ja-laienduspaagid" class="text-trust-blue hover:underline">
+            <span class="blog-et">Hüdroakumulaatorid ja laienduspaagid</span>
+            <span class="blog-ru">Гидроаккумуляторы и расширительные баки</span>
+          </a></li>
+          <li><a href="/blog/elektrikatla-ulehendamine" class="text-trust-blue hover:underline">
+            <span class="blog-et">Elektrikatla ühendamine küttesüsteemiga</span>
+            <span class="blog-ru">Подключение электрокотла к системе отопления</span>
+          </a></li>
+          <li><a href="/blog/avatud-ja-suletud-kuttesusteemid" class="text-trust-blue hover:underline">
+            <span class="blog-et">Avatud ja suletud küttesüsteemid</span>
+            <span class="blog-ru">Открытая и закрытая системы отопления</span>
+          </a></li>
+          <li><a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-trust-blue hover:underline">
+            <span class="blog-et">Kanalisatsiooni ummistus - mida teha?</span>
+            <span class="blog-ru">Засор канализации - что делать?</span>
+          </a></li>
+          <li><a href="/blog/boileri-hooldus-ja-loputus" class="text-trust-blue hover:underline">
+            <span class="blog-et">Boileri hooldus ja läbipesu</span>
+            <span class="blog-ru">Обслуживание и промывка бойлера</span>
+          </a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

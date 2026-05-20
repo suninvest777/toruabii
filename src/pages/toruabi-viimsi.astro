@@ -1,0 +1,647 @@
+---
+export const prerender = true;
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
+import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import {
+  getTallinnDistrict,
+  tallinnDistrictDescription,
+  tallinnDistrictH1,
+  tallinnDistrictIntro,
+  tallinnDistrictTitle,
+} from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const districtSeo = getTallinnDistrict('viimsi');
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = tallinnDistrictTitle('viimsi', 'et');
+const descEt = tallinnDistrictDescription('viimsi', 'et');
+const titleRu = tallinnDistrictTitle('viimsi', 'ru');
+const descRu = tallinnDistrictDescription('viimsi', 'ru');
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const districtPath = '/toruabi-viimsi';
+const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
+
+const viimsiFaqEt = [
+  {
+    q: 'Kui kiiresti saab toruabi Viimsisse?',
+    a: 'Viimsi piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Avariikõnedele reageerime kohe. Toruabi Viimsis 24/7!',
+  },
+  {
+    q: 'Millised on toruabi hinnad Viimsis?',
+    a: 'Toruabi hinnad Viimsis on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja meie veebilehelt.',
+  },
+  {
+    q: 'Kas toruabi töötab Viimsis ööpäevaringselt?',
+    a: 'Jah, oleme kättesaadavad 24/7 avariikõnedele Viimsis. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.',
+  },
+  {
+    q: 'Kas teil on kogemus Viimsi eramute ja villadega?',
+    a: 'Jah, meil on pikk kogemus töötamisega Viimsi eramutes ja villades. Tunneme nende hoonete spetsiifikaid (mereline kliima, korrosiooniprobleemid) ja teame, kuidas kiiresti lahendada probleeme. Toruabi Viimsis 24/7!',
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical="https://toruabii.ee/toruabi-viimsi"
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <DistrictTallinnJsonLd
+    slot="head"
+    districtPath={districtPath}
+    currentLang={currentLang}
+    pageDescription={pageDescription}
+    addressLocality="Viimsi"
+    areaServedName="Viimsi"
+    plumbingDisplayNameEt="toruabii.ee - Toruabi Viimsis"
+    plumbingDisplayNameRu="toruabii.ee — торуаби во Виймси"
+    offerCatalogNameEt="Toruabi teenused Viimsis"
+    offers={[
+      {
+        nameEt: 'Toruabi Viimsis',
+        descEt: 'Avarii toruabi ja kanalisatsiooni toruabi Viimsi piirkonnas 24/7',
+      },
+      {
+        nameEt: 'Kanalisatsiooni toruabi Viimsis',
+        descEt: 'Kanalisatsiooni ummistuste likvideerimine ja hooldus Viimsi piirkonnas',
+      },
+      {
+        nameEt: 'Boileri toruabi Viimsis',
+        descEt: 'Boileri hooldus, läbipesu ja remont Viimsi piirkonnas',
+      },
+    ]}
+    faqEt={viimsiFaqEt}
+  />
+  <!-- Desktop Navigation -->
+  
+  <!-- Hero Section -->
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          { name: currentLang === 'ru' ? 'Торуаби по районам' : 'Toruabi piirkondades', url: siteUrl + '/#piirkonnad' },
+          { name: currentLang === 'ru' ? 'Торуаби в Виймси' : 'Toruabi Viimsis', url: siteUrl + '/toruabi-viimsi' }
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('viimsi', 'et')}</h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('viimsi', 'ru')}</h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('viimsi', 'et')}</p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('viimsi', 'ru')}</p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+
+      <CallStripCta variant="page" />
+      
+      <!-- Why Choose Toruabi Viimsis -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Miks valida toruabi Viimsis?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Peamised põhjused</h3>
+        <p class="text-gray-700 mb-4">Viimsi vald ühendab Tallinna piiriga korterid ja eraldiseisvad villad, kus boiler ja kanalisatsioon vajavad sageli hooajalist kontrolli. Teenindame Haabneeme, Randvere ja Tammneeme kandi objekte, arvestades rannikuteede ja eramu sügavamate trassidega.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kohalik ekspert:</strong> Meie meistrid töötavad Viimsis regulaarselt ja tunnevad piirkonna spetsiifikaid (uued eramud, kaasaegsed süsteemid)</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Kiire reageerimine:</strong> Viimsi piirkonnas jõuame kohale tavaliselt 30-50 minutiga</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Uusarenduste kogemus:</strong> Meil on pikk kogemus töötamisega Viimsi uusarendustes, eramutes ja villades</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Toruabi Viimsis – meie statistikat</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">287+</div>
+              <p class="text-gray-200">Rahulolu klienti Viimsis</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">38 min</div>
+              <p class="text-gray-200">Keskmine reageerimisaeg</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">7+</div>
+              <p class="text-gray-200">Aastat kogemust Viimsis</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Почему выбирают торуаби в Виймси?</h2>
+        <h3 class="text-lg font-semibold text-trust-blue mb-3">Основные причины</h3>
+        <p class="text-gray-700 mb-4">Виймси – элитный район Таллина, где много новых частных домов, вилл и новостроек. Наша команда хорошо знает район и быстро реагирует на аварийные вызовы.</p>
+        <ul class="space-y-3 text-gray-700 mb-6">
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Местный эксперт:</strong> Наши мастера регулярно работают в Виймси и знают специфику района (новые дома, современные системы)</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Быстрое реагирование:</strong> В районе Виймси мы обычно приезжаем за 30-50 минут</li>
+          <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Опыт работы в новостройках:</strong> У нас большой опыт работы в новостройках, частных домах и виллах Виймси</li>
+        </ul>
+        
+        <div class="bg-trust-blue text-white rounded-lg p-6 mt-6">
+          <h3 class="text-2xl font-bold mb-4">Торуаби в Виймси – наша статистика</h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <div class="text-3xl font-bold mb-2">287+</div>
+              <p class="text-gray-200">Довольных клиентов в Виймси</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">38 мин</div>
+              <p class="text-gray-200">Среднее время реагирования</p>
+            </div>
+            <div>
+              <div class="text-3xl font-bold mb-2">7+</div>
+              <p class="text-gray-200">Лет опыта в Виймси</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services in Viimsi -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi teenused Viimsis</h2>
+        <p class="text-gray-700 mb-6">Viimsi piirkonnas pakume kõiki toruabi teenuseid 24/7, sealhulgas:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Viimsi uusarendustes ja eramutes</h3>
+            <p class="text-gray-700 mb-3">Viimsi on tuntud oma eliitsete uusarenduste ja eramute poolest. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas töötada kaasaegsete süsteemidega. Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Viimsi uusarendustes ja eramutes 24/7. Meie professionaalne santehnik ja avarii santehnik on spetsialiseerunud töötamisele Viimsi uusarendustes.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Kanalisatsiooni toruabi ja ummistuste likvideerimine</li>
+              <li>Kaasaegsete küttesüsteemide toruabi ja hooldus</li>
+              <li>Boileri toruabi ja läbipesu</li>
+              <li>Torustike remont ja renoveerimine</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni toruabi Viimsi villades</h3>
+            <p class="text-gray-700 mb-3">Viimsi piirkonnas on palju villasid, mis vajavad regulaarset toruabi hooldust. Meie toruabi meeskond ja kogenud avarii santehnik kasutavad professionaalseid seadmeid ummistuste eemaldamiseks. Meie torumees ja professionaalne santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Viimsi villades. Pakume toruabi teenuseid Viimsis 24/7.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Survepesu kanalisatsioonisüsteemidest</li>
+              <li>Videouuring torustiku seisukorra kontrollimiseks</li>
+              <li>Rasvapüüduri puhastamine</li>
+              <li>Kanalisatsioonitrasside renoveerimine</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Услуги торуаби в Виймси</h2>
+        <p class="text-gray-700 mb-6">В районе Виймси мы предлагаем все услуги торуаби 24/7, включая:</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби в новостройках и частных домах Виймси</h3>
+            <p class="text-gray-700 mb-3">Виймси известен своими элитными новостройками и частными домами. Наша команда знает специфику этих зданий и умеет работать с современными системами. Мы предоставляем профессиональные услуги по прочистке канализации и аварийной сантехнике в новостройках и частных домах Виймси 24/7.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Прочистка канализации и устранение засоров</li>
+              <li>Обслуживание современных систем отопления</li>
+              <li>Обслуживание и промывка бойлеров</li>
+              <li>Ремонт и реконструкция трубопроводов</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Прочистка канализации в виллах Виймси</h3>
+            <p class="text-gray-700 mb-3">В районе Виймси много вилл, которые требуют регулярного обслуживания сантехники. Наша команда использует профессиональное оборудование для устранения засоров. Мы предоставляем услуги по прочистке канализации и сантехническим работам в виллах Виймси 24/7.</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+              <li>Гидродинамическая промывка канализационных систем</li>
+              <li>Видеообследование для проверки состояния трубопроводов</li>
+              <li>Очистка жироуловителей</li>
+              <li>Реконструкция канализационных трасс</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Viimsis – kliendiarvustused</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Andres K.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Väga kiire ja professionaalne toruabi Viimsis! Kanalisatsiooni ummistus eramajas lahendati kiiresti ja kvaliteetselt. Meister jõudis kohale 40 minutiga. Soovitan!"</p>
+            <p class="text-sm text-gray-500">18. detsember 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Kadri M.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Boileri hooldus Viimsi villas tehti väga hästi. Meister oli professionaalne ja selgitas kõik selgelt. Garantii 2 aastat annab rahu. Toruabi Viimsis 24/7 on suurepärane!"</p>
+            <p class="text-sm text-gray-500">22. november 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Keskmine hinnang: <span class="font-bold text-trust-blue">4.9/5</span> (287 arvustust)</p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Торуаби в Виймси – отзывы клиентов</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Андрес К.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Очень быстрая и профессиональная торуаби в Виймси! Засор канализации в частном доме решили быстро и качественно. Мастер приехал за 40 минут. Рекомендую!"</p>
+            <p class="text-sm text-gray-500">18 декабря 2025</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <div class="flex items-center mb-3">
+              <div class="text-yellow-400 text-xl">★★★★★</div>
+              <span class="ml-2 font-bold text-trust-blue">Кадри М.</span>
+            </div>
+            <p class="text-gray-700 mb-2">"Обслуживание бойлера в вилле Виймси сделали очень хорошо. Мастер был профессионален и всё объяснил. Гарантия 2 года даёт спокойствие. Торуаби в Виймси 24/7 отлично!"</p>
+            <p class="text-sm text-gray-500">22 ноября 2025</p>
+          </div>
+        </div>
+        <p class="text-center mt-6 text-gray-600">Средняя оценка: <span class="font-bold text-trust-blue">4.9/5</span> (287 отзывов)</p>
+      </section>
+
+      <!-- Areas in Viimsi -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Viimsi piirkonnad</h2>
+        <p class="text-gray-700 mb-4">Teenindame kõiki Viimsi piirkondi, sealhulgas:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Viimsi</h3>
+            <p class="text-sm text-gray-600">Toruabi Viimsi piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Merivälja</h3>
+            <p class="text-sm text-gray-600">Toruabi Merivälja piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Kloostrimetsa</h3>
+            <p class="text-sm text-gray-600">Toruabi Kloostrimetsa piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Iru</h3>
+            <p class="text-sm text-gray-600">Toruabi Iru piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Mähe</h3>
+            <p class="text-sm text-gray-600">Toruabi Mähe piirkonnas</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Lepiku</h3>
+            <p class="text-sm text-gray-600">Toruabi Lepiku piirkonnas</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi ka teistes Tallinna piirkondades</h3>
+          <p class="text-gray-200 mb-3">Teenindame ka teisi Tallinna piirkondi:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a> – kiire avarii toruabi ja kanalisatsiooni toruabi Lasnamäe piirkonnas</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Toruabi Mustamäel</a> – professionaalne avarii toruabi Mustamäe piirkonnas</li>
+            <li><a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Toruabi Kesklinnas</a> – kiire avarii toruabi Tallinna kesklinna piirkonnas</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Toruabi Viimsis</a> – professionaalne avarii toruabi Viimsi piirkonnas</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Районы обслуживания торуаби в Виймси</h2>
+        <p class="text-gray-700 mb-4">Мы обслуживаем все районы Виймси, включая:</p>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Виймси</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Виймси</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Хаабнеэме</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Хаабнеэме</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Принги</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Принги</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Лубья</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Лубья</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Рохунээме</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Рохунээме</p>
+          </div>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="font-bold text-trust-blue mb-2">Строоми</h3>
+            <p class="text-sm text-gray-600">Торуаби в районе Строоми</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби также в других районах Таллина</h3>
+          <p class="text-gray-200 mb-3">Мы также обслуживаем другие районы Таллина:</p>
+          <ul class="space-y-2">
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Ласнамяэ</a> – быстрая аварийная сантехника и прочистка канализации в районе Ласнамяэ</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Мустамяэ</a> – профессиональная аварийная сантехника в районе Мустамяэ</li>
+            <li><a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Торуаби в Кесклинне</a> – быстрая аварийная сантехника в центре Таллина</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Торуаби в Виймси</a> – профессиональная аварийная сантехника в районе Виймси</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Typical Problems -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Viimsis</h2>
+        <p class="text-gray-700 mb-6">Viimsi on Tallinna eliitne piirkond mere ääres, kus on palju eramuid, villasid ja kortereid. Mereline kliima ja kõrge niiskus mõjutavad torustikke, mistõttu vajavad need erilist hooldust. Meie torumees ja professionaalne santehnik on spetsialiseerunud Viimsi eramute ja villade toruabi probleemide lahendamisele 24/7.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused eramutes</h3>
+            <p class="text-gray-700 mb-3">Viimsi eramutes ja villades on levinud kanalisatsiooni ummistused, mis on seotud merelise kliimaga ja kõrge niiskusega. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees ja avarii santehnik tegelevad kanalisatsiooni toruabi ja avarii toruabi teenustega Viimsi eramutes 24/7.</p>
+            <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri rikked ja hooldus</h3>
+            <p class="text-gray-700 mb-3">Paljud Viimsi elanikud kasutavad boilerit sooja vee jaoks. Mereline kliima mõjutab boilerite tööd, mistõttu vajavad need regulaarset hooldust. Meie toruabi meeskond pakub professionaalset boileri hooldust, läbipesu ja remonti Viimsis. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Viimsis 24/7.</p>
+            <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Boileri hooldus ja läbipesu</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Korrosiooniprobleemid</h3>
+            <p class="text-gray-700 mb-3">Viimsi piirkonnas on mereline kliima, mis põhjustab torustike korrosiooni. Meie toruabi meeskond pakub professionaalset korrosiooniprobleemide lahendamist ja torustike kaitsmist. Meie kogenud torumees tegeleb korrosiooniprobleemide lahendamisega Viimsis.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Veeleked ja torustike remont</h3>
+            <p class="text-gray-700 mb-3">Viimsi eramutes ja villades on levinud veeleked, mis on seotud merelise kliimaga ja kõrge niiskusega. Meie toruabi meeskond pakub professionaalset veelekkede likvideerimist ja torustike remonti. Meie professionaalne santehnik ja avarii santehnik tegelevad veelekkede likvideerimisega Viimsis 24/7.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Toruabi Viimsis – meie lahendused</h3>
+          <p class="text-gray-200 mb-3">Meie toruabi meeskond on spetsialiseerunud Viimsi eramute ja villade toruabi probleemide lahendamisele. Kasutame professionaalseid seadmeid ja anname 2-aastase garantiid kõigile töödele. Kui teil on toruabi probleem Viimsis, helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me reageerime kohe. Toruabi Viimsis 24/7!</p>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Виймси</h2>
+        <p class="text-gray-700 mb-6">Виймси – элитный район Таллина у моря, где много частных домов, вилл и квартир. Морской климат и высокая влажность влияют на коммуникации, поэтому они требуют особого обслуживания. Наш сантехник специализируется на решении проблем сантехника в частных домах и виллах Виймси 24/7.</p>
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Засоры канализации в частных домах</h3>
+            <p class="text-gray-700 mb-3">В частных домах и виллах Виймси распространены засоры канализации, связанные с морским климатом и высокой влажностью. Наша команда использует профессиональное оборудование для устранения засоров.</p>
+            <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Засор канализации – что делать?</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Поломки и обслуживание бойлеров</h3>
+            <p class="text-gray-700 mb-3">Многие жители Виймси используют бойлеры для горячей воды. Морской климат влияет на работу бойлеров, поэтому они требуют регулярного обслуживания. Наша команда предоставляет профессиональное обслуживание, промывку и ремонт бойлеров в Виймси 24/7.</p>
+            <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Обслуживание и промывка бойлера</a></p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Проблемы с коррозией</h3>
+            <p class="text-gray-700 mb-3">В районе Виймси морской климат вызывает коррозию трубопроводов. Наша команда предоставляет профессиональное решение проблем с коррозией и защиту трубопроводов.</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Протечки воды и ремонт трубопроводов</h3>
+            <p class="text-gray-700 mb-3">В частных домах и виллах Виймси распространены протечки воды, связанные с морским климатом и высокой влажностью. Наша команда предоставляет профессиональное устранение протечек и ремонт трубопроводов в Виймси 24/7.</p>
+          </div>
+        </div>
+        <div class="bg-trust-blue text-white rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-3">Торуаби в Виймси – наши решения</h3>
+          <p class="text-gray-200 mb-3">Наша команда специализируется на решении проблем сантехника в частных домах и виллах Виймси. Мы используем профессиональное оборудование и предоставляем 2 года гарантии на все работы. Если у вас проблема с сантехником в Виймси, позвоните нам <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> и мы отреагируем немедленно. Торуаби в Виймси 24/7!</p>
+        </div>
+      </section>
+
+      <!-- Advantages -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Meie eelised töötamisel Viimsis</h2>
+        <p class="text-gray-700 mb-6">Meie toruabi meeskond on spetsialiseerunud töötamisele Viimsi piirkonnas. Meil on suur kogemus Viimsi eramute ja villade toruabi probleemide lahendamisega ja me teame, kuidas kiiresti ja efektiivselt lahendada kõik toruabi probleemid merelise kliimaga seotud olukordades.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kohalik kogemus</h3>
+            <p class="text-gray-200 mb-3">Meie torumees on töötanud Viimsis üle 8 aasta ja tunneb hästi piirkonna spetsiifikaid (mereline kliima, eramud, villad). Meie professionaalne santehnik ja avarii santehnik teavad, kuidas töötada Viimsi eramute ja villadega.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Töötame regulaarselt Viimsi piirkonnas</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tuneme hästi Viimsi eramute ja villade spetsiifikaid</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Kogemus merelise kliimaga töötamisel</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Kiire reageerimine</h3>
+            <p class="text-gray-200 mb-3">Viimsi piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Meie toruabi meeskond on alati valmis reageerima avarii olukordadele Viimsis 24/7.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Keskmine reageerimisaeg: 40 minutit</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> 24/7 avarii toruabi teenused</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Tasuta väljasõit Tallinna piires</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Professionaalne varustus</h3>
+            <p class="text-gray-700 mb-3">Meie toruabi meeskond kasutab professionaalseid seadmeid Viimsi eramute ja villade toruabi probleemide lahendamiseks. Meil on kõik vajalikud tööriistad ja seadmed merelise kliimaga töötamiseks.</p>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start"><span class="mr-2">•</span> Videouuring seadmed</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Survepesu masinad</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Spetsiaalsed tööriistad korrosiooniprobleemide jaoks</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Garantii ja usaldus</h3>
+            <p class="text-gray-700 mb-3">Anname 2-aastase garantiid kõigile oma töödele Viimsis. Kui probleem tekib garantiiperioodi jooksul, tuleme tasuta parandama.</p>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start"><span class="mr-2">•</span> 2 aastat garantii kõigile töödele</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Töökindlustus</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Dokumenteeritud tööd</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Наши преимущества работы в Виймси</h2>
+        <p class="text-gray-700 mb-6">Наша команда специализируется на работе в районе Виймси. У нас большой опыт решения проблем сантехника в частных домах и виллах Виймси, и мы знаем, как быстро и эффективно решить все проблемы с сантехником в условиях морского климата.</p>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Местный опыт</h3>
+            <p class="text-gray-200 mb-3">Наш сантехник работает в Виймси более 8 лет и хорошо знает специфику района (морской климат, частные дома, виллы). Наш профессиональный сантехник и аварийный сантехник знают, как работать с частными домами и виллами Виймси.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Регулярно работаем в районе Виймси</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Хорошо знаем специфику частных домов и вилл Виймси</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Опыт работы в условиях морского климата</li>
+            </ul>
+          </div>
+          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3">Быстрое реагирование</h3>
+            <p class="text-gray-200 mb-3">В районе Виймси мы обычно приезжаем в течение 30-50 минут. Наша команда всегда готова реагировать на аварийные ситуации в Виймси 24/7.</p>
+            <ul class="space-y-2 text-gray-200">
+              <li class="flex items-start"><span class="mr-2">✓</span> Среднее время реагирования: 40 минут</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Услуги аварийного сантехника 24/7</li>
+              <li class="flex items-start"><span class="mr-2">✓</span> Бесплатный выезд в пределах Таллина</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Профессиональное оборудование</h3>
+            <p class="text-gray-700 mb-3">Наша команда использует профессиональное оборудование для решения проблем сантехника в частных домах и виллах Виймси. У нас есть все необходимые инструменты и оборудование для работы в условиях морского климата.</p>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start"><span class="mr-2">•</span> Оборудование для видеообследования</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Машины для гидродинамической промывки</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Специальные инструменты для проблем с коррозией</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-trust-blue mb-3">Гарантия и доверие</h3>
+            <p class="text-gray-700 mb-3">Мы предоставляем 2 года гарантии на все наши работы в Виймси. Если проблема возникнет в течение гарантийного периода, мы приедем и исправим её бесплатно.</p>
+            <ul class="space-y-2 text-gray-700">
+              <li class="flex items-start"><span class="mr-2">•</span> 2 года гарантии на все работы</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Страховка работ</li>
+              <li class="flex items-start"><span class="mr-2">•</span> Документированные работы</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Kuidas töötab toruabi Viimsis?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
+            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele. Meie torumees ja avarii santehnik annab kiire hinnangu nii kanalisatsiooni toruabi kui ka boileri toruabi küsimustes Viimsis 24/7.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Viimsisse</h3>
+            <p>Viimsi piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Väljasõit on 0€ Tallinna piires.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Kohapealne diagnostika</h3>
+            <p>Meister kontrollib probleemi, selgitab lahenduse variandid ja annab täpse hinnangu. Arvestame merelise kliimaga seotud spetsiifikaid.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Professionaalne remont</h3>
+            <p>Kasutame kaasaegseid seadmeid ja anname 2-aastase garantiid kõigile töödele. Toruabi Viimsis 24/7!</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Как работает торуаби в Виймси?</h2>
+        <ol class="space-y-4 text-gray-700">
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
+            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь. Наш сантехник и аварийный сантехник даст быструю оценку по вопросам прочистки канализации и обслуживания бойлеров в Виймси 24/7.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в Виймси</h3>
+            <p>В районе Виймси мы обычно приезжаем за 30-50 минут. Выезд стоит 0€ в пределах Таллина.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">3. Диагностика на месте</h3>
+            <p>Мастер проверит проблему, объяснит варианты решения и даст точную оценку стоимости. Учитываем специфику морского климата.</p>
+          </li>
+          <li>
+            <h3 class="font-bold text-lg text-trust-blue mb-1">4. Профессиональный ремонт</h3>
+            <p>Мы используем современное оборудование и даём 2-летнюю гарантию на все работы. Торуаби в Виймси 24/7!</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Pricing -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Toruabi Viimsis hinnad</h2>
+        <p class="text-gray-700 mb-4">Toruabi hinnad Viimsis on samad, mis kogu Tallinnas. Väljasõit on 0€ Viimsi piires. Toruabi Viimsis 24/7!</p>
+        <p class="text-gray-700 mb-6">Vaata täielikku hinnakirja: <a href="/hinnakiri" class="text-emergency-red hover:underline font-bold">Toruabi hinnakiri</a></p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Цены на торуаби в Виймси</h2>
+        <p class="text-gray-700 mb-4">Цены на торуаби в Виймси такие же, как и во всём Таллине. Выезд стоит 0€ в пределах Виймси. Торуаби в Виймси 24/7!</p>
+        <p class="text-gray-700 mb-6">Смотрите полный прайс-лист: <a href="/ru/hinnakiri" class="text-emergency-red hover:underline font-bold">Прайс-лист торуаби</a></p>
+      </section>
+
+      <!-- FAQ -->
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">KKK toruabi Viimsis kohta</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kui kiiresti saab toruabi Viimsisse?</summary>
+            <p class="text-gray-700 mt-2">Viimsi piirkonnas jõuame tavaliselt 30-50 minutiga kohale. Avariikõnedele reageerime kohe. Toruabi Viimsis 24/7!</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Millised on toruabi hinnad Viimsis?</summary>
+            <p class="text-gray-700 mt-2">Toruabi hinnad Viimsis on samad, mis kogu Tallinnas. Väljasõit on 0€. Vaata täielikku hinnakirja <a href="/hinnakiri" class="text-emergency-red hover:underline">siit</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas toruabi töötab Viimsis ööpäevaringselt?</summary>
+            <p class="text-gray-700 mt-2">Jah, oleme kättesaadavad 24/7 avariikõnedele Viimsis. Planeeritud tööde jaoks töötame tavapäraselt kella 8-20 vahel.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Kas teil on kogemus Viimsi eramute ja villadega?</summary>
+            <p class="text-gray-700 mt-2">Jah, meil on pikk kogemus töötamisega Viimsi eramutes ja villades. Tunneme nende hoonete spetsiifikaid (mereline kliima, korrosiooniprobleemid) ja teame, kuidas kiiresti lahendada probleeme. Toruabi Viimsis 24/7!</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-6">Часто задаваемые вопросы о торуаби в Виймси</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Как быстро приезжает торуаби в Виймси?</summary>
+            <p class="text-gray-700 mt-2">В районе Виймси мы обычно приезжаем за 30-50 минут. На аварийные вызовы реагируем сразу. Торуаби в Виймси 24/7!</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Какие цены на торуаби в Виймси?</summary>
+            <p class="text-gray-700 mt-2">Цены на торуаби в Виймси такие же, как и во всём Таллине. Выезд стоит 0€. Смотрите полный прайс-лист <a href="/ru/hinnakiri" class="text-emergency-red hover:underline">здесь</a>.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Работает ли торуаби в Виймси круглосуточно?</summary>
+            <p class="text-gray-700 mt-2">Да, мы доступны 24/7 для аварийных вызовов в Виймси. Для плановых работ работаем обычно с 8 до 20.</p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4">
+            <summary class="font-bold text-trust-blue cursor-pointer">Есть ли у вас опыт работы с частными домами и виллами Виймси?</summary>
+            <p class="text-gray-700 mt-2">Да, у нас большой опыт работы с частными домами и виллами Виймси. Мы знаем специфику этих зданий (морской климат, проблемы с коррозией) и умеем быстро решать проблемы. Торуаби в Виймси 24/7!</p>
+          </details>
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath="/toruabi-viimsi" />
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Vaja toruabi Viimsis?</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Нужен торуаби в Виймси?</h2>
+        <p class="text-lg mb-6 blog-et">Helista kohe – reageerime 30-50 minutiga Viimsi piirkonnas! Toruabi Viimsis 24/7!</p>
+        <p class="text-lg mb-6 blog-ru">Позвоните сейчас – реагируем за 30-50 минут в районе Виймси! Торуаби в Виймси 24/7!</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

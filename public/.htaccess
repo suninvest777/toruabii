@@ -1,0 +1,11 @@
+# Zone.ee / Apache: RU paths mirror middleware.ts (SSR/Workers use middleware instead).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # /ru → /ru/index.html (prerendered RU homepage)
+  RewriteRule ^ru/?$ /ru/ [L]
+
+  # /ru/* → same ET page with ?lang=ru (bilingual pages toggle via BaseLayout)
+  RewriteRule ^ru/(.+)$ /$1?lang=ru [L,QSA]
+</IfModule>

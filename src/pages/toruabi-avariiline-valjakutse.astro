@@ -1,0 +1,277 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StickyCTA from '../components/StickyCTA.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
+import FooterLegal from '../components/FooterLegal.astro';
+import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
+import CallStripCta from '../components/CallStripCta.astro';
+import { ruPath } from '../utils/i18n-paths';
+import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { serviceLandingSeo } from '../data/seo-keywords';
+
+const siteUrl = 'https://toruabii.ee';
+const pagePath = '/toruabi-avariiline-valjakutse';
+const landing = serviceLandingSeo['avariiline-valjakutse'];
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt = landing.titleEt;
+const descEt = landing.descriptionEt;
+const titleRu = landing.titleRu;
+const descRu = landing.descriptionRu;
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const faqEt = [
+  {
+    q: 'Kui kiiresti toruabi avariikõnele reageerib?',
+    a: 'Tallinnas ja Harjumaal on tüüpiline saabumisaeg umbes 30–60 minutit, sõltuvalt asukohast ja liiklusest. Öösel ja nädalavahetusel töötleme avariitoruabi kõnesid samuti kohe.',
+  },
+  {
+    q: 'Kas toruabi väljasõit maksab?',
+    a: 'Tallinna piires on väljasõit 0€. Täpne töö hind sõltub töö mahust – vaata hinnakirja või küsi telefonis.',
+  },
+  {
+    q: 'Millal kutsuda avarii toruabi?',
+    a: 'Kutsu avarii toruabi lekete, torustiku purunemiste, tõsiste ummistuste, boileri või küttesüsteemi häirete korral, kui oht endale või kinnisvarale on kohene või vajad professionaalset sekkumist.',
+  },
+  {
+    q: 'Kas toruabi töötab nädalavahetusel ja pühadel?',
+    a: 'Jah, meie toruabi on avariikõnedele kättesaadav 24/7, sealhulgas nädalavahetustel ja riigipühadel.',
+  },
+];
+
+const faqRu = [
+  {
+    q: 'Как быстро торуаби реагирует на аварийный вызов?',
+    a: 'В Таллине и Харьюмаа типичное время прибытия около 30–60 минут в зависимости от адреса и дорожной ситуации. Ночью и в выходные аварийный торуаби обрабатывает заявки сразу.',
+  },
+  {
+    q: 'Платный ли выезд торуаби?',
+    a: 'В пределах Таллина выезд 0€. Точная стоимость работ зависит от объёма — смотрите прайс или уточните по телефону.',
+  },
+  {
+    q: 'Когда вызывать аварийный торуаби?',
+    a: 'Вызывайте при протечках, разрывах труб, серьёзных засорах, проблемах с бойлером или отоплением, когда есть немедленный риск или нужна профессиональная помощь.',
+  },
+  {
+    q: 'Работает ли торуаби в выходные и праздники?',
+    a: 'Да, для аварийных вызовов торуаби доступен 24/7, включая выходные и государственные праздники.',
+  },
+];
+
+const faqForLd = currentLang === 'ru' ? faqRu : faqEt;
+const crumbHomeName = currentLang === 'ru' ? 'Главная' : 'Avaleht';
+const crumbServiceEt = 'Avarii toruabi väljakutse';
+const crumbServiceRu = 'Аварийный выезд торуаби';
+const crumbServiceName = currentLang === 'ru' ? crumbServiceRu : crumbServiceEt;
+const pageCanonicalUrl = currentLang === 'ru' ? `${siteUrl}${ruPath(pagePath)}` : `${siteUrl}${pagePath}`;
+const breadcrumbJsonLdOverride = serviceLandingBreadcrumbJsonLd(pagePath, currentLang, crumbServiceEt, crumbServiceRu);
+
+const plumbingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'PlumbingService',
+  '@id': `${pageCanonicalUrl}#plumbing`,
+  name: 'toruabii.ee – Toruabi avarii väljakutse',
+  alternateName: 'Avarii toruabi Tallinnas',
+  url: pageCanonicalUrl,
+  logo: `${siteUrl}/photos/toruabii.webp`,
+  image: `${siteUrl}/photos/maintoruabii.webp`,
+  description: pageDescription,
+  telephone: '+3725181112',
+  priceRange: '€€',
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
+  currenciesAccepted: 'EUR',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tallinn',
+    addressRegion: 'Harjumaa',
+    addressCountry: 'EE',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Tallinn' },
+    { '@type': 'AdministrativeArea', name: 'Harjumaa' },
+  ],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: '00:00',
+      closes: '23:59',
+    },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Avarii toruabi väljakutse',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Toruabi avarii väljakutse',
+          description: 'Ööpäevaringne avarii toruabi Tallinnas ja Harjumaal',
+        },
+      },
+    ],
+  },
+};
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqForLd.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={`${siteUrl}${pagePath}`}
+  ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
+  suppressPlumbingJsonLd
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(plumbingLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(faqLd)} />
+  
+  <header class="bg-trust-blue text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <Breadcrumb
+        items={[
+          { name: crumbHomeName, url: currentLang === 'ru' ? siteUrl + '/ru' : siteUrl + '/' },
+          {
+            name: crumbServiceName,
+            url: pageCanonicalUrl,
+          },
+        ]}
+        class="text-gray-300 mb-3"
+      />
+      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
+      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">
+        Toruabi avarii väljakutse 24/7 – avarii toruabi Tallinnas ja Harjumaal
+      </h1>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">
+        Торуаби аварийный выезд 24/7 – аварийная сантехника в Таллине и Харьюмаа
+      </h1>
+      <p class="text-xl text-gray-200 mb-6 blog-et">
+        Kui vajad kiiret toruabi väljakutset öösel või päeval, saadab meeskond meistri kohale. Tallinnas ja Harjumaal hindame lekke, purunemise või ummistuse ulatuse enne töö algust ja pakume lahendust.
+      </p>
+      <p class="text-xl text-gray-200 mb-6 blog-ru">
+        Для срочного выезда торуаби днём или ночью бригада приедет на объект. В Таллине и Харьюмаа оценим протечку, разрыв или засор до начала работ и предложим решение.
+      </p>
+      <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
+        <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+      </a>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50">
+    <div class="max-w-6xl mx-auto space-y-12">
+      <CallStripCta variant="page" />
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Mida avarii toruabi väljakutsel teeme?</h2>
+        <p class="text-gray-700 mb-4">
+          Toruabi avariilise väljakutse raames lahendame sanitaartehnilisi häireid, mis ei kannata ootamist: lekked, toru purunemised, tõsised ummistused, boileri ja küttega seotud kiired sekkumised. Pakume toruabi teenust nii korterites, eramajades kui ka äripindadel.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Toruabi lekete ja purunemiste kiire sulgemine</li>
+          <li>Avarii toruabi ummistuste ja tagasivoolude korral</li>
+          <li>Boileri ja soojavee häirete esmane diagnoos ja toruabi</li>
+          <li>Planeeritud torutööd eraldi kokkuleppel (tööaegadel)</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Что входит в аварийный выезд торуаби?</h2>
+        <p class="text-gray-700 mb-4">
+          При аварийном вызове торуаби устраняем ситуации, которые нельзя откладывать: протечки, разрывы труб, серьёзные засоры, проблемы с бойлером и отоплением. Работаем в квартирах, частных домах и на коммерческих объектах.
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Быстрое устранение протечек и разрывов</li>
+          <li>Аварийный торуаби при засорах и обратных стоках</li>
+          <li>Первичная диагностика бойлера и горячей воды</li>
+          <li>Плановые работы — по отдельной договорённости в рабочее время</li>
+        </ul>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Kuidas tellida toruabi väljakutse?</h2>
+        <p class="text-gray-700 mb-4">
+          Helista numbril <a href={`tel:${phoneLink}`} class="text-emergency-red font-semibold hover:underline">{phoneNumber}</a> — toruabi dispetšer küsib aadressi, kirjeldust ja annab orienteeruva jõustumisaja. Täpsemad hinnad ja töö ulatus on <a href="/hinnakiri" class="text-trust-blue hover:underline font-semibold">hinnakirjas</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-3xl font-bold text-trust-blue mb-4">Как заказать выезд торуаби?</h2>
+        <p class="text-gray-700 mb-4">
+          Позвоните <a href={`tel:${phoneLink}`} class="text-emergency-red font-semibold hover:underline">{phoneNumber}</a> — диспетчер торуаби уточнит адрес и ситуацию и назовёт ориентировочное время прибытия. Подробные цены — в <a href="/ru/hinnakiri" class="text-trust-blue hover:underline font-semibold">прайс-листе</a>.
+        </p>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Korduma kippuvad küsimused – avarii toruabi</h2>
+        <div class="space-y-4">
+          {faqEt.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Частые вопросы – аварийный торуаби</h2>
+        <div class="space-y-4">
+          {faqRu.map((item) => (
+            <details class="bg-gray-50 rounded-lg p-4">
+              <summary class="font-bold text-trust-blue cursor-pointer">{item.q}</summary>
+              <p class="text-gray-700 mt-2">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <DistrictCrossLinks currentPath={pagePath} />
+
+      <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4 blog-et">Vajad avarii toruabi?</h2>
+        <h2 class="text-3xl font-bold mb-4 blog-ru">Нужен аварийный торуаби?</h2>
+        <p class="text-lg mb-6 blog-et">Toruabi väljakutse – helista kohe, aitame 24/7.</p>
+        <p class="text-lg mb-6 blog-ru">Аварийный выезд торуаби — звоните сейчас, работаем 24/7.</p>
+        <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
+          <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-trust-blue text-white py-8 px-4 text-center">
+    <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+    </p>
+    <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+    </p>
+    <FooterLegal variant="bilingual" />
+    <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>
+  </footer>
+
+  <StickyCTA />
+</BaseLayout>

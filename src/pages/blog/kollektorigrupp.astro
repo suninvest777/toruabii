@@ -1,0 +1,538 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ruPath } from '../../utils/i18n-paths';
+import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
+import { sitemapEntries } from '../../data/sitemap-entries';
+
+const phoneNumber = '+372 5181 112';
+const phoneLink = phoneNumber.replace(/\s/g, '');
+
+const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+
+const titleEt =
+  'Kollektorigrupp küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
+const descEt =
+  'Kollektorigrupp küttesüsteemis Tallinnas: toruabi 24/7, kollektorigrupi paigaldus, remont ja hooldus. Kollektorid põrandakütte jaoks, radiaatorite jaoks. Professionaalne kollektorigrupi torumees Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis. Kollektorsüsteemi eelised ja paigaldus.';
+const titleRu =
+  'Коллекторная группа в системе отопления – что это такое и в чем плюсы? | toruabii.ee';
+const descRu =
+  'Коллекторы предназначены для распределения потока транспортируемой среды по потребителям. Рассказываем, что такое коллекторная группа, как она работает и каковы её преимущества в системе отопления в Таллине и Харьюмаа.';
+
+const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
+const pageDescription = currentLang === 'ru' ? descRu : descEt;
+
+const articlePath = '/blog/kollektorigrupp';
+const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
+const siteOrigin = 'https://toruabii.ee';
+const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  lang={currentLang}
+  canonical={canonicalUrl}
+  ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+>
+  <BlogPostingSchema
+    slot="head"
+    lang={currentLang}
+    headlineEt={titleEt}
+    headlineRu={titleRu}
+    descriptionEt={descEt}
+    descriptionRu={descRu}
+    canonicalPath={articlePath}
+    datePublished={articleDatePublished}
+    imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  />
+<!-- Estonian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/" class="hover:text-white">Avaleht</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog" class="hover:text-white">Blogi</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/kategoria/kuttesusteem" class="hover:text-white">Küttesüsteem</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Kollektorigrupp</li>
+        </ol>
+      </nav>
+      <a href="/blog/kategoria/kuttesusteem" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Tagasi küttesüsteemi artiklite juurde
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Kollektorigrupp küttesüsteemis Tallinnas: toruabi, paigaldus ja remont 24/7
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Vajate kollektorigrupi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub kollektorigrupi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Kollektorid on mõeldud transporditava keskkonna voo jaotamiseks tarbijate vahel. Tarbijaks võib olla üksik seade või seadmete grupp, kontuur või põrandakütte aas, eraldi osad või süsteemi harud.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Avaldatud: {new Date('2025-01-08').toLocaleDateString('et-EE', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <!-- Russian header -->
+  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+    <div class="max-w-5xl mx-auto">
+      <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
+        <ol class="flex flex-wrap items-center gap-1">
+          <li><a href="/ru" class="hover:text-white">Главная</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog" class="hover:text-white">Блог</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/ru/blog/kategoria/otoplenije" class="hover:text-white">Отопление</a></li>
+          <li aria-hidden="true">›</li>
+          <li class="text-gray-200">Коллекторная группа</li>
+        </ol>
+      </nav>
+      <a href="/ru/blog/kategoria/otoplenije" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">
+        ← Назад к статьям об отоплении
+      </a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">
+        Коллекторная группа в системе отопления: что это такое и в чем плюсы использования?
+      </h1>
+      <p class="text-gray-200 max-w-2xl">
+        Коллекторы предназначены для распределения потока транспортируемой среды по потребителям. При этом под «потребителем» понимается отдельный прибор или группа приборов, контур или петля «теплого пола», отдельные части или ветви системы.
+      </p>
+      <p class="text-sm text-gray-300 mt-3">
+        Опубликовано: {new Date('2025-01-08').toLocaleDateString('ru-RU', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </div>
+  </header>
+
+  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Kollektorigrupp küttesüsteemis Tallinnas – professionaalne paigaldus"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Mis on kollektorigrupp?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Kollektorigrupp on süsteem, mis jaotab soojuskandja voolu erinevatele tarbijatele küttesüsteemis. See koosneb kollektoritest – spetsiaalsetest torudest, mis on varustatud liitmikega erinevatele kontuuridele.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Kollektorsüsteemide kasutamine võimaldab:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Võrdsustada rõhku tarbijate vahel</li>
+          <li>Reguleerida vooluhulka igas kontuuris</li>
+          <li>Eemaldada õhku süsteemist</li>
+          <li>Lasta välja töökeskkonda hoolduseks</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Millised on kollektorsüsteemi eelised?
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Ühtlane soojusjaotus</h3>
+        <p class="text-gray-700 mb-3">
+          Kollektorsüsteem tagab, et kõik radiaatorid või põrandakütte kontuurid saavad võrdse koguse soojust. See elimineerib probleemi, kus mõned ruumid on liiga soojad ja teised liiga külmad.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Sõltumatu reguleerimine</h3>
+        <p class="text-gray-700 mb-3">
+          Iga kontuuri saab reguleerida sõltumatult. See tähendab, et saate määrata erineva temperatuuri erinevates ruumides vastavalt vajadusele.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Lihtsam hooldus</h3>
+        <p class="text-gray-700 mb-3">
+          Kui üks kontuur vajab hooldust või remonti, ei pea te kogu küttesüsteemi välja lülitama. Saate lihtsalt sulgeda konkreetse kontuuri.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Energiatõhusus</h3>
+        <p class="text-gray-700 mb-3">
+          Tänu täpsele reguleerimisele saate vähendada energiakulusid, kuna saate kütmata ruume, mida ei kasutata.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Kus kasutatakse kollektorsüsteeme?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Põrandaküte</strong> – kollektorid on eriti olulised põrandakütte süsteemides, kus on palju erinevaid kontuure.</li>
+          <li><strong>Radiaatorid</strong> – suuremates majades või kui soovite sõltumatut reguleerimist igas ruumis.</li>
+          <li><strong>Kombineeritud süsteemid</strong> – kui teil on nii radiaatorid kui ka põrandaküte.</li>
+          <li><strong>Mitmekorruselised hooned</strong> – kollektorid võimaldavad jaotada soojust erinevatele korrustele.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Professionaalne kollektorigrupi toruabi Tallinnas 24/7
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Kollektorigrupi paigaldus, remont ja hooldus Tallinnas nõuab professionaalseid teadmisi ja kogemust. Meie kogenud torumees pakub kollektorigrupi toruabi 24/7 kõigis Tallinna piirkondades. Meie meister:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Kollektorigrupi arvutus</strong> – arvutab õige kollektori suuruse teie küttesüsteemi jaoks</li>
+          <li><strong>Kollektorigrupi paigaldus</strong> – paigaldab kollektori õiges kohas vastavalt standarditele</li>
+          <li><strong>Kontuuride ühendamine</strong> – ühendab kõik kontuurid korrektselt ja ohutult</li>
+          <li><strong>Reguleerimissüsteem</strong> – seadistab reguleerimissüsteemi optimaalseks tööks</li>
+          <li><strong>Testimine</strong> – testib süsteemi tööd ja tagab korrektsuse</li>
+          <li><strong>Kollektorigrupi remont</strong> – remontib või vahetab kollektorigrupi vajadusel</li>
+        </ul>
+        <p class="text-gray-700 mt-4 mb-3">
+          Vaadake ka meie teisi artikleid küttesüsteemi kohta: <a href="/blog/kuttesusteem-eramaja" class="text-emergency-red hover:underline font-semibold">küttesüsteem eramajas</a>, <a href="/blog/tsirkulatsioonipump" class="text-emergency-red hover:underline font-semibold">tsirkulatsioonipump</a>, <a href="/blog/laienduspaak-kutte-ja-gvs" class="text-emergency-red hover:underline font-semibold">laienduspaak</a>.
+        </p>
+      </section>
+
+      <!-- Service Areas Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Kollektorigrupi toruabi Tallinna piirkondades</h2>
+        <p class="text-gray-700 mb-4">Meie professionaalne torumees pakub kollektorigrupi paigaldust, remonti ja hooldust kõigis Tallinna piirkondades:</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Kesklinnas</a>
+          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Piritas</a>
+          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors text-sm">Toruabi Viimsis</a>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Korduma kippuvad küsimused kollektorigrupi kohta Tallinnas</h2>
+        <div class="space-y-4">
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui palju maksab kollektorigrupi paigaldus Tallinnas?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kollektorigrupi paigalduse hind Tallinnas sõltub kontuuride arvust ja süsteemi keerukusest. Lihtsam kollektorsüsteem võib maksta 500-1500€, keerukam põrandakütte kollektorsüsteem 2000-5000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet. Pakume kollektorigrupi toruabi Lasnamäes, Mustamäel, Kesklinnas, Piritas ja Viimsis 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Millal on vaja kollektorigruppi?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kollektorigrupp on vajalik põrandakütte süsteemides, kus on palju erinevaid kontuure. Samuti on see kasulik suuremates majades, kus soovite sõltumatut reguleerimist igas ruumis. Kollektorsüsteem tagab ühtlase soojusjaotuse ja parema energiatõhususe.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kas kollektorigrupi saab paigaldada ise?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kollektorigrupi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada ebaühtlast soojusjaotust, lekkeid või ebaefektiivset tööd. Soovitame alati kasutada professionaalse torumehe teenuseid. Meie pakume kollektorigrupi toruabi Tallinnas 24/7.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Kui tihti peaks kollektorigruppi hooldama?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kollektorigrupi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab õhu eemaldamist, kontrollimist ja reguleerimissüsteemi kontrollimist. Regulaarne hooldus tagab optimaalse töö ja pikendab süsteemi eluiga.
+            </p>
+          </details>
+          <details class="bg-gray-50 rounded-lg p-4 cursor-pointer">
+            <summary class="font-semibold text-trust-blue text-lg cursor-pointer">
+              Mis on kollektorigrupi peamised eelised?
+            </summary>
+            <p class="text-gray-700 mt-3">
+              Kollektorigrupi peamised eelised on ühtlane soojusjaotus, sõltumatu reguleerimine igas kontuuris, lihtsam hooldus ja parem energiatõhusus. See võimaldab kontrollida temperatuuri igas ruumis eraldi ja vähendada energiakulusid.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- Related Articles Section -->
+      <section class="bg-gray-50 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Seotud artiklid küttesüsteemi kohta</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="/blog/kuttesusteem-eramaja" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Küttesüsteem eramajas</h3>
+            <p class="text-sm text-gray-600">Küttesüsteemi valik, paigaldus ja hooldus Tallinnas.</p>
+          </a>
+          <a href="/blog/tsirkulatsioonipump" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Tsirkulatsioonipump küttesüsteemis</h3>
+            <p class="text-sm text-gray-600">Kuidas tsirkulatsioonipump töötab ja milline on selle otstarve.</p>
+          </a>
+          <a href="/blog/laienduspaak-kutte-ja-gvs" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Laienduspaak küttesüsteemi jaoks</h3>
+            <p class="text-sm text-gray-600">Laienduspaagi erinevused küttesüsteemi ja soojaveevarustuse jaoks.</p>
+          </a>
+          <a href="/blog/avatud-ja-suletud-kuttesusteemid" class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition-shadow">
+            <h3 class="font-bold text-trust-blue mb-2">Avatud ja suletud küttesüsteemid</h3>
+            <p class="text-sm text-gray-600">Erinevused avatud ja suletud küttesüsteemide vahel.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Category Section -->
+      <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+            Küttesüsteemi artiklid
+          </a>
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+            Статьи об отоплении
+          </a>
+        </div>
+      </section>
+
+      <!-- Additional SEO Content Section -->
+      <section class="mb-8 bg-blue-50 rounded-lg p-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          Kollektorigrupi toruabi Tallinnas – miks valida meid?
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">24/7 kättesaadavus</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kättesaadav 24/7 kõigis Tallinna piirkondades. Kollektorigrupi avarii Tallinnas? Helistage meile – oleme kohal 30-60 minutiga.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">2 aastat garantii</h3>
+            <p class="text-gray-700 text-sm">
+              Pakume 2 aastat garantiid kõigile kollektorigrupi paigalduse ja remondi töödele. Kui probleem tekib, tuleme tasuta parandama.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Kogenud meister</h3>
+            <p class="text-gray-700 text-sm">
+              Meie torumees on kogenud kollektorsüsteemide paigalduses, remondis ja hoolduses. Töötame professionaalselt ja vastavalt standarditele.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-trust-blue mb-2">Tasuta hinnapakkumine</h3>
+            <p class="text-gray-700 text-sm">
+              Anname tasuta hinnapakkumise ja konsultatsiooni kollektorigrupi valiku, paigalduse ja hoolduse kohta. Väljasõit on tasuta.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Vaja kollektorigrupi toruabi Tallinnas 24/7?
+        </h2>
+        <p class="text-lg mb-6">
+          Vajate kollektorigrupi paigaldust, remonti või hooldust Tallinnas? Meie professionaalne torumees pakub kollektorigrupi toruabi 24/7 Lasnamäes, Mustamäel, Kesklinnas, Piritas, Viimsis ja kõigis Tallinna piirkondades. Helistage meile – nõustame kollektorsüsteemide valiku, paigalduse ja hoolduse kohta.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          HELISTA KOHE: {phoneNumber}
+        </a>
+        <p class="text-sm mt-4 opacity-90">Kollektorigrupi toruabi Tallinnas 24/7 | Kollektorigrupi paigaldus | Kollektorigrupi remont | Kollektorsüsteem</p>
+      </section>
+    </article>
+
+    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+      <figure class="mb-6">
+        <img
+          src="/photos/sistema-otoplenija-connectors-liking.webp"
+          alt="Коллекторная группа в системе отопления в Таллине – профессиональная установка"
+          class="w-full h-64 md:h-80 object-cover rounded-lg"
+          loading="eager"
+          width="1000"
+          height="600"
+        />
+      </figure>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          1. Что такое коллекторная группа?
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Коллекторная группа – это система, которая распределяет поток теплоносителя между различными потребителями в системе отопления. Она состоит из коллекторов – специальных труб, оснащенных соединениями для различных контуров.
+        </p>
+        <p class="text-gray-700 mb-3">
+          Использование коллекторных систем позволяет:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Выравнивать давление между потребителями</li>
+          <li>Осуществлять регулирование расхода в каждом контуре</li>
+          <li>Удалять воздух из системы</li>
+          <li>Осуществлять слив рабочей среды для обслуживания</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          2. Каковы преимущества коллекторной системы?
+        </h2>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Равномерное распределение тепла</h3>
+        <p class="text-gray-700 mb-3">
+          Коллекторная система обеспечивает, что все радиаторы или контуры теплого пола получают равное количество тепла. Это устраняет проблему, когда некоторые помещения слишком теплые, а другие слишком холодные.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Независимое регулирование</h3>
+        <p class="text-gray-700 mb-3">
+          Каждый контур можно регулировать независимо. Это означает, что вы можете установить разную температуру в разных помещениях в соответствии с потребностями.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Упрощенное обслуживание</h3>
+        <p class="text-gray-700 mb-3">
+          Если один контур требует обслуживания или ремонта, вам не нужно отключать всю систему отопления. Вы можете просто закрыть конкретный контур.
+        </p>
+        <h3 class="text-xl font-bold text-trust-blue mt-4 mb-2">Энергоэффективность</h3>
+        <p class="text-gray-700 mb-3">
+          Благодаря точному регулированию вы можете снизить энергозатраты, так как можете не отапливать неиспользуемые помещения.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          3. Где используются коллекторные системы?
+        </h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><strong>Теплый пол</strong> – коллекторы особенно важны в системах теплого пола, где много различных контуров.</li>
+          <li><strong>Радиаторы</strong> – в больших домах или когда вы хотите независимого регулирования в каждой комнате.</li>
+          <li><strong>Комбинированные системы</strong> – если у вас есть и радиаторы, и теплый пол.</li>
+          <li><strong>Многоэтажные здания</strong> – коллекторы позволяют распределять тепло на разные этажи.</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-4">
+          4. Профессиональная установка в Таллине
+        </h2>
+        <p class="text-gray-700 mb-3">
+          Установка коллекторной группы требует профессиональных знаний и опыта. Наш мастер:
+        </p>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li>Рассчитает правильный размер коллектора для вашей системы</li>
+          <li>Установит коллектор в правильном месте</li>
+          <li>Подключит все контуры правильно</li>
+          <li>Настроит систему регулирования</li>
+          <li>Протестирует работу системы</li>
+        </ul>
+      </section>
+
+      <!-- CTA RU -->
+      <section class="bg-emergency-red text-white rounded-lg p-6 md:p-8 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          Нужна установка или обслуживание коллекторной группы в Таллине?
+        </h2>
+        <p class="text-lg mb-6">
+          Позвоните нам – проконсультируем по выбору и установке коллекторных систем.
+        </p>
+        <a
+          href={`tel:${phoneLink}`}
+          class="inline-flex items-center justify-center bg-white text-emergency-red font-bold py-3 px-8 rounded-lg text-xl hover:bg-gray-100 transition-colors min-h-[56px]"
+        >
+          ПОЗВОНИТЬ СЕЙЧАС: {phoneNumber}
+        </a>
+      </section>
+    </article>
+  </main>
+</BaseLayout>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка коллекторной группы в Таллине?' : 'Kui palju maksab kollektorigrupi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки коллекторной группы в Таллине зависит от количества контуров и сложности системы. Простая коллекторная система может стоить 500-1500€, более сложная система теплого пола 2000-5000€.'
+            : 'Kollektorigrupi paigalduse hind Tallinnas sõltub kontuuride arvust ja süsteemi keerukusest. Lihtsam kollektorsüsteem võib maksta 500-1500€, keerukam põrandakütte kollektorsüsteem 2000-5000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужна коллекторная группа?' : 'Millal on vaja kollektorigruppi?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Коллекторная группа необходима в системах теплого пола, где много различных контуров. Также она полезна в больших домах, где вы хотите независимого регулирования в каждой комнате.'
+            : 'Kollektorigrupp on vajalik põrandakütte süsteemides, kus on palju erinevaid kontuure. Samuti on see kasulik suuremates majades, kus soovite sõltumatut reguleerimist igas ruumis.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Можно ли установить коллекторную группу самостоятельно?' : 'Kas kollektorigrupi saab paigaldada ise?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка коллекторной группы требует профессиональных знаний и опыта. Неправильная установка может привести к неравномерному распределению тепла, утечкам или неэффективной работе.'
+            : 'Kollektorigrupi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada ebaühtlast soojusjaotust, lekkeid või ebaefektiivset tööd.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать коллекторную группу?' : 'Kui tihti peaks kollektorigruppi hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание коллекторной группы раз в год, желательно перед началом отопительного сезона. Это включает удаление воздуха, проверку и контроль системы регулирования.'
+            : 'Kollektorigrupi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab õhu eemaldamist, kontrollimist ja reguleerimissüsteemi kontrollimist.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Каковы основные преимущества коллекторной группы?' : 'Mis on kollektorigrupi peamised eelised?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Основные преимущества коллекторной группы: равномерное распределение тепла, независимое регулирование в каждом контуре, упрощенное обслуживание и лучшая энергоэффективность.'
+            : 'Kollektorigrupi peamised eelised on ühtlane soojusjaotus, sõltumatu reguleerimine igas kontuuris, lihtsam hooldus ja parem energiatõhusus.',
+        },
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': canonicalUrl + '#breadcrumb',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
+        item: currentLang === 'ru' 
+          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
+          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: currentLang === 'ru'
+          ? 'Коллекторная группа в системе отопления'
+          : 'Kollektorigrupp küttesüsteemis',
+        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kollektorigrupp' : 'https://toruabii.ee/blog/kollektorigrupp',
+      },
+    ],
+  })}
+/>
