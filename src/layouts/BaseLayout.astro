@@ -1,10 +1,11 @@
 ---
+import { PUBLIC_AHREFS_ANALYTICS_KEY, PUBLIC_GA4_MEASUREMENT_ID } from 'astro:env/client';
 import CookieBanner from '../components/CookieBanner.astro';
 import PromotionBanner from '../components/PromotionBanner.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import { SITE_IDENTITY } from '../data/site-identity';
 import { buildPlumbingServiceSchema } from '../data/plumbing-service-schema';
-import { seoHomeDescription, seoHomeKeywords } from '../data/seo-keywords';
+import { seoHomeDescription } from '../data/seo-keywords';
 import '../styles/home-theme.css';
 import { etPath as pathnameToEt } from '../utils/i18n-paths';
 
@@ -19,8 +20,9 @@ interface Props {
   ogImageWidth?: number;
   ogImageHeight?: number;
   ogDescription?: string;
+  /** Open Graph type — `article` for blog posts, default `website`. */
+  ogType?: 'website' | 'article';
   noindex?: boolean;
-  keywords?: string;
   /** When set, replaces auto-generated BreadcrumbList (avoids duplicate JSON-LD). */
   breadcrumbJsonLdOverride?: BreadcrumbJsonLdItem[];
   /** Local landing pages emit their own PlumbingService — skip global duplicate. */
@@ -38,8 +40,8 @@ const {
   ogImageWidth: ogImageWidthProp,
   ogImageHeight: ogImageHeightProp,
   ogDescription,
+  ogType = 'website',
   noindex = false,
-  keywords,
   breadcrumbJsonLdOverride,
   suppressPlumbingJsonLd = false,
   homeTheme = false,
@@ -84,8 +86,6 @@ if (resolvedOgW == null) {
 const pathNorm = cleanPathname.replace(/\/$/, '') || '/';
 const isRuHome = pathNorm === '/ru';
 const isEtHome = pathNorm === '/';
-const defaultKeywords =
-  keywords ?? (isEtHome || isRuHome ? seoHomeKeywords(lang === 'ru' ? 'ru' : 'et') : undefined);
 const etPath = pageEtPath;
 const secPathNorm = etPath.replace(/\/$/, '') || '/';
 const etAltUrlObj = new URL(canonicalBase);
@@ -164,25 +164,30 @@ const organizationJsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     
-    <!-- TODO(toruabii): Add NEW Google Analytics 4 property (do not reuse 24toruabi G-Z19PJ8JWD8)
-    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
+    {PUBLIC_GA4_MEASUREMENT_ID ? (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GA4_MEASUREMENT_ID}`}></script>
+        <script
+          is:inline
+          set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', ${JSON.stringify(PUBLIC_GA4_MEASUREMENT_ID)});`}
+        />
+      </>
+    ) : null}
 
-    <!-- TODO(toruabii): Add NEW Ahrefs Analytics key (do not reuse 24toruabi data-key)
-    <script type="text/partytown" src="https://analytics.ahrefs.com/analytics.js" data-key="YOUR_NEW_KEY" async></script>
-    -->
+    {PUBLIC_AHREFS_ANALYTICS_KEY ? (
+      <script
+        src="https://analytics.ahrefs.com/analytics.js"
+        data-key={PUBLIC_AHREFS_ANALYTICS_KEY}
+        async
+      />
+    ) : null}
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
-    <meta name="title" content={title} />
     <meta name="description" content={description} />
-    {defaultKeywords ? <meta name="keywords" content={defaultKeywords} /> : null}
     <meta name="author" content={lang === 'ru' ? 'Торуаби toruabii.ee' : 'Toruabi toruabii.ee'} />
     <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -289,17 +294,26 @@ const organizationJsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
     
-    <!-- Performance: Preconnect & DNS Prefetch -->
+    <!-- Fonts: preconnect + non-blocking load (display=swap in URL) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Nunito+Sans:ital,wght@0,500;0,600;0,700;0,800;1,500&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Nunito+Sans:ital,wght@0,500;0,600;0,700;0,800&display=swap"
     />
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/scripts/mobile-menu.js" as="script" />
-    <link rel="preload" href="/scripts/time-display.js" as="script" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Nunito+Sans:ital,wght@0,500;0,600;0,700;0,800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Nunito+Sans:ital,wght@0,500;0,600;0,700;0,800&display=swap"
+      />
+    </noscript>
     
     <!-- Inline script: /ru and ?lang= win over localStorage (aligns with SSR head) -->
     <script is:inline>
@@ -324,7 +338,7 @@ const organizationJsonLd = {
       <script type="application/ld+json" set:html={JSON.stringify(plumbingJsonLd)} />
     ) : null}
 
-    {pathNorm !== '/' && pathNorm !== '/ru' ? (
+    {(pathNorm === '/' || pathNorm === '/ru') ? (
       <script type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -335,21 +349,16 @@ const organizationJsonLd = {
           ? seoHomeDescription('ru')
           : seoHomeDescription('et'),
         "inLanguage": ["et", "ru"],
-        "publisher": {
-          "@type": "Organization",
-          "@id": `${siteUrl}#organization`,
-          "name": "toruabii.ee",
-          "url": siteUrl,
-          "logo": { "@type": "ImageObject", "url": `${siteUrl}/photos/toruabii.webp`, "width": 1226, "height": 257 }
-        }
+        "publisher": { "@id": `${siteUrl}#organization` }
       })} />
     ) : null}
-    
-    <!-- Breadcrumb Schema -->
+
+    <!-- Breadcrumb Schema (single block per page; pages with custom crumbs pass breadcrumbJsonLdOverride) -->
     {breadcrumbItems.length > 0 && (
       <script type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
+        "@id": `${currentUrl}#breadcrumb`,
         "itemListElement": breadcrumbItems.map((c, idx) => ({
           "@type": "ListItem",
           "position": idx + 1,
@@ -373,13 +382,12 @@ const organizationJsonLd = {
       <slot />
     </main>
   <CookieBanner />
-  <!-- Language switcher (bundled & minified) -->
+  <!-- Non-critical JS: deferred (modules defer by default; public scripts use defer) -->
   <script>
     import '../scripts/language-switcher';
   </script>
-  {!homeTheme && <script src="/scripts/mobile-menu.js" is:inline />}
-  <!-- Call tracking script -->
-  <script src="/scripts/track-call-clicks.js" is:inline></script>
+  {!homeTheme && <script src="/scripts/mobile-menu.js" defer />}
+  <script src="/scripts/track-call-clicks.js" defer />
   </body>
 </html>
 

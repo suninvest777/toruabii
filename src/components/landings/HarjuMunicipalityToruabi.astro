@@ -5,8 +5,8 @@ import StickyCTA from '../StickyCTA.astro';
 import Breadcrumb from '../Breadcrumb.astro';
 import DistrictCrossLinks from '../DistrictCrossLinks.astro';
 import FooterLegal from '../FooterLegal.astro';
-import NavGoogleReviewLink from '../NavGoogleReviewLink.astro';
 import CallStripCta from '../CallStripCta.astro';
+import { municipalityH1 } from '../../data/seo-keywords';
 import { ruPath } from '../../utils/i18n-paths';
 
 interface Props {
@@ -23,7 +23,8 @@ const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
 
 const pageTitle = currentLang === 'ru' ? region.titleRu : region.titleEt;
 const pageDescription = currentLang === 'ru' ? region.descriptionRu : region.descriptionEt;
-const keywords = currentLang === 'ru' ? region.keywordsRu : region.keywordsEt;
+const pageH1Et = municipalityH1(region.schemaLocality, 'et');
+const pageH1Ru = municipalityH1(region.schemaLocality, 'ru');
 const crumbHomeName = currentLang === 'ru' ? 'Главная' : 'Avaleht';
 const crumbAreaEt =
   region.schemaLocality === 'Jõelähtme'
@@ -152,6 +153,9 @@ const plumbingHarjuLd = {
 const faqHarjuLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${pageCanonicalUrl}#faq`,
+  url: pageCanonicalUrl,
+  inLanguage: currentLang,
   mainEntity: faqForLd.map((item) => ({
     '@type': 'Question',
     name: item.q,
@@ -166,7 +170,6 @@ const faqHarjuLd = {
   lang={currentLang}
   canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={keywords}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -183,14 +186,16 @@ const faqHarjuLd = {
         ]}
         class="text-white/70 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold blog-ru">← На главную</a>
-      <p class="text-sm uppercase tracking-widest text-white/60 mb-2 blog-et">Harjumaa · 24/7 toruabi</p>
-      <p class="text-sm uppercase tracking-widest text-white/60 mb-2 blog-ru">Харьюмаа · торуаби 24/7</p>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-sm blog-et">{region.h1Et}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-sm blog-ru">{region.h1Ru}</h1>
-      <p class="text-xl text-white/90 mb-6 max-w-3xl blog-et">{region.heroLeadEt}</p>
-      <p class="text-xl text-white/90 mb-6 max-w-3xl blog-ru">{region.heroLeadRu}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-amber-300 hover:text-amber-100 font-bold">← Tagasi avalehele</a>
+      )}
+      <p class="text-sm uppercase tracking-widest text-white/60 mb-2">
+        {currentLang === 'ru' ? 'Харьюмаа · торуаби 24/7' : 'Harjumaa · 24/7 toruabi'}
+      </p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 drop-shadow-sm">{currentLang === 'ru' ? pageH1Ru : pageH1Et}</h1>
+      <p class="text-xl text-white/90 mb-6 max-w-3xl">{currentLang === 'ru' ? region.heroLeadRu : region.heroLeadEt}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl text-xl shadow-lg">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>

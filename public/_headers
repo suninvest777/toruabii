@@ -6,6 +6,10 @@
 /photos/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
+# Static client scripts (versioned by deploy)
+/scripts/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
 # Favicons and PWA manifest
 /favicon.ico
   Cache-Control: public, max-age=604800

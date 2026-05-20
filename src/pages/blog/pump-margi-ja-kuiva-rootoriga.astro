@@ -5,11 +5,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
+import { pageLang } from '../../utils/page-lang';
+import LangOnly from '../../components/LangOnly.astro';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Pump margi ja kuiva rootoriga Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/pump-margi-ja-kuiva-rootoriga';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['pump-margi-ja-kuiva-rootoriga'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -47,8 +61,73 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     datePublished={articleDatePublished}
     imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
   />
+  <script
+    slot="head"
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': canonicalUrl + '#faq',
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между насосами с мокрым и сухим ротором?' : 'Mis vahe on margi ja kuiva rootoriga pumpadel?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором тише и подходит для небольших систем отопления частных домов. Насос с сухим ротором мощнее и подходит для больших систем, но шумнее.'
+            : 'Märja rootoriga pump on vaiksem ja sobib väiksematele eramajade küttesüsteemidele. Kuiva rootoriga pump on võimsam ja sobib suurematele süsteemidele, kuid on valjem.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка насоса в Таллине?' : 'Kui palju maksab pumba paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
+            : 'Pumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда выбрать насос с мокрым ротором?' : 'Millal valida margi rootoriga pump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором идеален для небольших систем отопления частных домов, когда важна тишина и мощность достаточна (до 3 кВт). Он также дешевле в обслуживании.'
+            : 'Märja rootoriga pump on ideaalne valik väiksematele eramajade küttesüsteemidele, kui on oluline vaikus ja võimsus on piisav (kuni 3 kW). See on ka odavam hooldada.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда выбрать насос с сухим ротором?' : 'Millal valida kuiva rootoriga pump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с сухим ротором подходит для больших систем, когда нужна высокая эффективность и мощность превышает 3 кВт. Это идеальный выбор для больших частных домов или коммерческих зданий.'
+            : 'Kuiva rootoriga pump sobib suurematele süsteemidele, kui on vaja kõrget efektiivsust ja võimsus ületab 3 kW. See on ideaalne valik suurematele eramajadele või kommertsehitistele.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать насос?' : 'Kui tihti peaks pumba hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Насос с мокрым ротором требует меньше обслуживания – рекомендуем проверять раз в год. Насос с сухим ротором требует больше обслуживания – рекомендуем проверять два раза в год.'
+            : 'Märja rootoriga pump nõuab vähem hooldust – soovitame kontrollida kord aastas. Kuiva rootoriga pump vajab rohkem hooldust – soovitame kontrollida kaks korda aastas.',
+        },
+      },
+    ],
+  })}
+/>
+
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -75,9 +154,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -104,9 +185,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -188,16 +271,22 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Category Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Rohkem artikleid küttesüsteemi kohta</h2>
         <div class="flex justify-center">
-          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Küttesüsteemi artiklid
           </a>
-          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Статьи об отоплении
           </a>
         </div>
+      </LangOnly>
       </section>
 
       <!-- FAQ Section -->
@@ -333,8 +422,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         <p class="text-sm mt-4 opacity-90">Pumba toruabi Tallinnas 24/7 | Pumba paigaldus | Pumba remont | Pumba hooldus</p>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -430,105 +521,6 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'В чем разница между насосами с мокрым и сухим ротором?' : 'Mis vahe on margi ja kuiva rootoriga pumpadel?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Насос с мокрым ротором тише и подходит для небольших систем отопления частных домов. Насос с сухим ротором мощнее и подходит для больших систем, но шумнее.'
-            : 'Märja rootoriga pump on vaiksem ja sobib väiksematele eramajade küttesüsteemidele. Kuiva rootoriga pump on võimsam ja sobib suurematele süsteemidele, kuid on valjem.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Сколько стоит установка насоса в Таллине?' : 'Kui palju maksab pumba paigaldus Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Стоимость установки насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
-            : 'Pumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Когда выбрать насос с мокрым ротором?' : 'Millal valida margi rootoriga pump?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Насос с мокрым ротором идеален для небольших систем отопления частных домов, когда важна тишина и мощность достаточна (до 3 кВт). Он также дешевле в обслуживании.'
-            : 'Märja rootoriga pump on ideaalne valik väiksematele eramajade küttesüsteemidele, kui on oluline vaikus ja võimsus on piisav (kuni 3 kW). See on ka odavam hooldada.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Когда выбрать насос с сухим ротором?' : 'Millal valida kuiva rootoriga pump?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Насос с сухим ротором подходит для больших систем, когда нужна высокая эффективность и мощность превышает 3 кВт. Это идеальный выбор для больших частных домов или коммерческих зданий.'
-            : 'Kuiva rootoriga pump sobib suurematele süsteemidele, kui on vaja kõrget efektiivsust ja võimsus ületab 3 kW. See on ideaalne valik suurematele eramajadele või kommertsehitistele.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как часто нужно обслуживать насос?' : 'Kui tihti peaks pumba hooldama?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Насос с мокрым ротором требует меньше обслуживания – рекомендуем проверять раз в год. Насос с сухим ротором требует больше обслуживания – рекомендуем проверять два раза в год.'
-            : 'Märja rootoriga pump nõuab vähem hooldust – soovitame kontrollida kord aastas. Kuiva rootoriga pump vajab rohkem hooldust – soovitame kontrollida kaks korda aastas.',
-        },
-      },
-    ],
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
-          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Насос с мокрым и сухим ротором'
-          : 'Pump margi ja kuiva rootoriga',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/pump-margi-ja-kuiva-rootoriga' : 'https://toruabii.ee/blog/pump-margi-ja-kuiva-rootoriga',
-      },
-    ],
-  })}
-/>

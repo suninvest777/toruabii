@@ -1,10 +1,10 @@
-# Telegram notifications (toruabii.ee vs 24toruabi.ee)
+# Telegram notifications (toruabii.ee)
 
-Lead notifications go to one Telegram chat. Messages use **different visual markers** so you can tell which site sent the lead.
+Lead notifications go to one Telegram chat. Messages use **blue block markers** for toruabii.ee leads.
 
 ## Environment variables
 
-Set on **each** deployment (local `.env`, Cloudflare Pages → Settings → Environment variables). Never commit real tokens.
+Set on **each** deployment (local `.env`, Cloudflare Worker **Settings → Variables and Secrets**). Never commit real tokens.
 
 | Variable | Description |
 |----------|-------------|
@@ -13,9 +13,13 @@ Set on **each** deployment (local `.env`, Cloudflare Pages → Settings → Envi
 
 Copy from `.env.example` and fill in values.
 
-### Same bot for both sites?
+### Getting your chat ID
 
-Yes. You can use the **same** `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` on toruabii.ee and 24toruabi.ee. Differentiation comes from the `source` field the frontend sends (`toruabii.ee` vs `24toruabi.ee`). If `source` is missing, the API labels the lead as **24toruabi.ee (legacy)**.
+If you do not know `TELEGRAM_CHAT_ID`:
+
+1. Message [@userinfobot](https://t.me/userinfobot) — it replies with your numeric **Id** (use that for a private chat).
+2. Or message your bot once, then open `https://api.telegram.org/bot<TOKEN>/getUpdates` and read `message.chat.id` from the JSON.
+3. For a **group**, add the bot to the group, send a message there, then use `getUpdates` (group ids are usually negative, e.g. `-100…`).
 
 ## toruabii.ee (this project)
 
@@ -23,60 +27,27 @@ Frontend always sends `source: toruabii.ee` (and header `X-Site-Source: toruabii
 
 ### Phone click (`/api/track-call`)
 
+Example message shape:
+
 ```
-🟦🟦🟦 TORUABII.EE 🟦🟦🟦
-━━━━━━━━━━━━━━━━━━
+🔵 TORUABII.EE 🔵
 📞 Uus kõne / tagasihelistamine
-🌐 Allikas: toruabii.ee
-⏰ 21.05.2026, 14:30:00
-━━━━━━━━━━━━━━━━━━
+📍 Allikas: toruabii.ee
+🕐 21.05.2026, 14:30:00
 📱 Tel: +3725181112
-📄 Leht: /toruabi-lasnamae
+🌐 Leht: /toruabi-lasnamae
 ```
 
 ### Callback form (`/api/callback`)
 
 ```
-🟦 TORUABII.EE · UUS PÄRING 🟦
-━━━━━━━━━━━━━━━━━━
+🔵 TORUABII.EE — UUS PÄRING 🔵
 👤 Nimi: Mari Mets
-📱 Telefon: +372 5555 5555
+📞 Telefon: +372 5555 5555
 📝 Märkus: Email: x@y.ee
 🌐 toruabii.ee
 🔗 https://toruabii.ee/#kontaktivorm
-⏰ 21.05.2026, 14:31:00
-```
-
-## 24toruabi.ee (legacy / other deploy)
-
-When `source` is `24toruabi.ee` (or omitted → legacy label):
-
-### Phone click
-
-```
-🟥🟥 24TORUABI.EE 🟥🟥
-━━━━━━━━━━━━━━━━━━
-📞 Uus kõne / tagasihelistamine
-🌐 Allikas: 24toruabi.ee
-⏰ ...
-━━━━━━━━━━━━━━━━━━
-📱 Tel: ...
-📄 Leht: ...
-```
-
-### Callback form
-
-```
-🟥 24TORUABI.EE · UUS PÄRING 🟥
-...
-🌐 24toruabi.ee
-```
-
-If `source` is missing entirely:
-
-```
-🟥 24TORUABI (pärand) 🟥
-🌐 Allikas: 24toruabi.ee (legacy)
+🕐 21.05.2026, 14:31:00
 ```
 
 ## API routes
@@ -103,7 +74,7 @@ Test page (dev or `PUBLIC_SHOW_TEST_PAGE=true`): `/test-call-buttons`
 
 **Most common cause:** Telegram secrets must be declared in Astro’s `env.schema` **and** read from `astro:env/server` in `src/lib/telegram.ts`. Using bare `import.meta.env.TELEGRAM_*` gets constant-folded at build time, so production always skips Telegram even when Cloudflare env vars are set.
 
-Fix: keep `env.schema` in `astro.config.mjs`, use `import { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } from 'astro:env/server'`, set variables in Cloudflare Pages → Settings → Environment variables (Production + Preview), redeploy.
+Fix: keep `env.schema` in `astro.config.mjs`, use `import { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } from 'astro:env/server'`, set variables in Cloudflare Worker **Variables and Secrets**, redeploy.
 
 ### Quick checks
 
@@ -128,7 +99,7 @@ curl -s -X POST http://localhost:4322/api/track-call \
   -d '{"source":"toruabii.ee","url":"https://toruabii.ee/test","tel":"tel:+3725181112","timestamp":"21.05.2026, 14:30:00"}'
 ```
 
-Expect: `{"success":true,"requestId":"..."}`. Telegram message should show **blue** 🟦 markers.
+Expect: `{"success":true,"requestId":"..."}`. Telegram message should show **blue** toruabii markers.
 
 5. **Callback form**:
 
@@ -148,11 +119,6 @@ curl -s -X POST http://localhost:4322/api/callback \
 | `400` | Bad JSON or missing `name`/`phone`/`url` |
 
 Server logs in dev: `[Telegram]`, `[Callback API]`, `[Track Call API]`.
-
-### Wrong site color in Telegram
-
-- **Blue 🟦** — body/header must include `source: "toruabii.ee"` (toruabii frontend does this automatically).
-- **Red 🟥** — `source: "24toruabi.ee"` or omitted source (legacy label).
 
 ### Forms vs call clicks
 

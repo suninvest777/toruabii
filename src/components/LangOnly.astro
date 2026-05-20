@@ -1,0 +1,9 @@
+---
+/** Render slot only for the active locale — one H1/body in HTML (no blog-et/blog-ru hide). */
+interface Props {
+  lang: 'et' | 'ru';
+  activeLang: 'et' | 'ru';
+}
+const { lang, activeLang } = Astro.props;
+---
+{lang === activeLang && <slot />}

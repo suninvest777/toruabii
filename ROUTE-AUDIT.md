@@ -1,7 +1,7 @@
 # ROUTE-AUDIT — toruabii.ee
 
 Date: 2026-05-21  
-Stack: Astro 5, `output: 'static'` + Cloudflare adapter (API routes remain server-side)
+Stack: Astro 5, `output: 'server'` + Cloudflare adapter (SSR pages + API on Workers)
 
 ## Executive summary
 
@@ -18,9 +18,9 @@ Stack: Astro 5, `output: 'static'` + Cloudflare adapter (API routes remain serve
 
 **Fixes applied in repo:**
 
-1. `output: 'static'` — prerender all content pages to `dist/**/index.html` (Zone-compatible).
-2. `export const prerender = true` on all page components; `getStaticPaths` for blog categories.
-3. `public/.htaccess` — Apache rewrite `/ru/*` → `/*?lang=ru` (mirrors `middleware.ts` on Zone).
+1. `output: 'server'` — SSR on Cloudflare Workers; middleware `/ru/*` rewrites work at runtime.
+2. No `export const prerender = true` on content pages (43 files) — prerender + `context.rewrite()` is incompatible in Astro 5 server mode (`ForbiddenRewrite`). API routes keep `prerender = false`.
+3. `public/.htaccess` — Apache rewrite `/ru/*` → `/*?lang=ru` (**Zone static fallback only**, not used by Worker deploy).
 4. `wrangler.jsonc` — `assets.run_worker_first: true` for Cloudflare Worker SSR/API.
 5. `public/.assetsignore` — ignore `_routes.json` on asset upload.
 
@@ -85,11 +85,11 @@ Stack: Astro 5, `output: 'static'` + Cloudflare adapter (API routes remain serve
 
 | File | Action |
 |------|--------|
-| `astro.config.mjs` | `output: 'server'` → `output: 'static'` |
+| `astro.config.mjs` | `output: 'server'` (reverted static-only deploy for RU middleware) |
 | `wrangler.jsonc` | Added `run_worker_first: true` |
 | `public/.htaccess` | **Created** — RU path rewrites for Zone |
 | `public/.assetsignore` | Added `_routes.json` |
-| All `src/pages/**/*.astro` (except api) | `export const prerender = true` |
+| All `src/pages/**/*.astro` (except api) | Removed `export const prerender = true` (SSR for `/ru/*` rewrite) |
 | `src/pages/blog/kategoria/[category].astro` | `getStaticPaths` for kuttesusteem + otoplenije |
 | `scripts/route-audit.mjs` | Audit helper |
 | `scripts/generate-route-audit.mjs` | This report generator |
@@ -108,7 +108,8 @@ No `24toruabi` links in `src/`.
 |----------|----------|
 | Dev / Cloudflare Worker | `middleware.ts` rewrites `/ru/*` → ET path + `?lang=ru` |
 | Zone Apache | `public/.htaccess` same rewrite |
-| Prerendered | `/ru/index.html` from `src/pages/ru/index.astro`; other `/ru/foo` served via rewrite to `/foo?lang=ru` |
+| SSR (Worker / dev) | `/ru` from `src/pages/ru/index.astro`; other `/ru/foo` via middleware rewrite to `/foo?lang=ru` |
+| Zone static only | `public/.htaccess` mirrors rewrite; upload full `dist/` if using static host |
 
 ## Still broken on production until deploy
 
@@ -136,8 +137,10 @@ No `24toruabi` links in `src/`.
 
 ```bash
 npm run build
-# Prerender log: 43 sitemap paths + /ru + test-call-buttons
-# dist/<path>/index.html exists for every sitemap path
+# output: server — dist/_worker.js + assets; no per-path index.html prerender
+npm run dev
+# /ru/toruabi-avariiline-valjakutse, /ru/hinnakiri, /ru/toruabi-lasnamae,
+# /ru/blog/kategoria/otoplenije, /toruabi-avariiline-valjakutse → 200 (no ForbiddenRewrite)
 ```
 
 ## Counts (requested)
@@ -148,5 +151,5 @@ npm run build
 | Missing page files (before) | **0** |
 | Missing page files (after) | **0** |
 | New `.astro` files created | **0** |
-| Prerendered HTML files for sitemap | **43** |
+| Files where `prerender = true` removed | **43** |
 | Build status | **PASS** |

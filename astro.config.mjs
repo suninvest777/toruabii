@@ -1,7 +1,6 @@
 import { defineConfig, envField } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import cloudflare from '@astrojs/cloudflare';
-import partytown from '@astrojs/partytown';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,13 +16,22 @@ export default defineConfig({
         access: 'secret',
         optional: true,
       }),
+      PUBLIC_GA4_MEASUREMENT_ID: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
+      PUBLIC_AHREFS_ANALYTICS_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
     },
   },
   integrations: [
     tailwind(),
-    partytown({ config: { forward: ['dataLayer.push'] } }),
   ],
-  output: 'static',
+  output: 'server',
   adapter: cloudflare({
     imageService: 'compile',
     platformProxy: { enabled: process.env.CLOUDFLARE_PLATFORM_PROXY === '1' },
@@ -41,6 +49,15 @@ export default defineConfig({
     build: {
       cssMinify: true,
       minify: 'esbuild',
+      target: 'es2020',
+      assetsInlineLimit: 4096,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('language-switcher')) return 'lang';
+          },
+        },
+      },
     },
     server: {
       fs: {

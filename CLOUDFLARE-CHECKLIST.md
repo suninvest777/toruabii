@@ -6,7 +6,6 @@ Use before `npm run deploy` or merging to `main` (if CI deploy is enabled).
 
 - [ ] `TELEGRAM_BOT_TOKEN` set in Cloudflare (secret), not only in local `.env`
 - [ ] `TELEGRAM_CHAT_ID` set in Cloudflare
-- [ ] `PUBLIC_GOOGLE_REVIEW_URL` set if the review/discount page should show a real link
 - [ ] Local `.env` is **not** committed (verify with `git status` — `.env` must be ignored)
 
 ## Analytics

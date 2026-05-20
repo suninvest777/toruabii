@@ -29,7 +29,7 @@ export type HarjuVisualPreset =
 
 export type HarjuFaqItem = { q: string; a: string };
 
-/** Shared tail for municipality landing <meta name="keywords"> (local phrases stay per-row). */
+/** Legacy keyword lists (not emitted in HTML; kept for reference in copy audits). */
 const HARJU_SEO_KW_ET =
   'toruabi, ummistuste likvideerimine, toruabi 24/7, avarii toruabi Harjumaa, kanalisatsiooni toruabi, kanalisatsiooni survepesu, survepesu, toruabi survepesu, santehnik, santehnik Harjumaal, erakorraline santehnik, öine toruabi, toruabi väljakutse';
 const HARJU_SEO_KW_RU =

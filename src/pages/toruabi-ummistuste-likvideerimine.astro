@@ -1,12 +1,10 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import { ruPath } from '../utils/i18n-paths';
 import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
@@ -146,6 +144,9 @@ const plumbingLd = {
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${pageCanonicalUrl}#faq`,
+  url: pageCanonicalUrl,
+  inLanguage: currentLang,
   mainEntity: faqForLdPlain.map((item) => ({
     '@type': 'Question',
     name: item.q,
@@ -158,9 +159,8 @@ const faqLd = {
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical={`${siteUrl}${pagePath}`}
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -179,15 +179,16 @@ const faqLd = {
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{landing.h1Et}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{landing.h1Ru}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">
-        Torude ummistuste likvideerimine vannitoas, köögis, WC-s ja peamistes liinides — kasutame professionaalset seadmet ja kogemust. Kiire toruabi on kättesaadav ööpäevaringselt; helista, kui vesi ei voola või kanalisatsioon on kinni.
-      </p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">
-        Устраняем засоры в ванной, кухне, унитазе и магистралях — с профессиональным оборудованием и опытом. Срочный торуаби доступен круглосуточно; звоните, если вода не уходит или канализация встала.
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? landing.h1Ru : landing.h1Et}</h1>
+      <p class="text-xl text-gray-200 mb-6">
+        {currentLang === 'ru'
+          ? 'Устраняем засоры в ванной, кухне, унитазе и магистралях — с профессиональным оборудованием и опытом. Срочный торуаби доступен круглосуточно; звоните, если вода не уходит или канализация встала.'
+          : 'Torude ummistuste likvideerimine vannitoas, köögis, WC-s ja peamistes liinides — kasutame professionaalset seadmet ja kogemust. Kiire toruabi on kättesaadav ööpäevaringselt; helista, kui vesi ei voola või kanalisatsioon on kinni.'}
       </p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}

@@ -1,11 +1,9 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import { homeHref, ruPath } from '../utils/i18n-paths';
 
 const siteUrl = 'https://toruabii.ee';
@@ -32,7 +30,6 @@ const canonicalUrl =
 <BaseLayout 
   title={pageTitle}
   description={pageDescription}
-  keywords={currentLang === 'ru' ? 'торуаби, политика конфиденциальности, toruabii.ee' : 'toruabi, privaatsuspoliitika, toruabii.ee'}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/toruabii.webp"

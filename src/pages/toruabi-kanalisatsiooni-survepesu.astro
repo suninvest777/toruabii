@@ -1,11 +1,9 @@
 ---
-export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import { ruPath } from '../utils/i18n-paths';
 import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
@@ -133,6 +131,9 @@ const plumbingLd = {
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${pageCanonicalUrl}#faq`,
+  url: pageCanonicalUrl,
+  inLanguage: currentLang,
   mainEntity: faqForLd.map((item) => ({
     '@type': 'Question',
     name: item.q,
@@ -146,9 +147,8 @@ const faqLd = {
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical={`${siteUrl}${pagePath}`}
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -164,19 +164,16 @@ const faqLd = {
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">
-        Toruabi kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve kanalisatsiooni toruabi
-      </h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">
-        Торуаби гидродинамическая промывка канализации в Таллине и Харьюмаа
-      </h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">
-        Kanalisatsiooni survepesu eemaldab setted ja rasva trassidest — teenindame kortermaju, äripindu ja eramuid. Vajadusel ühendame videouuringu ja ummistuste likvideerimise, et toruabi tulemus kestaks.
-      </p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">
-        Гидропромывка канализации удаляет отложения и жир из линий — обслуживаем МКД, бизнес и частные дома. При необходимости совмещаем с видеодиагностикой и прочисткой, чтобы результат торуаби держался дольше.
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? landing.h1Ru : landing.h1Et}</h1>
+      <p class="text-xl text-gray-200 mb-6">
+        {currentLang === 'ru'
+          ? 'Гидропромывка канализации удаляет отложения и жир из линий — обслуживаем МКД, бизнес и частные дома. При необходимости совмещаем с видеодиагностикой и прочисткой, чтобы результат торуаби держался дольше.'
+          : 'Kanalisatsiooni survepesu eemaldab setted ja rasva trassidest — teenindame kortermaju, äripindu ja eramuid. Vajadusel ühendame videouuringu ja ummistuste likvideerimise, et toruabi tulemus kestaks.'}
       </p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}

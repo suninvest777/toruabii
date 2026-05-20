@@ -1,14 +1,13 @@
 ---
-export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
-import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { tallinnDistrictBreadcrumbJsonLd, tallinnDistrictPageUrl } from '../utils/district-tallinn-jsonld';
+import { pageLang } from '../utils/page-lang';
 import {
   getTallinnDistrict,
   tallinnDistrictDescription,
@@ -23,7 +22,7 @@ const districtSeo = getTallinnDistrict('viimsi');
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt = tallinnDistrictTitle('viimsi', 'et');
 const descEt = tallinnDistrictDescription('viimsi', 'et');
@@ -34,6 +33,7 @@ const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
 
 const districtPath = '/toruabi-viimsi';
+const pageCanonicalUrl = tallinnDistrictPageUrl(districtPath, currentLang);
 const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
 
 const viimsiFaqEt = [
@@ -60,9 +60,8 @@ const viimsiFaqEt = [
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical="https://toruabii.ee/toruabi-viimsi"
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -105,12 +104,13 @@ const viimsiFaqEt = [
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('viimsi', 'et')}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('viimsi', 'ru')}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('viimsi', 'et')}</p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('viimsi', 'ru')}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? tallinnDistrictH1('viimsi', 'ru') : tallinnDistrictH1('viimsi', 'et')}</h1>
+      <p class="text-xl text-gray-200 mb-6">{currentLang === 'ru' ? tallinnDistrictIntro('viimsi', 'ru') : tallinnDistrictIntro('viimsi', 'et')}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>
@@ -188,7 +188,7 @@ const viimsiFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Viimsi uusarendustes ja eramutes</h3>
-            <p class="text-gray-700 mb-3">Viimsi on tuntud oma eliitsete uusarenduste ja eramute poolest. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas töötada kaasaegsete süsteemidega. Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Viimsi uusarendustes ja eramutes 24/7. Meie professionaalne santehnik ja avarii santehnik on spetsialiseerunud töötamisele Viimsi uusarendustes.</p>
+            <p class="text-gray-700 mb-3">Haabneeme ja Pringi uued eramud kasutavad sageli soojuspumpasid ja eraldi kanalisatsioonikaevu — hooldame filtreid, lekkeid ja kaasaegseid plasttrasse ilma fassaadi lõhkumata.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Kanalisatsiooni toruabi ja ummistuste likvideerimine</li>
               <li>Kaasaegsete küttesüsteemide toruabi ja hooldus</li>
@@ -198,7 +198,7 @@ const viimsiFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni toruabi Viimsi villades</h3>
-            <p class="text-gray-700 mb-3">Viimsi piirkonnas on palju villasid, mis vajavad regulaarset toruabi hooldust. Meie toruabi meeskond ja kogenud avarii santehnik kasutavad professionaalseid seadmeid ummistuste eemaldamiseks. Meie torumees ja professionaalne santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Viimsi villades. Pakume toruabi teenuseid Viimsis 24/7.</p>
+            <p class="text-gray-700 mb-3">Randvere ja Tammneeme villades on pikemad sõiduteed ja sügavamad trassid — videouuring ja survepesu aitavad leida ummistuse ilma suurema kaevamiseta.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Survepesu kanalisatsioonisüsteemidest</li>
               <li>Videouuring torustiku seisukorra kontrollimiseks</li>
@@ -215,7 +215,7 @@ const viimsiFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби в новостройках и частных домах Виймси</h3>
-            <p class="text-gray-700 mb-3">Виймси известен своими элитными новостройками и частными домами. Наша команда знает специфику этих зданий и умеет работать с современными системами. Мы предоставляем профессиональные услуги по прочистке канализации и аварийной сантехнике в новостройках и частных домах Виймси 24/7.</p>
+            <p class="text-gray-700 mb-3">В Хаабнеэме и Принги — тепловые насосы и отдельные колодцы: обслуживаем фильтры, протечки и пластиковые трассы без повреждения фасада.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Прочистка канализации и устранение засоров</li>
               <li>Обслуживание современных систем отопления</li>
@@ -225,7 +225,7 @@ const viimsiFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Прочистка канализации в виллах Виймси</h3>
-            <p class="text-gray-700 mb-3">В районе Виймси много вилл, которые требуют регулярного обслуживания сантехники. Наша команда использует профессиональное оборудование для устранения засоров. Мы предоставляем услуги по прочистке канализации и сантехническим работам в виллах Виймси 24/7.</p>
+            <p class="text-gray-700 mb-3">В Рандвере и Таммнеэме — длинные подъезды и глубокие линии; видеодиагностика и промывка без крупной раскопки.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Гидродинамическая промывка канализационных систем</li>
               <li>Видеообследование для проверки состояния трубопроводов</li>
@@ -243,18 +243,18 @@ const viimsiFaqEt = [
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
-              <span class="ml-2 font-bold text-trust-blue">Andres K.</span>
+              <span class="ml-2 font-bold text-trust-blue">Helle V.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Väga kiire ja professionaalne toruabi Viimsis! Kanalisatsiooni ummistus eramajas lahendati kiiresti ja kvaliteetselt. Meister jõudis kohale 40 minutiga. Soovitan!"</p>
-            <p class="text-sm text-gray-500">18. detsember 2025</p>
+            <p class="text-gray-700 mb-2">"Haabneeme eramus kontrolliti soojuspumba leke ja torustik — töö tehti ühe visiidiga, selge arve ja garantii."</p>
+            <p class="text-sm text-gray-500">8. jaanuar 2026</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Kadri M.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Boileri hooldus Viimsi villas tehti väga hästi. Meister oli professionaalne ja selgitas kõik selgelt. Garantii 2 aastat annab rahu. Toruabi Viimsis 24/7 on suurepärane!"</p>
-            <p class="text-sm text-gray-500">22. november 2025</p>
+            <p class="text-gray-700 mb-2">"Pringi villas tehti kanalisatsiooni videouuring ja survepesu — ummistus kadus ilma aeda kaevamata."</p>
+            <p class="text-sm text-gray-500">28. november 2025</p>
           </div>
         </div>
         <p class="text-center mt-6 text-gray-600">Keskmine hinnang: <span class="font-bold text-trust-blue">4.9/5</span> (287 arvustust)</p>
@@ -266,18 +266,18 @@ const viimsiFaqEt = [
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
-              <span class="ml-2 font-bold text-trust-blue">Андрес К.</span>
+              <span class="ml-2 font-bold text-trust-blue">Хелле В.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Очень быстрая и профессиональная торуаби в Виймси! Засор канализации в частном доме решили быстро и качественно. Мастер приехал за 40 минут. Рекомендую!"</p>
-            <p class="text-sm text-gray-500">18 декабря 2025</p>
+            <p class="text-gray-700 mb-2">"В Хаабнеэме устранили течь теплового насоса и проверили трубы за один визит — понятный счёт и гарантия."</p>
+            <p class="text-sm text-gray-500">8 января 2026</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Кадри М.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Обслуживание бойлера в вилле Виймси сделали очень хорошо. Мастер был профессионален и всё объяснил. Гарантия 2 года даёт спокойствие. Торуаби в Виймси 24/7 отлично!"</p>
-            <p class="text-sm text-gray-500">22 ноября 2025</p>
+            <p class="text-gray-700 mb-2">"В Принги сделали видеообследование и промывку канализации — засор ушёл без копания газона."</p>
+            <p class="text-sm text-gray-500">28 ноября 2025</p>
           </div>
         </div>
         <p class="text-center mt-6 text-gray-600">Средняя оценка: <span class="font-bold text-trust-blue">4.9/5</span> (287 отзывов)</p>
@@ -293,24 +293,24 @@ const viimsiFaqEt = [
             <p class="text-sm text-gray-600">Toruabi Viimsi piirkonnas</p>
           </div>
           <div class="bg-gray-50 p-4 rounded-lg">
-            <h3 class="font-bold text-trust-blue mb-2">Merivälja</h3>
-            <p class="text-sm text-gray-600">Toruabi Merivälja piirkonnas</p>
+            <h3 class="font-bold text-trust-blue mb-2">Haabneeme</h3>
+            <p class="text-sm text-gray-600">Toruabi Haabneemes</p>
           </div>
           <div class="bg-gray-50 p-4 rounded-lg">
-            <h3 class="font-bold text-trust-blue mb-2">Kloostrimetsa</h3>
-            <p class="text-sm text-gray-600">Toruabi Kloostrimetsa piirkonnas</p>
+            <h3 class="font-bold text-trust-blue mb-2">Pringi</h3>
+            <p class="text-sm text-gray-600">Toruabi Pringi piirkonnas</p>
           </div>
           <div class="bg-gray-50 p-4 rounded-lg">
-            <h3 class="font-bold text-trust-blue mb-2">Iru</h3>
-            <p class="text-sm text-gray-600">Toruabi Iru piirkonnas</p>
+            <h3 class="font-bold text-trust-blue mb-2">Randvere</h3>
+            <p class="text-sm text-gray-600">Toruabi Randveres</p>
           </div>
           <div class="bg-gray-50 p-4 rounded-lg">
-            <h3 class="font-bold text-trust-blue mb-2">Mähe</h3>
-            <p class="text-sm text-gray-600">Toruabi Mähe piirkonnas</p>
+            <h3 class="font-bold text-trust-blue mb-2">Tammneeme</h3>
+            <p class="text-sm text-gray-600">Toruabi Tammneemes</p>
           </div>
           <div class="bg-gray-50 p-4 rounded-lg">
-            <h3 class="font-bold text-trust-blue mb-2">Lepiku</h3>
-            <p class="text-sm text-gray-600">Toruabi Lepiku piirkonnas</p>
+            <h3 class="font-bold text-trust-blue mb-2">Lubja</h3>
+            <p class="text-sm text-gray-600">Toruabi Lubja piirkonnas</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -320,7 +320,7 @@ const viimsiFaqEt = [
             <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a> – kiire avarii toruabi ja kanalisatsiooni toruabi Lasnamäe piirkonnas</li>
             <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Toruabi Mustamäel</a> – professionaalne avarii toruabi Mustamäe piirkonnas</li>
             <li><a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-semibold">Toruabi Kesklinnas</a> – kiire avarii toruabi Tallinna kesklinna piirkonnas</li>
-            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Toruabi Viimsis</a> – professionaalne avarii toruabi Viimsi piirkonnas</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Toruabi Piritas</a> – toruabi Pirita ja Merivälja piirkonnas</li>
           </ul>
         </div>
       </section>
@@ -369,11 +369,11 @@ const viimsiFaqEt = [
       <!-- Typical Problems -->
       <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Viimsis</h2>
-        <p class="text-gray-700 mb-6">Viimsi on Tallinna eliitne piirkond mere ääres, kus on palju eramuid, villasid ja kortereid. Mereline kliima ja kõrge niiskus mõjutavad torustikke, mistõttu vajavad need erilist hooldust. Meie torumees ja professionaalne santehnik on spetsialiseerunud Viimsi eramute ja villade toruabi probleemide lahendamisele 24/7.</p>
+        <p class="text-gray-700 mb-6">Viimsis on tüüpilised soojuspumba lekked, sügavad erakanalisatsioonid ja uute eramute paigaldusvead — lahendame need videouuringu ja survepesuga, arvestades pikemat sõiduteed.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused eramutes</h3>
-            <p class="text-gray-700 mb-3">Viimsi eramutes ja villades on levinud kanalisatsiooni ummistused, mis on seotud merelise kliimaga ja kõrge niiskusega. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees ja avarii santehnik tegelevad kanalisatsiooni toruabi ja avarii toruabi teenustega Viimsi eramutes 24/7.</p>
+            <p class="text-gray-700 mb-3">Eraldatud kanalisatsioonisüsteemides ummistuvad sageli pika sisselaske toru või pump — testime õhutust ja pumba tööd enne trassi kaevamist.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">

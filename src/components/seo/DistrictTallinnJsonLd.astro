@@ -88,6 +88,9 @@ const plumbingLd = {
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${pageLocUrl}#faq`,
+  url: pageLocUrl,
+  inLanguage: currentLang,
   mainEntity: faqEt.map((item) => ({
     '@type': 'Question',
     name: item.q,

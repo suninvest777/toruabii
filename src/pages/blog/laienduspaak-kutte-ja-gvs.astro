@@ -5,11 +5,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
+import { pageLang } from '../../utils/page-lang';
+import LangOnly from '../../components/LangOnly.astro';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Laienduspaak küttesüsteemi ja soojavee jaoks Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/laienduspaak-kutte-ja-gvs';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['laienduspaak-kutte-ja-gvs'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -47,8 +61,73 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     datePublished={articleDatePublished}
     imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
   />
+  <script
+    slot="head"
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': canonicalUrl + '#faq',
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'В чем разница между расширительным баком для отопления и ГВС?' : 'Mis vahe on küttesüsteemi ja soojaveevarustuse laienduspaagil?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак для отопления предназначен для компенсации расширения теплоносителя в системе отопления. Расширительный бак для ГВС предназначен для компенсации расширения горячей воды в системе горячего водоснабжения и должен соответствовать контакту с питьевой водой.'
+            : 'Küttesüsteemi laienduspaak on mõeldud kompenseerima soojusülekande paisumist küttesüsteemis. Soojaveevarustuse laienduspaak on mõeldud kompenseerima vee paisumist soojaveevarustuse süsteemis ja peab vastama joogiveega kokkupuute nõuetele.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка расширительного бака в Таллине?' : 'Kui palju maksab laienduspaagi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки расширительного бака в Таллине зависит от объема бака и сложности системы. Небольшой расширительный бак (10-50 литров) может стоить 200-500€, большой (100+ литров) 500-1500€.'
+            : 'Laienduspaagi paigalduse hind Tallinnas sõltub paagi mahust ja süsteemi keerukusest. Väiksem laienduspaak (10-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен расширительный бак?' : 'Millal on vaja laienduspaaki?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак необходим для всех закрытых систем отопления и систем горячего водоснабжения. Он компенсирует расширение воды при нагревании и обеспечивает стабильное давление в системе.'
+            : 'Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какого размера нужен расширительный бак?' : 'Kui suur laienduspaak on vajalik?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Размер расширительного бака зависит от объема системы. Общее правило: примерно 10% от объема системы. Например, для системы объемом 100 литров нужно около 10 литров расширительного бака.'
+            : 'Laienduspaagi suurus sõltub süsteemi mahust. Üldreegel: umbes 10% süsteemi mahust. Näiteks 100-liitrise süsteemi jaoks vajate umbes 10-liitrist laienduspaaki.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Требует ли расширительный бак обслуживания?' : 'Kas laienduspaak nõuab hooldust?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Расширительный бак требует минимального обслуживания. Рекомендуем проверять давление и состояние мембраны раз в год. Если расширительный бак правильно установлен, он может работать годами без особого обслуживания.'
+            : 'Laienduspaak nõuab minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui laienduspaak on õigesti paigaldatud, võib see töötada aastaid ilma erilise hoolduseta.',
+        },
+      },
+    ],
+  })}
+/>
+
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -75,9 +154,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -104,9 +185,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -180,16 +263,22 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Category Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Rohkem artikleid küttesüsteemi kohta</h2>
         <div class="flex justify-center">
-          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Küttesüsteemi artiklid
           </a>
-          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Статьи об отоплении
           </a>
         </div>
+      </LangOnly>
       </section>
 
       <!-- FAQ Section -->
@@ -325,8 +414,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         <p class="text-sm mt-4 opacity-90">Laienduspaagi toruabi Tallinnas 24/7 | Laienduspaagi paigaldus | Laienduspaagi remont | Laienduspaagi hooldus</p>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -414,105 +505,6 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'В чем разница между расширительным баком для отопления и ГВС?' : 'Mis vahe on küttesüsteemi ja soojaveevarustuse laienduspaagil?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Расширительный бак для отопления предназначен для компенсации расширения теплоносителя в системе отопления. Расширительный бак для ГВС предназначен для компенсации расширения горячей воды в системе горячего водоснабжения и должен соответствовать контакту с питьевой водой.'
-            : 'Küttesüsteemi laienduspaak on mõeldud kompenseerima soojusülekande paisumist küttesüsteemis. Soojaveevarustuse laienduspaak on mõeldud kompenseerima vee paisumist soojaveevarustuse süsteemis ja peab vastama joogiveega kokkupuute nõuetele.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Сколько стоит установка расширительного бака в Таллине?' : 'Kui palju maksab laienduspaagi paigaldus Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Стоимость установки расширительного бака в Таллине зависит от объема бака и сложности системы. Небольшой расширительный бак (10-50 литров) может стоить 200-500€, большой (100+ литров) 500-1500€.'
-            : 'Laienduspaagi paigalduse hind Tallinnas sõltub paagi mahust ja süsteemi keerukusest. Väiksem laienduspaak (10-50 liitrit) võib maksta 200-500€, suurem (100+ liitrit) 500-1500€.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Когда нужен расширительный бак?' : 'Millal on vaja laienduspaaki?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Расширительный бак необходим для всех закрытых систем отопления и систем горячего водоснабжения. Он компенсирует расширение воды при нагревании и обеспечивает стабильное давление в системе.'
-            : 'Laienduspaak on vajalik kõigile suletud küttesüsteemidele ja soojaveevarustuse süsteemidele. See kompenseerib vee paisumist kuumutamisel ja tagab stabiilse rõhu süsteemis.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Какого размера нужен расширительный бак?' : 'Kui suur laienduspaak on vajalik?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Размер расширительного бака зависит от объема системы. Общее правило: примерно 10% от объема системы. Например, для системы объемом 100 литров нужно около 10 литров расширительного бака.'
-            : 'Laienduspaagi suurus sõltub süsteemi mahust. Üldreegel: umbes 10% süsteemi mahust. Näiteks 100-liitrise süsteemi jaoks vajate umbes 10-liitrist laienduspaaki.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Требует ли расширительный бак обслуживания?' : 'Kas laienduspaak nõuab hooldust?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Расширительный бак требует минимального обслуживания. Рекомендуем проверять давление и состояние мембраны раз в год. Если расширительный бак правильно установлен, он может работать годами без особого обслуживания.'
-            : 'Laienduspaak nõuab minimaalset hooldust. Soovitame kontrollida rõhku ja membraani seisundit kord aastas. Kui laienduspaak on õigesti paigaldatud, võib see töötada aastaid ilma erilise hoolduseta.',
-        },
-      },
-    ],
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
-          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Расширительный бак для отопления и ГВС'
-          : 'Laienduspaak küttesüsteemi ja soojavee jaoks',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/laienduspaak-kutte-ja-gvs' : 'https://toruabii.ee/blog/laienduspaak-kutte-ja-gvs',
-      },
-    ],
-  })}
-/>

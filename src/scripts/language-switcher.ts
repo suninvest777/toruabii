@@ -13,9 +13,9 @@ const langData: Record<string, Record<string, string>> = {
     blog: 'Blogi',
     callNow: 'HELISTA',
     callNowFull: 'HELISTA KOHE',
-    heroTitle: 'Toruabi ja kiire väljakutse 24/7 Tallinnas ja Harjumaal',
+    heroTitle: 'Toruabi hoiab tehnosüsteemid korras',
     heroSubtitle:
-      'Torude ummistuste likvideerimine ja kanalisatsiooni toruabi. Meister tavaliselt 30–60 minutiga. Garantii 2 aastat. Väljasõit 0 € Tallinna piires.',
+      'Ehitame ja hooldame vee-, kanalisatsiooni-, kütte ning välistrasse Tallinnas ja Harjumaal.',
     openNow: 'Avatud nüüd',
     phone: '+372 5181 112',
     service1: 'Toruabi ja avariitööd 24h',
@@ -229,24 +229,6 @@ const langData: Record<string, Record<string, string>> = {
     kesklinn: 'Toruabi Kesklinnas',
     pirita: 'Toruabi Piritas',
     viimsi: 'Toruabi Viimsis',
-    navGoogleReview: 'Google\'i tagasiside',
-    reviewBonusTitle: 'Jäta Google\'is arvustus',
-    reviewBonusSubtitle:
-      'Sinu tagasiside aitab teistel klientidel meid leida. Pärast meie tööl käiku ja avaldatud ausa Google\'i arvustust kehtib 10% soodustus kõigile järgnevatele tellimustele (tellimuste arv ei ole piiratud) — maini seda iga broneeringu juures (+372 5181 112). Allpool avad arvustuse lingi.',
-    reviewBonusStep1:
-      'Oluline: tingimuseks on teostatud töö ja avaldatud aus Google\'i arvustus. Seejärel kehtib 10% soodustus kõigile edaspidistele tellimustele piiramatus ulatuses — maini soodustusest alati broneerides. Klõpsa all olevat nuppu ja jätka arvustuse Google\'is (logi sisse oma Google\'i kontoga, kui vaja).',
-    reviewBonusStep2: 'Pärast avaldamist salvesta ekraanitõmmis või pea meeles, et arvustus on üleval.',
-    reviewBonusStep3:
-      'Iga uue töö broneerides helista +372 5181 112 või kasuta vormi — ütle, et oled Google\'is arvustuse jätanud, et rakendada 10% soodustust (kehtib kõigile tellimustele pärast vastavat arvustust; täpsustab dispetšer).',
-    reviewBonusCtaGoogle: 'Ava Google\'i arvustused',
-    reviewBonusDisclaimer:
-      'Arvustus on vabatahtlik. 10% soodustus kehtib kõigile tellimustele pärast teostatud tööd ja avaldatud Google\'i arvustust, kui klient soodustusest broneerides teatab (täpsustab dispetšer). Lõplik hind ja töö ulatus sõltuvad objektist.',
-    reviewBonusPromoHeading: 'Google\'i arvustuse eest: 10% kõigile järgnevatele tellimustele',
-    reviewBonusPromoBody:
-      'Pärast meie teenuse kasutamist (väljakutse/töö) ja ausa arvustuse avaldamist Google\'is kehtib 10% allahindlus kõigile järgnevatele tellimustele — tellimuste arv ei ole piiratud. Broneerides maini alati telefonil +372 5181 112 või kodulehe kaudu, et oled arvustuse jätanud; kinnitab dispetšer.',
-    reviewBonusPromoSrOnly:
-      'Kümne protsendi soodustus kõigile järgnevatele tellimustele pärast ausa Google\'i arvustuse avaldamist ja teostatud tööd.',
-    reviewBonusCtaCallIntro: 'Küsimused? Helista kohe:',
   },
   ru: {
     services: 'Услуги',
@@ -256,9 +238,9 @@ const langData: Record<string, Record<string, string>> = {
     blog: 'Блог',
     callNow: 'ПОЗВОНИТЬ',
     callNowFull: 'ПОЗВОНИТЬ СЕЙЧАС',
-    heroTitle: 'Торуаби и срочный выезд 24/7 в Таллинне и Харьюмаа',
+    heroTitle: 'Торуаби поддерживает технические системы в порядке',
     heroSubtitle:
-      'Устранение засоров труб и канализационный торуаби. Мастер обычно за 30–60 минут. Гарантия 2 года. Выезд 0 € в пределах Таллина.',
+      'Строим и обслуживаем водопровод, канализацию, отопление и наружные сети в Таллинне и Харьюмаа.',
     openNow: 'Открыто сейчас',
     phone: '+372 5181 112',
     service1: 'Сантехнические аварийные работы 24ч',
@@ -472,24 +454,6 @@ const langData: Record<string, Record<string, string>> = {
     kesklinn: 'Сантехник в Кесклинне',
     pirita: 'Сантехник в Пирита',
     viimsi: 'Сантехник в Виймси',
-    navGoogleReview: 'Отзыв в Google',
-    reviewBonusTitle: 'Оставьте отзыв в Google',
-    reviewBonusSubtitle:
-      'Ваш отзыв помогает другим клиентам нас найти. После нашего выезда/работы и честного отзыва в Google действует скидка 10% на каждый последующий заказ (количество заказов не ограничено) — сообщайте об этом при каждом бронировании (+372 5181 112). Ниже ссылка на отзывы.',
-    reviewBonusStep1:
-      'Важно: условие — выполненный заказ и опубликованный честный отзыв в Google. После этого скидка 10% действует на все дальнейшие заказы без ограничения их числа — напоминайте о скидке при каждом бронировании. Нажмите кнопку ниже и оставьте отзыв в Google (при необходимости войдите в аккаунт Google).',
-    reviewBonusStep2: 'После публикации сохраните скриншот или запомните, что отзыв опубликован.',
-    reviewBonusStep3:
-      'При каждом новом заказе звоните +372 5181 112 или отправляйте заявку — скажите, что оставили отзыв в Google, чтобы применить скидку 10% (действует на все заказы после соответствующего отзыва; уточняет диспетчер).',
-    reviewBonusCtaGoogle: 'Открыть отзывы в Google',
-    reviewBonusDisclaimer:
-      'Отзыв добровольный. Скидка 10% на все заказы после выполненной работы и опубликованного отзыва в Google, если клиент сообщает о скидке при бронировании (уточняет диспетчер). Итоговая цена и объём работ зависят от объекта.',
-    reviewBonusPromoHeading: 'За отзыв в Google — скидка 10% на каждый последующий заказ',
-    reviewBonusPromoBody:
-      'После нашего выезда/выполнения работы и честного отзыва в Google действует скидка 10% на каждый следующий заказ — число заказов не ограничено. При бронировании каждый раз сообщайте по телефону +372 5181 112 или через форму на сайте, что отзыв оставлен; подтверждает диспетчер.',
-    reviewBonusPromoSrOnly:
-      'Скидка десять процентов на все последующие заказы после честного отзыва в Google и выполненного заказа.',
-    reviewBonusCtaCallIntro: 'Вопросы? Позвоните сейчас:',
   },
 };
 

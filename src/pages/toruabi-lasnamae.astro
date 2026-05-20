@@ -1,15 +1,14 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
-import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { tallinnDistrictBreadcrumbJsonLd, tallinnDistrictPageUrl } from '../utils/district-tallinn-jsonld';
+import { pageLang } from '../utils/page-lang';
 import {
   getTallinnDistrict,
   tallinnDistrictDescription,
@@ -24,7 +23,7 @@ const districtSeo = getTallinnDistrict('lasnamae');
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt = tallinnDistrictTitle('lasnamae', 'et');
 const descEt = tallinnDistrictDescription('lasnamae', 'et');
@@ -35,6 +34,7 @@ const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
 
 const districtPath = '/toruabi-lasnamae';
+const pageCanonicalUrl = tallinnDistrictPageUrl(districtPath, currentLang);
 const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
 
 const lasnamaeFaqEt = [
@@ -69,9 +69,8 @@ const lasnamaeFaqEt = [
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical="https://toruabii.ee/toruabi-lasnamae"
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -114,12 +113,13 @@ const lasnamaeFaqEt = [
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('lasnamae', 'et')}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('lasnamae', 'ru')}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('lasnamae', 'et')}</p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('lasnamae', 'ru')}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? tallinnDistrictH1('lasnamae', 'ru') : tallinnDistrictH1('lasnamae', 'et')}</h1>
+      <p class="text-xl text-gray-200 mb-6">{currentLang === 'ru' ? tallinnDistrictIntro('lasnamae', 'ru') : tallinnDistrictIntro('lasnamae', 'et')}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>
@@ -164,7 +164,7 @@ const lasnamaeFaqEt = [
       <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Почему выбирают торуаби в Ласнамяэ?</h2>
         <h3 class="text-lg font-semibold text-trust-blue mb-3">Основные причины</h3>
-        <p class="text-gray-700 mb-4">Ласнамяэ – самый большой район Таллина с более чем 120 000 жителей. Наша команда хорошо знает район и быстро реагирует на аварийные вызовы.</p>
+        <p class="text-gray-700 mb-4">Ласнамяэ — крупнейший район с панельными домами 1970–1980-х: повторяющиеся засоры в горизонтальных трассах и проблемы отопления. Мы знаем практику КУ и типовые планировки — диагностика и выезд обычно за 30–45 минут.</p>
         <ul class="space-y-3 text-gray-700 mb-6">
           <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Местный эксперт:</strong> Наши мастера регулярно работают в Ласнамяэ и знают специфику района</li>
           <li class="flex items-start"><span class="text-emergency-red mr-2">✓</span> <strong>Быстрое реагирование:</strong> В районе Ласнамяэ мы обычно приезжаем за 30-45 минут</li>
@@ -197,7 +197,7 @@ const lasnamaeFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Lasnamäe paneelmajades</h3>
-            <p class="text-gray-700 mb-3">Lasnamäe on tuntud oma paneelmajade poolest. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme vanades torustikes. Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Lasnamäe paneelmajades. Meie professionaalne santehnik on spetsialiseerunud töötamisele Lasnamäe paneelmajades.</p>
+            <p class="text-gray-700 mb-3">Lasnamäe paneelmajades pakume kanalisatsiooni toruabi, küttehooldust ja boileri teenuseid. Tunneme KÜ-de praktikat ja vanu horisontaaltrasse — diagnoos tehakse enne tööd, mitte pärast lammutamist.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Kanalisatsiooni toruabi ja ummistuste likvideerimine</li>
               <li>Küttesüsteemi toruabi ja hooldus</li>
@@ -207,7 +207,7 @@ const lasnamaeFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni toruabi Lasnamäe vanades majades</h3>
-            <p class="text-gray-700 mb-3">Paljud Lasnamäe majad on ehitatud 1970-1980ndatel ja nende kanalisatsioonisüsteemid vajavad regulaarset hooldust. Meie toruabi meeskond ja kogenud avarii santehnik kasutavad professionaalseid seadmeid ummistuste eemaldamiseks. Meie torumees ja professionaalne santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Lasnamäe vanades majades.</p>
+            <p class="text-gray-700 mb-3">1970.–1980. aastate majades teeme survepesu ja videouuringut, et leida ummistuse põhjus ilma liigse lammutuseta. Vajadusel planeerime trassi renoveerimise samm-sammult.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Survepesu kanalisatsioonisüsteemidest</li>
               <li>Videouuring torustiku seisukorra kontrollimiseks</li>
@@ -376,30 +376,26 @@ const lasnamaeFaqEt = [
       <!-- Typical Problems -->
       <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Lasnamäes</h2>
-        <p class="text-gray-700 mb-6">Lasnamäe on Tallinna suurim piirkond, kus on palju paneelmaju 1970-1980ndatest. Need hooned on ehitatud spetsiifilise arhitektuuriga ja nende torustikud vajavad erilist hooldust. Meie torumees ja professionaalne santehnik on spetsialiseerunud Lasnamäe paneelmajade toruabi probleemide lahendamisele.</p>
+        <p class="text-gray-700 mb-6">Lasnamäe paneelmajades korduvad sageli ummistused, kütteprobleemid ja boileri hoolduse vajadus — lahendame need sama brigaadiga, mis tunneb piirkonna tüüphooned.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused paneelmajades</h3>
-            <p class="text-gray-700 mb-3">Lasnamäe paneelmajades on levinud kanalisatsiooni ummistused, mis on seotud vananenud torustikega. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees tegeleb kanalisatsiooni toruabi ja avarii toruabi teenustega Lasnamäe paneelmajades.</p>
+            <p class="text-gray-700 mb-3">Kanalisatsiooni ummistused vanades torustikes lahendame survepesu ja spetsiaalse tööriistaga; vajadusel teeme videouuringu enne suuremaid töid.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri rikked ja hooldus</h3>
-            <p class="text-gray-700 mb-3">Paljud Lasnamäe elanikud kasutavad boilerit sooja vee jaoks. Meie toruabi meeskond pakub professionaalset boileri hooldust, läbipesu ja remonti Lasnamäel. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Lasnamäel.</p>
+            <p class="text-gray-700 mb-3">Boileri hooldus, läbipesu ja remont — regulaarne hooldus pikendab seadme eluiga ja vähendab lekke riski.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Boileri hooldus ja läbipesu</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Küttesüsteemide probleemid</h3>
-            <p class="text-gray-700 mb-3">Lasnamäe paneelmajades on levinud küttesüsteemide probleemid, mis on seotud vananenud torustikega. Meie toruabi meeskond pakub professionaalset küttesüsteemi hooldust ja remonti. Meie kogenud torumees tegeleb küttesüsteemi toruabi ja renoveerimisega Lasnamäel.</p>
+            <p class="text-gray-700 mb-3">Kütteahela õhutõrje, radiaatorite kontroll ja lekete likvideerimine enne küttehooaega vähendavad avariide arvu.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Veeleked ja torustike remont</h3>
-            <p class="text-gray-700 mb-3">Lasnamäe vanades majades on levinud veeleked, mis on seotud vananenud torustikega. Meie toruabi meeskond pakub professionaalset veelekkede likvideerimist ja torustike remonti. Meie professionaalne santehnik ja avarii santehnik tegelevad veelekkede likvideerimisega Lasnamäel.</p>
+            <p class="text-gray-700 mb-3">Veelekked ja purunenud ühendused — kiire väljakutse, et vältida naaberkorterite kahjustusi paneelmajas.</p>
           </div>
-        </div>
-        <div class="bg-trust-blue text-white rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-3">Toruabi Lasnamäes – meie lahendused</h3>
-          <p class="text-gray-200 mb-3">Meie toruabi meeskond on spetsialiseerunud Lasnamäe paneelmajade toruabi probleemide lahendamisele. Kasutame professionaalseid seadmeid ja anname 2-aastase garantiid kõigile töödele. Kui teil on toruabi probleem Lasnamäes, helistage meile <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> ja me reageerime kohe.</p>
         </div>
       </section>
 
@@ -426,97 +422,6 @@ const lasnamaeFaqEt = [
             <p class="text-gray-700 mb-3">В старых домах Ласнамяэ распространены протечки воды, связанные с устаревшими трубопроводами. Наша команда предоставляет профессиональное устранение протечек и ремонт трубопроводов.</p>
           </div>
         </div>
-        <div class="bg-trust-blue text-white rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-3">Торуаби в Ласнамяэ – наши решения</h3>
-          <p class="text-gray-200 mb-3">Наша команда специализируется на решении проблем сантехника в панельных домах Ласнамяэ. Мы используем профессиональное оборудование и предоставляем 2 года гарантии на все работы. Если у вас проблема с сантехником в Ласнамяэ, позвоните нам <a href={`tel:${phoneLink}`} class="text-emergency-red hover:underline font-semibold">{phoneNumber}</a> и мы отреагируем немедленно.</p>
-        </div>
-      </section>
-
-      <!-- Advantages -->
-      <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
-        <h2 class="text-3xl font-bold text-trust-blue mb-6">Meie eelised töötamisel Lasnamäes</h2>
-        <p class="text-gray-700 mb-6">Meie toruabi meeskond on spetsialiseerunud töötamisele Lasnamäe piirkonnas. Meil on suur kogemus Lasnamäe paneelmajade toruabi probleemide lahendamisega ja me teame, kuidas kiiresti ja efektiivselt lahendada kõik toruabi probleemid.</p>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
-            <h3 class="text-xl font-bold mb-3">Kohalik kogemus</h3>
-            <p class="text-gray-200 mb-3">Meie torumees on töötanud Lasnamäes üle 10 aasta ja tunneb hästi piirkonna spetsiifikaid. Meie professionaalne santehnik teab, kuidas töötada Lasnamäe paneelmajadega ja KÜ-dega.</p>
-            <ul class="space-y-2 text-gray-200">
-              <li class="flex items-start"><span class="mr-2">✓</span> Töötame regulaarselt Lasnamäe piirkonnas</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Tuneme hästi Lasnamäe paneelmajade spetsiifikaid</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Koostöö KÜ-dega ja haldusfirmadega</li>
-            </ul>
-          </div>
-          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
-            <h3 class="text-xl font-bold mb-3">Kiire reageerimine</h3>
-            <p class="text-gray-200 mb-3">Lasnamäe piirkonnas jõuame tavaliselt 30-45 minutiga kohale. Meie toruabi meeskond on alati valmis reageerima avarii olukordadele Lasnamäes.</p>
-            <ul class="space-y-2 text-gray-200">
-              <li class="flex items-start"><span class="mr-2">✓</span> Keskmine reageerimisaeg: 35 minutit</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> 24/7 avarii toruabi teenused</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Tasuta väljasõit Tallinna piires</li>
-            </ul>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-bold text-trust-blue mb-3">Professionaalne varustus</h3>
-            <p class="text-gray-700 mb-3">Meie toruabi meeskond kasutab professionaalseid seadmeid Lasnamäe paneelmajade toruabi probleemide lahendamiseks. Meil on kõik vajalikud tööriistad ja seadmed.</p>
-            <ul class="space-y-2 text-gray-700">
-              <li class="flex items-start"><span class="mr-2">•</span> Videouuring seadmed</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Survepesu masinad</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Spetsiaalsed tööriistad vanade torustike jaoks</li>
-            </ul>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-bold text-trust-blue mb-3">Garantii ja usaldus</h3>
-            <p class="text-gray-700 mb-3">Anname 2-aastase garantiid kõigile oma töödele Lasnamäes. Kui probleem tekib garantiiperioodi jooksul, tuleme tasuta parandama.</p>
-            <ul class="space-y-2 text-gray-700">
-              <li class="flex items-start"><span class="mr-2">•</span> 2 aastat garantii kõigile töödele</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Töökindlustus</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Dokumenteeritud tööd</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
-        <h2 class="text-3xl font-bold text-trust-blue mb-6">Наши преимущества работы в Ласнамяэ</h2>
-        <p class="text-gray-700 mb-6">Наша команда специализируется на работе в районе Ласнамяэ. У нас большой опыт решения проблем сантехника в панельных домах Ласнамяэ, и мы знаем, как быстро и эффективно решить все проблемы с сантехником.</p>
-        <div class="grid md:grid-cols-2 gap-6">
-          <div class="bg-gradient-to-br from-trust-blue to-blue-700 text-white rounded-lg p-6">
-            <h3 class="text-xl font-bold mb-3">Местный опыт</h3>
-            <p class="text-gray-200 mb-3">Наш сантехник работает в Ласнамяэ более 10 лет и хорошо знает специфику района. Наш профессиональный сантехник знает, как работать с панельными домами Ласнамяэ и КУ.</p>
-            <ul class="space-y-2 text-gray-200">
-              <li class="flex items-start"><span class="mr-2">✓</span> Регулярно работаем в районе Ласнамяэ</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Хорошо знаем специфику панельных домов Ласнамяэ</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Сотрудничество с КУ и управляющими компаниями</li>
-            </ul>
-          </div>
-          <div class="bg-gradient-to-br from-emergency-red to-red-700 text-white rounded-lg p-6">
-            <h3 class="text-xl font-bold mb-3">Быстрое реагирование</h3>
-            <p class="text-gray-200 mb-3">В районе Ласнамяэ мы обычно приезжаем в течение 30-45 минут. Наша команда всегда готова реагировать на аварийные ситуации в Ласнамяэ.</p>
-            <ul class="space-y-2 text-gray-200">
-              <li class="flex items-start"><span class="mr-2">✓</span> Среднее время реагирования: 35 минут</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Услуги аварийного сантехника 24/7</li>
-              <li class="flex items-start"><span class="mr-2">✓</span> Бесплатный выезд в пределах Таллина</li>
-            </ul>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-bold text-trust-blue mb-3">Профессиональное оборудование</h3>
-            <p class="text-gray-700 mb-3">Наша команда использует профессиональное оборудование для решения проблем сантехника в панельных домах Ласнамяэ. У нас есть все необходимые инструменты и оборудование.</p>
-            <ul class="space-y-2 text-gray-700">
-              <li class="flex items-start"><span class="mr-2">•</span> Оборудование для видеообследования</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Машины для гидродинамической промывки</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Специальные инструменты для старых трубопроводов</li>
-            </ul>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-bold text-trust-blue mb-3">Гарантия и доверие</h3>
-            <p class="text-gray-700 mb-3">Мы предоставляем 2 года гарантии на все наши работы в Ласнамяэ. Если проблема возникнет в течение гарантийного периода, мы приедем и исправим её бесплатно.</p>
-            <ul class="space-y-2 text-gray-700">
-              <li class="flex items-start"><span class="mr-2">•</span> 2 года гарантии на все работы</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Страховка работ</li>
-              <li class="flex items-start"><span class="mr-2">•</span> Документированные работы</li>
-            </ul>
-          </div>
-        </div>
       </section>
 
       <!-- How it works -->
@@ -525,7 +430,7 @@ const lasnamaeFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
-            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele. Meie torumees annab kiire hinnangu nii kanalisatsiooni toruabi kui ka boileri toruabi küsimustes Lasnamäes.</p>
+            <p>Helista ja kirjelda, kas tegu on ummistuse, lekke või boileri rikega — dispetšer saadab Lasnamäe piirkonda tuttava meistri. Enne tööd selgitame hinda ja vältida lammutamist, kui võimalik.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Lasnamäesse</h3>
@@ -547,7 +452,7 @@ const lasnamaeFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
-            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь.</p>
+            <p>Опишите засор, протечку или бойлер — диспетчер отправит мастера, который знает панельные дома Ласнамяэ. Стоимость и план работ согласуем до начала, без лишнего демонтажа.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в Ласнамяэ</h3>
@@ -626,10 +531,8 @@ const lasnamaeFaqEt = [
 
       <!-- CTA -->
       <section class="bg-emergency-red text-white rounded-lg p-8 text-center">
-        <h2 class="text-3xl font-bold mb-4 blog-et">Vaja toruabi Lasnamäes?</h2>
-        <h2 class="text-3xl font-bold mb-4 blog-ru">Нужен торуаби в Ласнамяэ?</h2>
-        <p class="text-lg mb-6 blog-et">Helista kohe – reageerime 30-45 minutiga Lasnamäe piirkonnas!</p>
-        <p class="text-lg mb-6 blog-ru">Позвоните сейчас – реагируем за 30-45 минут в районе Ласнамяэ!</p>
+        <h2 class="text-3xl font-bold mb-4">{currentLang === 'ru' ? 'Нужен торуаби в Ласнамяэ?' : 'Vaja toruabi Lasnamäes?'}</h2>
+        <p class="text-lg mb-6">{currentLang === 'ru' ? 'Позвоните сейчас – реагируем за 30-45 минут в районе Ласнамяэ!' : 'Helista kohe – reageerime 30-45 minutiga Lasnamäe piirkonnas!'}</p>
         <a href={`tel:${phoneLink}`} class="inline-block bg-white text-emergency-red font-bold py-4 px-8 rounded-lg text-xl hover:bg-gray-100">
           <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
         </a>

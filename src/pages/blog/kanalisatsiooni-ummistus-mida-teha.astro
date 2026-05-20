@@ -2,14 +2,18 @@
 export const prerender = true;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LangOnly from '../../components/LangOnly.astro';
+import { pageLang } from '../../utils/page-lang';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Kanalisatsiooni ummistus Tallinnas – toruabi ja ummistuste likvideerimine | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/kanalisatsiooni-ummistus-mida-teha';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['kanalisatsiooni-ummistus-mida-teha'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -48,7 +62,7 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     imageUrl="https://toruabii.ee/photos/maintoruabii.webp"
   />
 <!-- Estonian version -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -89,7 +103,7 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     </div>
   </header>
 
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -131,7 +145,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   </header>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/blog/zasor-kanalizacii-blog-est.webp"
@@ -286,18 +301,24 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Districts Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Toruabi piirkondades</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Торуаби в районах</h2>
-        <p class="text-gray-700 mb-4 blog-et">Me pakume kanalisatsiooni toruabi teenuseid kõigis Tallinna piirkondades:</p>
-        <p class="text-gray-700 mb-4 blog-ru">Мы предоставляем услуги прочистки канализации во всех районах Таллинна:</p>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Toruabi piirkondades</h2>
+        <p class="text-gray-700 mb-4">Me pakume kanalisatsiooni toruabi teenuseid kõigis Tallinna piirkondades:</p>
         <div class="flex flex-wrap gap-4 justify-center">
-          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Lasnamäes</a>
-          <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Ласнамяэ</a>
-          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Mustamäel</a>
-          <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Мустамяэ</a>
-          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Kesklinnas</a>
-          <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в центре</a>
+          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Lasnamäes</a>
+          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Mustamäel</a>
+          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Kesklinnas</a>
         </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Торуаби в районах</h2>
+        <p class="text-gray-700 mb-4">Мы предоставляем услуги прочистки канализации во всех районах Таллинна:</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Ласнамяэ</a>
+          <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Мустамяэ</a>
+          <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в центре</a>
+        </div>
+      </LangOnly>
       </section>
 
       <!-- CTA -->
@@ -318,8 +339,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/blog/zasor-kanalizacii-blog-rus.webp"
@@ -500,46 +523,7 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
   <!-- Language switcher scripts -->
 </BaseLayout>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Канализация' : 'Kanalisatsioon',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/kanalizacija'
-          : 'https://toruabii.ee/blog/kategoria/kanalisatsioon',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Засор канализации - что делать?'
-          : 'Kanalisatsiooni ummistus - mida teha?',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kanalisatsiooni-ummistus-mida-teha' : 'https://toruabii.ee/blog/kanalisatsiooni-ummistus-mida-teha',
-      },
-    ],
-  })}
-/>

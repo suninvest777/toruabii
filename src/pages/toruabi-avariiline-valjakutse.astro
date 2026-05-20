@@ -1,12 +1,10 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import { ruPath } from '../utils/i18n-paths';
 import { serviceLandingBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
@@ -126,6 +124,9 @@ const plumbingLd = {
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${pageCanonicalUrl}#faq`,
+  url: pageCanonicalUrl,
+  inLanguage: currentLang,
   mainEntity: faqForLd.map((item) => ({
     '@type': 'Question',
     name: item.q,
@@ -138,9 +139,8 @@ const faqLd = {
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical={`${siteUrl}${pagePath}`}
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? landing.keywordsRu : landing.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -159,19 +159,16 @@ const faqLd = {
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">
-        Toruabi avarii väljakutse 24/7 – avarii toruabi Tallinnas ja Harjumaal
-      </h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">
-        Торуаби аварийный выезд 24/7 – аварийная сантехника в Таллине и Харьюмаа
-      </h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">
-        Kui vajad kiiret toruabi väljakutset öösel või päeval, saadab meeskond meistri kohale. Tallinnas ja Harjumaal hindame lekke, purunemise või ummistuse ulatuse enne töö algust ja pakume lahendust.
-      </p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">
-        Для срочного выезда торуаби днём или ночью бригада приедет на объект. В Таллине и Харьюмаа оценим протечку, разрыв или засор до начала работ и предложим решение.
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? landing.h1Ru : landing.h1Et}</h1>
+      <p class="text-xl text-gray-200 mb-6">
+        {currentLang === 'ru'
+          ? 'Для срочного выезда торуаби днём или ночью бригада приедет на объект. В Таллине и Харьюмаа оценим протечку, разрыв или засор до начала работ и предложим решение.'
+          : 'Kui vajad kiiret toruabi väljakutset öösel või päeval, saadab meeskond meistri kohale. Tallinnas ja Harjumaal hindame lekke, purunemise või ummistuse ulatuse enne töö algust ja pakume lahendust.'}
       </p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}

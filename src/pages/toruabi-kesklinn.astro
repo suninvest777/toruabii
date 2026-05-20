@@ -1,14 +1,13 @@
 ---
-export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
-import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { tallinnDistrictBreadcrumbJsonLd, tallinnDistrictPageUrl } from '../utils/district-tallinn-jsonld';
+import { pageLang } from '../utils/page-lang';
 import {
   getTallinnDistrict,
   tallinnDistrictDescription,
@@ -23,7 +22,7 @@ const districtSeo = getTallinnDistrict('kesklinn');
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt = tallinnDistrictTitle('kesklinn', 'et');
 const descEt = tallinnDistrictDescription('kesklinn', 'et');
@@ -34,6 +33,7 @@ const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
 
 const districtPath = '/toruabi-kesklinn';
+const pageCanonicalUrl = tallinnDistrictPageUrl(districtPath, currentLang);
 const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
 
 const kesklinnFaqEt = [
@@ -60,9 +60,8 @@ const kesklinnFaqEt = [
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical="https://toruabii.ee/toruabi-kesklinn"
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -105,12 +104,13 @@ const kesklinnFaqEt = [
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('kesklinn', 'et')}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('kesklinn', 'ru')}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('kesklinn', 'et')}</p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('kesklinn', 'ru')}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? tallinnDistrictH1('kesklinn', 'ru') : tallinnDistrictH1('kesklinn', 'et')}</h1>
+      <p class="text-xl text-gray-200 mb-6">{currentLang === 'ru' ? tallinnDistrictIntro('kesklinn', 'ru') : tallinnDistrictIntro('kesklinn', 'et')}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>
@@ -188,7 +188,7 @@ const kesklinnFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Kesklinnas kohvikutele ja restoranidele</h3>
-            <p class="text-gray-700 mb-3">Kesklinnas on palju kohvikuid ja restorane, kus kanalisatsioonisüsteemid töötavad intensiivselt. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset kanalisatsiooni toruabi ja hooldust kommertsobjektidele. Meie professionaalne santehnik ja avarii santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Kesklinnas.</p>
+            <p class="text-gray-700 mb-3">Rotermanni, Telliskivi ja Vanalinna köögid vajavad sageli rasvapüüduri puhastust ja kiiret ummistuse likvideerimist enne lahtiolekut. Töötame öösiti ja nädalavahetusel, et klientide voog ei katkeks.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Kanalisatsiooni toruabi kohvikutes ja restoranides</li>
               <li>Rasvapüüduri puhastamine</li>
@@ -198,7 +198,7 @@ const kesklinnFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Avarii toruabi Kesklinnas vanades hoonetes</h3>
-            <p class="text-gray-700 mb-3">Kesklinnas on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme vanades torustikes. Pakume professionaalset avarii toruabi, kanalisatsiooni toruabi ja boileri toruabi teenuseid Kesklinnas. Meie professionaalne santehnik on spetsialiseerunud töötamisele Kesklinnas vanades hoonetes.</p>
+            <p class="text-gray-700 mb-3">Kadrioru ja Uue Maailma kivimajades on kitsad trepid ja vanad tsingitud torud — lekkeid parandame minimaalse avamisega. Soovitame videouuringut enne suuremaid renoveerimisi, et hoida remondikulusid kontrolli all.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Kanalisatsiooni toruabi vanades hoonetes</li>
               <li>Küttesüsteemi toruabi ja renoveerimine</li>
@@ -215,7 +215,7 @@ const kesklinnFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби для кафе и ресторанов в центре</h3>
-            <p class="text-gray-700 mb-3">В центре много кафе и ресторанов, где канализационные системы работают интенсивно. Наша команда предлагает профессиональную прочистку канализации и обслуживание коммерческих объектов.</p>
+            <p class="text-gray-700 mb-3">Кафе и рестораны в Ротерманни и Старом городе часто «встают» из‑за жира в трассах. Чистим жироуловители и устраняем засоры до открытия — в том числе ночью и в выходные.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Прочистка канализации в кафе и ресторанах</li>
               <li>Очистка жироуловителей</li>
@@ -225,7 +225,7 @@ const kesklinnFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Аварийная сантехника в старых зданиях центра</h3>
-            <p class="text-gray-700 mb-3">В центре много старых зданий, которые требуют особого ухода. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в старых коммуникациях.</p>
+            <p class="text-gray-700 mb-3">В каменных домах Кадриорга и Уус Маайм узкие лестницы и старые трубы — устраняем протечки с минимальным вскрытием. Перед капремонтом делаем видеодиагностику, чтобы не переделывать лишнее.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Прочистка канализации в старых зданиях</li>
               <li>Обслуживание и реконструкция систем отопления</li>
@@ -245,7 +245,7 @@ const kesklinnFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Tõnu R.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Suurepärane toruabi Kesklinnas! Restorani kanalisatsiooni ummistus lahendati kiiresti ja professionaalselt. Soovitan!"</p>
+            <p class="text-gray-700 mb-2">"Telliskivi kohviku rasvapüüduri puhastus ja trassi loputus tehti enne hommikust lahtiolekut — köök sai tööle ilma kaotamata üht müügipäeva."</p>
             <p class="text-sm text-gray-500">20. detsember 2025</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
@@ -253,7 +253,7 @@ const kesklinnFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Liis K.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Vanas hoones Kesklinnas tehti torustike remont väga hästi. Meister oli professionaalne ja selgitas kõik selgelt. Garantii 2 aastat annab rahu."</p>
+            <p class="text-gray-700 mb-2">"Uue Maailma korteri küttekollektori leke parandati samal õhtul; meister selgitas, miks vesi tekkis ja mida jälgida talvel."</p>
             <p class="text-sm text-gray-500">30. november 2025</p>
           </div>
         </div>
@@ -268,7 +268,7 @@ const kesklinnFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Тыну Р.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Отличная торуаби в центре! Засор канализации в ресторане решили быстро и профессионально. Рекомендую!"</p>
+            <p class="text-gray-700 mb-2">"В кафе на Телискиви промыли жироуловитель и трассу до открытия — кухня заработала без потери смены."</p>
             <p class="text-sm text-gray-500">20 декабря 2025</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
@@ -276,7 +276,7 @@ const kesklinnFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Лиис К.</span>
             </div>
-            <p class="text-gray-700 mb-2">"В старом здании в центре ремонт трубопроводов сделали очень хорошо. Мастер был профессионален и всё объяснил. Гарантия 2 года даёт спокойствие."</p>
+            <p class="text-gray-700 mb-2">"В квартире в Уус Маайм устранили течь на коллекторе отопления в тот же вечер — всё объяснили по-русски, гарантия 2 года."</p>
             <p class="text-sm text-gray-500">30 ноября 2025</p>
           </div>
         </div>
@@ -317,10 +317,10 @@ const kesklinnFaqEt = [
           <h3 class="text-xl font-bold mb-3">Toruabi ka teistes Tallinna piirkondades</h3>
           <p class="text-gray-200 mb-3">Teenindame ka teisi Tallinna piirkondi:</p>
           <ul class="space-y-2">
-            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Toruabi Lasnamäes</a> – kiire avarii toruabi ja kanalisatsiooni toruabi Lasnamäe piirkonnas</li>
-            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Toruabi Mustamäel</a> – professionaalne avarii toruabi Mustamäe piirkonnas</li>
-            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Toruabi Piritas</a> – professionaalne avarii toruabi Pirita piirkonnas 24/7</li>
-            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Toruabi Viimsis</a> – professionaalne avarii toruabi Viimsi piirkonnas 24/7</li>
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">toruabi lasnamäe</a> – avarii toruabi ja ummistuste likvideerimine Lasnamäes</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">toruabi mustamäe</a> – toruabi 24/7 Mustamäel</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">toruabi pirita</a> – kanalisatsiooni toruabi Piritas</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">toruabi viimsi</a> – toruabi harjumaa rannikul</li>
           </ul>
         </div>
       </section>
@@ -358,10 +358,10 @@ const kesklinnFaqEt = [
           <h3 class="text-xl font-bold mb-3">Торуаби также в других районах Таллина</h3>
           <p class="text-gray-200 mb-3">Мы также обслуживаем другие районы Таллина:</p>
           <ul class="space-y-2">
-            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Ласнамяэ</a> – быстрая аварийная сантехника и прочистка канализации в районе Ласнамяэ</li>
-            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">Торуаби в Мустамяэ</a> – профессиональная аварийная сантехника в районе Мустамяэ</li>
-            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">Торуаби в Пирита</a> – профессиональная аварийная сантехника в районе Пирита 24/7</li>
-            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">Торуаби в Виймси</a> – профессиональная аварийная сантехника в районе Виймси 24/7</li>
+            <li><a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-semibold">торуаби ласнамяэ</a> – аварийный торуаби и устранение засоров</li>
+            <li><a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-semibold">торуаби мустамяэ</a> – торуаби 24/7 в Мустамяэ</li>
+            <li><a href="/toruabi-pirita" class="text-emergency-red hover:underline font-semibold">торуаби пирита</a> – прочистка канализации в Пирита</li>
+            <li><a href="/toruabi-viimsi" class="text-emergency-red hover:underline font-semibold">торуаби виймси</a> – торуаби харьюмаа на побережье</li>
           </ul>
         </div>
       </section>
@@ -369,24 +369,24 @@ const kesklinnFaqEt = [
       <!-- Typical Problems -->
       <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Kesklinnas</h2>
-        <p class="text-gray-700 mb-6">Kesklinnas on palju kohvikuid ja restorane, kus kanalisatsioonisüsteemid töötavad intensiivselt. Samuti on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset kanalisatsiooni toruabi ja hooldust kommertsobjektidele. Meie professionaalne santehnik ja avarii santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Kesklinnas.</p>
+        <p class="text-gray-700 mb-6">Kesklinnas korduvad köögitorude ummistused, rasvakogunemine restoranides ja vanade kivimajade lekked kitsastes trepikodades. Lahendame need kiiresti, arvestades parkimist ja naabrite müra.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused restoranides</h3>
-            <p class="text-gray-700 mb-3">Kesklinnas on palju restorane ja kohvikuid, kus kanalisatsioonisüsteemid töötavad intensiivselt. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees tegeleb kanalisatsiooni toruabi ja avarii toruabi teenustega Kesklinnas.</p>
+            <p class="text-gray-700 mb-3">Intensiivne köögikoormus täidab rasvaga horisontaalseid trasse — puhastame püüduri, survepesu ja mehaanilise läbipääsu kombineeritult, et vältida korduvaid ummistusi nädalavahetusel.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Vanade hoonete torustike remont</h3>
-            <p class="text-gray-700 mb-3">Kesklinnas on palju vanu hooneteid, mis vajavad erilist hooldust. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme vanades torustikes. Pakume professionaalset avarii toruabi, kanalisatsiooni toruabi ja boileri toruabi teenuseid Kesklinnas. Meie professionaalne santehnik on spetsialiseerunud töötamisele Kesklinnas vanades hoonetes.</p>
+            <p class="text-gray-700 mb-3">Vanalinna ja Kalamaja majades lekivad sageli külm- ja soojatoru ühendused — vahetame lõikeid või ühendusdetailid, dokumenteerime töö fotodega korteriühistule.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Rasvapüüduri puhastus</h3>
-            <p class="text-gray-700 mb-3">Restoranides ja kohvikutes Kesklinnas on vaja regulaarset rasvapüüduri puhastust. Meie toruabi meeskond pakub professionaalset rasvapüüduri puhastust ja trasside survepesu. Meie kogenud torumees tegeleb rasvapüüduri puhastusega Kesklinnas.</p>
+            <p class="text-gray-700 mb-3">Hoolduslepingud kohvikutele: regulaarne püüduri tühjendus ja trassi loputus vähendab avariikõnede arvu enne hooaega.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kommertsobjektide hooldus</h3>
-            <p class="text-gray-700 mb-3">Kesklinnas pakume ka hoolduslepinguid kommertsobjektidele. Meie toruabi meeskond tegeleb regulaarse hooldusega restoranide, kohvikute ja kontorite torustike jaoks. Meie professionaalne santehnik tegeleb kommertsobjektide toruabi teenustega Kesklinnas.</p>
+            <p class="text-gray-700 mb-3">Kontorite ja büroode veesüsteemide kontroll — lekete ennetus, segistite remont ja dokumenteeritud akt haldajale.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -397,24 +397,24 @@ const kesklinnFaqEt = [
 
       <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Кесклинне</h2>
-        <p class="text-gray-700 mb-6">В центре много кафе и ресторанов, где канализационные системы работают интенсивно. Также много старых зданий, требующих особого обслуживания. Наша команда предоставляет профессиональные услуги по канализации и обслуживанию коммерческих объектов.</p>
+        <p class="text-gray-700 mb-6">В центре часты засоры кухонных трасс, жир в ресторанах и протечки в старых каменных домах с узкими лестницами. Работаем быстро, учитывая парковку и шум для соседей.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Засоры канализации в ресторанах</h3>
-            <p class="text-gray-700 mb-3">В центре много ресторанов и кафе, где канализационные системы работают интенсивно. Наша команда использует профессиональное оборудование для устранения засоров.</p>
+            <p class="text-gray-700 mb-3">Жир забивает горизонтальные участки — комбинируем очистку жироуловителя, гидропромывку и механический проход, чтобы избежать повторов в выходные.</p>
             <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Засор канализации – что делать?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Ремонт трубопроводов в старых зданиях</h3>
-            <p class="text-gray-700 mb-3">В центре много старых зданий, требующих особого обслуживания. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в старых коммуникациях.</p>
+            <p class="text-gray-700 mb-3">В Старом городе и Каламая часто текут стыки холодной и горячей воды — меняем участки и фиксируем работы фото для КУ.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Очистка жироуловителей</h3>
-            <p class="text-gray-700 mb-3">В ресторанах и кафе в центре требуется регулярная очистка жироуловителей. Наша команда предоставляет профессиональную очистку жироуловителей и гидродинамическую промывку трасс.</p>
+            <p class="text-gray-700 mb-3">Договоры на обслуживание кафе: регулярная очистка уловителя и промывка трассы снижают аварийные вызовы перед сезоном.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание коммерческих объектов</h3>
-            <p class="text-gray-700 mb-3">В центре мы также предлагаем договоры на обслуживание коммерческих объектов. Наша команда занимается регулярным обслуживанием трубопроводов ресторанов, кафе и офисов.</p>
+            <p class="text-gray-700 mb-3">Профилактика для офисов: проверка узлов, мелкий ремонт смесителей, акт для управляющей компании.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -480,7 +480,7 @@ const kesklinnFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
-            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele.</p>
+            <p>Kirjelda, kas tegu on köögitoru, rasvapüüduri või vanema majaga seotud lekkega — saadame Kesklinna tundva meistri, kes arvestab parkimist ja ligipääsu.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Kesklinnas</h3>
@@ -488,7 +488,7 @@ const kesklinnFaqEt = [
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">3. Kohapealne diagnostika</h3>
-            <p>Meister kontrollib probleemi, selgitab lahenduse variandid ja annab täpse hinnangu.</p>
+            <p>Kohapeal teeme videouuringu või testi, kui vaja, ja pakume lahenduse ilma üllatusliku hinnata.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">4. Professionaalne remont</h3>
@@ -502,7 +502,7 @@ const kesklinnFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
-            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь.</p>
+            <p>Уточните: кухонная трасса, жироуловитель или протечка в старом доме — отправим мастера, знающего центр и парковку.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в центр</h3>
@@ -510,7 +510,7 @@ const kesklinnFaqEt = [
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">3. Диагностика на месте</h3>
-            <p>Мастер проверит проблему, объяснит варианты решения и даст точную оценку стоимости.</p>
+            <p>На месте при необходимости делаем видеодиагностику и согласуем цену до начала работ.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">4. Профессиональный ремонт</h3>

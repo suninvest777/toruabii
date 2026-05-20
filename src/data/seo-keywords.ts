@@ -80,9 +80,9 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     descriptionRu:
       'Торуаби Кесклинн: аварийная сантехника и канализация в центре Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
     introEt:
-      'Toruabi Kesklinn on mõeldud vanade kivimajade, kontorite ja restoranide torustikele, kus vajad kiiret meistrit. Brigaad tunneb kesklinna parkimist ja ligipääsu, et avarii toruabi jõuaks objektile ilma viivitusteta. Helista +372 5181 112, kui vajad toruabi Kesklinnas ööpäevaringselt.',
+      'Toruabi Kesklinn on mõeldud vanade kivimajade, kontorite ja restoranide torustikele, kus vajad kiiret meistrit. Brigaad tunneb kesklinna parkimist ja ligipääsu, et avarii toruabi jõuaks objektile ilma viivitusteta. Kui otsid toruabi tallinn kesklinna piirkonnas, jõuame tavaliselt 20–40 minutiga. Helista +372 5181 112, kui vajad toruabi Kesklinnas ööpäevaringselt.',
     introRu:
-      'Торуаби Кесклинн — для старого фонда, офисов и HoReCa, где важна быстрая реакция. Бригада знает парковку и доступ в центре, чтобы аварийный выезд не задерживался. Звоните +372 5181 112 для торуаби в Кесклинне круглосуточно.',
+      'Торуаби Кесклинн — для старого фонда, офисов и HoReCa, где важна быстрая реакция. Бригада знает парковку и доступ в центре, чтобы аварийный выезд не задерживался. Для торуаби таллин в Кесклинне обычно приезжаем за 20–40 минут. Звоните +372 5181 112 для торуаби в Кесклинне круглосуточно.',
     keywordsEt:
       'toruabi, toruabi kesklinn, toruabi tallinn, avarii toruabi, kanalisatsioon, toruabi 24/7',
     keywordsRu:
@@ -102,9 +102,9 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     descriptionRu:
       'Торуаби Ласнамяэ: канализация в панельных домах и аварийный выезд в Таллине 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
     introEt:
-      'Toruabi Lasnamäe katab suurima linnaosa, kus 1970.–1980. aastate paneelmajade torustikud vajavad sageli survepesu ja kiiret ummistuste likvideerimist. Meeskond tunneb KÜ-de ja trepikodade ligipääsu, et toruabi jõuaks Priisle, Laagna või Ülemiste kandis kiiresti kohale. Helista +372 5181 112 — toruabi Lasnamäes on saadaval ööpäevaringselt.',
+      'Toruabi Lasnamäe katab suurima linnaosa, kus 1970.–1980. aastate paneelmajade torustikud vajavad sageli survepesu ja kiiret ummistuste likvideerimist. Meeskond tunneb KÜ-de ja trepikodade ligipääsu, et toruabi jõuaks Priisle, Laagna või Ülemiste kandis kiiresti kohale. Toruabi lasnamäe piirkonnas on meie brigaad sageli juba teel 30–45 minutiga pärast kõnet. Helista +372 5181 112 — toruabi Lasnamäes on saadaval ööpäevaringselt.',
     introRu:
-      'Торуаби Ласнамяэ охватывает крупнейший район с панельными домами 1970–1980-х, где часто нужна промывка и срочная прочистка. Бригада знает подъезды и КУ, чтобы быстро попасть в Прийсле, Лаагна или Юлемисте. Звоните +372 5181 112 — торуаби в Ласнамяэ доступен 24/7.',
+      'Торуаби Ласнамяэ охватывает крупнейший район с панельными домами 1970–1980-х, где часто нужна промывка и срочная прочистка. Бригада знает подъезды и КУ, чтобы быстро попасть в Прийсле, Лаагна или Юлемисте. В районе Ласнамяэ бригада обычно выезжает в течение 30–45 минут после звонка. Звоните +372 5181 112 — торуаби в Ласнамяэ доступен 24/7.',
     keywordsEt:
       'toruabi, toruabi lasnamäe, toruabi lasnamae, toruabi tallinn, avarii toruabi, kanalisatsioon',
     keywordsRu:
@@ -124,9 +124,9 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     descriptionRu:
       'Торуаби Мустамяэ: аварийная сантехника и бойлер на западе Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
     introEt:
-      'Toruabi Mustamäe sobib nii uute korterelamute kui vanemate mikrorajoonide klientidele, kus kütte- ja kanalisatsioonitööd kattuvad. Meistrid teavad Mustamäe teeolusid ja parkimist, et toruabi jõuaks Sääse, Hiiu või Mäeküla kandis tavaliselt 30–45 minutiga. Avarii toruabi Mustamäel: +372 5181 112.',
+      'Toruabi Mustamäe sobib nii uute korterelamute kui vanemate mikrorajoonide klientidele, kus kütte- ja kanalisatsioonitööd kattuvad. Meistrid teavad Mustamäe teeolusid ja parkimist, et toruabi jõuaks Sääse, Hiiu või Mäeküla kandis tavaliselt 30–45 minutiga. Toruabi mustamäe klientidele pakume sama 24/7 avarii toruabi nagu kogu Tallinnas. Avarii toruabi Mustamäel: +372 5181 112.',
     introRu:
-      'Торуаби Мустамяэ подходит для новостроек и старых микрорайонов, где пересекаются отопление и канализация. Мастера знают дороги и парковку, чтобы приехать в Сяэсе, Хийу или Мяэкюла за 30–45 минут. Аварийный торуаби в Мустамяэ: +372 5181 112.',
+      'Торуаби Мустамяэ подходит для новостроек и старых микрорайонов, где пересекаются отопление и канализация. Мастера знают дороги и парковку, чтобы приехать в Сяэсе, Хийу или Мяэкюла за 30–45 минут. В Мустамяэ доступен тот же аварийный торуаби 24/7, что и по всему Таллину. Аварийный торуаби в Мустамяэ: +372 5181 112.',
     keywordsEt:
       'toruabi, toruabi mustamäe, toruabi mustamae, toruabi tallinn, avarii toruabi, santehnik',
     keywordsRu:
@@ -146,9 +146,9 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     descriptionRu:
       'Торуаби Пирита: частные дома, квартиры и канализация у моря 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
     introEt:
-      'Toruabi Pirita hõlmab mereranna eramuid, uusi elamurajoonid ja vanemaid kortermaju, kus niiskus ja hooajaline kasutus koormavad torustikku. Pakume kanalisatsiooni toruabi, boileri hooldust ja lekete likvideerimist Kose, Merivälja ja Pirita tee kandis. Toruabi Piritas ööpäevaringselt: +372 5181 112.',
+      'Toruabi Pirita hõlmab mereranna eramuid, uusi elamurajoonid ja vanemaid kortermaju, kus niiskus ja hooajaline kasutus koormavad torustikku. Pakume kanalisatsiooni toruabi, boileri hooldust ja lekete likvideerimist Kose, Merivälja ja Pirita tee kandis. Toruabi pirita rannikul arvestab niiskust ja hooajalist koormust, et väljasõit oleks õigeaegne. Toruabi Piritas ööpäevaringselt: +372 5181 112.',
     introRu:
-      'Торуаби Пирита — для домов у моря, новых кварталов и старых МКД, где влажность и сезон нагружают трубы. Промывка, бойлер и протечки в Косе, Меривялья и на Пирита tee. Торуаби в Пирита 24/7: +372 5181 112.',
+      'Торуаби Пирита — для домов у моря, новых кварталов и старых МКД, где влажность и сезон нагружают трубы. Промывка, бойлер и протечки в Косе, Меривялья и на Пирита tee. На побережье Пирита учитываем влажность, чтобы выезд торуаби не затягивался. Торуаби в Пирита 24/7: +372 5181 112.',
     keywordsEt:
       'toruabi, toruabi pirita, toruabi tallinn, avarii toruabi, kanalisatsiooni toruabi',
     keywordsRu:
@@ -168,9 +168,9 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     descriptionRu:
       'Торуаби Виймси: частные дома и квартиры на побережье Харьюмаа, аварийный выезд 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
     introEt:
-      'Viimsi valla ja Tallinna piiriga piirnevates korterites tegeleme sageli boileri hoolduse ja kanalisatsiooni survepesuga. Rannikul arvestame niiskust ja hooajalist koormust, et väljasõit Haabneeme või Randvere suunas oleks õigeaegne. Toruabi Viimsis ja Harjumaal: +372 5181 112.',
+      'Toruabi Viimsi katab Viimsi valla ja Tallinna piiriga piirnevad korterid, kus vajatakse sageli boileri hooldust ja kanalisatsiooni survepesu. Rannikul arvestame niiskust ja hooajalist koormust, et väljasõit Haabneeme või Randvere suunas oleks õigeaegne. Toruabi viimsi piirkonnas ühendab kiire avarii toruabi ja toruabi harjumaa väljasõidud. Toruabi Viimsis ja Harjumaal: +372 5181 112.',
     introRu:
-      'В Виймси и у границы Таллина часто обслуживаем бойлеры и делаем гидропромывку канализации. На побережье учитываем влажность и сезонную нагрузку, чтобы выезд в Хаабнееме или Рандвере не затягивался. Торуаби в Виймси и Харьюмаа: +372 5181 112.',
+      'Торуаби Виймси обслуживает Виймси и квартиры у границы с Таллином — бойлеры и гидропромывка канализации. На побережье учитываем влажность и сезонную нагрузку, чтобы выезд в Хаабнееме или Рандвере не затягивался. В Виймси доступен аварийный торуаби и выезд по всему Харьюмаа. Торуаби в Виймси и Харьюмаа: +372 5181 112.',
     keywordsEt:
       'toruabi, toruabi viimsi, toruabi tallinn, avarii toruabi, kanalisatsiooni toruabi, harjumaa',
     keywordsRu:
@@ -212,8 +212,8 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
   'ummistuste-likvideerimine': {
     id: 'ummistuste-likvideerimine',
     path: '/toruabi-ummistuste-likvideerimine',
-    titleEt: 'Ummistuste likvideerimine 24/7 | Toruabi ummistus Tallinn | toruabii.ee',
-    titleRu: 'Устранение засоров 24/7 | Прочистка канализации Таллин | toruabii.ee',
+    titleEt: 'Toruabi ummistuste likvideerimine 24/7 | Tallinn | toruabii.ee',
+    titleRu: 'Торуаби устранение засоров 24/7 | Таллин | toruabii.ee',
     descriptionEt:
       'Toruabi ummistuste likvideerimine ja kanalisatsiooni ummistuse lahendamine Tallinnas ja Harjumaal. Toru ummistus Tallinn – kiire toruabi 24/7, väljasõit 0 €. +372 5181 112.',
     descriptionRu:
@@ -222,8 +222,8 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
       'ummistuste likvideerimine, toruabi ummistuste likvideerimine, kanalisatsiooni ummistus, toru ummistus tallinn, toruabi tallinn, toruabi 24/7',
     keywordsRu:
       'устранение засоров, прочистка засоров, прочистка канализации, торуаби таллин, засор канализации, торуаби 24/7',
-    h1Et: 'Ummistuste likvideerimine – toruabi kanalisatsiooni ummistusele Tallinnas',
-    h1Ru: 'Устранение засоров – прочистка канализации в Таллине и Харьюмаа',
+    h1Et: 'Toruabi ummistuste likvideerimine 24/7 – Tallinn ja Harjumaa',
+    h1Ru: 'Торуаби устранение засоров 24/7 – Таллин и Харьюмаа',
   },
   'kanalisatsiooni-survepesu': {
     id: 'kanalisatsiooni-survepesu',
@@ -307,20 +307,20 @@ export function seoHomeKeywords(lang: Lang): string {
   return lang === 'ru' ? PRIMARY_KEYWORDS_RU.join(', ') : PRIMARY_KEYWORDS_ET.join(', ');
 }
 
-/** H1 for ET/RU homepage hero */
+/** H1 for ET/RU homepage hero (visible only; title tag uses seoHomeTitle) */
 export function seoHomeH1(lang: Lang): string {
   if (lang === 'ru') {
-    return 'Торуаби 24/7 – сантехник tallinn и аварийный торуаби в Харьюмаа';
+    return 'Торуаби поддерживает технические системы в порядке';
   }
-  return 'Toruabi 24/7 – avarii toruabi Tallinnas ja toruabi Harjumaa';
+  return 'Toruabi hoiab tehnosüsteemid korras';
 }
 
-/** Default inner-page title: "{page} | Toruabi Tallinn | toruabii.ee" */
+/** Inner-page title: primary keyword first — "Toruabi {page} | 24/7 | toruabii.ee" */
 export function seoInnerTitle(pageLabel: string, lang: Lang): string {
   if (lang === 'ru') {
-    return `${pageLabel} | Торуаби Таллин | ${BRAND}`;
+    return `Торуаби ${pageLabel} | 24/7 | ${BRAND}`;
   }
-  return `${pageLabel} | Toruabi Tallinn | ${BRAND}`;
+  return `Toruabi ${pageLabel} | 24/7 | ${BRAND}`;
 }
 
 /** Default inner-page meta description */
@@ -355,7 +355,49 @@ export function tallinnDistrictDescription(id: TallinnDistrictId, lang: Lang): s
 
 export function tallinnDistrictH1(id: TallinnDistrictId, lang: Lang): string {
   const d = getTallinnDistrict(id);
-  return lang === 'ru' ? `Торуаби ${d.nameRu}` : `Toruabi ${d.nameEt}`;
+  return lang === 'ru'
+    ? `Торуаби ${d.nameRu} 24/7 – аварийный торуаби в Таллине`
+    : `Toruabi ${d.nameEt} 24/7 – avarii toruabi Tallinnas`;
+}
+
+/** Blog index title/description */
+export function seoBlogIndexTitle(lang: Lang): string {
+  if (lang === 'ru') {
+    return `Торуаби блог | 24/7 | ${BRAND}`;
+  }
+  return `Toruabi blogi | 24/7 | ${BRAND}`;
+}
+
+export function seoBlogIndexDescription(lang: Lang): string {
+  if (lang === 'ru') {
+    return `Торуаби блог: советы по торуаби, аварийному выезду, засорам и отоплению в Таллине и Харьюмаа. ${PHONE_DISPLAY}`;
+  }
+  return `Toruabi blogi: nõuanded toruabi, avarii toruabi, ummistuste likvideerimise ja kütte hoolduse kohta Tallinnas ja Harjumaal. ${PHONE_DISPLAY}`;
+}
+
+/** Blog post title: "Toruabi blogi: {topic} | toruabii.ee" */
+export function seoBlogPostTitle(topic: string, lang: Lang): string {
+  if (lang === 'ru') {
+    return `Торуаби: ${topic} | ${BRAND}`;
+  }
+  return `Toruabi: ${topic} | ${BRAND}`;
+}
+
+/** Blog post meta description */
+export function seoBlogPostDescription(topic: string, lang: Lang, extra?: string): string {
+  const tail = extra ? ` ${extra}` : '';
+  if (lang === 'ru') {
+    return `Торуаби ${topic} в Таллине и Харьюмаа.${tail} Аварийный выезд 24/7. ${PHONE_DISPLAY}`;
+  }
+  return `Toruabi ${topic} Tallinnas ja Harjumaal.${tail} Avarii toruabi 24/7. ${PHONE_DISPLAY}`;
+}
+
+/** Municipality H1: "Toruabi Maardu 24/7 – avarii toruabi Harjumaa" */
+export function municipalityH1(locality: string, lang: Lang): string {
+  if (lang === 'ru') {
+    return `Торуаби ${locality} 24/7 – аварийный торуаби в Харьюмаа`;
+  }
+  return `Toruabi ${locality} 24/7 – avarii toruabi Harjumaa`;
 }
 
 /** 2–3 unique sentences for district hero intro */

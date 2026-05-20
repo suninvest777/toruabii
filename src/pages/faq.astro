@@ -1,11 +1,9 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import { homeHref, ruPath } from '../utils/i18n-paths';
 import { faqJsonLdMainEntityEt, faqJsonLdMainEntityRu } from '../data/faq-jsonld';
 import { seoInnerDescription, seoInnerTitle } from '../data/seo-keywords';
@@ -17,13 +15,13 @@ const phoneLink = phoneNumber.replace(/\s/g, '');
 
 const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
 
-const titleEt = seoInnerTitle('Toruabi KKK', 'et');
+const titleEt = seoInnerTitle('KKK', 'et');
 const descEt = seoInnerDescription({
   pageLabel: 'Toruabi KKK',
   lang: 'et',
   extra: 'Vastused hindade, garantii, toruabi 24/7 ja avarii toruabi reageerimisaja kohta.',
 });
-const titleRu = seoInnerTitle('Торуаби FAQ', 'ru');
+const titleRu = seoInnerTitle('FAQ', 'ru');
 const descRu = seoInnerDescription({
   pageLabel: 'FAQ по торуаби',
   lang: 'ru',
@@ -32,11 +30,6 @@ const descRu = seoInnerDescription({
 
 const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
-const keywordsEt =
-  'toruabi, ummistuste likvideerimine, toruabi KKK, toruabi küsimused, avarii toruabi, toruabi hinnad, toruabi Tallinnas';
-const keywordsRu =
-  'торуаби, устранение засоров, торуаби FAQ, торуаби Таллинн, аварийная сантехника, торуаби цены, сантехник Харьюмаа';
-
 const faqPath = '/faq';
 const canonicalUrl =
   currentLang === 'ru' ? `${siteUrl}${ruPath(faqPath)}` : `${siteUrl}${faqPath}`;
@@ -46,11 +39,22 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  keywords={currentLang === 'ru' ? keywordsRu : keywordsEt}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/toruabii.webp"
 >
+  <script
+    type="application/ld+json"
+    slot="head"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${canonicalUrl}#faq`,
+      url: canonicalUrl,
+      inLanguage: currentLang,
+      mainEntity: currentLang === 'ru' ? faqJsonLdMainEntityRu : faqJsonLdMainEntityEt,
+    })}
+  />
 <!-- Header -->
   <header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
     <div class="max-w-6xl mx-auto">
@@ -452,15 +456,3 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
 
   <!-- Scripts -->
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    '@id': `${canonicalUrl}#faq`,
-    url: canonicalUrl,
-    inLanguage: currentLang,
-    mainEntity: currentLang === 'ru' ? faqJsonLdMainEntityRu : faqJsonLdMainEntityEt,
-  })}
-/>

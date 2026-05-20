@@ -1,5 +1,4 @@
 ---
-import NavGoogleReviewLink from './NavGoogleReviewLink.astro';
 import { HOME_SERVICES } from '../data/home-services';
 import { SITE_IDENTITY } from '../data/site-identity';
 import { alternateLangPath, ruPath } from '../utils/i18n-paths';
@@ -261,7 +260,6 @@ const langSwitchAria = lang === 'ru' ? 'Vaheta eesti keelele' : 'Переклю�
               <span class="home-ssr-et">Blogi</span>
               <span class="home-ssr-ru">Блог</span>
             </a>
-            <NavGoogleReviewLink variant="desktop" homeSsr homeNavInline />
             <a href="#kontaktivorm" class="home-header-nav-link px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">
               <span class="home-ssr-et">Kontakt</span>
               <span class="home-ssr-ru">Контакты</span>
@@ -275,7 +273,6 @@ const langSwitchAria = lang === 'ru' ? 'Vaheta eesti keelele' : 'Переклю�
             <a href="/ru/faq" class="home-header-nav-link blog-ru hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">FAQ</a>
             <a href="/blog" class="home-header-nav-link blog-et hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="blog">Blogi</a>
             <a href="/ru/blog" class="home-header-nav-link blog-ru hidden xl:inline-block px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Блог</a>
-            <NavGoogleReviewLink variant="desktop" />
             <a href="/#piirkonnad" class="home-header-nav-link blog-et px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="areas">Piirkonnad</a>
             <a href="/ru#piirkonnad" class="home-header-nav-link blog-ru px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors">Районы</a>
             <a href="/#kontakt" class="home-header-nav-link blog-et px-3 lg:px-4 py-2 hover:text-brand-blue transition-colors" data-lang="contact">Kontakt</a>
@@ -391,7 +388,6 @@ const langSwitchAria = lang === 'ru' ? 'Vaheta eesti keelele' : 'Переклю�
             <span class="home-ssr-ru">Блог</span>
           </a>
         </li>
-        <NavGoogleReviewLink variant="mobile" homeSsr />
         <li>
           <a href="#kontaktivorm" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">
             <span class="home-ssr-et">Kontakt</span>
@@ -425,7 +421,6 @@ const langSwitchAria = lang === 'ru' ? 'Vaheta eesti keelele' : 'Переклю�
         <li class="blog-ru">
           <a href="/ru/blog" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg">Блог</a>
         </li>
-        <NavGoogleReviewLink variant="mobile" />
         <li class="blog-et">
           <a href="/#piirkonnad" class="block py-2 px-2 font-medium hover:bg-brand-blue-light rounded-lg" data-lang="areas">Piirkonnad</a>
         </li>

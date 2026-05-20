@@ -11,7 +11,7 @@ import {
   isTallinnDistrictPath,
   type HarjuMunicipalityId,
 } from '../data/harju-municipality-landings';
-import { getTallinnNeighborDistricts, tallinnDistrictSeo } from '../data/seo-keywords';
+import { getTallinnNeighborDistricts, serviceLandingSeo, tallinnDistrictSeo } from '../data/seo-keywords';
 
 interface Props {
   currentPath: string;
@@ -58,7 +58,16 @@ const harjuHeadingRu = isHarjuPage
   ? 'Торуаби в соседних волостях Харьюмаа'
   : 'Торуаби в Харьюмаа (волости и города)';
 
-const showHarjuBlock = isTallinnPage || isHarjuPage || isOtherLanding;
+const serviceLinksEt = [
+  { path: serviceLandingSeo['avariiline-valjakutse'].path, anchor: 'avarii toruabi' },
+  { path: serviceLandingSeo['ummistuste-likvideerimine'].path, anchor: 'ummistuste likvideerimine' },
+  { path: serviceLandingSeo['kanalisatsiooni-survepesu'].path, anchor: 'toruabi survepesu' },
+];
+const serviceLinksRu = [
+  { path: serviceLandingSeo['avariiline-valjakutse'].path, anchor: 'аварийный торуаби' },
+  { path: serviceLandingSeo['ummistuste-likvideerimine'].path, anchor: 'устранение засоров' },
+  { path: serviceLandingSeo['kanalisatsiooni-survepesu'].path, anchor: 'промывка канализации' },
+];
 ---
 
 <section class="bg-gray-50 rounded-lg p-8 mb-8">
@@ -117,48 +126,66 @@ const showHarjuBlock = isTallinnPage || isHarjuPage || isOtherLanding;
   }
 
   <div class="mt-8 pt-6 border-t border-gray-200 max-w-3xl mx-auto">
-    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-et">Kasulikud lingid</h3>
-    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-ru">Полезные ссылки</h3>
-    <div class="flex flex-wrap gap-3 justify-center">
+    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-et">Toruabi teenused ja info</h3>
+    <h3 class="text-lg font-bold text-trust-blue mb-3 text-center blog-ru">Услуги торуаби и полезные ссылки</h3>
+    <div class="flex flex-wrap gap-3 justify-center blog-et">
+      {serviceLinksEt.map((link) => (
+        <a
+          href={link.path}
+          class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >
+          {link.anchor}
+        </a>
+      ))}
       <a
         href="/hinnakiri"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
-        >Hinnakiri</a
-      >
-      <a
-        href="/ru/hinnakiri"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
-        >Прайс-лист</a
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >toruabi hinnakiri</a
       >
       <a
         href="/faq"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
-        >KKK</a
-      >
-      <a
-        href="/ru/faq"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
-        >FAQ</a
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >toruabi KKK</a
       >
       <a
         href="/blog"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
-        >Blogi</a
-      >
-      <a
-        href="/ru/blog"
-        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
-        >Блог</a
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >toruabi blogi</a
       >
       <a
         href="/"
-        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors blog-et"
-        >Avaleht</a
+        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors"
+        >toruabi tallinn</a
+      >
+    </div>
+    <div class="flex flex-wrap gap-3 justify-center blog-ru mt-3">
+      {serviceLinksRu.map((link) => (
+        <a
+          href={ruPath(link.path)}
+          class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >
+          {link.anchor}
+        </a>
+      ))}
+      <a
+        href="/ru/hinnakiri"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >торуаби цены</a
+      >
+      <a
+        href="/ru/faq"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >торуаби FAQ</a
+      >
+      <a
+        href="/ru/blog"
+        class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >торуаби блог</a
       >
       <a
         href="/ru"
-        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors blog-ru"
-        >Главная (RU)</a
+        class="inline-block bg-white border-2 border-trust-blue text-trust-blue hover:bg-gray-50 font-semibold py-2 px-4 rounded-lg transition-colors"
+        >торуаби таллин</a
       >
     </div>
   </div>

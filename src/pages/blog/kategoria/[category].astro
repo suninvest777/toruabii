@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 
 export function getStaticPaths() {
   return [
@@ -9,13 +8,15 @@ export function getStaticPaths() {
 }
 
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import LangOnly from '../../../components/LangOnly.astro';
+import { pageLang } from '../../../utils/page-lang';
 import { blogCategoryPath, ruPath } from '../../../utils/i18n-paths';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
 const { category } = Astro.params;
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 // All blog posts with categories
 const blogPosts = [
@@ -145,7 +146,8 @@ const canonicalUrl =
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
 >
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -172,9 +174,11 @@ const canonicalUrl =
       <p class="text-gray-200 max-w-2xl">{currentCategory.description}</p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -201,14 +205,17 @@ const canonicalUrl =
       <p class="text-gray-200 max-w-2xl">{currentCategory.descriptionRu}</p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Main Content -->
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
     <!-- Estonian list -->
-    <div class="max-w-5xl mx-auto space-y-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+    <div class="max-w-5xl mx-auto space-y-8">
       {categoryPosts.length > 0 ? (
         categoryPosts.map((post) => (
-          <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <LangOnly lang="et" activeLang={currentLang}>
+<article class="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
               src={post.image}
               alt={post.imageAlt}
@@ -258,6 +265,7 @@ const canonicalUrl =
               </a>
             </div>
           </article>
+</LangOnly>
         ))
       ) : (
         <div class="bg-white rounded-lg shadow-lg p-8 text-center">
@@ -273,12 +281,14 @@ const canonicalUrl =
         </div>
       )}
     </div>
-
+    </LangOnly>
     <!-- Russian list -->
-    <div class="max-w-5xl mx-auto space-y-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+    <div class="max-w-5xl mx-auto space-y-8">
       {categoryPosts.length > 0 ? (
         categoryPosts.map((post) => (
-          <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <LangOnly lang="ru" activeLang={currentLang}>
+<article class="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
               src={post.imageRu}
               alt={post.imageAltRu}
@@ -327,7 +337,9 @@ const canonicalUrl =
                 </svg>
               </a>
             </div>
+    </LangOnly>
           </article>
+</LangOnly>
         ))
       ) : (
         <div class="bg-white rounded-lg shadow-lg p-8 text-center">

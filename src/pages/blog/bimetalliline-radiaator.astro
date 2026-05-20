@@ -5,11 +5,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
+import { pageLang } from '../../utils/page-lang';
+import LangOnly from '../../components/LangOnly.astro';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Bimetalliline radiaator küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/bimetalliline-radiaator';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['bimetalliline-radiaator'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -47,8 +61,73 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     datePublished={articleDatePublished}
     imageUrl="https://toruabii.ee/photos/otoplenije-batarei-liking.webp"
   />
+  <script
+    slot="head"
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': canonicalUrl + '#faq',
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Что такое биметаллический радиатор и почему он популярен в Таллине?' : 'Mis on bimetalliline radiaator ja miks see on populaarne Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Биметаллический радиатор сочетает прочность стали и теплоотдачу алюминия. Это популярный выбор в Таллине, так как подходит как для новых, так и для старых систем отопления и выдерживает высокое давление.'
+            : 'Bimetalliline radiaator kombineerib terase tugevuse ja alumiiniumi soojusülekande. See on populaarne valik Tallinnas, kuna sobib nii uutele kui vanadele küttesüsteemidele ja talub kõrget rõhku.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка биметаллических радиаторов в Таллине?' : 'Kui palju maksab bimetalliliste radiaatorite paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки биметаллических радиаторов в Таллине зависит от количества радиаторов и сложности установки. Установка одного биметаллического радиатора может стоить 200-400€, установка всех радиаторов в доме 1500-4000€.'
+            : 'Bimetalliliste radiaatorite paigalduse hind Tallinnas sõltub radiaatorite arvust ja paigalduse keerukusest. Ühe bimetallilise radiaatori paigaldus võib maksta 200-400€, kogu maja radiaatorite paigaldus 1500-4000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Подходят ли биметаллические радиаторы для старых систем отопления?' : 'Kas bimetallilised radiaatorid sobivad vanadele küttesüsteemidele?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Да, биметаллические радиаторы хорошо подходят как для новых, так и для старых систем отопления в Таллине. Стальные трубы обеспечивают долговечность для старых систем с высоким давлением.'
+            : 'Jah, bimetallilised radiaatorid sobivad hästi nii uutele kui vanadele küttesüsteemidele Tallinnas. Terasest torud tagavad vastupidavuse vanade süsteemide kõrge rõhu jaoks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как долго длится установка биметаллических радиаторов?' : 'Kui kaua kestab bimetalliliste radiaatorite paigaldus?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка биметаллических радиаторов обычно занимает 1-3 дня, в зависимости от количества радиаторов и сложности системы. Установка одного радиатора может занять 2-4 часа.'
+            : 'Bimetalliliste radiaatorite paigaldus võtab tavaliselt 1-3 päeva, olenevalt radiaatorite arvust ja süsteemi keerukusest. Ühe radiaatori paigaldus võib võtta 2-4 tundi.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какой срок службы биметаллических радиаторов?' : 'Milline on bimetalliliste radiaatorite eluiga?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Срок службы биметаллических радиаторов обычно составляет 20-30 лет, если они правильно установлены и обслуживаются. Регулярное обслуживание и правильное использование значительно продлевает срок службы радиаторов.'
+            : 'Bimetalliliste radiaatorite eluiga on tavaliselt 20-30 aastat, kui need on õigesti paigaldatud ja hooldatud. Regulaarne hooldus ja õige kasutamine pikendab radiaatorite eluiga oluliselt.',
+        },
+      },
+    ],
+  })}
+/>
+
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -75,9 +154,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -104,9 +185,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/otoplenije-batarei-liking.webp"
@@ -157,16 +240,22 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Category Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Rohkem artikleid küttesüsteemi kohta</h2>
         <div class="flex justify-center">
-          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Küttesüsteemi artiklid
           </a>
-          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Статьи об отоплении
           </a>
         </div>
+      </LangOnly>
       </section>
 
       <!-- FAQ Section -->
@@ -302,8 +391,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         <p class="text-sm mt-4 opacity-90">Bimetalliliste radiaatorite toruabi Tallinnas 24/7 | Bimetalliliste radiaatorite paigaldus | Bimetalliliste radiaatorite remont | Bimetalliliste radiaatorite hooldus</p>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/otoplenije-batarei-liking.webp"
@@ -368,105 +459,6 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Что такое биметаллический радиатор и почему он популярен в Таллине?' : 'Mis on bimetalliline radiaator ja miks see on populaarne Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Биметаллический радиатор сочетает прочность стали и теплоотдачу алюминия. Это популярный выбор в Таллине, так как подходит как для новых, так и для старых систем отопления и выдерживает высокое давление.'
-            : 'Bimetalliline radiaator kombineerib terase tugevuse ja alumiiniumi soojusülekande. See on populaarne valik Tallinnas, kuna sobib nii uutele kui vanadele küttesüsteemidele ja talub kõrget rõhku.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Сколько стоит установка биметаллических радиаторов в Таллине?' : 'Kui palju maksab bimetalliliste radiaatorite paigaldus Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Стоимость установки биметаллических радиаторов в Таллине зависит от количества радиаторов и сложности установки. Установка одного биметаллического радиатора может стоить 200-400€, установка всех радиаторов в доме 1500-4000€.'
-            : 'Bimetalliliste radiaatorite paigalduse hind Tallinnas sõltub radiaatorite arvust ja paigalduse keerukusest. Ühe bimetallilise radiaatori paigaldus võib maksta 200-400€, kogu maja radiaatorite paigaldus 1500-4000€.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Подходят ли биметаллические радиаторы для старых систем отопления?' : 'Kas bimetallilised radiaatorid sobivad vanadele küttesüsteemidele?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Да, биметаллические радиаторы хорошо подходят как для новых, так и для старых систем отопления в Таллине. Стальные трубы обеспечивают долговечность для старых систем с высоким давлением.'
-            : 'Jah, bimetallilised radiaatorid sobivad hästi nii uutele kui vanadele küttesüsteemidele Tallinnas. Terasest torud tagavad vastupidavuse vanade süsteemide kõrge rõhu jaoks.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как долго длится установка биметаллических радиаторов?' : 'Kui kaua kestab bimetalliliste radiaatorite paigaldus?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Установка биметаллических радиаторов обычно занимает 1-3 дня, в зависимости от количества радиаторов и сложности системы. Установка одного радиатора может занять 2-4 часа.'
-            : 'Bimetalliliste radiaatorite paigaldus võtab tavaliselt 1-3 päeva, olenevalt radiaatorite arvust ja süsteemi keerukusest. Ühe radiaatori paigaldus võib võtta 2-4 tundi.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Какой срок службы биметаллических радиаторов?' : 'Milline on bimetalliliste radiaatorite eluiga?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Срок службы биметаллических радиаторов обычно составляет 20-30 лет, если они правильно установлены и обслуживаются. Регулярное обслуживание и правильное использование значительно продлевает срок службы радиаторов.'
-            : 'Bimetalliliste radiaatorite eluiga on tavaliselt 20-30 aastat, kui need on õigesti paigaldatud ja hooldatud. Regulaarne hooldus ja õige kasutamine pikendab radiaatorite eluiga oluliselt.',
-        },
-      },
-    ],
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
-          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Биметаллический радиатор отопления'
-          : 'Bimetalliline radiaator küttesüsteemis',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/bimetalliline-radiaator' : 'https://toruabii.ee/blog/bimetalliline-radiaator',
-      },
-    ],
-  })}
-/>

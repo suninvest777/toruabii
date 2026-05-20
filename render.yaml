@@ -1,6 +1,5 @@
 # Render.com Blueprint for toruabii.ee
 # https://docs.render.com/blueprint-spec
-# Set PUBLIC_GOOGLE_REVIEW_URL in Render Dashboard → Environment (see .env.example)
 
 services:
   - type: web

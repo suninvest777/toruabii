@@ -6,6 +6,8 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /test-call-buttons
+Disallow: /test-call-buttons
 
 # Sitemap
 Sitemap: https://toruabii.ee/sitemap.xml

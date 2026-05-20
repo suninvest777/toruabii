@@ -1,0 +1,95 @@
+﻿<!-- HowTo Schema for step-by-step instructions -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': canonicalUrl + '#howto',
+    name: currentLang === 'ru'
+      ? '╨Ъ╨░╨║ ╨┐╤А╨░╨▓╨╕╨╗╤М╨╜╨╛ ╤Б╨╗╨╕╤В╤М ╨▓╨╛╨┤╤Г ╤Б ╤А╨░╨┤╨╕╨░╤В╨╛╤А╨╛╨▓ ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П'
+      : 'Kuidas ├╡igesti radiaatoreid t├╝hjendada',
+    description: currentLang === 'ru'
+      ? '╨Я╨╛╤И╨░╨│╨╛╨▓╨░╤П ╨╕╨╜╤Б╤В╤А╤Г╨║╤Ж╨╕╤П ╨┐╨╛ ╤Б╨╗╨╕╨▓╤Г ╨▓╨╛╨┤╤Л ╤Б ╤А╨░╨┤╨╕╨░╤В╨╛╤А╨╛╨▓ ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П: ╨║╨░╨║ ╨▒╨╡╨╖╨╛╨┐╨░╤Б╨╜╨╛ ╤Г╨┤╨░╨╗╨╕╤В╤М ╨▓╨╛╨╖╨┤╤Г╤Е ╨╕ ╨▓╨╛╨┤╤Г ╨╕╨╖ ╤Б╨╕╤Б╤В╨╡╨╝╤Л ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П.'
+      : 'Samm-sammult juhend radiaatorite t├╝hjendamiseks: kuidas ohutult eemaldada ├╡hk ja vesi k├╝ttes├╝steemist.',
+    image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+    totalTime: 'PT30M',
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'EUR',
+      value: '0',
+    },
+    tool: [
+      {
+        '@type': 'HowToTool',
+        name: currentLang === 'ru' ? '╨Ъ╨╗╤О╤З ╨┤╨╗╤П ╨▓╨╛╨╖╨┤╤Г╤И╨╜╨╛╨│╨╛ ╨║╨╗╨░╨┐╨░╨╜╨░' : '├Хhuklapi v├╡ti',
+      },
+      {
+        '@type': 'HowToTool',
+        name: currentLang === 'ru' ? '╨Х╨╝╨║╨╛╤Б╤В╤М ╨┤╨╗╤П ╨▓╨╛╨┤╤Л' : 'Vee n├╡u',
+      },
+    ],
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: currentLang === 'ru' ? '╨Т╤Л╨║╨╗╤О╤З╨╕╤В╨╡ ╤Б╨╕╤Б╤В╨╡╨╝╤Г ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П' : 'L├╝litage k├╝ttes├╝steem v├дlja',
+        text: currentLang === 'ru'
+          ? '╨Т╤Л╨║╨╗╤О╤З╨╕╤В╨╡ ╤Б╨╕╤Б╤В╨╡╨╝╤Г ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П ╨╕ ╨┐╨╛╨┤╨╛╨╢╨┤╨╕╤В╨╡, ╨┐╨╛╨║╨░ ╤А╨░╨┤╨╕╨░╤В╨╛╤А╤Л ╨╛╤Б╤В╤Л╨╜╤Г╤В. ╨н╤В╨╛ ╨╛╨▒╤Л╤З╨╜╨╛ ╨╖╨░╨╜╨╕╨╝╨░╨╡╤В ╨╜╨╡╤Б╨║╨╛╨╗╤М╨║╨╛ ╤З╨░╤Б╨╛╨▓.'
+          : 'L├╝litage k├╝ttes├╝steem v├дlja ja oodake, kuni radiaatorid jahtuvad. See v├╡tab tavaliselt mitu tundi.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: currentLang === 'ru' ? '╨Э╨░╨╣╨┤╨╕╤В╨╡ ╨▓╨╛╨╖╨┤╤Г╤И╨╜╤Л╨╣ ╨║╨╗╨░╨┐╨░╨╜' : 'Leidke ├╡huklapp',
+        text: currentLang === 'ru'
+          ? '╨Э╨░╨╣╨┤╨╕╤В╨╡ ╨▓╨╛╨╖╨┤╤Г╤И╨╜╤Л╨╣ ╨║╨╗╨░╨┐╨░╨╜ ╨▓ ╨▓╨╡╤А╤Е╨╜╨╡╨╣ ╤З╨░╤Б╤В╨╕ ╤А╨░╨┤╨╕╨░╤В╨╛╤А╨░, ╨╛╨▒╤Л╤З╨╜╨╛ ╨╜╨░ ╨┐╤А╨╛╤В╨╕╨▓╨╛╨┐╨╛╨╗╨╛╨╢╨╜╨╛╨╣ ╤Б╤В╨╛╤А╨╛╨╜╨╡ ╨╛╤В ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╤П ╨║ ╤Б╨╡╤В╨╕.'
+          : 'Leidke ├╡huklapp radiaatori ├╝laosas, tavaliselt vastask├╝ljel v├╡rgu├╝hendusest.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: currentLang === 'ru' ? '╨Я╨╛╨┤╨│╨╛╤В╨╛╨▓╤М╤В╨╡ ╨╡╨╝╨║╨╛╤Б╤В╤М' : 'Valmistage ette n├╡u',
+        text: currentLang === 'ru'
+          ? '╨Я╨╛╨╝╨╡╤Б╤В╨╕╤В╨╡ ╨╡╨╝╨║╨╛╤Б╤В╤М ╨╕╨╗╨╕ ╨┐╨░╨║╨╡╤В ╨┐╨╛╨┤ ╨▓╨╛╨╖╨┤╤Г╤И╨╜╤Л╨╣ ╨║╨╗╨░╨┐╨░╨╜, ╤З╤В╨╛╨▒╤Л ╤Б╨╛╨▒╤А╨░╤В╤М ╨▓╨╛╨┤╤Г ╨╕ ╨▓╨╛╨╖╨┤╤Г╤Е.'
+          : 'Asetage n├╡u v├╡i kott ├╡huklapi alla, et kinni p├╝├╝da vett ja ├╡hku.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: currentLang === 'ru' ? '╨Ю╤В╨║╤А╨╛╨╣╤В╨╡ ╨▓╨╛╨╖╨┤╤Г╤И╨╜╤Л╨╣ ╨║╨╗╨░╨┐╨░╨╜' : 'Avage ├╡huklapp',
+        text: currentLang === 'ru'
+          ? '╨Ш╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╣╤В╨╡ ╤Б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╤Л╨╣ ╨║╨╗╤О╤З ╨╕╨╗╨╕ ╨╛╤В╨▓╨╡╤А╤В╨║╤Г. ╨Ю╤В╨║╤А╨╛╨╣╤В╨╡ ╨╝╨╡╨┤╨╗╨╡╨╜╨╜╨╛ ╨╕ ╨┐╨╛╨╖╨▓╨╛╨╗╤М╤В╨╡ ╨▓╨╛╨╖╨┤╤Г╤Е╤Г ╨╕ ╨▓╨╛╨┤╨╡ ╨▓╤Л╨╣╤В╨╕.'
+          : 'Kasutage spetsiaalset v├╡tit v├╡i kruvikeeretit. Avage aeglaselt ja laske ├╡hul ja veel v├дlja tulla.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: currentLang === 'ru' ? '╨Ф╨╛╨╢╨┤╨╕╤В╨╡╤Б╤М ╨┐╤А╨╡╨║╤А╨░╤Й╨╡╨╜╨╕╤П ╨┐╨╛╤В╨╛╨║╨░ ╨▓╨╛╨┤╤Л' : 'Oodake, kuni vesi lakkab voolamast',
+        text: currentLang === 'ru'
+          ? '╨Ъ╨╛╨│╨┤╨░ ╨▓╨╛╨┤╨░ ╨┐╨╡╤А╨╡╤Б╤В╨░╨╜╨╡╤В ╤В╨╡╤З╤М, ╨▓╨╛╨╖╨┤╤Г╤Е ╤Г╨┤╨░╨╗╨╡╨╜. ╨Ч╨░╨║╤А╨╛╨╣╤В╨╡ ╨▓╨╛╨╖╨┤╤Г╤И╨╜╤Л╨╣ ╨║╨╗╨░╨┐╨░╨╜.'
+          : 'Kui vesi lakkab voolamast, on ├╡hk eemaldatud. Sulgege ├╡huklapp.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 6,
+        name: currentLang === 'ru' ? '╨Я╤А╨╛╨▓╨╡╤А╤М╤В╨╡ ╨┤╨░╨▓╨╗╨╡╨╜╨╕╨╡' : 'Kontrollige r├╡hku',
+        text: currentLang === 'ru'
+          ? '╨Я╨╛╤Б╨╗╨╡ ╤Г╨┤╨░╨╗╨╡╨╜╨╕╤П ╨▓╨╛╨╖╨┤╤Г╤Е╨░ ╨┐╤А╨╛╨▓╨╡╤А╤М╤В╨╡ ╨┤╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╨▓ ╤Б╨╕╤Б╤В╨╡╨╝╨╡ ╨╛╤В╨╛╨┐╨╗╨╡╨╜╨╕╤П ╨╕ ╨┐╤А╨╕ ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╨╛╤Б╤В╨╕ ╨┤╨╛╨▒╨░╨▓╤М╤В╨╡ ╨▓╨╛╨┤╤Л.'
+          : 'P├дrast ├╡hu eemaldamist kontrollige k├╝ttes├╝steemi r├╡hku ja vajadusel lisage vett.',
+        image: 'https://toruabii.ee/photos/otoplenije-batarei-liking.webp',
+      },
+    ],
+  })}
+/>
+
+<!-- BreadcrumbList Schema -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',

@@ -1,12 +1,11 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
+import LangOnly from '../components/LangOnly.astro';
 import { homeHref, ruPath } from '../utils/i18n-paths';
 import { seoInnerDescription, seoInnerTitle } from '../data/seo-keywords';
 
@@ -17,13 +16,13 @@ const phoneLink = phoneNumber.replace(/\s/g, '');
 
 const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
 
-const titleEt = seoInnerTitle('Toruabi hinnakiri', 'et');
+const titleEt = seoInnerTitle('hinnakiri', 'et');
 const descEt = seoInnerDescription({
   pageLabel: 'Toruabi hinnad ja hinnakiri',
   lang: 'et',
   extra: 'Väljakutse, ummistuste likvideerimine. −50% pärast esimest tundi kuni kuu lõpuni.',
 });
-const titleRu = seoInnerTitle('Торуаби цены', 'ru');
+const titleRu = seoInnerTitle('цены', 'ru');
 const descRu = seoInnerDescription({
   pageLabel: 'Прайс торуаби',
   lang: 'ru',
@@ -37,6 +36,20 @@ const hinnakiriPath = '/hinnakiri';
 const canonicalUrl =
   currentLang === 'ru' ? `${siteUrl}${ruPath(hinnakiriPath)}` : `${siteUrl}${hinnakiriPath}`;
 const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
+const breadcrumbJsonLdOverride = [
+  { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', item: crumbHomeUrl },
+  { name: currentLang === 'ru' ? 'Цены' : 'Hinnakiri', item: canonicalUrl },
+];
+const hinnakiriServiceLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${canonicalUrl}#service`,
+  name: currentLang === 'ru' ? 'Прайс торуаби' : 'Toruabi hinnakiri',
+  description: pageDescription,
+  url: canonicalUrl,
+  provider: { '@id': `${siteUrl}#business` },
+  areaServed: { '@type': 'City', name: 'Tallinn' },
+};
 ---
 
 <BaseLayout 
@@ -45,31 +58,172 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/toruabii.webp"
-  keywords={currentLang === 'ru' ? "торуаби, торуаби цены, торуаби Таллинн, аварийный сантехник цены, сантехнические работы" : "toruabi, toruabi hinnad, toruabi Tallinnas, avarii toruabi hinnad, toruabi hind"}
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
-<!-- Header -->
-  <header class="bg-trust-blue text-white py-6 px-4 pt-4 md:pt-6">
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(hinnakiriServiceLd)} />
+  <!-- Header (compact — pricing table is the hero) -->
+  <header class="bg-trust-blue text-white py-4 px-4 pt-3 md:pt-4">
     <div class="max-w-6xl mx-auto">
       <Breadcrumb
         items={[
           { name: currentLang === 'ru' ? 'Главная' : 'Avaleht', url: crumbHomeUrl },
           { name: currentLang === 'ru' ? 'Цены' : 'Hinnakiri', url: canonicalUrl },
         ]}
-        class="text-gray-300 mb-3"
+        class="text-gray-300 mb-2"
       />
-      <a href={homeHref(currentLang)} class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold" data-lang="backToHome">← Tagasi avalehele</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-2" data-lang="pricingPageTitle">Konkurentsivõimelised hinnad kvaliteetse sanitaartehnilise töö eest</h1>
-      <p class="text-gray-200" data-lang="pricingPageSubtitle">toruabii - Avariiline santehnik Harjumaal 24/7</p>
-      <div class="mt-6 max-w-xl mx-auto rounded-2xl bg-black/25 p-3 ring-1 ring-white/20">
-        <CallStripCta variant="page" />
-      </div>
+      <a href={homeHref(currentLang)} class="inline-block mb-2 text-sm text-emergency-red hover:text-red-400 font-bold" data-lang="backToHome">← Tagasi avalehele</a>
+      <h1 class="text-2xl md:text-3xl font-bold blog-et">Toruabi hinnakiri – hinnad Tallinnas ja Harjumaal</h1>
+      <h1 class="text-2xl md:text-3xl font-bold blog-ru">Торуаби цены – прайс в Таллине и Харьюмаа</h1>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="py-12 px-4 bg-gray-50 min-h-screen">
+  <main class="py-4 md:py-6 px-4 bg-gray-50 min-h-screen">
     <div class="max-w-6xl mx-auto">
-      
+
+      <p class="text-center text-gray-700 text-sm md:text-base font-medium mb-4 max-w-3xl mx-auto" data-lang="pricingInfo1">
+        Minimaalne väljakutsetasu on esimese töötunni hind; edasi arvestatakse 10-minutilise sammuga.
+      </p>
+
+      <!-- Pricing Table (primary — first visible content) -->
+      <div id="hinnakiri" class="bg-white rounded-xl shadow-2xl ring-2 ring-trust-blue/40 overflow-hidden mb-6 scroll-mt-4">
+        <div class="bg-trust-blue text-white px-4 md:px-6 py-4 md:py-5 sticky top-0 z-20 shadow-md">
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight" data-lang="plannedWork">Planeetitud tööd</h2>
+          <p class="text-white/80 text-sm mt-1 hidden sm:block" data-lang="pricingPageSubtitle">toruabii - Avariiline santehnik Harjumaal 24/7</p>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 md:px-6 py-3 md:py-4 text-left text-sm md:text-base font-bold text-trust-blue" data-lang="service">Teenus</th>
+                <th class="px-4 md:px-6 py-3 md:py-4 text-right text-sm md:text-base font-bold text-trust-blue" data-lang="price">Hind</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService1">Санитарно-технические работы</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 45€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService3">Сварка PEM-труб</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 48€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService4">Инспекция труб камерой</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">75€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService5">Промыв отопительной системы</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 25€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService6">Чистка теплообменников</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 25€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService7">Опрессовка трубопроводов</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 50€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService8">Опрессовка отопительной системы и теплоузла</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 45€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService9">Мойка внутридомовых труб горячей водой под давлением до 75 бар</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">250€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService10">Гидродинамическая промывка канализационных систем</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 200€</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService11">Очистка жироуловителей и пескоуловителей</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">294€ <span data-lang="pricePerM3">/ 1М3</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50 bg-yellow-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService12">К цене добавляется стоимость утилизации</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 50€ <span data-lang="pricePerM3">/ 1М3</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService13">Размораживание пластмассовых труб</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 75€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService14">Размораживание металлических труб</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap"><span data-lang="priceFrom">От</span> 75€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50 bg-blue-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService15">Тариф за пределы Таллинна</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">0,50€ <span data-lang="pricePerKm">/ 1km</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService16">Вакуумная прочистка</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">60,40€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService17">Прочистка засоров Rothenberger 16 мм</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">100,80€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="priceService18">Прочистка засоров Rothenberger 22 мм</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">161,29€ <span data-lang="pricePerHour">/ час</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="bg-gray-100 px-6 py-4 border-t">
+          <p class="text-sm text-gray-700">
+            <strong data-lang="vatNote">Hinnale lisandub käibemaks 24%</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- High Pressure Machine Section (second price list) -->
+      <div class="bg-white rounded-xl shadow-xl ring-2 ring-trust-blue/30 overflow-hidden mb-6">
+        <div class="bg-trust-blue text-white px-4 md:px-6 py-4 md:py-5 sticky top-0 z-10 shadow-md">
+          <h2 class="text-xl md:text-2xl font-bold tracking-tight" data-lang="highPressureMachineTitle">Вызов прочистной машины высокого давления</h2>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 md:px-6 py-3 md:py-4 text-left text-sm md:text-base font-bold text-trust-blue" data-lang="service">Услуга</th>
+                <th class="px-4 md:px-6 py-3 md:py-4 text-right text-sm md:text-base font-bold text-trust-blue" data-lang="price">Цена</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="highPressureMachineWeekday">Час работы ПН-ПТ(8:00-17:00)</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">175€<span data-lang="pricePerHour">/час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="highPressureMachineWeekend">Час работы ПН-ВС(17:00-00:00)</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">250€<span data-lang="pricePerHour">/час</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="highPressureMachineOutside">Выезд за пределы Таллинна(туда-обратно)</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">2€<span data-lang="pricePerKm">/км</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 md:px-6 py-3 md:py-4 text-sm md:text-base text-gray-700" data-lang="highPressureMachineMinPayment">Минимальная оплата</td>
+                <td class="px-4 md:px-6 py-3 md:py-4 text-right text-lg md:text-xl font-extrabold text-trust-blue whitespace-nowrap">2ч</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="bg-gray-100 px-6 py-4 border-t">
+          <p class="text-sm text-gray-700" data-lang="highPressureMachineNote">К ценам за откачку выгребных ям и промывку канализационных трасс и колодцев добавляется стоимость за транспортные расходы, забор воды, стоимость утилизации сточных вод/жира/песка</p>
+        </div>
+      </div>
+
+      <div class="mb-8 max-w-xl mx-auto rounded-2xl bg-white p-3 shadow-lg ring-1 ring-trust-blue/20">
+        <CallStripCta variant="page" />
+      </div>
+
       <!-- Pricing Info Section -->
       <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
         <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="pricingInfoTitle">Ценообразование</h2>
@@ -90,140 +244,6 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
       <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h2 class="text-2xl font-bold text-trust-blue mb-4" data-lang="documentationTitle">Документация, чеки, акты</h2>
         <p class="text-gray-700" data-lang="documentationText">После каждого заказа мы выписываем квитанцию, при оплате картой чек. Так же составляем АКТ для страховой компании.</p>
-      </div>
-
-      <!-- Pricing Table -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div class="bg-trust-blue text-white px-6 py-4">
-          <h2 class="text-2xl font-bold" data-lang="plannedWork">Planeetitud tööd</h2>
-        </div>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="px-6 py-4 text-left text-sm font-bold text-trust-blue" data-lang="service">Teenus</th>
-                <th class="px-6 py-4 text-right text-sm font-bold text-trust-blue" data-lang="price">Hind</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService1">Санитарно-технические работы</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 45€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService3">Сварка PEM-труб</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 48€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService4">Инспекция труб камерой</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">75€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService5">Промыв отопительной системы</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 25€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService6">Чистка теплообменников</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 25€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService7">Опрессовка трубопроводов</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 50€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService8">Опрессовка отопительной системы и теплоузла</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 45€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService9">Мойка внутридомовых труб горячей водой под давлением до 75 бар</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">250€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService10">Гидродинамическая промывка канализационных систем</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 200€</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService11">Очистка жироуловителей и пескоуловителей</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">294€ <span data-lang="pricePerM3">/ 1М3</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50 bg-yellow-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService12">К цене добавляется стоимость утилизации</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 50€ <span data-lang="pricePerM3">/ 1М3</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService13">Размораживание пластмассовых труб</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 75€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService14">Размораживание металлических труб</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue"><span data-lang="priceFrom">От</span> 75€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50 bg-blue-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService15">Тариф за пределы Таллинна</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">0,50€ <span data-lang="pricePerKm">/ 1km</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService16">Вакуумная прочистка</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">60,40€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService17">Прочистка засоров Rothenberger 16 мм</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">100,80€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="priceService18">Прочистка засоров Rothenberger 22 мм</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">161,29€ <span data-lang="pricePerHour">/ час</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="bg-gray-100 px-6 py-4 border-t">
-          <p class="text-sm text-gray-700">
-            <strong data-lang="vatNote">Hinnale lisandub käibemaks 24%</strong>
-          </p>
-        </div>
-      </div>
-
-      <!-- High Pressure Machine Section -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div class="bg-trust-blue text-white px-6 py-4">
-          <h2 class="text-2xl font-bold" data-lang="highPressureMachineTitle">Вызов прочистной машины высокого давления</h2>
-        </div>
-        
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="px-6 py-4 text-left text-sm font-bold text-trust-blue" data-lang="service">Услуга</th>
-                <th class="px-6 py-4 text-right text-sm font-bold text-trust-blue" data-lang="price">Цена</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="highPressureMachineWeekday">Час работы ПН-ПТ(8:00-17:00)</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">175€<span data-lang="pricePerHour">/час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="highPressureMachineWeekend">Час работы ПН-ВС(17:00-00:00)</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">250€<span data-lang="pricePerHour">/час</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="highPressureMachineOutside">Выезд за пределы Таллинна(туда-обратно)</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">2€<span data-lang="pricePerKm">/км</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 text-gray-700" data-lang="highPressureMachineMinPayment">Минимальная оплата</td>
-                <td class="px-6 py-4 text-right font-bold text-trust-blue">2ч</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="bg-gray-100 px-6 py-4 border-t">
-          <p class="text-sm text-gray-700" data-lang="highPressureMachineNote">К ценам за откачку выгребных ям и промывку канализационных трасс и колодцев добавляется стоимость за транспортные расходы, забор воды, стоимость утилизации сточных вод/жира/песка</p>
-        </div>
       </div>
 
       <!-- Why Choose Section -->
@@ -260,48 +280,54 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
       </div>
 
       <!-- Districts Section -->
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Toruabi piirkondades</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Торуаби в районах</h2>
-        <p class="text-gray-700 mb-4 blog-et">Me pakume toruabi teenuseid kõigis Tallinna piirkondades. Vaadake hinnakirju konkreetsetele piirkondadele:</p>
-        <p class="text-gray-700 mb-4 blog-ru">Мы предоставляем услуги торуаби во всех районах Таллинна. Посмотрите информацию по конкретным районам:</p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Lasnamäes</a>
-          <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Ласнамяэ</a>
-          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Mustamäel</a>
-          <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Мустамяэ</a>
-          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Kesklinnas</a>
-          <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в центре</a>
-          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Piritas</a>
-          <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Пирита</a>
-          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">Toruabi Viimsis</a>
-          <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">Торуаби в Виймси</a>
+      <LangOnly lang="et" activeLang={currentLang}>
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-2xl font-bold text-trust-blue mb-4">Toruabi piirkondades</h2>
+          <p class="text-gray-700 mb-4">Me pakume toruabi teenuseid kõigis Tallinna piirkondades. Vaadake hinnakirju konkreetsetele piirkondadele:</p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Lasnamäes</a>
+            <a href="/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Mustamäel</a>
+            <a href="/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Kesklinnas</a>
+            <a href="/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Piritas</a>
+            <a href="/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Toruabi Viimsis</a>
+          </div>
         </div>
-      </div>
-
-      <!-- Related services -->
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-8 blog-et">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4">Toruabi teenused ja hinnad</h2>
-        <p class="text-gray-700">
-          Kanalisatsiooni ummistuste puhul vaata eraldi lehte{' '}
-          <a href="/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">ummistuste likvideerimine</a>
-          {' '}või telli otse{' '}
-          <a href="/toruabi-ummistuste-likvideerimine" class="text-trust-blue font-semibold hover:underline">toruabi ummistus</a>
-          {' '}teenus – väljasõit 0 €, reageerimine 30–60 min. Korduvate probleemide korral sobib ka{' '}
-          <a href="/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">kanalisatsiooni survepesu</a>.
-        </p>
-      </div>
-      <div class="bg-white rounded-lg shadow-lg p-6 mb-8 blog-ru">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4">Услуги торуаби и цены</h2>
-        <p class="text-gray-700">
-          При засоре канализации — страница{' '}
-          <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">устранение засоров</a>
-          {' '}или заказ{' '}
-          <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-trust-blue font-semibold hover:underline">торуаби при засоре</a>
-          {' '}— выезд 0 €, приезд 30–60 мин. При повторных засорах —{' '}
-          <a href="/ru/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">промывка канализации</a>.
-        </p>
-      </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-2xl font-bold text-trust-blue mb-4">Toruabi teenused ja hinnad</h2>
+          <p class="text-gray-700">
+            Kanalisatsiooni ummistuste puhul vaata eraldi lehte{' '}
+            <a href="/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">ummistuste likvideerimine</a>
+            {' '}või telli otse{' '}
+            <a href="/toruabi-ummistuste-likvideerimine" class="text-trust-blue font-semibold hover:underline">toruabi ummistus</a>
+            {' '}teenus – väljasõit 0 €, reageerimine 30–60 min. Korduvate probleemide korral sobib ka{' '}
+            <a href="/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">kanalisatsiooni survepesu</a>.
+          </p>
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-2xl font-bold text-trust-blue mb-4">Торуаби в районах</h2>
+          <p class="text-gray-700 mb-4">Мы предоставляем услуги торуаби во всех районах Таллинна. Посмотрите информацию по конкретным районам:</p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            <a href="/ru/toruabi-lasnamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Ласнамяэ</a>
+            <a href="/ru/toruabi-mustamae" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Мустамяэ</a>
+            <a href="/ru/toruabi-kesklinn" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в центре</a>
+            <a href="/ru/toruabi-pirita" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Пирита</a>
+            <a href="/ru/toruabi-viimsi" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Торуаби в Виймси</a>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 class="text-2xl font-bold text-trust-blue mb-4">Услуги торуаби и цены</h2>
+          <p class="text-gray-700">
+            При засоре канализации — страница{' '}
+            <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-emergency-red font-semibold hover:underline">устранение засоров</a>
+            {' '}или заказ{' '}
+            <a href="/ru/toruabi-ummistuste-likvideerimine" class="text-trust-blue font-semibold hover:underline">торуаби при засоре</a>
+            {' '}— выезд 0 €, приезд 30–60 мин. При повторных засорах —{' '}
+            <a href="/ru/toruabi-kanalisatsiooni-survepesu" class="text-trust-blue font-semibold hover:underline">промывка канализации</a>.
+          </p>
+        </div>
+      </LangOnly>
 
       <!-- CTA Section -->
       <div class="bg-emergency-red text-white rounded-lg p-8 text-center">
@@ -356,330 +382,4 @@ const crumbHomeUrl = currentLang === 'ru' ? `${siteUrl}/ru` : `${siteUrl}/`;
   <StickyCTA />
 
   <!-- Scripts -->
-<!-- Schema.org Structured Data -->
-  <!-- BreadcrumbList Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Avaleht",
-        "item": "https://toruabii.ee/"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Hinnakiri",
-        "item": "https://toruabii.ee/hinnakiri"
-      }
-    ]
-  })} />
-
-  <!-- Service Schema with PriceSpecification -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Sanitaartehnilised tööd",
-    "description": "Konkurentsivõimelised hinnad kvaliteetse sanitaartehnilise töö eest Tallinnas ja Harjumaal",
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "toruabii.ee",
-      "telephone": "+3725181112",
-      "url": "https://toruabii.ee"
-    },
-    "areaServed": {
-      "@type": "City",
-      "name": "Tallinn"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Toruabi hinnakiri",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Sanitaartehnilised tööd"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "45",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "PEM toru keevitamine"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "48",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Torustiku inspekteerimine kaameraga"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "75",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Küttesüsteemi läbipesu"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "25",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Soojusvahetite puhastus"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "25",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Torustike survekatse"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "50",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Küttesüsteemi ja soojussõlme survekatse"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "45",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Hoonesiseste torude pesu kuuma veega surve all kuni 75 bar"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "250",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Kanalisatsiooni hüdrodünaamiline pesu"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "200",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Rasvaeraldite ja liivapüüdurite puhastus"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "294",
-            "unitText": "1 m³"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Utiliseerimiskulu (lisandub hinnale)"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "50",
-            "unitText": "1 m³",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Plasttorude sulatamine"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "75",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Metalltorude sulatamine"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "75",
-            "unitText": "tund",
-            "priceType": "https://schema.org/MinimumPrice"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Vaakumpuhastus"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "60.40",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Ummistuste likvideerimine Rothenberger 16 mm"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "100.80",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Ummistuste likvideerimine Rothenberger 22 mm"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "161.29",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Tariif Tallinnast väljapoole (planeeritud tööd, tuda–tagasi km)"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "0.50",
-            "unitText": "km"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Survepesu auto sõit Tallinnast väljapoole (tuda–tagasi km)"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "2",
-            "unitText": "km"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Survepesu auto tellimine (E-R 8:00-17:00)"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "175",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Survepesu auto tellimine (E-P 17:00-00:00)"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "250",
-            "unitText": "tund"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Avarii torumehe väljakutse"
-          },
-          "priceSpecification": {
-            "@type": "UnitPriceSpecification",
-            "priceCurrency": "EUR",
-            "price": "75",
-            "unitText": "tund"
-          }
-        }
-      ]
-    }
-  })} />
 </BaseLayout>

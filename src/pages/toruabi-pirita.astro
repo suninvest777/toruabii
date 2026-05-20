@@ -1,14 +1,13 @@
 ---
-export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
-import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { tallinnDistrictBreadcrumbJsonLd, tallinnDistrictPageUrl } from '../utils/district-tallinn-jsonld';
+import { pageLang } from '../utils/page-lang';
 import {
   getTallinnDistrict,
   tallinnDistrictDescription,
@@ -23,7 +22,7 @@ const districtSeo = getTallinnDistrict('pirita');
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt = tallinnDistrictTitle('pirita', 'et');
 const descEt = tallinnDistrictDescription('pirita', 'et');
@@ -34,6 +33,7 @@ const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
 
 const districtPath = '/toruabi-pirita';
+const pageCanonicalUrl = tallinnDistrictPageUrl(districtPath, currentLang);
 const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
 
 const piritaFaqEt = [
@@ -60,9 +60,8 @@ const piritaFaqEt = [
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical="https://toruabii.ee/toruabi-pirita"
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -105,12 +104,13 @@ const piritaFaqEt = [
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('pirita', 'et')}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('pirita', 'ru')}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('pirita', 'et')}</p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('pirita', 'ru')}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? tallinnDistrictH1('pirita', 'ru') : tallinnDistrictH1('pirita', 'et')}</h1>
+      <p class="text-xl text-gray-200 mb-6">{currentLang === 'ru' ? tallinnDistrictIntro('pirita', 'ru') : tallinnDistrictIntro('pirita', 'et')}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>
@@ -188,7 +188,7 @@ const piritaFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Pirita eramutes ja villades</h3>
-            <p class="text-gray-700 mb-3">Pirita on tuntud oma eliitsete eramute ja villade poolest mere ääres. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas töötada merelise kliimaga seotud probleemidega (korrosioon, niiskus). Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Pirita eramutes ja villades 24/7. Meie professionaalne santehnik ja avarii santehnik on spetsialiseerunud töötamisele Pirita eramutes.</p>
+            <p class="text-gray-700 mb-3">Merivälja ja Kloostrimetsa eramutes on sageli sügavam kanalisatsioon ja suurem niiskuskoormus — kontrollime kaevu, pumplaake ja vajadusel teeme trassi videouuringu enne remonti.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Kanalisatsiooni toruabi ja ummistuste likvideerimine</li>
               <li>Küttesüsteemi toruabi ja hooldus</li>
@@ -198,7 +198,7 @@ const piritaFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni toruabi Pirita korterites</h3>
-            <p class="text-gray-700 mb-3">Pirita piirkonnas on ka palju kortereid, mis vajavad regulaarset toruabi hooldust. Meie toruabi meeskond ja kogenud avarii santehnik kasutavad professionaalseid seadmeid ummistuste eemaldamiseks. Meie torumees ja professionaalne santehnik tegelevad kanalisatsiooni toruabi ja sanitaartehniliste töödega Pirita korterites. Pakume toruabi teenuseid Piritas 24/7.</p>
+            <p class="text-gray-700 mb-3">Pirita tee ja Mähe korterelamud vajavad kiiret ummistuste lahendust ja boileri hooldust — jõuame objektile tavaliselt 30–50 minutiga.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Survepesu kanalisatsioonisüsteemidest</li>
               <li>Videouuring torustiku seisukorra kontrollimiseks</li>
@@ -215,7 +215,7 @@ const piritaFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби в частных домах и виллах Пирита</h3>
-            <p class="text-gray-700 mb-3">Пирита известен своими элитными частными домами и виллами у моря. Наша команда знает специфику этих зданий и умеет работать с проблемами, связанными с морским климатом (коррозия, влажность). Мы предоставляем профессиональные услуги по прочистке канализации и аварийной сантехнике в частных домах и виллах Пирита 24/7.</p>
+            <p class="text-gray-700 mb-3">В Меривялья и Клоостриметса — глубокая канализация и влажность: проверяем колодцы, насосы и при необходимости делаем видеодиагностику до ремонта.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Прочистка канализации и устранение засоров</li>
               <li>Обслуживание систем отопления</li>
@@ -225,7 +225,7 @@ const piritaFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Прочистка канализации в квартирах Пирита</h3>
-            <p class="text-gray-700 mb-3">В районе Пирита также много квартир, которые требуют регулярного обслуживания сантехники. Наша команда использует профессиональное оборудование для устранения засоров. Мы предоставляем услуги по прочистке канализации и сантехническим работам в квартирах Пирита 24/7.</p>
+            <p class="text-gray-700 mb-3">На Пирита tee и в Мяхе — квартирные засоры и обслуживание бойлеров; обычно приезжаем за 30–50 минут.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Гидродинамическая промывка канализационных систем</li>
               <li>Видеообследование для проверки состояния трубопроводов</li>
@@ -243,18 +243,18 @@ const piritaFaqEt = [
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
-              <span class="ml-2 font-bold text-trust-blue">Andres K.</span>
+              <span class="ml-2 font-bold text-trust-blue">Priit S.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Väga kiire ja professionaalne toruabi Piritas! Kanalisatsiooni ummistus eramajas lahendati kiiresti ja kvaliteetselt. Meister jõudis kohale 40 minutiga. Soovitan!"</p>
-            <p class="text-sm text-gray-500">18. detsember 2025</p>
+            <p class="text-gray-700 mb-2">"Merivälja eramu kaevu pump ei töötanud — meister kontrollis kaevu ja kanalisatsiooni, probleem lahendati samal päeval."</p>
+            <p class="text-sm text-gray-500">5. jaanuar 2026</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Kadri M.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Boileri hooldus Pirita villas tehti väga hästi. Meister oli professionaalne ja selgitas kõik selgelt. Garantii 2 aastat annab rahu. Toruabi Piritas 24/7 on suurepärane!"</p>
-            <p class="text-sm text-gray-500">22. november 2025</p>
+            <p class="text-gray-700 mb-2">"Pirita tee korteris lahendati vannitoa ummistus ilma seina avamata — selge hind ja 2-aastane garantii."</p>
+            <p class="text-sm text-gray-500">12. detsember 2025</p>
           </div>
         </div>
         <p class="text-center mt-6 text-gray-600">Keskmine hinnang: <span class="font-bold text-trust-blue">4.9/5</span> (312 arvustust)</p>
@@ -266,18 +266,18 @@ const piritaFaqEt = [
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
-              <span class="ml-2 font-bold text-trust-blue">Андрес К.</span>
+              <span class="ml-2 font-bold text-trust-blue">Приит С.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Очень быстрая и профессиональная торуаби в Пирита! Засор канализации в частном доме решили быстро и качественно. Мастер приехал за 40 минут. Рекомендую!"</p>
-            <p class="text-sm text-gray-500">18 декабря 2025</p>
+            <p class="text-gray-700 mb-2">"В Меривялья не работал насос колодца — проверили колодец и канализацию, всё исправили в тот же день."</p>
+            <p class="text-sm text-gray-500">5 января 2026</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <div class="flex items-center mb-3">
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Кадри М.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Обслуживание бойлера в вилле Пирита сделали очень хорошо. Мастер был профессионален и всё объяснил. Гарантия 2 года даёт спокойствие. Торуаби в Пирита 24/7 отлично!"</p>
-            <p class="text-sm text-gray-500">22 ноября 2025</p>
+            <p class="text-gray-700 mb-2">"На Пирита tee устранили засор в ванной без вскрытия стены — понятная цена и гарантия 2 года."</p>
+            <p class="text-sm text-gray-500">12 декабря 2025</p>
           </div>
         </div>
         <p class="text-center mt-6 text-gray-600">Средняя оценка: <span class="font-bold text-trust-blue">4.9/5</span> (312 отзывов)</p>
@@ -369,25 +369,25 @@ const piritaFaqEt = [
       <!-- Typical Problems -->
       <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Piritas</h2>
-        <p class="text-gray-700 mb-6">Pirita on Tallinna eliitne piirkond mere ääres, kus on palju eramuid, villasid ja kortereid. Mereline kliima ja kõrge niiskus mõjutavad torustikke, mistõttu vajavad need erilist hooldust. Meie torumees ja professionaalne santehnik on spetsialiseerunud Pirita eramute ja villade toruabi probleemide lahendamisele 24/7.</p>
+        <p class="text-gray-700 mb-6">Piritas on tüüpilised mereäärsed korrosioonikahjustused, suvilate hooajalised ummistused ja sügavamad kanalisatsiooniliinid eramutes — lahendame need kohapeal videouuringu ja survepesuga.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni ummistused eramutes</h3>
-            <p class="text-gray-700 mb-3">Pirita eramutes ja villades on levinud kanalisatsiooni ummistused, mis on seotud merelise kliimaga ja kõrge niiskusega. Meie toruabi meeskond kasutab professionaalseid seadmeid ummistuste eemaldamiseks. Meie kogenud torumees ja avarii santehnik tegelevad kanalisatsiooni toruabi ja avarii toruabi teenustega Pirita eramutes 24/7.</p>
+            <p class="text-gray-700 mb-3">Juurekaevu ja pumplaagi riked ning okaste kogunemine — kontrollime elektrit, õhutust ja toru läbilaskevõimet enne trassi avamist.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Kanalisatsiooni ummistus – mida teha?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri rikked ja hooldus</h3>
-            <p class="text-gray-700 mb-3">Paljud Pirita elanikud kasutavad boilerit sooja vee jaoks. Mereline kliima mõjutab boilerite tööd, mistõttu vajavad need regulaarset hooldust. Meie toruabi meeskond pakub professionaalset boileri hooldust, läbipesu ja remonti Piritas. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Piritas 24/7.</p>
+            <p class="text-gray-700 mb-3">Niiskes kliimas kiireneb anoodi kulumine — soovitame igal aastal läbipesu ja kontrolli, et vältida leket ja ebapiisavat sooja vett.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Boileri hooldus ja läbipesu</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Korrosiooniprobleemid</h3>
-            <p class="text-gray-700 mb-3">Pirita piirkonnas on mereline kliima, mis põhjustab torustike korrosiooni. Meie toruabi meeskond pakub professionaalset korrosiooniprobleemide lahendamist ja torustike kaitsmist. Meie kogenud torumees tegeleb korrosiooniprobleemide lahendamisega Piritas.</p>
+            <p class="text-gray-700 mb-3">Välis- ja maapealsed torud roostevad kiiremini — vahetame lõigud ja soovitame kaitse või plastsegu, kui vana trass on läbi.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Veeleked ja torustike remont</h3>
-            <p class="text-gray-700 mb-3">Pirita eramutes ja villades on levinud veeleked, mis on seotud merelise kliimaga ja kõrge niiskusega. Meie toruabi meeskond pakub professionaalset veelekkede likvideerimist ja torustike remonti. Meie professionaalne santehnik ja avarii santehnik tegelevad veelekkede likvideerimisega Piritas 24/7.</p>
+            <p class="text-gray-700 mb-3">Keldri- ja vundamendilekked pärast vihmasid — tuvastame allika niiskusmõõdiku ja kaameraga, et mitte kaevata asjatult.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -398,25 +398,25 @@ const piritaFaqEt = [
 
       <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Пирита</h2>
-        <p class="text-gray-700 mb-6">Пирита – элитный район Таллина у моря, где много частных домов, вилл и квартир. Морской климат и высокая влажность влияют на коммуникации, поэтому они требуют особого обслуживания. Наш сантехник специализируется на решении проблем сантехника в частных домах и виллах Пирита 24/7.</p>
+        <p class="text-gray-700 mb-6">В Пирита типичны коррозия у моря, сезонные засоры дач и глубокие линии в частных домах — решаем на месте с видеодиагностикой и промывкой.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Засоры канализации в частных домах</h3>
-            <p class="text-gray-700 mb-3">В частных домах и виллах Пирита распространены засоры канализации, связанные с морским климатом и высокой влажностью. Наша команда использует профессиональное оборудование для устранения засоров.</p>
+            <p class="text-gray-700 mb-3">Неисправности колодца и насоса, скопление корней — проверяем питание, вентиляцию и проходимость до вскрытия трассы.</p>
             <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/kanalisatsiooni-ummistus-mida-teha" class="text-emergency-red hover:underline">Засор канализации – что делать?</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Поломки и обслуживание бойлеров</h3>
-            <p class="text-gray-700 mb-3">Многие жители Пирита используют бойлеры для горячей воды. Морской климат влияет на работу бойлеров, поэтому они требуют регулярного обслуживания. Наша команда предоставляет профессиональное обслуживание, промывку и ремонт бойлеров в Пирита 24/7.</p>
+            <p class="text-gray-700 mb-3">Во влажном климате быстрее изнашивается анод — рекомендуем ежегодную промывку, чтобы избежать протечек и холодной воды.</p>
             <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Обслуживание и промывка бойлера</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Проблемы с коррозией</h3>
-            <p class="text-gray-700 mb-3">В районе Пирита морской климат вызывает коррозию трубопроводов. Наша команда предоставляет профессиональное решение проблем с коррозией и защиту трубопроводов.</p>
+            <p class="text-gray-700 mb-3">Наружные трубы ржавеют быстрее — меняем участки, предлагаем защиту или пластик при износе старой линии.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Протечки воды и ремонт трубопроводов</h3>
-            <p class="text-gray-700 mb-3">В частных домах и виллах Пирита распространены протечки воды, связанные с морским климатом и высокой влажностью. Наша команда предоставляет профессиональное устранение протечек и ремонт трубопроводов в Пирита 24/7.</p>
+            <p class="text-gray-700 mb-3">Подвальные протечки после дождей — находим источник влагомером и камерой, без лишней раскопки.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -518,7 +518,7 @@ const piritaFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
-            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele. Meie torumees ja avarii santehnik annab kiire hinnangu nii kanalisatsiooni toruabi kui ka boileri toruabi küsimustes Piritas 24/7.</p>
+            <p>Kirjelda, kas tegu on kaevu, kanalisatsiooni või boileriga — saadame Pirita ja Merivälja piirkonda tundva meistri.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Piritasse</h3>
@@ -540,7 +540,7 @@ const piritaFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
-            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь. Наш сантехник и аварийный сантехник даст быструю оценку по вопросам прочистки канализации и обслуживания бойлеров в Пирита 24/7.</p>
+            <p>Уточните: колодец, канализация или бойлер — отправим мастера, знающего Пирита и Меривялья.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в Пирита</h3>

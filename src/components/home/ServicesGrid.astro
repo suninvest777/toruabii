@@ -30,7 +30,7 @@ const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
           <div class="service-card-media aspect-[4/3] overflow-hidden">
             <img
               src={service.image}
-              alt=""
+              alt={lang === 'ru' ? service.titleRu : service.titleEt}
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
               decoding="async"
@@ -40,7 +40,7 @@ const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
           </div>
           <div class="service-card-overlay">
             <span class="service-card-icon-circle" aria-hidden="true">
-              <img src={service.icon} alt="" width="28" height="28" loading="lazy" />
+              <img src={service.icon} alt="" width="28" height="28" loading="lazy" aria-hidden="true" />
             </span>
             <div class="min-w-0 flex-1">
               <h3 class="font-display font-bold text-base home-text mb-1 leading-snug">

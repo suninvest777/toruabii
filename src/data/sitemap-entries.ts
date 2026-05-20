@@ -45,13 +45,12 @@ export const sitemapEntries: SitemapEntry[] = [
   { path: '/ru', lastmod: '2026-05-20', changefreq: 'weekly', priority: '0.95' },
   { path: '/hinnakiri', lastmod: '2026-05-20', changefreq: 'monthly', priority: '0.8' },
   { path: '/faq', lastmod: '2026-05-20', changefreq: 'monthly', priority: '0.7' },
-  { path: '/tagasiside-soodus', lastmod: '2026-05-20', changefreq: 'monthly', priority: '0.65' },
-  { path: '/sitemap', lastmod: '2026-04-04', changefreq: 'monthly', priority: '0.5' },
-  { path: '/privacy', lastmod: '2026-04-04', changefreq: 'yearly', priority: '0.5' },
-  { path: '/blog', lastmod: '2026-04-04', changefreq: 'weekly', priority: '0.6' },
+  { path: '/sitemap', lastmod: '2026-05-20', changefreq: 'monthly', priority: '0.5' },
+  { path: '/privacy', lastmod: '2026-05-20', changefreq: 'yearly', priority: '0.5' },
+  { path: '/blog', lastmod: '2026-05-20', changefreq: 'weekly', priority: '0.6' },
   {
     path: '/blog/kanalisatsiooni-ummistus-mida-teha',
-    lastmod: '2026-02-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.6',
     images: [
@@ -64,7 +63,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/boileri-hooldus-ja-loputus',
-    lastmod: '2026-02-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.6',
     images: [
@@ -77,7 +76,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/kuttesusteemi-hooldus-radiaatorite-tyhjendamine',
-    lastmod: '2026-01-27',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -90,7 +89,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/kuttesusteem-eramaja',
-    lastmod: '2026-01-27',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -103,7 +102,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/kollektorigrupp',
-    lastmod: '2026-01-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -116,7 +115,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/puhvermahuti',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -129,7 +128,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/radiaatori-valik',
-    lastmod: '2026-03-20',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -142,7 +141,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/bimetalliline-radiaator',
-    lastmod: '2026-02-06',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -155,7 +154,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/pump-margi-ja-kuiva-rootoriga',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -168,7 +167,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/laienduspaak-kutte-ja-gvs',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -181,7 +180,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/tsirkulatsioonipump',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -194,7 +193,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/hudroakumulaatorid-ja-laienduspaagid',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -207,7 +206,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/elektrikatla-ulehendamine',
-    lastmod: '2026-01-31',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -220,7 +219,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/avatud-ja-suletud-kuttesusteemid',
-    lastmod: '2026-04-08',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.7',
     images: [
@@ -233,21 +232,21 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/blog/kategoria/kuttesusteem',
-    lastmod: '2026-04-04',
+    lastmod: '2026-05-20',
     changefreq: 'weekly',
     priority: '0.6',
     ruPath: '/blog/kategoria/otoplenije',
   },
   {
     path: '/blog/kategoria/otoplenije',
-    lastmod: '2026-04-04',
+    lastmod: '2026-05-20',
     changefreq: 'weekly',
     priority: '0.6',
     etPath: '/blog/kategoria/kuttesusteem',
   },
   {
     path: '/toruabi-avariiline-valjakutse',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -273,7 +272,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-kanalisatsiooni-survepesu',
-    lastmod: '2026-04-26',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -286,7 +285,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-rasvapuuduri-puhastus',
-    lastmod: '2026-04-26',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -302,7 +301,7 @@ export const sitemapEntries: SitemapEntry[] = [
   { path: '/toruabi-kesklinn', lastmod: '2026-05-20', changefreq: 'monthly', priority: '0.9' },
   {
     path: '/toruabi-pirita',
-    lastmod: '2026-04-04',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -315,7 +314,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-viimsi',
-    lastmod: '2026-04-04',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -328,7 +327,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-maardu',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -341,7 +340,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-keila',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -354,7 +353,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-saue',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -367,7 +366,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-rae',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -380,7 +379,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-saku',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -393,7 +392,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-harku',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -406,7 +405,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-joelahtme',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -419,7 +418,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-kiili',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -432,7 +431,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-kose',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [
@@ -445,7 +444,7 @@ export const sitemapEntries: SitemapEntry[] = [
   },
   {
     path: '/toruabi-anija',
-    lastmod: '2026-04-25',
+    lastmod: '2026-05-20',
     changefreq: 'monthly',
     priority: '0.9',
     images: [

@@ -5,11 +5,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
+import { pageLang } from '../../utils/page-lang';
+import LangOnly from '../../components/LangOnly.astro';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Küttesüsteem eramajas Tallinnas 24/7 – toruabi, paigaldus, remont ja hooldus | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/kuttesusteem-eramaja';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['kuttesusteem-eramaja'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -47,8 +61,73 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     datePublished={articleDatePublished}
     imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
   />
+  <script
+    slot="head"
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': canonicalUrl + '#faq',
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка системы отопления в Таллине?' : 'Kui palju maksab küttesüsteemi paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru' 
+            ? 'Стоимость установки системы отопления в Таллине зависит от типа системы, размера дома и сложности. Газовое отопление для частного дома может стоить 3000-8000€, электрическое 2000-5000€. Наш мастер дает бесплатную оценку после первичного осмотра.'
+            : 'Küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi tüübist, maja suurusest ja komplekssusest. Gaasiküte eramajale võib maksta 3000-8000€, elektriküte 2000-5000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как долго длится установка системы отопления?' : 'Kui kaua kestab küttesüsteemi paigaldus?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка системы отопления в частном доме обычно занимает 3-7 дней, в зависимости от сложности системы. Простое электрическое отопление может быть готово за 1-2 дня, в то время как газовое отопление с трубопроводом может занять до недели.'
+            : 'Küttesüsteemi paigaldus eramajale võtab tavaliselt 3-7 päeva, olenevalt süsteemi komplekssusest. Lihtsam elektriküte võib olla valmis 1-2 päevaga, samas kui gaasiküte koos torustikuga võib võtta kuni nädal.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Какая система отопления лучше для частного дома в Таллине?' : 'Milline küttesüsteem on parim eramajale Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Лучшая система отопления зависит от размера дома, изоляции и доступа к топливу. Газовое отопление популярно в Таллине благодаря хорошему газоснабжению. Электрическое отопление подходит для небольших домов. Твердое топливо - хороший выбор для сельской местности.'
+            : 'Parim küttesüsteem sõltub maja suurusest, isolatsioonist ja ligipääsust kütusele. Gaasiküte on populaarne valik Tallinnas tänu heale gaasivarustusele. Elektriküte sobib väiksematele majadele. Tahkekütus on hea valik maapiirkondades.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать систему отопления?' : 'Kui tihti peaks küttesüsteemi hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание системы отопления раз в год, желательно перед началом отопительного сезона. Регулярное обслуживание продлевает срок службы системы, обеспечивает эффективную работу и может предотвратить дорогостоящий ремонт.'
+            : 'Küttesüsteemi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. Regulaarne hooldus pikendab süsteemi eluiga, tagab efektiivse töö ja võib vältida kalleid remonte.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Можно ли установить систему отопления самостоятельно?' : 'Kas küttesüsteemi saab paigaldada ise?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Установка системы отопления требует профессиональных знаний и опыта. Неправильная установка может привести к пожару, утечкам газа или неэффективной работе. Рекомендуем всегда использовать услуги профессионального сантехника.'
+            : 'Küttesüsteemi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada tuleohtu, gaasilekkeid või ebaefektiivset tööd. Soovitame alati kasutada professionaalse torumehe teenuseid.',
+        },
+      },
+    ],
+  })}
+/>
+
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -75,9 +154,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -104,9 +185,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -326,16 +409,22 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Category Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Rohkem artikleid küttesüsteemi kohta</h2>
         <div class="flex justify-center">
-          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Küttesüsteemi artiklid
           </a>
-          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Статьи об отоплении
           </a>
         </div>
+      </LangOnly>
       </section>
 
       <!-- CTA -->
@@ -355,8 +444,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         <p class="text-sm mt-4 opacity-90">Küttesüsteemi toruabi Tallinnas 24/7 | Küttesüsteemi paigaldus | Küttesüsteemi remont | Küttesüsteemi hooldus</p>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -463,105 +554,6 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Сколько стоит установка системы отопления в Таллине?' : 'Kui palju maksab küttesüsteemi paigaldus Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru' 
-            ? 'Стоимость установки системы отопления в Таллине зависит от типа системы, размера дома и сложности. Газовое отопление для частного дома может стоить 3000-8000€, электрическое 2000-5000€. Наш мастер дает бесплатную оценку после первичного осмотра.'
-            : 'Küttesüsteemi paigalduse hind Tallinnas sõltub süsteemi tüübist, maja suurusest ja komplekssusest. Gaasiküte eramajale võib maksta 3000-8000€, elektriküte 2000-5000€. Meie torumees annab tasuta hinnapakkumise pärast esialgset ülevaadet.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как долго длится установка системы отопления?' : 'Kui kaua kestab küttesüsteemi paigaldus?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Установка системы отопления в частном доме обычно занимает 3-7 дней, в зависимости от сложности системы. Простое электрическое отопление может быть готово за 1-2 дня, в то время как газовое отопление с трубопроводом может занять до недели.'
-            : 'Küttesüsteemi paigaldus eramajale võtab tavaliselt 3-7 päeva, olenevalt süsteemi komplekssusest. Lihtsam elektriküte võib olla valmis 1-2 päevaga, samas kui gaasiküte koos torustikuga võib võtta kuni nädal.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Какая система отопления лучше для частного дома в Таллине?' : 'Milline küttesüsteem on parim eramajale Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Лучшая система отопления зависит от размера дома, изоляции и доступа к топливу. Газовое отопление популярно в Таллине благодаря хорошему газоснабжению. Электрическое отопление подходит для небольших домов. Твердое топливо - хороший выбор для сельской местности.'
-            : 'Parim küttesüsteem sõltub maja suurusest, isolatsioonist ja ligipääsust kütusele. Gaasiküte on populaarne valik Tallinnas tänu heale gaasivarustusele. Elektriküte sobib väiksematele majadele. Tahkekütus on hea valik maapiirkondades.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как часто нужно обслуживать систему отопления?' : 'Kui tihti peaks küttesüsteemi hooldama?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Рекомендуем проводить обслуживание системы отопления раз в год, желательно перед началом отопительного сезона. Регулярное обслуживание продлевает срок службы системы, обеспечивает эффективную работу и может предотвратить дорогостоящий ремонт.'
-            : 'Küttesüsteemi hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. Regulaarne hooldus pikendab süsteemi eluiga, tagab efektiivse töö ja võib vältida kalleid remonte.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Можно ли установить систему отопления самостоятельно?' : 'Kas küttesüsteemi saab paigaldada ise?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Установка системы отопления требует профессиональных знаний и опыта. Неправильная установка может привести к пожару, утечкам газа или неэффективной работе. Рекомендуем всегда использовать услуги профессионального сантехника.'
-            : 'Küttesüsteemi paigaldus nõuab professionaalseid teadmisi ja kogemust. Vale paigaldus võib põhjustada tuleohtu, gaasilekkeid või ebaefektiivset tööd. Soovitame alati kasutada professionaalse torumehe teenuseid.',
-        },
-      },
-    ],
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
-          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Система отопления частного дома'
-          : 'Küttesüsteem eramajas',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/kuttesusteem-eramaja' : 'https://toruabii.ee/blog/kuttesusteem-eramaja',
-      },
-    ],
-  })}
-/>

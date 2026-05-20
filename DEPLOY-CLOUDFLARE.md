@@ -1,4 +1,4 @@
-﻿# Deploy toruabii.ee to Cloudflare Workers
+# Deploy toruabii.ee to Cloudflare Workers
 
 This project uses **Wrangler** with **`wrangler.jsonc`** (Worker name: **`toruabiiee`**). Deploy command from the repo root:
 
@@ -45,7 +45,6 @@ Confirm in the Cloudflare dashboard: **Workers & Pages** → worker **`toruabiie
 |------|------|---------|
 | `TELEGRAM_BOT_TOKEN` | Secret | Telegram Bot API token |
 | `TELEGRAM_CHAT_ID` | Secret / plain | Target chat for form/call notifications |
-| `PUBLIC_GOOGLE_REVIEW_URL` | Plain text | Link on `/tagasiside-soodus` |
 
 CLI alternative for secrets:
 
@@ -55,6 +54,8 @@ npx wrangler secret put TELEGRAM_CHAT_ID
 ```
 
 Redeploy after changing variables if needed: `npm run deploy`.
+**Telegram (production):** Form and call notifications need **both** `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` on worker **toruabiiee** (dashboard **Variables and Secrets** or `wrangler secret put`). Local `.env` does not apply after deploy. Use the same values as your working local `.env`; then `npx wrangler secret list` should list both secret names. Redeploy after changes. See [TELEGRAM-SETUP.md](./TELEGRAM-SETUP.md) for chat ID discovery.
+
 
 **Do not** commit real values in `.env` to git.
 
@@ -73,7 +74,7 @@ Ensure the zone **toruabii.ee** is active on Cloudflare (orange cloud proxy is f
 
 - https://toruabii.ee loads
 - Submit a test on the callback form (if enabled) — check Telegram
-- `/tagasiside-soodus` shows the Google review link when `PUBLIC_GOOGLE_REVIEW_URL` is set
+- Key pages load (home, `/hinnakiri`, a district landing, `/faq`)
 
 ## Wrangler config reference
 
@@ -85,7 +86,9 @@ File: **`wrangler.jsonc`**
 - `compatibility_flags`: `["nodejs_compat"]`
 - `assets`: `./dist` with binding `ASSETS`, `run_worker_first: true`
 
-**Astro:** `astro.config.mjs` uses `@astrojs/cloudflare` adapter; `site` is `https://toruabii.ee`. Run `npm run build` before every deploy so `dist/_worker.js` matches the adapter output.
+**Astro:** `astro.config.mjs` uses `@astrojs/cloudflare` adapter with `output: 'server'`; `site` is `https://toruabii.ee`. Run `npm run build` before every deploy so `dist/_worker.js` matches the adapter output.
+
+**RU URLs (`/ru/*`):** `middleware.ts` rewrites `/ru/path` → `/path?lang=ru`. That requires on-demand (SSR) pages — `export const prerender = true` on content pages caused `ForbiddenRewrite` in dev and on Workers. Content pages have no `prerender` export; only `src/pages/api/*` sets `prerender = false`. For Zone.ee Apache-only static hosting, use `public/.htaccess` (see [ROUTE-AUDIT.md](./ROUTE-AUDIT.md)).
 
 ## Optional: CI deploy on push to `main`
 

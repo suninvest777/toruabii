@@ -1,9 +1,11 @@
 ---
-export const prerender = true;
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LangOnly from '../../components/LangOnly.astro';
+import { pageLang } from '../../utils/page-lang';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { homeHref, ruPath } from '../../utils/i18n-paths';
+import { seoBlogIndexDescription, seoBlogIndexTitle } from '../../data/seo-keywords';
 
 const siteUrl = 'https://toruabii.ee';
 
@@ -262,15 +264,12 @@ const categories = {
   },
 };
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
-const pageTitleEt = 'Toruabi blogi – toruabi Tallinn, hooldus ja nõuanded | toruabii.ee';
-const pageDescEt =
-  'Toruabi blogi: artiklid toruabi, avarii toruabi, kanalisatsiooni toruabi, ummistuste likvideerimise ja küttesüsteemi hoolduse kohta Tallinnas ja Harjumaal.';
-const pageTitleRu =
-  'Торуаби блог – торуаби Таллин, обслуживание и советы | toruabii.ee';
-const pageDescRu =
-  'Торуаби блог: статьи о торуаби, аварийной сантехнике, засорах, обслуживании бойлеров и систем отопления в Таллине и Харьюмаа.';
+const pageTitleEt = seoBlogIndexTitle('et');
+const pageDescEt = seoBlogIndexDescription('et');
+const pageTitleRu = seoBlogIndexTitle('ru');
+const pageDescRu = seoBlogIndexDescription('ru');
 
 const pageTitle = currentLang === 'ru' ? pageTitleRu : pageTitleEt;
 const pageDescription = currentLang === 'ru' ? pageDescRu : pageDescEt;
@@ -295,6 +294,9 @@ const blogJsonLd = {
 const blogFaqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
+  '@id': `${blogCanonical}#faq`,
+  url: blogCanonical,
+  inLanguage: currentLang === 'ru' ? 'ru' : 'et',
   mainEntity: [
     {
       '@type': 'Question',
@@ -322,7 +324,6 @@ const blogFaqJsonLd = {
   lang={currentLang}
   canonical={blogCanonical}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? "торуаби, торуаби блог, торуаби Таллинн, аварийная сантехника" : "toruabi, toruabi blogi, toruabi Tallinnas, avarii toruabi"}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogJsonLd)} />
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(blogFaqJsonLd)} />
@@ -355,11 +356,11 @@ const blogFaqJsonLd = {
 </div>
   </header>
 
-  <section class="bg-white border-b border-gray-200 py-6 px-4" aria-label="Piirkonnad">
+  <LangOnly lang="et" activeLang={currentLang}>
+    <section class="bg-white border-b border-gray-200 py-6 px-4" aria-label="Piirkonnad">
     <div class="max-w-5xl mx-auto">
-      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center blog-et">Toruabi lehed Tallinna piirkondades</h2>
-      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center blog-ru">Торуаби по районам Таллина</h2>
-      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm blog-et">
+      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center">Toruabi lehed Tallinna piirkondades</h2>
+      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm">
         <a href="/toruabi-lasnamae" class="text-emergency-red hover:underline font-medium">Lasnamäe</a>
         <a href="/toruabi-mustamae" class="text-emergency-red hover:underline font-medium">Mustamäe</a>
         <a href="/toruabi-kesklinn" class="text-emergency-red hover:underline font-medium">Kesklinn</a>
@@ -368,7 +369,14 @@ const blogFaqJsonLd = {
         <a href="/hinnakiri" class="text-trust-blue hover:underline font-medium">Hinnakiri</a>
         <a href="/faq" class="text-trust-blue hover:underline font-medium">KKK</a>
       </div>
-      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm blog-ru">
+    </div>
+  </section>
+  </LangOnly>
+  <LangOnly lang="ru" activeLang={currentLang}>
+    <section class="bg-white border-b border-gray-200 py-6 px-4" aria-label="Районы">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-lg font-bold text-trust-blue mb-3 text-center">Торуаби по районам Таллина</h2>
+      <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm">
         <a href="/ru/toruabi-lasnamae" class="text-emergency-red hover:underline font-medium">Ласнамяэ</a>
         <a href="/ru/toruabi-mustamae" class="text-emergency-red hover:underline font-medium">Мустамяэ</a>
         <a href="/ru/toruabi-kesklinn" class="text-emergency-red hover:underline font-medium">Кесклинн</a>
@@ -379,11 +387,12 @@ const blogFaqJsonLd = {
       </div>
     </div>
   </section>
-
+  </LangOnly>
   <!-- Main Content -->
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
     <!-- Categories Section -->
-    <section class="max-w-5xl mx-auto mb-12 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+    <section class="max-w-5xl mx-auto mb-12">
       <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Kategooriad</h2>
       <div class="flex flex-wrap gap-4">
         {Object.values(categories).map((cat) => (
@@ -396,8 +405,9 @@ const blogFaqJsonLd = {
         ))}
       </div>
     </section>
-
-    <section class="max-w-5xl mx-auto mb-12 blog-ru">
+    </LangOnly>
+    <LangOnly lang="ru" activeLang={currentLang}>
+    <section class="max-w-5xl mx-auto mb-12">
       <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6">Категории</h2>
       <div class="flex flex-wrap gap-4">
         {Object.values(categories).map((cat) => (
@@ -410,9 +420,10 @@ const blogFaqJsonLd = {
         ))}
       </div>
     </section>
+    </LangOnly>
 
     <!-- Estonian list -->
-    <div class="max-w-5xl mx-auto space-y-8 blog-et">
+    <div class="max-w-5xl mx-auto space-y-8">
       {blogPosts.map((post) => (
         <article class="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
@@ -468,7 +479,7 @@ const blogFaqJsonLd = {
     </div>
 
     <!-- Russian list -->
-    <div class="max-w-5xl mx-auto space-y-8 blog-ru">
+    <div class="max-w-5xl mx-auto space-y-8">
       {blogPosts.map((post) => (
         <article class="bg-white rounded-lg shadow-lg overflow-hidden">
           <img
@@ -524,7 +535,8 @@ const blogFaqJsonLd = {
     </div>
 
     <!-- FAQ block for blog (ET) -->
-    <section class="max-w-5xl mx-auto mt-16 space-y-4 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+    <section class="max-w-5xl mx-auto mt-16 space-y-4">
       <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
         KKK blogi kohta
       </h2>
@@ -549,9 +561,10 @@ const blogFaqJsonLd = {
         </p>
       </details>
     </section>
-
+    </LangOnly>
     <!-- FAQ block for blog (RU) -->
-    <section class="max-w-5xl mx-auto mt-16 space-y-4 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+    <section class="max-w-5xl mx-auto mt-16 space-y-4">
       <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-2">
         Часто задаваемые вопросы о блоге
       </h2>
@@ -576,5 +589,6 @@ const blogFaqJsonLd = {
         </p>
       </details>
     </section>
+    </LangOnly>
   </main>
 </BaseLayout>

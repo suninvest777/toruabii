@@ -1,14 +1,13 @@
 ---
-export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StickyCTA from '../components/StickyCTA.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import DistrictCrossLinks from '../components/DistrictCrossLinks.astro';
 import FooterLegal from '../components/FooterLegal.astro';
-import NavGoogleReviewLink from '../components/NavGoogleReviewLink.astro';
 import CallStripCta from '../components/CallStripCta.astro';
 import DistrictTallinnJsonLd from '../components/seo/DistrictTallinnJsonLd.astro';
-import { tallinnDistrictBreadcrumbJsonLd } from '../utils/district-tallinn-jsonld';
+import { tallinnDistrictBreadcrumbJsonLd, tallinnDistrictPageUrl } from '../utils/district-tallinn-jsonld';
+import { pageLang } from '../utils/page-lang';
 import {
   getTallinnDistrict,
   tallinnDistrictDescription,
@@ -23,7 +22,7 @@ const districtSeo = getTallinnDistrict('mustamae');
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt = tallinnDistrictTitle('mustamae', 'et');
 const descEt = tallinnDistrictDescription('mustamae', 'et');
@@ -34,6 +33,7 @@ const pageTitle = currentLang === 'ru' ? titleRu : titleEt;
 const pageDescription = currentLang === 'ru' ? descRu : descEt;
 
 const districtPath = '/toruabi-mustamae';
+const pageCanonicalUrl = tallinnDistrictPageUrl(districtPath, currentLang);
 const breadcrumbJsonLdOverride = tallinnDistrictBreadcrumbJsonLd(districtPath, currentLang, titleEt, titleRu);
 
 const mustamaeFaqEt = [
@@ -60,9 +60,8 @@ const mustamaeFaqEt = [
   title={pageTitle}
   description={pageDescription}
   lang={currentLang}
-  canonical="https://toruabii.ee/toruabi-mustamae"
+  canonical={pageCanonicalUrl}
   ogImage="https://toruabii.ee/photos/maintoruabii.webp"
-  keywords={currentLang === 'ru' ? districtSeo.keywordsRu : districtSeo.keywordsEt}
   suppressPlumbingJsonLd
   breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
@@ -105,12 +104,13 @@ const mustamaeFaqEt = [
         ]}
         class="text-gray-300 mb-3"
       />
-      <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-et">← Tagasi avalehele</a>
-      <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold blog-ru">← На главную</a>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-et">{tallinnDistrictH1('mustamae', 'et')}</h1>
-      <h1 class="text-4xl md:text-5xl font-bold mb-3 blog-ru">{tallinnDistrictH1('mustamae', 'ru')}</h1>
-      <p class="text-xl text-gray-200 mb-6 blog-et">{tallinnDistrictIntro('mustamae', 'et')}</p>
-      <p class="text-xl text-gray-200 mb-6 blog-ru">{tallinnDistrictIntro('mustamae', 'ru')}</p>
+      {currentLang === 'ru' ? (
+        <a href="/ru" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← На главную</a>
+      ) : (
+        <a href="/" class="inline-block mb-4 text-emergency-red hover:text-red-400 font-bold">← Tagasi avalehele</a>
+      )}
+      <h1 class="text-4xl md:text-5xl font-bold mb-3">{currentLang === 'ru' ? tallinnDistrictH1('mustamae', 'ru') : tallinnDistrictH1('mustamae', 'et')}</h1>
+      <p class="text-xl text-gray-200 mb-6">{currentLang === 'ru' ? tallinnDistrictIntro('mustamae', 'ru') : tallinnDistrictIntro('mustamae', 'et')}</p>
       <a href={`tel:${phoneLink}`} class="inline-block bg-emergency-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl">
         <span data-lang="callNowFull">HELISTA KOHE</span>: {phoneNumber}
       </a>
@@ -188,7 +188,7 @@ const mustamaeFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Toruabi Mustamäe uusarendustes</h3>
-            <p class="text-gray-700 mb-3">Mustamäes on palju uusi elamuid ja uusarendusi. Meie toruabi meeskond ja kogenud torumees tunnevad nende hoonete spetsiifikaid ja teavad, kuidas kiiresti lahendada probleeme uutes torustikes. Pakume professionaalset kanalisatsiooni toruabi ja avarii toruabi teenuseid Mustamäe uusarendustes. Meie professionaalne santehnik ja avarii santehnik on spetsialiseerunud töötamisele Mustamäe uusarendustes.</p>
+            <p class="text-gray-700 mb-3">Hiiu ja Väike-Õismäe uued korterelamud kasutavad plast- ja roostevabast torustikku — paigaldame ja parandame segisteid, WC-süsteeme ja pesumasinavoolikuid ilma fassaadi kahjustamata.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Sanitaarseadmete paigaldus ja remont</li>
               <li>Kanalisatsiooni toruabi uusarendustes</li>
@@ -198,7 +198,7 @@ const mustamaeFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri toruabi ja hooldus Mustamäel</h3>
-            <p class="text-gray-700 mb-3">Paljud Mustamäe elanikud kasutavad boilerit sooja vee jaoks. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset boileri hooldust, läbipesu ja remonti Mustamäel. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Mustamäel.</p>
+            <p class="text-gray-700 mb-3">Kadaka ja Sääse mikrorajoonides on palju 80. aastate maju, kus boiler vajab hooajalist läbipesu ja anoodi kontrolli — vähendame kalki ja pikendame seadme eluiga.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Boileri hooldus ja läbipesu</li>
               <li>Boileri remont ja vahetus</li>
@@ -215,7 +215,7 @@ const mustamaeFaqEt = [
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Торуаби в новостройках Мустамяэ</h3>
-            <p class="text-gray-700 mb-3">В Мустамяэ много новых жилых домов и новостроек. Наша команда знает специфику этих зданий и умеет быстро решать проблемы в новых коммуникациях.</p>
+            <p class="text-gray-700 mb-3">В Хииу и Вяйке-Ыйсмяэ — новые дома с пластиковыми трассами: установка и ремонт сантехники, унитазов и стиральных подключений без повреждения фасада.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Установка и ремонт сантехники</li>
               <li>Прочистка канализации в новостройках</li>
@@ -225,7 +225,7 @@ const mustamaeFaqEt = [
           </div>
           <div>
             <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание бойлеров в Мустамяэ</h3>
-            <p class="text-gray-700 mb-3">Многие жители Мустамяэ используют бойлеры для горячей воды. Наша команда предлагает профессиональное обслуживание, промывку и ремонт бойлеров в Мустамяэ.</p>
+            <p class="text-gray-700 mb-3">В Кадака и Сяэсе много домов 1980-х — сезонная промывка бойлера и проверка анода снижают накипь и риск протечек.</p>
             <ul class="list-disc list-inside text-gray-700 space-y-1">
               <li>Обслуживание и промывка бойлеров</li>
               <li>Ремонт и замена бойлеров</li>
@@ -245,7 +245,7 @@ const mustamaeFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Andres L.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Suurepärane toruabi Mustamäes! Uusarenduses tehti sanitaarseadmete paigaldus kiiresti ja kvaliteetselt. Soovitan!"</p>
+            <p class="text-gray-700 mb-2">"Väike-Õismäe uues korteris paigaldati WC ja pesumasinavoolikud ühe päevaga — kõik korras ja puhas töö."</p>
             <p class="text-sm text-gray-500">10. detsember 2025</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
@@ -253,7 +253,7 @@ const mustamaeFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Kadri M.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Boileri hooldus Mustamäes tehti väga professionaalselt. Meister selgitas kõik selgelt ja andis nõuandeid. Garantii 2 aastat annab rahu."</p>
+            <p class="text-gray-700 mb-2">"Kadaka paneelmajas tehti boileri läbipesu enne küttehooaega — soe vesi tuli tagasi ilma leketeta."</p>
             <p class="text-sm text-gray-500">25. november 2025</p>
           </div>
         </div>
@@ -268,7 +268,7 @@ const mustamaeFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Андрес Л.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Отличная торуаби в Мустамяэ! В новостройке установку сантехники сделали быстро и качественно. Рекомендую!"</p>
+            <p class="text-gray-700 mb-2">"В новостройке на Вяйке-Ыйсмяэ установили унитаз и подключение стиралки за один визит — аккуратно и без грязи."</p>
             <p class="text-sm text-gray-500">10 декабря 2025</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
@@ -276,7 +276,7 @@ const mustamaeFaqEt = [
               <div class="text-yellow-400 text-xl">★★★★★</div>
               <span class="ml-2 font-bold text-trust-blue">Кадри М.</span>
             </div>
-            <p class="text-gray-700 mb-2">"Обслуживание бойлера в Мустамяэ сделали очень профессионально. Мастер всё объяснил и дал советы. Гарантия 2 года даёт спокойствие."</p>
+            <p class="text-gray-700 mb-2">"В Кадака промыли бойлер перед отопительным сезоном — горячая вода вернулась без протечек."</p>
             <p class="text-sm text-gray-500">25 ноября 2025</p>
           </div>
         </div>
@@ -369,24 +369,24 @@ const mustamaeFaqEt = [
       <!-- Typical Problems -->
       <section class="bg-white rounded-lg shadow-lg p-8 blog-et">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Tüüpilised toruabi probleemid Mustamäel</h2>
-        <p class="text-gray-700 mb-6">Mustamäes on palju uusi elamuid ja uusarendusi, kus torustikud on uuemad kui Lasnamäes. Siiski tekivad ka siin toruabi probleemid, mis nõuavad professionaalset lahendust. Meie torumees ja professionaalne santehnik on spetsialiseerunud töötamisele Mustamäe uusarendustes.</p>
+        <p class="text-gray-700 mb-6">Mustamäel segunevad uued torustikud ja 1980. aastate küttekollektorid — tüüpilised on boileri hooldus, köögiummistused ja radiaatorite õhutõrje enne talve.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Boileri hooldus uusarendustes</h3>
-            <p class="text-gray-700 mb-3">Paljud Mustamäe elanikud kasutavad boilerit sooja vee jaoks. Meie toruabi meeskond ja kogenud torumees pakuvad professionaalset boileri hooldust, läbipesu ja remonti Mustamäel. Meie professionaalne santehnik tegeleb boileri toruabi ja sanitaartehniliste töödega Mustamäel.</p>
+            <p class="text-gray-700 mb-3">Enne küttehooaega soovitame läbipesu ja T&amp;R-kontrolli — vähendab müra, lekkeid ja ebapiisavat sooja vett.</p>
             <p class="text-gray-600 text-sm">Vaata rohkem infot: <a href="/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Boileri hooldus ja läbipesu</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Kanalisatsiooni survepesu</h3>
-            <p class="text-gray-700 mb-3">Mustamäe uusarendustes on vaja regulaarset kanalisatsiooni survepesu. Meie toruabi meeskond kasutab professionaalseid survepesu masinaid kanalisatsioonisüsteemide puhastamiseks. Meie kogenud torumees tegeleb kanalisatsiooni toruabi ja avarii toruabi teenustega Mustamäel.</p>
+            <p class="text-gray-700 mb-3">Uusamates trassides aitab survepesu eemaldada rasva ja hooldusjäätmeid; vanemates majades kombineerime mehaanilise läbipääsu ja kaamerauuringu.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Sanitaarseadmete paigaldus</h3>
-            <p class="text-gray-700 mb-3">Uusarendustes Mustamäel on sageli vaja sanitaarseadmete paigaldust. Meie toruabi meeskond pakub professionaalset sanitaarseadmete paigaldust, sealhulgas kraanikauside, segistite ja WC potide paigaldust. Meie professionaalne santehnik tegeleb sanitaarseadmete paigaldusega Mustamäel.</p>
+            <p class="text-gray-700 mb-3">Remonditööde järel paigaldame segisteid, dušinurki ja WC-süsteeme koos veetõenduse kontrolliga.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Küttesüsteemide hooldus</h3>
-            <p class="text-gray-700 mb-3">Mustamäe uusarendustes on kaasaegsed küttesüsteemid, mis vajavad regulaarset hooldust. Meie toruabi meeskond pakub professionaalset küttesüsteemi hooldust ja läbipesu. Meie kogenud torumees tegeleb küttesüsteemi toruabi ja renoveerimisega Mustamäel.</p>
+            <p class="text-gray-700 mb-3">Küttekollektorite õhutõrje, radiaatorite ventiilide vahetus ja lekete kiire sulgemine enne kütte käivitamist.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -397,24 +397,24 @@ const mustamaeFaqEt = [
 
       <section class="bg-white rounded-lg shadow-lg p-8 blog-ru">
         <h2 class="text-3xl font-bold text-trust-blue mb-6">Типичные проблемы сантехника в Мустамяэ</h2>
-        <p class="text-gray-700 mb-6">В Мустамяэ много новых жилых домов и новостроек, где коммуникации новее, чем в Ласнамяэ. Однако и здесь возникают проблемы с сантехником, требующие профессионального решения. Наш сантехник специализируется на работе в новостройках Мустамяэ.</p>
+        <p class="text-gray-700 mb-6">В Мустамяэ сочетаются новые трассы и коллекторы 1980-х — типичны обслуживание бойлера, засоры кухни и воздух в радиаторах перед зимой.</p>
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание бойлеров в новостройках</h3>
-            <p class="text-gray-700 mb-3">Многие жители Мустамяэ используют бойлеры для горячей воды. Наша команда предоставляет профессиональное обслуживание, промывку и ремонт бойлеров в Мустамяэ.</p>
+            <p class="text-gray-700 mb-3">Перед отопительным сезоном — промывка и проверка ТЭНа, меньше шума и риска протечек.</p>
             <p class="text-gray-600 text-sm">Подробнее: <a href="/ru/blog/boileri-hooldus-ja-loputus" class="text-emergency-red hover:underline">Обслуживание и промывка бойлера</a></p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Гидродинамическая промывка канализации</h3>
-            <p class="text-gray-700 mb-3">В новостройках Мустамяэ требуется регулярная гидродинамическая промывка канализации. Наша команда использует профессиональные машины для промывки канализационных систем.</p>
+            <p class="text-gray-700 mb-3">В новых домах — гидропромывка; в старых — сочетаем механический проход и видеодиагностику.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Установка сантехнического оборудования</h3>
-            <p class="text-gray-700 mb-3">В новостройках Мустамяэ часто требуется установка сантехнического оборудования. Наша команда предоставляет профессиональную установку сантехники, включая раковины, смесители и унитазы.</p>
+            <p class="text-gray-700 mb-3">После ремонта устанавливаем смесители, душ и унитазы с проверкой герметичности.</p>
           </div>
           <div class="bg-gray-50 rounded-lg p-6">
             <h3 class="text-xl font-bold text-trust-blue mb-3">Обслуживание систем отопления</h3>
-            <p class="text-gray-700 mb-3">В новостройках Мустамяэ современные системы отопления требуют регулярного обслуживания. Наша команда предоставляет профессиональное обслуживание и промывку систем отопления.</p>
+            <p class="text-gray-700 mb-3">Стравливание воздуха, замена вентилей радиаторов и срочное перекрытие течи перед запуском отопления.</p>
           </div>
         </div>
         <div class="bg-trust-blue text-white rounded-lg p-6">
@@ -480,7 +480,7 @@ const mustamaeFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Helista kohe</h3>
-            <p>Helista meile ja kirjelda probleemi. Meie dispetšer hindab olukorda ja saadab toruabi meeskonna teele.</p>
+            <p>Kirjelda, kas probleem on boileris, köögis või küttekollektoris — saadame Mustamäe piirkonda harjunud meistri.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Meister teel Mustamäesse</h3>
@@ -502,7 +502,7 @@ const mustamaeFaqEt = [
         <ol class="space-y-4 text-gray-700">
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">1. Позвоните сейчас</h3>
-            <p>Позвоните нам и опишите проблему. Наш диспетчер оценит ситуацию и отправит команду в путь.</p>
+            <p>Уточните: бойлер, кухня или коллектор отопления — отправим мастера, знающего Мустамяэ.</p>
           </li>
           <li>
             <h3 class="font-bold text-lg text-trust-blue mb-1">2. Мастер в пути в Мустамяэ</h3>

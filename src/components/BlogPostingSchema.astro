@@ -40,6 +40,7 @@ const absImage = imageUrl.startsWith('http') ? imageUrl : `${siteUrl}${imageUrl.
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
+  '@id': `${absUrl}#blogpost`,
   headline,
   description: articleDescription,
   inLanguage: lang,

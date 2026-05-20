@@ -5,11 +5,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { ruPath } from '../../utils/i18n-paths';
 import BlogPostingSchema from '../../components/BlogPostingSchema.astro';
 import { sitemapEntries } from '../../data/sitemap-entries';
+import { blogArticleBreadcrumbMeta } from '../../data/blog-article-breadcrumbs';
+import { blogArticleBreadcrumbOverride } from '../../utils/seo-jsonld';
+import { pageLang } from '../../utils/page-lang';
+import LangOnly from '../../components/LangOnly.astro';
 
 const phoneNumber = '+372 5181 112';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
-const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
+const currentLang = pageLang(Astro.url);
 
 const titleEt =
   'Tsirkulatsioonipump küttesüsteemis Tallinnas – toruabi, paigaldus ja remont 24/7 | toruabii.ee';
@@ -27,6 +31,14 @@ const articlePath = '/blog/tsirkulatsioonipump';
 const articleDatePublished = sitemapEntries.find((e) => e.path === articlePath)?.lastmod ?? '2026-01-01';
 const siteOrigin = 'https://toruabii.ee';
 const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}` : `${siteOrigin}${articlePath}`;
+const articleCrumb = blogArticleBreadcrumbMeta['tsirkulatsioonipump'];
+const breadcrumbJsonLdOverride = blogArticleBreadcrumbOverride(
+  articlePath,
+  currentLang,
+  articleCrumb.category,
+  articleCrumb.crumbNameEt,
+  articleCrumb.crumbNameRu
+);
 ---
 
 <BaseLayout
@@ -35,6 +47,8 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
   lang={currentLang}
   canonical={canonicalUrl}
   ogImage="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
+  ogType="article"
+  breadcrumbJsonLdOverride={breadcrumbJsonLdOverride}
 >
   <BlogPostingSchema
     slot="head"
@@ -47,8 +61,73 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
     datePublished={articleDatePublished}
     imageUrl="https://toruabii.ee/photos/sistema-otoplenija-connectors-liking.webp"
   />
+  <script
+    slot="head"
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': canonicalUrl + '#faq',
+    url: canonicalUrl,
+    inLanguage: currentLang,
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Что такое циркуляционный насос и зачем он нужен?' : 'Mis on tsirkulatsioonipump ja miks see on vajalik?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Циркуляционный насос обеспечивает постоянное движение воды в системе отопления, позволяя равномерно распределять тепло во всех помещениях. Без циркуляционного насоса система отопления может работать неэффективно.'
+            : 'Tsirkulatsioonipump tagab pideva vee liikumise küttesüsteemis, võimaldades ühtlast soojusjaotust kõigis ruumides. Ilma tsirkulatsioonipumbata võib küttesüsteem töötada ebaefektiivselt.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Сколько стоит установка циркуляционного насоса в Таллине?' : 'Kui palju maksab tsirkulatsioonipumba paigaldus Tallinnas?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Стоимость установки циркуляционного насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
+            : 'Tsirkulatsioonipumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Когда нужен циркуляционный насос?' : 'Millal on vaja tsirkulatsioonipumpa?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Циркуляционный насос необходим для всех закрытых систем отопления, особенно для больших частных домов и систем теплого пола. Он обеспечивает равномерное распределение тепла и лучшую энергоэффективность.'
+            : 'Tsirkulatsioonipump on vajalik kõigile suletud küttesüsteemidele, eriti suurematele eramajadele ja põrandakütte süsteemidele. See tagab ühtlase soojusjaotuse ja parema energiatõhususe.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как выбрать правильный циркуляционный насос?' : 'Kuidas valida õige tsirkulatsioonipump?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Выбор циркуляционного насоса зависит от объема системы, длины трубопровода, количества радиаторов и наличия теплого пола. Наш мастер поможет выбрать правильный насос для вашей системы.'
+            : 'Tsirkulatsioonipumba valik sõltub süsteemi mahust, torustiku pikkusest, radiaatorite arvust ja põrandakütte olemasolust. Meie torumees aitab valida õige pumba teie süsteemi jaoks.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: currentLang === 'ru' ? 'Как часто нужно обслуживать циркуляционный насос?' : 'Kui tihti peaks tsirkulatsioonipumpa hooldama?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: currentLang === 'ru'
+            ? 'Рекомендуем проводить обслуживание циркуляционного насоса раз в год, желательно перед началом отопительного сезона. Это включает проверку, очистку и при необходимости ремонт.'
+            : 'Tsirkulatsioonipumba hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab kontrollimist, puhastamist ja vajadusel remonti.',
+        },
+      },
+    ],
+  })}
+/>
+
 <!-- Estonian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-et">
+  <LangOnly lang="et" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -75,9 +154,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <!-- Russian header -->
-  <header class="bg-trust-blue text-white py-6 px-4 blog-ru">
+  <LangOnly lang="ru" activeLang={currentLang}>
+<header class="bg-trust-blue text-white py-6 px-4">
     <div class="max-w-5xl mx-auto">
       <nav class="text-sm text-gray-300 mb-3" aria-label="Breadcrumb">
         <ol class="flex flex-wrap items-center gap-1">
@@ -104,9 +185,11 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
       </p>
     </div>
   </header>
+</LangOnly>
 
   <main class="py-12 px-4 bg-gray-50 min-h-screen">
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-et">
+    <LangOnly lang="et" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -178,16 +261,22 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
 
       <!-- Category Section -->
       <section class="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-et">Rohkem artikleid küttesüsteemi kohta</h2>
-        <h2 class="text-2xl font-bold text-trust-blue mb-4 blog-ru">Больше статей об отоплении</h2>
+        <LangOnly lang="et" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Rohkem artikleid küttesüsteemi kohta</h2>
         <div class="flex justify-center">
-          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-et">
+          <a href="/blog/kategoria/kuttesusteem" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Küttesüsteemi artiklid
           </a>
-          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors blog-ru">
+        </div>
+      </LangOnly>
+      <LangOnly lang="ru" activeLang={currentLang}>
+        <h2 class="text-2xl font-bold text-trust-blue mb-4">Больше статей об отоплении</h2>
+        <div class="flex justify-center">
+          <a href="/ru/blog/kategoria/otoplenije" class="inline-block bg-trust-blue hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
             Статьи об отоплении
           </a>
         </div>
+      </LangOnly>
       </section>
 
       <!-- FAQ Section -->
@@ -323,8 +412,10 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         <p class="text-sm mt-4 opacity-90">Tsirkulatsioonipumba toruabi Tallinnas 24/7 | Tsirkulatsioonipumba paigaldus | Tsirkulatsioonipumba remont | Tsirkulatsioonipumba hooldus</p>
       </section>
     </article>
+</LangOnly>
 
-    <article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8 blog-ru">
+    <LangOnly lang="ru" activeLang={currentLang}>
+<article class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-6 md:p-8">
       <figure class="mb-6">
         <img
           src="/photos/sistema-otoplenija-connectors-liking.webp"
@@ -410,105 +501,6 @@ const canonicalUrl = currentLang === 'ru' ? `${siteOrigin}${ruPath(articlePath)}
         </a>
       </section>
     </article>
+</LangOnly>
   </main>
 </BaseLayout>
-
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Что такое циркуляционный насос и зачем он нужен?' : 'Mis on tsirkulatsioonipump ja miks see on vajalik?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Циркуляционный насос обеспечивает постоянное движение воды в системе отопления, позволяя равномерно распределять тепло во всех помещениях. Без циркуляционного насоса система отопления может работать неэффективно.'
-            : 'Tsirkulatsioonipump tagab pideva vee liikumise küttesüsteemis, võimaldades ühtlast soojusjaotust kõigis ruumides. Ilma tsirkulatsioonipumbata võib küttesüsteem töötada ebaefektiivselt.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Сколько стоит установка циркуляционного насоса в Таллине?' : 'Kui palju maksab tsirkulatsioonipumba paigaldus Tallinnas?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Стоимость установки циркуляционного насоса в Таллине зависит от типа насоса и сложности системы. Установка насоса с мокрым ротором может стоить 300-600€, установка насоса с сухим ротором 500-1000€.'
-            : 'Tsirkulatsioonipumba paigalduse hind Tallinnas sõltub pumba tüübist ja süsteemi keerukusest. Märja rootoriga pumba paigaldus võib maksta 300-600€, kuiva rootoriga pumba paigaldus 500-1000€.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Когда нужен циркуляционный насос?' : 'Millal on vaja tsirkulatsioonipumpa?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Циркуляционный насос необходим для всех закрытых систем отопления, особенно для больших частных домов и систем теплого пола. Он обеспечивает равномерное распределение тепла и лучшую энергоэффективность.'
-            : 'Tsirkulatsioonipump on vajalik kõigile suletud küttesüsteemidele, eriti suurematele eramajadele ja põrandakütte süsteemidele. See tagab ühtlase soojusjaotuse ja parema energiatõhususe.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как выбрать правильный циркуляционный насос?' : 'Kuidas valida õige tsirkulatsioonipump?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Выбор циркуляционного насоса зависит от объема системы, длины трубопровода, количества радиаторов и наличия теплого пола. Наш мастер поможет выбрать правильный насос для вашей системы.'
-            : 'Tsirkulatsioonipumba valik sõltub süsteemi mahust, torustiku pikkusest, radiaatorite arvust ja põrandakütte olemasolust. Meie torumees aitab valida õige pumba teie süsteemi jaoks.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: currentLang === 'ru' ? 'Как часто нужно обслуживать циркуляционный насос?' : 'Kui tihti peaks tsirkulatsioonipumpa hooldama?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: currentLang === 'ru'
-            ? 'Рекомендуем проводить обслуживание циркуляционного насоса раз в год, желательно перед началом отопительного сезона. Это включает проверку, очистку и при необходимости ремонт.'
-            : 'Tsirkulatsioonipumba hooldust soovitame teha kord aastas, eelistatavalt enne küttehooaja algust. See hõlmab kontrollimist, puhastamist ja vajadusel remonti.',
-        },
-      },
-    ],
-  })}
-/>
-
-<!-- BreadcrumbList Schema -->
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    '@id': canonicalUrl + '#breadcrumb',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: currentLang === 'ru' ? 'Главная' : 'Avaleht',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru' : 'https://toruabii.ee',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: currentLang === 'ru' ? 'Блог' : 'Blogi',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog' : 'https://toruabii.ee/blog',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: currentLang === 'ru' ? 'Отопление' : 'Küttesüsteem',
-        item: currentLang === 'ru' 
-          ? 'https://toruabii.ee/ru/blog/kategoria/otoplenije'
-          : 'https://toruabii.ee/blog/kategoria/kuttesusteem',
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        name: currentLang === 'ru'
-          ? 'Циркуляционный насос в системе отопления'
-          : 'Tsirkulatsioonipump küttesüsteemis',
-        item: currentLang === 'ru' ? 'https://toruabii.ee/ru/blog/tsirkulatsioonipump' : 'https://toruabii.ee/blog/tsirkulatsioonipump',
-      },
-    ],
-  })}
-/>
