@@ -1,96 +1,46 @@
 ---
-// Gallery component with horizontal scroll and arrow navigation
+// Galerii — ainult failid, mis on olemas public/photos/
 const photos = [
   {
-    src: '/photos/prokladka1.webp',
-    alt: 'Toruühenduse tihend ja protseduur Tallinnas – lekke likvideerimine ja toruabi remont',
-    title: 'Toruühenduse tihend ja toruabi remont'
+    src: '/photos/avariitehtus.webp',
+    alt: 'Avarii toruabi ja sanitaartehnilised avariitööd Tallinnas – toruabii.ee',
+    title: 'Avarii toruabi 24/7',
   },
   {
-    src: '/photos/sifon.webp',
-    alt: 'Valamu sifoon ja äravool – sanitaartehnilised tööd ja kanalisatsiooni toruabi Tallinnas',
-    title: 'Valamu sifoon ja äravool'
+    src: '/photos/sanitaretehtus.webp',
+    alt: 'Sanitaartehnilised tööd ja ummistuste likvideerimine Tallinnas',
+    title: 'Sanitaartehnilised tööd',
   },
   {
-    src: '/photos/photo_2_2026-01-12_17-17-35.webp',
-    alt: 'Toruabi tööd Tallinnas - Avarii toruabi ja sanitaartehnilised tööd remont',
-    title: 'Avarii toruabi remont Tallinnas'
+    src: '/photos/kameraauring.webp',
+    alt: 'Tehnosüsteemide videouuring ja kaamerauuring – toruabi diagnostika',
+    title: 'Tehnosüsteemide videouuring',
   },
   {
     src: '/photos/maintoruabii.webp',
-    alt: 'Kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve toruabi kanalisatsiooni puhastus',
-    title: 'Kanalisatsiooni survepesu – toruabi'
+    alt: 'Kanalisatsiooni survepesu Tallinnas ja Harjumaal – kõrgsurve toruabi',
+    title: 'Kanalisatsiooni survepesu',
   },
   {
-    src: '/photos/photo_3_2026-01-12_17-17-35.webp',
-    alt: 'Sanitaartehnilised tööd ja toruabi Tallinnas - Torustike remont ja kanalisatsiooni toruabi',
-    title: 'Sanitaartehnilised tööd Tallinnas'
+    src: '/photos/trassideremondi.webp',
+    alt: 'Vee- ja kanalisatsiooni trasside remont ja ehitus Tallinnas',
+    title: 'Trasside remont ja ehitus',
   },
   {
-    src: '/photos/photo_6_2026-01-12_17-17-35.webp',
-    alt: 'Küttesüsteemi paigaldus Tallinnas - Kütte remont',
-    title: 'Küttesüsteemi paigaldus Tallinnas'
+    src: '/photos/potipaigaldaminejpg.webp',
+    alt: 'WC potipaigaldus ja sanitaarseadmete paigaldus Tallinnas',
+    title: 'WC potipaigaldus',
   },
   {
-    src: '/photos/photo_7_2026-01-12_17-17-35.webp',
-    alt: 'Boileri paigaldus Tallinnas - Boileri remont',
-    title: 'Boileri paigaldus Tallinnas'
+    src: '/photos/mobileversion-main.webp',
+    alt: 'Toruabi meister tööl Tallinnas – toruabii.ee',
+    title: 'Toruabi Tallinnas',
   },
   {
-    src: '/photos/photo_8_2026-01-12_17-17-35.webp',
-    alt: 'Kanalisatsiooni remont Tallinnas - Torustike avamine',
-    title: 'Kanalisatsiooni remont Tallinnas'
+    src: '/photos/toruabii.webp',
+    alt: 'Toruabii.ee – toruabi ja sanitaarteenused',
+    title: 'Toruabii.ee',
   },
-  {
-    src: '/photos/photo_12_2026-01-12_17-17-35.webp',
-    alt: 'WC potipaigaldus Tallinnas - Sanitaarseadmete paigaldus',
-    title: 'WC potipaigaldus Tallinnas'
-  },
-  {
-    src: '/photos/photo_27_2026-01-12_17-17-35.webp',
-    alt: 'Küttesüsteemi renoveerimine Tallinnas - Kütte remont',
-    title: 'Küttesüsteemi renoveerimine Tallinnas'
-  },
-  {
-    src: '/photos/photo_30_2026-01-12_17-17-35.webp',
-    alt: 'Toruabi tööd Harjumaal - Avarii toruabi',
-    title: 'Toruabi tööd Harjumaal'
-  },
-  {
-    src: '/photos/photo_33_2026-01-12_17-17-35.webp',
-    alt: 'Rasvapüüduri puhastus Tallinnas - Torustike hooldus',
-    title: 'Rasvapüüduri puhastus Tallinnas'
-  },
-  {
-    src: '/photos/photo_34_2026-01-12_17-17-35.webp',
-    alt: 'Sanitaartehnilised tööd Harjumaal - Toruabi remont',
-    title: 'Sanitaartehnilised tööd Harjumaal'
-  },
-  {
-    src: '/photos/luk-na-ulice.webp',
-    alt: 'Küttesüsteemi lukustus Tallinnas - Kütte remont ja hooldus',
-    title: 'Küttesüsteemi lukustus Tallinnas'
-  },
-  {
-    src: '/photos/otoplenije-batarei-liking.webp',
-    alt: 'Küttepatareide paigaldus Tallinnas - Radiaatorite remont',
-    title: 'Küttepatareide paigaldus Tallinnas'
-  },
-  {
-    src: '/photos/sistema-otoplenija-connectors-liking.webp',
-    alt: 'Küttesüsteemi ühendused Tallinnas - Kütte torustiku remont',
-    title: 'Küttesüsteemi ühendused Tallinnas'
-  },
-  {
-    src: '/photos/spusknoj-klapan-na-radiatore.webp',
-    alt: 'Õhuklapi paigaldus radiaatorile Tallinnas - Kütte remont',
-    title: 'Õhuklapi paigaldus radiaatorile'
-  },
-  {
-    src: '/photos/spusknoj-na-radiatore-2.webp',
-    alt: 'Radiaatori õhuklapi remont Tallinnas - Kütte hooldus',
-    title: 'Radiaatori õhuklapi remont Tallinnas'
-  }
 ];
 ---
 
@@ -123,7 +73,7 @@ const photos = [
             loading="lazy"
             decoding="async"
             width="400"
-            height="400"
+            height="256"
           />
         </div>
       </div>
@@ -186,7 +136,7 @@ const photos = [
     
     if (!gallery || !prevBtn || !nextBtn) return;
     
-    const scrollAmount = 320; // Width of one item + gap
+    const scrollAmount = 320;
     
     function updateArrowVisibility() {
       const { scrollLeft, scrollWidth, clientWidth } = gallery;
@@ -216,11 +166,7 @@ const photos = [
     });
     
     gallery.addEventListener('scroll', updateArrowVisibility);
-    
-    // Initial check
     updateArrowVisibility();
-    
-    // Update on resize
     window.addEventListener('resize', updateArrowVisibility);
   })();
 </script>

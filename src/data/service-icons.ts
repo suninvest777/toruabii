@@ -23,76 +23,36 @@ export function serviceIconAbsolute(path: string): string {
   return `${SITE_ORIGIN}${path}`;
 }
 
-/** ItemList / ImageObject — sama järjekord kui avalehe teenuste plokis */
+/** ItemList / ImageObject — sama järjekord kui avalehe teenuste plokis (HOME_SERVICES) */
 export const SERVICE_IMAGE_SCHEMA_ITEMS = [
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.toruabiAvariitood),
-    description: 'Toruabi ja avariitööd 24h - Sanitaartehnilised avariitööd',
+    contentUrl: serviceIconAbsolute('/photos/avariitehtus.webp'),
+    description: 'Toruabi ja avariitööd 24h',
     name: 'Toruabi ja avariitööd',
   },
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.ujustamineLekvideerimine),
-    description: 'Ummistuste likvideerimine 24h - Kiire reageerimine ummistustele',
+    contentUrl: serviceIconAbsolute('/photos/sanitaretehtus.webp'),
+    description: 'Ummistuste likvideerimine 24h',
     name: 'Ummistuste likvideerimine',
   },
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.tehnosusteemideVideouuring),
-    description: 'Tehnosüsteemide videouuring - Professionaalne kaamerauuring',
+    contentUrl: serviceIconAbsolute('/photos/kameraauring.webp'),
+    description: 'Tehnosüsteemide videouuring',
     name: 'Tehnosüsteemide videouuring',
   },
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.ujustamineLekvideerimine),
-    description: 'Survepesu - Kanalisatsioonisüsteemide survepesu',
+    contentUrl: serviceIconAbsolute('/photos/maintoruabii.webp'),
+    description: 'Kanalisatsiooni survepesu',
     name: 'Survepesu',
   },
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.rasvapuuduriPuhastus),
-    description: 'Rasvapüüduri puhastus - Rasvapüüduri puhastus ja trasside survepesu',
-    name: 'Rasvapüüduri puhastus',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.wcPotipaigaldus),
-    description: 'WC potipaigaldus - WC potipaigaldus, vahetus ja remont',
+    contentUrl: serviceIconAbsolute('/photos/potipaigaldaminejpg.webp'),
+    description: 'WC potipaigaldus',
     name: 'WC potipaigaldus',
   },
   {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.kuttesusteemideRenoveerimine),
-    description: 'Küttesüsteemi renoveerimine - Küttesüsteemide renoveerimine, ehitus ja remont',
-    name: 'Küttesüsteemi renoveerimine',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.veeJaKanalisatsiooni),
-    description: 'Kaevetööd - Vee ja kanalisatsiooni trasside remont ja ehitus',
-    name: 'Kaevetööd',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.veeJaKanalisatsiooni),
-    description: 'Trasside remont ja ehitus - Vee ja kanalisatsiooni trasside remont ja ehitus',
+    contentUrl: serviceIconAbsolute('/photos/trassideremondi.webp'),
+    description: 'Trasside remont ja ehitus',
     name: 'Trasside remont ja ehitus',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.kute),
-    description: 'Küttesüsteemi läbipesu - Kütte, põrandaküte, soojusõlme hooldus',
-    name: 'Küttesüsteemi läbipesu',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.saanitar),
-    description: 'Sanitaarseadmete paigaldus - Kraanikausid, segistid, segisti vahetus',
-    name: 'Sanitaarseadmete paigaldus',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.boileriPaigaldus),
-    description: 'Boileri paigaldus ja remont - Boileri paigaldus, remont ja hooldus',
-    name: 'Boileri paigaldus ja remont',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.kodumasinaPaigaldamine),
-    description: 'Kodumasina paigaldamine - Kodumasina paigaldamine, vahetus ja hooldus',
-    name: 'Kodumasina paigaldamine',
-  },
-  {
-    contentUrl: serviceIconAbsolute(SERVICE_ICONS.hooldusleping),
-    description: 'Hooldusleping KÜ-le - Pikaajaline hooldusleping',
-    name: 'Hooldusleping KÜ-le',
   },
 ] as const;

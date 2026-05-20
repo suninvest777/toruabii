@@ -136,17 +136,29 @@ html.home-theme body {
   height: 48px;
   border-radius: 50%;
   border: 2px solid var(--brand-blue);
-  background: #fff;
+  background: linear-gradient(145deg, #ffffff 0%, #eff8fd 100%);
+  box-shadow: 0 2px 8px rgba(0, 126, 184, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
-.service-card-icon-circle img {
+.service-card:hover .service-card-icon-circle,
+.service-card:focus-within .service-card-icon-circle {
+  border-color: #0d517c;
+  box-shadow: 0 4px 14px rgba(0, 126, 184, 0.22);
+  transform: scale(1.05);
+}
+
+.service-card-icon-svg {
   width: 28px;
   height: 28px;
-  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Stats bar — overlaps hero, rounded top only */

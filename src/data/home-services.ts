@@ -1,8 +1,8 @@
-import { SERVICE_ICONS } from './service-icons';
+export type ServiceIconId = 'emergency' | 'clog' | 'camera' | 'pressure' | 'toilet' | 'pipes';
 
 export type HomeServiceItem = {
   path: string;
-  icon: string;
+  icon: ServiceIconId;
   image: string;
   titleEt: string;
   titleRu: string;
@@ -10,12 +10,12 @@ export type HomeServiceItem = {
   descRu: string;
 };
 
-/** Avalehe teenuste grid ja menüü (9 põhiteenust) */
+/** Avalehe teenuste grid ja menüü */
 export const HOME_SERVICES: HomeServiceItem[] = [
   {
     path: '/toruabi-avariiline-valjakutse',
-    icon: SERVICE_ICONS.toruabiAvariitood,
-    image: '/photos/luk-na-ulice.webp',
+    icon: 'emergency',
+    image: '/photos/avariitehtus.webp',
     titleEt: 'Toruabi ja avariitööd 24h',
     titleRu: 'Сантехнические аварийные работы 24ч',
     descEt: 'Ööpäevaringne sanitaartehniline abi',
@@ -23,8 +23,8 @@ export const HOME_SERVICES: HomeServiceItem[] = [
   },
   {
     path: '/toruabi-ummistuste-likvideerimine',
-    icon: SERVICE_ICONS.ujustamineLekvideerimine,
-    image: '/photos/sifon.webp',
+    icon: 'clog',
+    image: '/photos/sanitaretehtus.webp',
     titleEt: 'Ummistuste likvideerimine',
     titleRu: 'Устранение засоров',
     descEt: 'Toruabi ummistus ja kanalisatsiooni toruabi 24/7',
@@ -32,8 +32,8 @@ export const HOME_SERVICES: HomeServiceItem[] = [
   },
   {
     path: '/hinnakiri',
-    icon: SERVICE_ICONS.tehnosusteemideVideouuring,
-    image: '/photos/prokladka1.webp',
+    icon: 'camera',
+    image: '/photos/kameraauring.webp',
     titleEt: 'Tehnosüsteemide videouuring',
     titleRu: 'Видеообследование техносистем',
     descEt: 'Professionaalne kaamerauuring',
@@ -41,7 +41,7 @@ export const HOME_SERVICES: HomeServiceItem[] = [
   },
   {
     path: '/toruabi-kanalisatsiooni-survepesu',
-    icon: SERVICE_ICONS.ujustamineLekvideerimine,
+    icon: 'pressure',
     image: '/photos/maintoruabii.webp',
     titleEt: 'Survepesu',
     titleRu: 'Гидродинамическая промывка',
@@ -49,18 +49,9 @@ export const HOME_SERVICES: HomeServiceItem[] = [
     descRu: 'Гидропромывка канализационных линий',
   },
   {
-    path: '/toruabi-rasvapuuduri-puhastus',
-    icon: SERVICE_ICONS.rasvapuuduriPuhastus,
-    image: '/photos/boiler1.webp',
-    titleEt: 'Rasvapüüduri puhastus',
-    titleRu: 'Очистка жироуловителя',
-    descEt: 'Rasvapüüduri puhastus ja trasside survepesu',
-    descRu: 'Очистка жироуловителя и промывка трасс',
-  },
-  {
     path: '/hinnakiri',
-    icon: SERVICE_ICONS.wcPotipaigaldus,
-    image: '/photos/sifon.webp',
+    icon: 'toilet',
+    image: '/photos/potipaigaldaminejpg.webp',
     titleEt: 'WC potipaigaldus',
     titleRu: 'Установка унитаза',
     descEt: 'WC potipaigaldus, vahetus ja remont',
@@ -68,26 +59,8 @@ export const HOME_SERVICES: HomeServiceItem[] = [
   },
   {
     path: '/hinnakiri',
-    icon: SERVICE_ICONS.kuttesusteemideRenoveerimine,
-    image: '/photos/otoplenije-batarei-liking.webp',
-    titleEt: 'Küttesüsteemi renoveerimine',
-    titleRu: 'Реконструкция системы отопления',
-    descEt: 'Küttesüsteemide renoveerimine, ehitus ja remont',
-    descRu: 'Реконструкция, строительство и ремонт отопления',
-  },
-  {
-    path: '/hinnakiri',
-    icon: SERVICE_ICONS.veeJaKanalisatsiooni,
-    image: '/photos/luk-na-ulice.webp',
-    titleEt: 'Kaevetööd',
-    titleRu: 'Земляные работы',
-    descEt: 'Professionaalsed kaevetööd',
-    descRu: 'Профессиональные земляные работы',
-  },
-  {
-    path: '/hinnakiri',
-    icon: SERVICE_ICONS.veeJaKanalisatsiooni,
-    image: '/photos/prokladka1.webp',
+    icon: 'pipes',
+    image: '/photos/trassideremondi.webp',
     titleEt: 'Trasside remont ja ehitus',
     titleRu: 'Ремонт и строительство трасс',
     descEt: 'Vee ja kanalisatsiooni trasside remont ja ehitus',

@@ -1,6 +1,7 @@
 ---
 import { HOME_SERVICES } from '../../data/home-services';
 import { ruPath } from '../../utils/i18n-paths';
+import ServiceCardIcon from './ServiceCardIcon.astro';
 
 interface Props {
   lang: 'et' | 'ru';
@@ -40,7 +41,7 @@ const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
           </div>
           <div class="service-card-overlay">
             <span class="service-card-icon-circle" aria-hidden="true">
-              <img src={service.icon} alt="" width="28" height="28" loading="lazy" aria-hidden="true" />
+              <ServiceCardIcon id={service.icon} />
             </span>
             <div class="min-w-0 flex-1">
               <h3 class="font-display font-bold text-base home-text mb-1 leading-snug">

@@ -68,14 +68,20 @@ const serviceLinksRu = [
   { path: serviceLandingSeo['ummistuste-likvideerimine'].path, anchor: 'устранение засоров' },
   { path: serviceLandingSeo['kanalisatsiooni-survepesu'].path, anchor: 'промывка канализации' },
 ];
+
+const showTallinnBlock = tallinnNeighborLinks.length > 0;
+const showHarjuBlock = harjuNeighborLinks.length > 0;
 ---
 
 <section class="bg-gray-50 rounded-lg p-8 mb-8">
-  <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-et">{tallinnHeadingEt}</h2>
-  <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-ru">{tallinnHeadingRu}</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-    {
-      tallinnNeighborLinks.map((d) => (
+  {
+    showTallinnBlock && (
+      <>
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-et">{tallinnHeadingEt}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-trust-blue mb-6 text-center blog-ru">{tallinnHeadingRu}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          {
+            tallinnNeighborLinks.map((d) => (
         <div class="bg-white rounded-lg shadow-md transition-shadow hover:shadow-lg h-full overflow-hidden">
           <a
             href={d.path}
@@ -92,9 +98,12 @@ const serviceLinksRu = [
             <p class="text-sm text-gray-600">{d.descriptionRu}</p>
           </a>
         </div>
-      ))
-    }
-  </div>
+            ))
+          }
+        </div>
+      </>
+    )
+  }
 
   {
     showHarjuBlock && (

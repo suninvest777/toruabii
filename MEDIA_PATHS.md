@@ -12,9 +12,12 @@
 |------|------|-----|
 | Logo (header, footer, JSON-LD) | `toruabii.webp` | `/photos/toruabii.webp` |
 | Hero / default OG image | `maintoruabii.webp` | `/photos/maintoruabii.webp` |
-| Mobile hero (optional) | `mobileversion-main.webp` | `/photos/mobileversion-main.webp` |
-
-Replaces former `24toruabilogo.webp` and `main-photo-santehnik.webp`.
+| Mobile hero | `mobileversion-main.webp` | `/photos/mobileversion-main.webp` |
+| Avarii tööd (teenuste grid) | `avariitehtus.webp` | `/photos/avariitehtus.webp` |
+| Sanitaartööd / ummistus | `sanitaretehtus.webp` | `/photos/sanitaretehtus.webp` |
+| Videouuring | `kameraauring.webp` | `/photos/kameraauring.webp` |
+| WC potipaigaldus | `potipaigaldaminejpg.webp` | `/photos/potipaigaldaminejpg.webp` |
+| Trasside remont | `trassideremondi.webp` | `/photos/trassideremondi.webp` |
 
 ## Removed (24toruabi clone)
 
