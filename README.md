@@ -8,7 +8,7 @@ Marketing site for **toruabii.ee** - emergency plumbing (Toruabi) in Estonia. Bu
 - Tailwind CSS (`@astrojs/tailwind`)
 - Partytown (analytics forwarding)
 - [@astrojs/cloudflare](https://docs.astro.build/en/guides/integrations-guide/cloudflare/) - build output in `dist/`, Worker entry `dist/_worker.js`
-- [Wrangler](https://developers.cloudflare.com/workers/wrangler/) - project name **`toruabiiee`** (`wrangler.jsonc`)
+- [Wrangler](https://developers.cloudflare.com/workers/wrangler/) - project name **`toruabii`** (`wrangler.jsonc`)
 
 ## Local development (Windows)
 
@@ -49,13 +49,13 @@ For production, set the same names in the **Cloudflare Workers** dashboard (or v
 ## Build & deploy (Cloudflare Workers)
 
 1. `npm run build` - produces `dist/` including `_worker.js` for Wrangler.
-2. `npm run deploy` - runs build + `wrangler deploy` using **`wrangler.jsonc`** (`name`: `toruabiiee`, `nodejs_compat`, assets binding `ASSETS`).
+2. `npm run deploy` - runs build + `wrangler deploy` using **`wrangler.jsonc`** (`name`: `toruabii`, `nodejs_compat`, assets binding `ASSETS`).
 
 Full steps, domain, DNS, and checklist: **[DEPLOY-CLOUDFLARE.md](./DEPLOY-CLOUDFLARE.md)** and **[CLOUDFLARE-CHECKLIST.md](./CLOUDFLARE-CHECKLIST.md)**.
 
 ## Cloudflare notes
 
-- **Worker name:** `toruabiiee` (Wrangler `name` in `wrangler.jsonc`).
+- **Worker name:** `toruabii` (Wrangler `name` in `wrangler.jsonc`).
 - **Site URL:** `https://toruabii.ee` (`site` in `astro.config.mjs`).
 - **Adapter:** `@astrojs/cloudflare` - output must match Wrangler (`main`: `./dist/_worker.js/index.js`, `assets.directory`: `./dist`).
 - **API routes:** `src/pages/api/callback.ts`, `track-call.ts` (Telegram notifications) - require Worker env vars above.

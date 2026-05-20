@@ -1,6 +1,6 @@
-# Deploy toruabii.ee to Cloudflare Workers
+﻿# Deploy toruabii.ee to Cloudflare Workers
 
-This project uses **Wrangler** with **`wrangler.jsonc`** (Worker name: **`toruabiiee`**). Deploy command from the repo root:
+This project uses **Wrangler** with **`wrangler.jsonc`** (Worker name: **`toruabii`**). Deploy command from the repo root:
 
 ```bash
 npm run deploy
@@ -35,11 +35,11 @@ Or in one step:
 npm run deploy
 ```
 
-Confirm in the Cloudflare dashboard: **Workers & Pages** → worker **`toruabiiee`**.
+Confirm in the Cloudflare dashboard: **Workers & Pages** → worker **`toruabii`**.
 
 ## 3. Environment variables (Cloudflare dashboard)
 
-**Workers & Pages** → **toruabiiee** → **Settings** → **Variables and Secrets**
+**Workers & Pages** → **toruabii** → **Settings** → **Variables and Secrets**
 
 | Name | Type | Purpose |
 |------|------|---------|
@@ -54,14 +54,14 @@ npx wrangler secret put TELEGRAM_CHAT_ID
 ```
 
 Redeploy after changing variables if needed: `npm run deploy`.
-**Telegram (production):** Form and call notifications need **both** `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` on worker **toruabiiee** (dashboard **Variables and Secrets** or `wrangler secret put`). Local `.env` does not apply after deploy. Use the same values as your working local `.env`; then `npx wrangler secret list` should list both secret names. Redeploy after changes. See [TELEGRAM-SETUP.md](./TELEGRAM-SETUP.md) for chat ID discovery.
+**Telegram (production):** Form and call notifications need **both** `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` on worker **toruabii** (dashboard **Variables and Secrets** or `wrangler secret put`). Local `.env` does not apply after deploy. Use the same values as your working local `.env`; then `npx wrangler secret list` should list both secret names. Redeploy after changes. See [TELEGRAM-SETUP.md](./TELEGRAM-SETUP.md) for chat ID discovery.
 
 
 **Do not** commit real values in `.env` to git.
 
 ## 4. Custom domain (toruabii.ee)
 
-1. In the dashboard: **Workers & Pages** → **toruabiiee** → **Settings** → **Domains & Routes** → **Add Custom Domain** → `toruabii.ee` (and `www.toruabii.ee` if used).
+1. In the dashboard: **Workers & Pages** → **toruabii** → **Settings** → **Domains & Routes** → **Add Custom Domain** → `toruabii.ee` (and `www.toruabii.ee` if used).
 2. Cloudflare may create DNS records automatically when the zone is on the same account.
 
 If you configure DNS manually:
@@ -80,7 +80,7 @@ Ensure the zone **toruabii.ee** is active on Cloudflare (orange cloud proxy is f
 
 File: **`wrangler.jsonc`**
 
-- `name`: `toruabiiee`
+- `name`: `toruabii`
 - `main`: `./dist/_worker.js/index.js`
 - `compatibility_date`: `2024-09-23`
 - `compatibility_flags`: `["nodejs_compat"]`
@@ -103,5 +103,5 @@ See `.github/workflows/deploy.yml`. Add repository secrets:
 |-------|--------|
 | `dist/_worker.js` missing | Run `npm run build` first |
 | 401 on `wrangler deploy` | Run `npx wrangler login` or fix API token in CI |
-| Telegram not firing | Check secrets on Worker **toruabiiee**, not only local `.env` |
+| Telegram not firing | Check secrets on Worker **toruabii**, not only local `.env` |
 | Wrong site URL | Update `site` in `astro.config.mjs` and rebuild |

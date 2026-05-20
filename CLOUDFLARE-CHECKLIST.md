@@ -21,7 +21,7 @@ Use before `npm run deploy` or merging to `main` (if CI deploy is enabled).
 
 ## Cloudflare / DNS
 
-- [ ] Worker **`toruabiiee`** deploy succeeds (`npx wrangler deploy`)
+- [ ] Worker **`toruabii`** deploy succeeds (`npx wrangler deploy`)
 - [ ] Custom domain **toruabii.ee** attached to the Worker (dashboard **Domains & Routes**)
 - [ ] DNS: zone on Cloudflare; **CNAME** or custom-domain wizard points to the Worker (no stale A record to old host)
 - [ ] HTTPS / SSL active on the zone
