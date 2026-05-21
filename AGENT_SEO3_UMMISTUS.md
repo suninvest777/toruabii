@@ -22,8 +22,8 @@
 
 ## Meta descriptions
 
-- **ET:** Toruabi ummistuste likvideerimine ja kanalisatsiooni ummistuse lahendamine Tallinnas ja Harjumaal. Toru ummistus Tallinn – kiire toruabi 24/7, väljasõit 0 €. +372 5181 112.
-- **RU:** Торуаби: устранение засоров и прочистка канализации в Таллине и Харьюмаа 24/7. Засор канализации – быстрый выезд, 0 €. +372 5181 112.
+- **ET:** Toruabi ummistuste likvideerimine ja kanalisatsiooni ummistuse lahendamine Tallinnas ja Harjumaal. Toru ummistus Tallinn – kiire toruabi 24/7, väljasõit 0 €. +372 5633 3332.
+- **RU:** Торуаби: устранение засоров и прочистка канализации в Таллине и Харьюмаа 24/7. Засор канализации – быстрый выезд, 0 €. +372 5633 3332.
 
 ## Changes by file
 
@@ -67,7 +67,7 @@
 
 ## Not changed
 
-- Phone: +372 5181 112 (unchanged).
+- Phone: +372 5633 3332 (unchanged).
 - No bot/crawler-specific content added.
 - Other blog posts (meta only on `kanalisatsiooni-ummistus-mida-teha`).
 

@@ -14,7 +14,7 @@ const siteUrl = 'https://toruabii.ee';
 const pagePath = '/toruabi-avariiline-valjakutse';
 const landing = serviceLandingSeo['avariiline-valjakutse'];
 
-const phoneNumber = '+372 5181 112';
+const phoneNumber = '+372 5633 3332';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 
 const currentLang = Astro.url.searchParams.get('lang') === 'ru' ? 'ru' : 'et';
@@ -83,7 +83,7 @@ const plumbingLd = {
   logo: `${siteUrl}/photos/toruabii.webp`,
   image: `${siteUrl}/photos/maintoruabii.webp`,
   description: pageDescription,
-  telephone: '+3725181112',
+  telephone: '+37256333332',
   priceRange: '€€',
   paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer'],
   currenciesAccepted: 'EUR',
@@ -261,10 +261,10 @@ const faqLd = {
   <footer class="bg-trust-blue text-white py-8 px-4 text-center">
     <p class="mb-2"><a href={`tel:${phoneLink}`} class="text-xl font-bold text-emergency-red">{phoneNumber}</a></p>
     <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-et">
-      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112
+      Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5633 3332
     </p>
     <p class="text-xs text-gray-400 mb-2 max-w-xl mx-auto blog-ru">
-      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112
+      Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5633 3332
     </p>
     <FooterLegal variant="bilingual" />
     <p class="text-sm text-gray-300">© 2026 toruabii.ee - Kõik õigused kaitstud</p>

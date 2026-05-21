@@ -19,7 +19,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const phoneNumber = '+372 5181 112';
+const phoneNumber = '+372 5633 3332';
 const phoneLink = phoneNumber.replace(/\s/g, '');
 const siteUrl = 'https://toruabii.ee';
 const H = (pathname: string) => (lang === 'ru' ? ruPath(pathname) : pathname);
@@ -165,7 +165,7 @@ const websiteJson = {
           <span class="home-ssr-et">Hinnad, helistamine ja tagasiside</span><span class="home-ssr-ru">Цены, звонок и заявка</span>
         </h3>
         <p class="text-center home-text-muted mb-6 max-w-2xl mx-auto">
-          <span class="home-ssr-et">Meie toruabi hinnad on konkurentsivõimelised ja läbipaistvad. Väljasõit on tasuta Tallinna piires, ja meie torumees annab alati selge hinnangu enne töö algust. Vaata <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">hinnakirja</a>, helista +372 5181 112 või jätke tagasiside — võtame ühendust.</span><span class="home-ssr-ru">Наши цены конкурентные и прозрачные. Выезд по Таллину — 0 €. Смотрите <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">прайс</a>, звоните +372 5181 112 или оставьте заявку — перезвоним.</span>
+          <span class="home-ssr-et">Meie toruabi hinnad on konkurentsivõimelised ja läbipaistvad. Väljasõit on tasuta Tallinna piires, ja meie torumees annab alati selge hinnangu enne töö algust. Vaata <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">hinnakirja</a>, helista +372 5633 3332 või jätke tagasiside — võtame ühendust.</span><span class="home-ssr-ru">Наши цены конкурентные и прозрачные. Выезд по Таллину — 0 €. Смотрите <a href={H('/hinnakiri')} class="text-trust-blue underline font-semibold">прайс</a>, звоните +372 5633 3332 или оставьте заявку — перезвоним.</span>
         </p>
       </div>
       <CallbackForm variant="home" />

@@ -8,7 +8,7 @@ import {
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const requestId = Date.now().toString(36);
 
   let data: {
@@ -54,7 +54,7 @@ export const POST: APIRoute = async ({ request }) => {
     timestamp: timestamp || formatTallinnTimestamp(),
   });
 
-  const sent = await sendTelegramMessage(message);
+  const sent = await sendTelegramMessage(message, locals.runtime?.env);
 
   if (!sent.ok) {
     if (sent.skipped) {

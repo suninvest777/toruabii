@@ -76,13 +76,13 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     linkAnchorEt: 'toruabi kesklinn',
     linkAnchorRu: 'торуаби кесклинн',
     descriptionEt:
-      'Toruabi Kesklinn: avarii toruabi ja kanalisatsioon Tallinna südames 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Kesklinn: avarii toruabi ja kanalisatsioon Tallinna südames 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Кесклинн: аварийная сантехника и канализация в центре Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Кесклинн: аварийная сантехника и канализация в центре Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     introEt:
-      'Toruabi Kesklinn on mõeldud vanade kivimajade, kontorite ja restoranide torustikele, kus vajad kiiret meistrit. Brigaad tunneb kesklinna parkimist ja ligipääsu, et avarii toruabi jõuaks objektile ilma viivitusteta. Kui otsid toruabi tallinn kesklinna piirkonnas, jõuame tavaliselt 20–40 minutiga. Helista +372 5181 112, kui vajad toruabi Kesklinnas ööpäevaringselt.',
+      'Toruabi Kesklinn on mõeldud vanade kivimajade, kontorite ja restoranide torustikele, kus vajad kiiret meistrit. Brigaad tunneb kesklinna parkimist ja ligipääsu, et avarii toruabi jõuaks objektile ilma viivitusteta. Kui otsid toruabi tallinn kesklinna piirkonnas, jõuame tavaliselt 20–40 minutiga. Helista +372 5633 3332, kui vajad toruabi Kesklinnas ööpäevaringselt.',
     introRu:
-      'Торуаби Кесклинн — для старого фонда, офисов и HoReCa, где важна быстрая реакция. Бригада знает парковку и доступ в центре, чтобы аварийный выезд не задерживался. Для торуаби таллин в Кесклинне обычно приезжаем за 20–40 минут. Звоните +372 5181 112 для торуаби в Кесклинне круглосуточно.',
+      'Торуаби Кесклинн — для старого фонда, офисов и HoReCa, где важна быстрая реакция. Бригада знает парковку и доступ в центре, чтобы аварийный выезд не задерживался. Для торуаби таллин в Кесклинне обычно приезжаем за 20–40 минут. Звоните +372 5633 3332 для торуаби в Кесклинне круглосуточно.',
     keywordsEt:
       'toruabi, toruabi kesklinn, toruabi tallinn, avarii toruabi, kanalisatsioon, toruabi 24/7',
     keywordsRu:
@@ -98,13 +98,13 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     linkAnchorEt: 'toruabi lasnamäe',
     linkAnchorRu: 'торуаби ласнамяэ',
     descriptionEt:
-      'Toruabi Lasnamäe: paneelmajade kanalisatsioon ja avarii toruabi Tallinnas 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Lasnamäe: paneelmajade kanalisatsioon ja avarii toruabi Tallinnas 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Ласнамяэ: канализация в панельных домах и аварийный выезд в Таллине 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Ласнамяэ: канализация в панельных домах и аварийный выезд в Таллине 24/7. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     introEt:
-      'Toruabi Lasnamäe katab suurima linnaosa, kus 1970.–1980. aastate paneelmajade torustikud vajavad sageli survepesu ja kiiret ummistuste likvideerimist. Meeskond tunneb KÜ-de ja trepikodade ligipääsu, et toruabi jõuaks Priisle, Laagna või Ülemiste kandis kiiresti kohale. Toruabi lasnamäe piirkonnas on meie brigaad sageli juba teel 30–45 minutiga pärast kõnet. Helista +372 5181 112 — toruabi Lasnamäes on saadaval ööpäevaringselt.',
+      'Toruabi Lasnamäe katab suurima linnaosa, kus 1970.–1980. aastate paneelmajade torustikud vajavad sageli survepesu ja kiiret ummistuste likvideerimist. Meeskond tunneb KÜ-de ja trepikodade ligipääsu, et toruabi jõuaks Priisle, Laagna või Ülemiste kandis kiiresti kohale. Toruabi lasnamäe piirkonnas on meie brigaad sageli juba teel 30–45 minutiga pärast kõnet. Helista +372 5633 3332 — toruabi Lasnamäes on saadaval ööpäevaringselt.',
     introRu:
-      'Торуаби Ласнамяэ охватывает крупнейший район с панельными домами 1970–1980-х, где часто нужна промывка и срочная прочистка. Бригада знает подъезды и КУ, чтобы быстро попасть в Прийсле, Лаагна или Юлемисте. В районе Ласнамяэ бригада обычно выезжает в течение 30–45 минут после звонка. Звоните +372 5181 112 — торуаби в Ласнамяэ доступен 24/7.',
+      'Торуаби Ласнамяэ охватывает крупнейший район с панельными домами 1970–1980-х, где часто нужна промывка и срочная прочистка. Бригада знает подъезды и КУ, чтобы быстро попасть в Прийсле, Лаагна или Юлемисте. В районе Ласнамяэ бригада обычно выезжает в течение 30–45 минут после звонка. Звоните +372 5633 3332 — торуаби в Ласнамяэ доступен 24/7.',
     keywordsEt:
       'toruabi, toruabi lasnamäe, toruabi lasnamae, toruabi tallinn, avarii toruabi, kanalisatsioon',
     keywordsRu:
@@ -120,13 +120,13 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     linkAnchorEt: 'toruabi mustamäe',
     linkAnchorRu: 'торуаби мустамяэ',
     descriptionEt:
-      'Toruabi Mustamäe: avarii toruabi ja boileri hooldus lääne-Tallinnas 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Mustamäe: avarii toruabi ja boileri hooldus lääne-Tallinnas 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Мустамяэ: аварийная сантехника и бойлер на западе Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Мустамяэ: аварийная сантехника и бойлер на западе Таллина 24/7. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     introEt:
-      'Toruabi Mustamäe sobib nii uute korterelamute kui vanemate mikrorajoonide klientidele, kus kütte- ja kanalisatsioonitööd kattuvad. Meistrid teavad Mustamäe teeolusid ja parkimist, et toruabi jõuaks Sääse, Hiiu või Mäeküla kandis tavaliselt 30–45 minutiga. Toruabi mustamäe klientidele pakume sama 24/7 avarii toruabi nagu kogu Tallinnas. Avarii toruabi Mustamäel: +372 5181 112.',
+      'Toruabi Mustamäe sobib nii uute korterelamute kui vanemate mikrorajoonide klientidele, kus kütte- ja kanalisatsioonitööd kattuvad. Meistrid teavad Mustamäe teeolusid ja parkimist, et toruabi jõuaks Sääse, Hiiu või Mäeküla kandis tavaliselt 30–45 minutiga. Toruabi mustamäe klientidele pakume sama 24/7 avarii toruabi nagu kogu Tallinnas. Avarii toruabi Mustamäel: +372 5633 3332.',
     introRu:
-      'Торуаби Мустамяэ подходит для новостроек и старых микрорайонов, где пересекаются отопление и канализация. Мастера знают дороги и парковку, чтобы приехать в Сяэсе, Хийу или Мяэкюла за 30–45 минут. В Мустамяэ доступен тот же аварийный торуаби 24/7, что и по всему Таллину. Аварийный торуаби в Мустамяэ: +372 5181 112.',
+      'Торуаби Мустамяэ подходит для новостроек и старых микрорайонов, где пересекаются отопление и канализация. Мастера знают дороги и парковку, чтобы приехать в Сяэсе, Хийу или Мяэкюла за 30–45 минут. В Мустамяэ доступен тот же аварийный торуаби 24/7, что и по всему Таллину. Аварийный торуаби в Мустамяэ: +372 5633 3332.',
     keywordsEt:
       'toruabi, toruabi mustamäe, toruabi mustamae, toruabi tallinn, avarii toruabi, santehnik',
     keywordsRu:
@@ -142,13 +142,13 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     linkAnchorEt: 'toruabi pirita',
     linkAnchorRu: 'торуаби пирита',
     descriptionEt:
-      'Toruabi Pirita: eramud, korterid ja kanalisatsioon mereranna ääres 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Pirita: eramud, korterid ja kanalisatsioon mereranna ääres 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Пирита: частные дома, квартиры и канализация у моря 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Пирита: частные дома, квартиры и канализация у моря 24/7. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     introEt:
-      'Toruabi Pirita hõlmab mereranna eramuid, uusi elamurajoonid ja vanemaid kortermaju, kus niiskus ja hooajaline kasutus koormavad torustikku. Pakume kanalisatsiooni toruabi, boileri hooldust ja lekete likvideerimist Kose, Merivälja ja Pirita tee kandis. Toruabi pirita rannikul arvestab niiskust ja hooajalist koormust, et väljasõit oleks õigeaegne. Toruabi Piritas ööpäevaringselt: +372 5181 112.',
+      'Toruabi Pirita hõlmab mereranna eramuid, uusi elamurajoonid ja vanemaid kortermaju, kus niiskus ja hooajaline kasutus koormavad torustikku. Pakume kanalisatsiooni toruabi, boileri hooldust ja lekete likvideerimist Kose, Merivälja ja Pirita tee kandis. Toruabi pirita rannikul arvestab niiskust ja hooajalist koormust, et väljasõit oleks õigeaegne. Toruabi Piritas ööpäevaringselt: +372 5633 3332.',
     introRu:
-      'Торуаби Пирита — для домов у моря, новых кварталов и старых МКД, где влажность и сезон нагружают трубы. Промывка, бойлер и протечки в Косе, Меривялья и на Пирита tee. На побережье Пирита учитываем влажность, чтобы выезд торуаби не затягивался. Торуаби в Пирита 24/7: +372 5181 112.',
+      'Торуаби Пирита — для домов у моря, новых кварталов и старых МКД, где влажность и сезон нагружают трубы. Промывка, бойлер и протечки в Косе, Меривялья и на Пирита tee. На побережье Пирита учитываем влажность, чтобы выезд торуаби не затягивался. Торуаби в Пирита 24/7: +372 5633 3332.',
     keywordsEt:
       'toruabi, toruabi pirita, toruabi tallinn, avarii toruabi, kanalisatsiooni toruabi',
     keywordsRu:
@@ -164,13 +164,13 @@ export const tallinnDistrictSeo: Record<TallinnDistrictId, TallinnDistrictSeo> =
     linkAnchorEt: 'toruabi viimsi',
     linkAnchorRu: 'торуаби виймси',
     descriptionEt:
-      'Toruabi Viimsi: eramud ja korterid Harjumaa rannikul, kiire avarii toruabi 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Viimsi: eramud ja korterid Harjumaa rannikul, kiire avarii toruabi 24/7. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Виймси: частные дома и квартиры на побережье Харьюмаа, аварийный выезд 24/7. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Виймси: частные дома и квартиры на побережье Харьюмаа, аварийный выезд 24/7. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     introEt:
-      'Toruabi Viimsi katab Viimsi valla ja Tallinna piiriga piirnevad korterid, kus vajatakse sageli boileri hooldust ja kanalisatsiooni survepesu. Rannikul arvestame niiskust ja hooajalist koormust, et väljasõit Haabneeme või Randvere suunas oleks õigeaegne. Toruabi viimsi piirkonnas ühendab kiire avarii toruabi ja toruabi harjumaa väljasõidud. Toruabi Viimsis ja Harjumaal: +372 5181 112.',
+      'Toruabi Viimsi katab Viimsi valla ja Tallinna piiriga piirnevad korterid, kus vajatakse sageli boileri hooldust ja kanalisatsiooni survepesu. Rannikul arvestame niiskust ja hooajalist koormust, et väljasõit Haabneeme või Randvere suunas oleks õigeaegne. Toruabi viimsi piirkonnas ühendab kiire avarii toruabi ja toruabi harjumaa väljasõidud. Toruabi Viimsis ja Harjumaal: +372 5633 3332.',
     introRu:
-      'Торуаби Виймси обслуживает Виймси и квартиры у границы с Таллином — бойлеры и гидропромывка канализации. На побережье учитываем влажность и сезонную нагрузку, чтобы выезд в Хаабнееме или Рандвере не затягивался. В Виймси доступен аварийный торуаби и выезд по всему Харьюмаа. Торуаби в Виймси и Харьюмаа: +372 5181 112.',
+      'Торуаби Виймси обслуживает Виймси и квартиры у границы с Таллином — бойлеры и гидропромывка канализации. На побережье учитываем влажность и сезонную нагрузку, чтобы выезд в Хаабнееме или Рандвере не затягивался. В Виймси доступен аварийный торуаби и выезд по всему Харьюмаа. Торуаби в Виймси и Харьюмаа: +372 5633 3332.',
     keywordsEt:
       'toruabi, toruabi viimsi, toruabi tallinn, avarii toruabi, kanalisatsiooni toruabi, harjumaa',
     keywordsRu:
@@ -199,9 +199,9 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
     titleEt: 'Avarii toruabi väljakutse 24/7 | Toruabi Tallinn | toruabii.ee',
     titleRu: 'Аварийный торуаби выезд 24/7 | Таллин | toruabii.ee',
     descriptionEt:
-      'Kiire toruabi väljakutse 24/7 Tallinnas ja Harjumaal: lekked, purunenud torud, boiler. Tavaliselt kohal 30–60 min, väljasõit 0 €. +372 5181 112.',
+      'Kiire toruabi väljakutse 24/7 Tallinnas ja Harjumaal: lekked, purunenud torud, boiler. Tavaliselt kohal 30–60 min, väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Срочный выезд торуаби 24/7 в Таллине и Харьюмаа: протечки, разрывы, бойлер. Обычно за 30–60 мин, выезд 0 €. +372 5181 112.',
+      'Срочный выезд торуаби 24/7 в Таллине и Харьюмаа: протечки, разрывы, бойлер. Обычно за 30–60 мин, выезд 0 €. +372 5633 3332.',
     keywordsEt:
       'toruabi, avarii toruabi, toruabi väljakutse, toruabi tallinn, toruabi 24/7, erakorraline toruabi',
     keywordsRu:
@@ -215,9 +215,9 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
     titleEt: 'Toruabi ummistuste likvideerimine 24/7 | Tallinn | toruabii.ee',
     titleRu: 'Торуаби устранение засоров 24/7 | Таллин | toruabii.ee',
     descriptionEt:
-      'Toruabi ummistuste likvideerimine ja kanalisatsiooni ummistuse lahendamine Tallinnas ja Harjumaal. Toru ummistus Tallinn – kiire toruabi 24/7, väljasõit 0 €. +372 5181 112.',
+      'Toruabi ummistuste likvideerimine ja kanalisatsiooni ummistuse lahendamine Tallinnas ja Harjumaal. Toru ummistus Tallinn – kiire toruabi 24/7, väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби: устранение засоров и прочистка канализации в Таллине и Харьюмаа 24/7. Засор канализации – быстрый выезд, 0 €. +372 5181 112.',
+      'Торуаби: устранение засоров и прочистка канализации в Таллине и Харьюмаа 24/7. Засор канализации – быстрый выезд, 0 €. +372 5633 3332.',
     keywordsEt:
       'ummistuste likvideerimine, toruabi ummistuste likvideerimine, kanalisatsiooni ummistus, toru ummistus tallinn, toruabi tallinn, toruabi 24/7',
     keywordsRu:
@@ -231,9 +231,9 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
     titleEt: 'Toruabi kanalisatsiooni survepesu | Toruabi Tallinn | toruabii.ee',
     titleRu: 'Торуаби гидропромывка канализации | Таллин | toruabii.ee',
     descriptionEt:
-      'Kanalisatsiooni survepesu Tallinnas ja Harjumaal: kõrgsurve puhastus trassidele, vajadusel videouuring. +372 5181 112.',
+      'Kanalisatsiooni survepesu Tallinnas ja Harjumaal: kõrgsurve puhastus trassidele, vajadusel videouuring. +372 5633 3332.',
     descriptionRu:
-      'Гидропромывка канализации в Таллине и Харьюмаа: высокое давление, при необходимости видеодиагностика. +372 5181 112.',
+      'Гидропромывка канализации в Таллине и Харьюмаа: высокое давление, при необходимости видеодиагностика. +372 5633 3332.',
     keywordsEt:
       'toruabi, kanalisatsiooni survepesu, toruabi survepesu, toruabi tallinn, kanalisatsiooni toruabi',
     keywordsRu:
@@ -247,9 +247,9 @@ export const serviceLandingSeo: Record<ServiceLandingId, ServiceLandingSeo> = {
     titleEt: 'Toruabi rasvapüüduri puhastus | Toruabi Tallinn | toruabii.ee',
     titleRu: 'Торуаби очистка жироуловителя | Таллин | toruabii.ee',
     descriptionEt:
-      'Rasvapüüduri puhastus ja hooldus toruabi meeskonnaga — köögid, restoranid ja kortermajad Tallinnas. +372 5181 112.',
+      'Rasvapüüduri puhastus ja hooldus toruabi meeskonnaga — köögid, restoranid ja kortermajad Tallinnas. +372 5633 3332.',
     descriptionRu:
-      'Очистка и обслуживание жироуловителей бригадой торуаби — кухни, рестораны и МКД в Таллине. +372 5181 112.',
+      'Очистка и обслуживание жироуловителей бригадой торуаби — кухни, рестораны и МКД в Таллине. +372 5633 3332.',
     keywordsEt:
       'toruabi, rasvapüüduri puhastus, toruabi tallinn, kanalisatsiooni toruabi, toruabi harjumaa',
     keywordsRu:

@@ -39,6 +39,17 @@ Confirm in the Cloudflare dashboard: **Workers & Pages** → worker **`toruabii`
 
 ## 3. Environment variables (Cloudflare dashboard)
 
+### Build variables ≠ Worker runtime
+
+**Do not** put `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` only under **Settings → Builds → Variables**. Those apply during the Cloudflare **build** step only. The live Worker that serves `/api/track-call` and `/api/callback` reads secrets at **runtime** from **Variables and Secrets** on the Worker (or Wrangler secrets).
+
+| Location | Purpose |
+|----------|---------|
+| **Builds → Variables** | CI build (`astro build`) — optional, e.g. `PUBLIC_*` |
+| **Variables and Secrets** (Encrypted) | **Required** for Telegram in production |
+
+After moving or adding runtime secrets, run `npm run deploy` again.
+
 **Workers & Pages** → **toruabii** → **Settings** → **Variables and Secrets**
 
 | Name | Type | Purpose |
@@ -103,5 +114,5 @@ See `.github/workflows/deploy.yml`. Add repository secrets:
 |-------|--------|
 | `dist/_worker.js` missing | Run `npm run build` first |
 | 401 on `wrangler deploy` | Run `npx wrangler login` or fix API token in CI |
-| Telegram not firing | Check secrets on Worker **toruabii**, not only local `.env` |
+| Telegram not firing / `503 Telegram not configured` | Add secrets under Worker **Variables and Secrets**, not **Build → Variables**; redeploy. See [TELEGRAM-SETUP.md](./TELEGRAM-SETUP.md) |
 | Wrong site URL | Update `site` in `astro.config.mjs` and rebuild |

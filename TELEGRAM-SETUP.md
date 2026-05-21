@@ -6,6 +6,33 @@ Lead notifications go to one Telegram chat. Messages use **blue block markers** 
 
 Set on **each** deployment (local `.env`, Cloudflare Worker **Settings → Variables and Secrets**). Never commit real tokens.
 
+### Cloudflare: Build variables ≠ Worker runtime (important)
+
+If Telegram returns `503` with `Telegram not configured` after deploy, the secrets are almost certainly in the **wrong place**.
+
+| Where | Used for | Telegram works? |
+|-------|----------|-----------------|
+| **Workers & Pages → toruabii → Settings → Builds → Variables** | CI/build only (`npm run build` on Cloudflare) | **No** — not available to the live Worker |
+| **Workers & Pages → toruabii → Settings → Variables and Secrets** (Encrypted) | Worker at **request time** (`/api/track-call`, `/api/callback`) | **Yes** |
+| Local `.env` | `npm run dev` / local preview | Yes (local only) |
+
+**Do this:**
+
+1. Open [Cloudflare dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **toruabii** → **Settings** → **Variables and Secrets**.
+2. Add **Encrypted** secrets (not Build → Variables):
+   - `TELEGRAM_BOT_TOKEN`
+   - `TELEGRAM_CHAT_ID`
+3. Or from the repo folder:
+
+```bash
+npx wrangler secret put TELEGRAM_BOT_TOKEN
+npx wrangler secret put TELEGRAM_CHAT_ID
+```
+
+4. **Redeploy** after adding or changing secrets: `npm run deploy`.
+
+Code reads credentials in this order: `astro:env/server` first, then `locals.runtime.env` on the Worker (see `getTelegramConfig()` in `src/lib/telegram.ts`). Both need **runtime** secrets on the Worker — build-time CI variables alone are not enough.
+
 | Variable | Description |
 |----------|-------------|
 | `TELEGRAM_BOT_TOKEN` | From [@BotFather](https://t.me/BotFather) |
@@ -34,7 +61,7 @@ Example message shape:
 📞 Uus kõne / tagasihelistamine
 📍 Allikas: toruabii.ee
 🕐 21.05.2026, 14:30:00
-📱 Tel: +3725181112
+📱 Tel: +37256333332
 🌐 Leht: /toruabi-lasnamae
 ```
 
@@ -72,9 +99,12 @@ Test page (dev or `PUBLIC_SHOW_TEST_PAGE=true`): `/test-call-buttons`
 
 ### Notifications stopped after a deploy
 
-**Most common cause:** Telegram secrets must be declared in Astro’s `env.schema` **and** read from `astro:env/server` in `src/lib/telegram.ts`. Using bare `import.meta.env.TELEGRAM_*` gets constant-folded at build time, so production always skips Telegram even when Cloudflare env vars are set.
+**Most common causes:**
 
-Fix: keep `env.schema` in `astro.config.mjs`, use `import { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } from 'astro:env/server'`, set variables in Cloudflare Worker **Variables and Secrets**, redeploy.
+1. **Secrets only under Build → Variables** — move them to Worker **Variables and Secrets** (see above), then redeploy.
+2. **Missing `env.schema` / wrong imports** — keep `env.schema` in `astro.config.mjs`, use `astro:env/server` plus runtime fallback in `src/lib/telegram.ts`. Do not use bare `import.meta.env.TELEGRAM_*` (can be constant-folded at build).
+
+Fix: set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` on Worker **toruabii** → **Variables and Secrets**, redeploy.
 
 ### Quick checks
 
@@ -96,7 +126,7 @@ Expect: `{"success":true,"message":"Test request - API is available",...}`
 curl -s -X POST http://localhost:4322/api/track-call \
   -H "Content-Type: application/json" \
   -H "X-Site-Source: toruabii.ee" \
-  -d '{"source":"toruabii.ee","url":"https://toruabii.ee/test","tel":"tel:+3725181112","timestamp":"21.05.2026, 14:30:00"}'
+  -d '{"source":"toruabii.ee","url":"https://toruabii.ee/test","tel":"tel:+37256333332","timestamp":"21.05.2026, 14:30:00"}'
 ```
 
 Expect: `{"success":true,"requestId":"..."}`. Telegram message should show **blue** toruabii markers.

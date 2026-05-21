@@ -36,7 +36,7 @@ Google Fonts link updated in `BaseLayout.astro`. Tailwind: `font-sans`, `font-bo
 | FAQ (8 answers ET + language-switcher) | `faq.astro`, `language-switcher.ts` |
 | Hinnakiri intro meta only | `hinnakiri.astro` |
 
-**Unchanged:** price tables, phone `+372 5181 112`, domain, sitemap structure, page count, grids.
+**Unchanged:** price tables, phone `+372 5633 3332`, domain, sitemap structure, page count, grids.
 
 ## Homepage sample (ET hero subtitle)
 

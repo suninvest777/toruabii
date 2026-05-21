@@ -1,7 +1,7 @@
 # SEO Agent 1 of 3 — toruabi (head keyword)
 
 **Domain:** https://toruabii.ee  
-**Phone:** +372 5181 112 (unchanged)  
+**Phone:** +372 5633 3332 (unchanged)  
 **Date:** 2026-05-20
 
 ## Target queries

@@ -80,17 +80,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Maardu | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Маарду | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Maardu: avarii toruabi ja kanalisatsioon Harjumaal 24/7. Maardu linn, Kallavere, Kostivere. Väljasõit 0 €, garantii 2 aastat. +372 5181 112.',
+      'Toruabi Maardu: avarii toruabi ja kanalisatsioon Harjumaal 24/7. Maardu linn, Kallavere, Kostivere. Väljasõit 0 €, garantii 2 aastat. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Маарду: аварийная сантехника и канализация в Харьюмаа 24/7. Маарду, Каллавере, Костивере. Выезд 0 €, гарантия 2 года. +372 5181 112.',
+      'Торуаби Маарду: аварийная сантехника и канализация в Харьюмаа 24/7. Маарду, Каллавере, Костивере. Выезд 0 €, гарантия 2 года. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Maardus, avarii toruabi Harjumaa, toruabi Kallavere, toruabi Kostivere, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Маарду, аварийная сантехника Харьюмаа, сантехник Маарду, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Maardu',
     h1Ru: 'Торуаби Маарду',
     heroLeadEt:
-      'Toruabi Maardu katab tööstus- ja elamupiirkonna, kus torustikud peavad vastu nii suurele koormusele kui vananenud trassidele. Meeskond tegeleb Kallavere ja Kostivere objektidega sama brigaadiga, mis teenindab ida-Harjumaad. Avarii toruabi Maardus ja Harjumaal: +372 5181 112.',
+      'Toruabi Maardu katab tööstus- ja elamupiirkonna, kus torustikud peavad vastu nii suurele koormusele kui vananenud trassidele. Meeskond tegeleb Kallavere ja Kostivere objektidega sama brigaadiga, mis teenindab ida-Harjumaad. Avarii toruabi Maardus ja Harjumaal: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Маарду — для промышленных и жилых объектов с высокой нагрузкой на сети. Бригада обслуживает Каллавере и Костивере в восточном Харьюмаа. Аварийный торуаби в Маарду: +372 5181 112.',
+      'Торуаби Маарду — для промышленных и жилых объектов с высокой нагрузкой на сети. Бригада обслуживает Каллавере и Костивере в восточном Харьюмаа. Аварийный торуаби в Маарду: +372 5633 3332.',
     linkAnchorEt: 'toruabi maardu',
     linkAnchorRu: 'торуаби маарду',
     neighbors: ['joelahtme', 'anija'],
@@ -141,17 +141,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Keila | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Кейла | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Keila: avarii toruabi ja kanalisatsioon Lääne-Harjumaal 24/7. Keila linn, vald, Klooga. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Keila: avarii toruabi ja kanalisatsioon Lääne-Harjumaal 24/7. Keila linn, vald, Klooga. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Кейла: аварийная сантехника на западе Харьюмаа 24/7. Кейла, волость, Клоога. Выезд 0 €. +372 5181 112.',
+      'Торуаби Кейла: аварийная сантехника на западе Харьюмаа 24/7. Кейла, волость, Клоога. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Keila, toruabi Klooga, avarii toruabi Keila vald, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Кейла, сантехник Клоога, аварийная сантехника Кейла, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Keila',
     h1Ru: 'Торуаби Кейла',
     heroLeadEt:
-      'Toruabi Keila sobib nii Keila linna korteritele kui rannikul asuvatele suvilatele Kloogas, kus hooajal kasvab koormus kanalisatsioonile. Meistrid tunnevad mereääre niiskuse mõju torustikule ja pakuvad survepesu vajadusel. Toruabi Keilas ja Harjumaal ööpäevaringselt: +372 5181 112.',
+      'Toruabi Keila sobib nii Keila linna korteritele kui rannikul asuvatele suvilatele Kloogas, kus hooajal kasvab koormus kanalisatsioonile. Meistrid tunnevad mereääre niiskuse mõju torustikule ja pakuvad survepesu vajadusel. Toruabi Keilas ja Harjumaal ööpäevaringselt: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Кейла — для квартир в городе и дач в Клоога, где сезон увеличивает нагрузку на канализацию. Учитываем влажность побережья и промывку при необходимости. Торуаби в Кейла 24/7: +372 5181 112.',
+      'Торуаби Кейла — для квартир в городе и дач в Клоога, где сезон увеличивает нагрузку на канализацию. Учитываем влажность побережья и промывку при необходимости. Торуаби в Кейла 24/7: +372 5633 3332.',
     linkAnchorEt: 'toruabi keila',
     linkAnchorRu: 'торуаби кейла',
     neighbors: ['harku', 'saue'],
@@ -200,17 +200,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Saue | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Сауэ | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Saue: avarii toruabi Laagris, Saue linnas ja vallas 24/7. Harjumaa läänepool. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Saue: avarii toruabi Laagris, Saue linnas ja vallas 24/7. Harjumaa läänepool. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Сауэ: аварийный выезд в Лагри, Сауэ и волости 24/7. Запад Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Сауэ: аварийный выезд в Лагри, Сауэ и волости 24/7. Запад Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Saue, toruabi Laagri, avarii toruabi Saue vald, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Сауэ, торуаби Лагри, сантехник запад Таллина, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Saue',
     h1Ru: 'Торуаби Сауэ',
     heroLeadEt:
-      'Toruabi Saue katab Laagri tihedat korter- ja ridamajade võrku ning Saue linna uuemaid arendusi, kus boiler ja kanalisatsioon vajavad regulaarset hooldust. Brigaad liigub kiiresti läbi Tallinna läänepoolse liikluse, et jõuda objektile õigeaegselt. Toruabi Saue vallas: +372 5181 112.',
+      'Toruabi Saue katab Laagri tihedat korter- ja ridamajade võrku ning Saue linna uuemaid arendusi, kus boiler ja kanalisatsioon vajavad regulaarset hooldust. Brigaad liigub kiiresti läbi Tallinna läänepoolse liikluse, et jõuda objektile õigeaegselt. Toruabi Saue vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Сауэ — для плотной застройки Лагри и новых домов в Сауэ, где важны бойлер и канализация. Быстро едем с западной стороны Таллина. Торуаби в волости Сауэ: +372 5181 112.',
+      'Торуаби Сауэ — для плотной застройки Лагри и новых домов в Сауэ, где важны бойлер и канализация. Быстро едем с западной стороны Таллина. Торуаби в волости Сауэ: +372 5633 3332.',
     linkAnchorEt: 'toruabi saue',
     linkAnchorRu: 'торуаби саулэ',
     neighbors: ['keila', 'harku', 'rae'],
@@ -253,17 +253,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Rae | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Раэ | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Rae: avarii toruabi Jüris, Lagedis ja Vaidas 24/7. Harjumaa ida-lõunapool. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Rae: avarii toruabi Jüris, Lagedis ja Vaidas 24/7. Harjumaa ida-lõunapool. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Раэ: аварийный выезд в Юри, Лагеди и Вайда 24/7. Восток-юг Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Раэ: аварийный выезд в Юри, Лагеди и Вайда 24/7. Восток-юг Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Jüri, toruabi Rae vald, toruabi Lagedi, toruabi Vaida, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Юри, сантехник Раэ, торуаби Вайда, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Rae',
     h1Ru: 'Торуаби Раэ',
     heroLeadEt:
-      'Toruabi Rae katab kiiresti kasvava Jüri äri- ja elamurajooni, kus uued trassid kõrvutavad vanemaid kanalisatsioonisüsteeme. Lagedi ja Vaida eramutes pakume nii planeeritud hooldust kui öist avarii toruabi. Toruabi Rae vallas: +372 5181 112.',
+      'Toruabi Rae katab kiiresti kasvava Jüri äri- ja elamurajooni, kus uued trassid kõrvutavad vanemaid kanalisatsioonisüsteeme. Lagedi ja Vaida eramutes pakume nii planeeritud hooldust kui öist avarii toruabi. Toruabi Rae vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Раэ — для растущего Юри, где новые сети соседствуют со старыми. В Лагеди и Вайда — плановое обслуживание и аварии ночью. Торуаби в волости Раэ: +372 5181 112.',
+      'Торуаби Раэ — для растущего Юри, где новые сети соседствуют со старыми. В Лагеди и Вайда — плановое обслуживание и аварии ночью. Торуаби в волости Раэ: +372 5633 3332.',
     linkAnchorEt: 'toruabi rae',
     linkAnchorRu: 'торуаби раэ',
     neighbors: ['saue', 'kiili', 'saku'],
@@ -306,17 +306,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Saku | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Саку | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Saku: avarii toruabi Saku alevikus ja Kiisas 24/7. Harjumaa lõunapool. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Saku: avarii toruabi Saku alevikus ja Kiisas 24/7. Harjumaa lõunapool. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Саку: аварийный выезд в посёлке и Кииса 24/7. Юг Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Саку: аварийный выезд в посёлке и Кииса 24/7. Юг Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Saku, toruabi Kiisa, avarii toruabi Saku vald, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Саку, сантехник Кииса, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Saku',
     h1Ru: 'Торуаби Саку',
     heroLeadEt:
-      'Toruabi Saku on suunatud peredele ja eramajadele metsaäärses vallas, kus talvel kasvab kütte- ja veetorustike koormus. Kiisa kandis teeme nii boileri hooldust kui kanalisatsiooni toruabi, arvestades pikemat väljasõitu. Toruabi Saku vallas: +372 5181 112.',
+      'Toruabi Saku on suunatud peredele ja eramajadele metsaäärses vallas, kus talvel kasvab kütte- ja veetorustike koormus. Kiisa kandis teeme nii boileri hooldust kui kanalisatsiooni toruabi, arvestades pikemat väljasõitu. Toruabi Saku vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Саку — для семей и частных домов в зелёной волости, где зимой растёт нагрузка на отопление и воду. В Кииса — бойлер и канализация с учётом длинного выезда. Торуаби в Саку: +372 5181 112.',
+      'Торуаби Саку — для семей и частных домов в зелёной волости, где зимой растёт нагрузка на отопление и воду. В Кииса — бойлер и канализация с учётом длинного выезда. Торуаби в Саку: +372 5633 3332.',
     linkAnchorEt: 'toruabi saku',
     linkAnchorRu: 'торуаби саку',
     neighbors: ['rae', 'kiili', 'kose'],
@@ -355,17 +355,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Harku | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Харку | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Harku: avarii toruabi Tabasalus ja Vääna-Jõesuus 24/7. Harjumaa rannik. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Harku: avarii toruabi Tabasalus ja Vääna-Jõesuus 24/7. Harjumaa rannik. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Харку: аварийный выезд в Табасалу и Вяэна-Йыэсуу 24/7. Побережье Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Харку: аварийный выезд в Табасалу и Вяэна-Йыэсуу 24/7. Побережье Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Tabasalu, toruabi Harku vald, toruabi Vääna-Jõesuu, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Табасалу, сантехник Харку, побережье, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Harku',
     h1Ru: 'Торуаби Харку',
     heroLeadEt:
-      'Toruabi Harku keskendub Tabasalu tihedale elamufondile ja Vääna-Jõesuu ranniku suvilatele, kus niiskus mõjutab torustikku. Pakume lekete likvideerimist, boileri hooldust ja kanalisatsiooni survepesu vastavalt objekti vanusele. Toruabi Harku vallas: +372 5181 112.',
+      'Toruabi Harku keskendub Tabasalu tihedale elamufondile ja Vääna-Jõesuu ranniku suvilatele, kus niiskus mõjutab torustikku. Pakume lekete likvideerimist, boileri hooldust ja kanalisatsiooni survepesu vastavalt objekti vanusele. Toruabi Harku vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Харку — для Табасалу и дач Вяэна-Йыэсуу, где влажность влияет на трубы. Протечки, бойлер и промывка канализации. Торуаби в Харку: +372 5181 112.',
+      'Торуаби Харку — для Табасалу и дач Вяэна-Йыэсуу, где влажность влияет на трубы. Протечки, бойлер и промывка канализации. Торуаби в Харку: +372 5633 3332.',
     linkAnchorEt: 'toruabi harku',
     linkAnchorRu: 'торуаби харку',
     neighbors: ['keila', 'saue'],
@@ -404,17 +404,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Jõelähtme | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Йыелахтме | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Jõelähtme: avarii toruabi Loos ja Kostiveres 24/7. Harjumaa ida. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Jõelähtme: avarii toruabi Loos ja Kostiveres 24/7. Harjumaa ida. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Йыелахтме: аварийный выезд в Лоо и Костивере 24/7. Восток Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Йыелахтме: аварийный выезд в Лоо и Костивере 24/7. Восток Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Loo, toruabi Jõelähtme, toruabi Kostivere Harjumaa, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Лоо, сантехник Йыелахтме, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Jõelähtme',
     h1Ru: 'Торуаби Йыелахтме',
     heroLeadEt:
-      'Toruabi Jõelähtme ühendab Loo ja Kostivere tihedama asustuse ning hajusama maapiirkonna, kus väljasõidu aeg sõltub teest ja ilmast. Sama meeskond teenindab ka Maardu suunda, et avarii toruabi oleks ida-Harjumaal koordineeritud. Toruabi Jõelähtme vallas: +372 5181 112.',
+      'Toruabi Jõelähtme ühendab Loo ja Kostivere tihedama asustuse ning hajusama maapiirkonna, kus väljasõidu aeg sõltub teest ja ilmast. Sama meeskond teenindab ka Maardu suunda, et avarii toruabi oleks ida-Harjumaal koordineeritud. Toruabi Jõelähtme vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Йыелахтме — Лоо, Костивере и разреженная застройка; время выезда зависит от дороги. Та же бригада, что и зона Маарду. Торуаби в Йыелахтме: +372 5181 112.',
+      'Торуаби Йыелахтме — Лоо, Костивере и разреженная застройка; время выезда зависит от дороги. Та же бригада, что и зона Маарду. Торуаби в Йыелахтме: +372 5633 3332.',
     linkAnchorEt: 'toruabi jõelähtme',
     linkAnchorRu: 'торуаби йыелахтме',
     neighbors: ['maardu', 'anija', 'rae'],
@@ -453,17 +453,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Kiili | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Кили | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Kiili: avarii toruabi Kiili alevikus ja Luiges 24/7. Tallinna lähi-Harjumaa. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Kiili: avarii toruabi Kiili alevikus ja Luiges 24/7. Tallinna lähi-Harjumaa. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Кили: аварийный выезд в посёлке и Луйге 24/7. Рядом с Таллином. Выезд 0 €. +372 5181 112.',
+      'Торуаби Кили: аварийный выезд в посёлке и Луйге 24/7. Рядом с Таллином. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Kiili, toruabi Luige, avarii toruabi Kiili vald, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Кили, сантехник Луйге, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Kiili',
     h1Ru: 'Торуаби Кили',
     heroLeadEt:
-      'Toruabi Kiili on mõeldud Tallinna lähi-Harjumaa ridamajadele ja uusarendustele, kus ootamatu leke ei tohi oodata pikka järjekorda. Luige kandis jõuame sageli lühikese saabumisajaga, sest brigaad liigub regulaarselt läbi Kiili valla. Toruabi Kiilis: +372 5181 112.',
+      'Toruabi Kiili on mõeldud Tallinna lähi-Harjumaa ridamajadele ja uusarendustele, kus ootamatu leke ei tohi oodata pikka järjekorda. Luige kandis jõuame sageli lühikese saabumisajaga, sest brigaad liigub regulaarselt läbi Kiili valla. Toruabi Kiilis: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Кили — для таунхаусов и новостроек у Таллина, где протечка требует быстрого выезда. В Луйге часто короткое время прибытия. Торуаби в Кили: +372 5181 112.',
+      'Торуаби Кили — для таунхаусов и новостроек у Таллина, где протечка требует быстрого выезда. В Луйге часто короткое время прибытия. Торуаби в Кили: +372 5633 3332.',
     linkAnchorEt: 'toruabi kiili',
     linkAnchorRu: 'торуаби кили',
     neighbors: ['rae', 'saue', 'saku'],
@@ -502,17 +502,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Kose | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Косе | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Kose: avarii toruabi Kose alevikus ja Kose-Uuemõisas 24/7. Harjumaa lõuna. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Kose: avarii toruabi Kose alevikus ja Kose-Uuemõisas 24/7. Harjumaa lõuna. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Косе: аварийный выезд в посёлке и Косе-Уuemõisa 24/7. Юг Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Косе: аварийный выезд в посёлке и Косе-Уuemõisa 24/7. Юг Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Kose, toruabi Kose-Uuemõisa, avarii toruabi Kose vald, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Косе, сантехник Косе-Уuemõisa, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Kose',
     h1Ru: 'Торуаби Косе',
     heroLeadEt:
-      'Toruabi Kose on suunatud hajusamale lõuna-Harjumaale, kus eramute trassid võivad olla pikemad ja vajavad eraldi planeerimist. Brigaad võtab kaasa survepesu ja diagnostika seadmed, et lahendada probleem ühe väljasõiduga. Toruabi Kose vallas: +372 5181 112.',
+      'Toruabi Kose on suunatud hajusamale lõuna-Harjumaale, kus eramute trassid võivad olla pikemad ja vajavad eraldi planeerimist. Brigaad võtab kaasa survepesu ja diagnostika seadmed, et lahendada probleem ühe väljasõiduga. Toruabi Kose vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Косе — для разреженного юга Харьюмаа с длинными трассами частных домов. Берём промывку и диагностику, чтобы решить задачу за один выезд. Торуаби в Косе: +372 5181 112.',
+      'Торуаби Косе — для разреженного юга Харьюмаа с длинными трассами частных домов. Берём промывку и диагностику, чтобы решить задачу за один выезд. Торуаби в Косе: +372 5633 3332.',
     linkAnchorEt: 'toruabi kose',
     linkAnchorRu: 'торуаби косе',
     neighbors: ['saku', 'anija'],
@@ -551,17 +551,17 @@ export const harjuMunicipalities: HarjuMunicipality[] = [
     titleEt: 'Toruabi Anija | 24/7 | toruabii.ee',
     titleRu: 'Торуаби Анижа | 24/7 | toruabii.ee',
     descriptionEt:
-      'Toruabi Anija: avarii toruabi Kehras ja Aegviidus 24/7. Harjumaa põhja-idapool. Väljasõit 0 €. +372 5181 112.',
+      'Toruabi Anija: avarii toruabi Kehras ja Aegviidus 24/7. Harjumaa põhja-idapool. Väljasõit 0 €. +372 5633 3332.',
     descriptionRu:
-      'Торуаби Анижа: аварийный выезд в Кехра и Ээгвийду 24/7. Северо-восток Харьюмаа. Выезд 0 €. +372 5181 112.',
+      'Торуаби Анижа: аварийный выезд в Кехра и Ээгвийду 24/7. Северо-восток Харьюмаа. Выезд 0 €. +372 5633 3332.',
     keywordsEt: `toruabi, toruabi Kehra, toruabi Anija vald, toruabi Aegviidu, ${HARJU_SEO_KW_ET}`,
     keywordsRu: `торуаби, торуаби Кехра, сантехник Анижа, ${HARJU_SEO_KW_RU}`,
     h1Et: 'Toruabi Anija',
     h1Ru: 'Торуаби Анижа',
     heroLeadEt:
-      'Toruabi Anija hõlmab Kehra tööstuslikku keskust ja väiksemaid eluasemeid Aegviidus, kus torustike vanus erineb oluliselt. Enne tööd selgitame ulatuse, et toruabi vastaks nii kommerts- kui eramu vajadusele. Toruabi Anija vallas: +372 5181 112.',
+      'Toruabi Anija hõlmab Kehra tööstuslikku keskust ja väiksemaid eluasemeid Aegviidus, kus torustike vanus erineb oluliselt. Enne tööd selgitame ulatuse, et toruabi vastaks nii kommerts- kui eramu vajadusele. Toruabi Anija vallas: +372 5633 3332.',
     heroLeadRu:
-      'Торуаби Анижа — Кехра с промышленными сетями и небольшие объекты в Ээгвийду. Сначала уточняем объём работ под тип здания. Торуаби в Анижа: +372 5181 112.',
+      'Торуаби Анижа — Кехра с промышленными сетями и небольшие объекты в Ээгвийду. Сначала уточняем объём работ под тип здания. Торуаби в Анижа: +372 5633 3332.',
     linkAnchorEt: 'toruabi anija',
     linkAnchorRu: 'торуаби анижа',
     neighbors: ['maardu', 'joelahtme', 'kose'],

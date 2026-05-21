@@ -17,7 +17,7 @@ const langData: Record<string, Record<string, string>> = {
     heroSubtitle:
       'Ehitame ja hooldame vee-, kanalisatsiooni-, kütte ning välistrasse Tallinnas ja Harjumaal.',
     openNow: 'Avatud nüüd',
-    phone: '+372 5181 112',
+    phone: '+372 5633 3332',
     service1: 'Toruabi ja avariitööd 24h',
     service1Desc: 'Ööpäevaringne sanitaartehniline abi',
     service2: 'Ummistuste likvideerimine 24h',
@@ -89,7 +89,7 @@ const langData: Record<string, Record<string, string>> = {
     footerText: 'Toruabi ja kiire väljakutse 24/7 Tallinnas ja Harjumaal',
     copyright: '© 2026 toruabii.ee — kõik autoriõigused on kaitstud',
     footerTrust:
-      'Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5181 112',
+      'Teenuspiirkond: Tallinn ja Harjumaa · info@toruabii.ee · +372 5633 3332',
     backToHome: '← Tagasi avalehele',
     pricingPageTitle: 'Konkurentsivõimelised hinnad kvaliteetse sanitaartehnilise töö eest',
     pricingPageSubtitle: 'toruabii.ee — toruabi ja väljakutse Harjumaal 24/7',
@@ -175,7 +175,7 @@ const langData: Record<string, Record<string, string>> = {
     faq8Question: 'Kas teil on kindlustus?',
     faq8Answer: 'Jah — tööd on kaetud töökindlustusega, mis kaitseb nii klienti kui objekti toruabi tööde ajal.',
     faq9Question: 'Kuidas tellida toruabi Lasnamäel, Mustamäel või Kesklinnas?',
-    faq9Answer: 'Toruabi tellimiseks helistage meile telefonil +372 5181 112. Pakume toruabi teenuseid Lasnamäel, Mustamäel ja Kesklinnas. Meie torumees jõuab kohale 30-60 minutiga. Väljasõit on tasuta Tallinna piires.',
+    faq9Answer: 'Toruabi tellimiseks helistage meile telefonil +372 5633 3332. Pakume toruabi teenuseid Lasnamäel, Mustamäel ja Kesklinnas. Meie torumees jõuab kohale 30-60 minutiga. Väljasõit on tasuta Tallinna piires.',
     faq10Question: 'Milline on keskmine toruabi töö kestus?',
     faq10Answer: 'Keskmine toruabi töö kestus sõltub probleemi tüübist. Lihtsad toruabi tööd (näiteks kraanide remont) võivad võtta 30-60 minutit. Kanalisatsiooni toruabi ja ummistuste likvideerimine võib võtta 1-3 tundi. Suuremad toruabi projektid võivad võtta mitu tundi või päeva. Meie torumees annab täpse hinnangu enne töö alustamist.',
     faq11Question: 'Kas teete toruabi töid ka öösel?',
@@ -242,7 +242,7 @@ const langData: Record<string, Record<string, string>> = {
     heroSubtitle:
       'Строим и обслуживаем водопровод, канализацию, отопление и наружные сети в Таллинне и Харьюмаа.',
     openNow: 'Открыто сейчас',
-    phone: '+372 5181 112',
+    phone: '+372 5633 3332',
     service1: 'Сантехнические аварийные работы 24ч',
     service1Desc: 'Круглосуточная сантехническая помощь',
     service2: 'Устранение засоров 24ч',
@@ -314,7 +314,7 @@ const langData: Record<string, Record<string, string>> = {
     footerText: 'Торуаби и срочный выезд 24/7 в Таллинне и Харьюмаа',
     copyright: '© 2026 toruabii.ee — все права защищены',
     footerTrust:
-      'Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5181 112',
+      'Зона обслуживания: Таллин и Харьюмаа · info@toruabii.ee · +372 5633 3332',
     backToHome: '← Вернуться на главную',
     pricingPageTitle: 'Конкурентные цены за качественные сантехнические работы',
     pricingPageSubtitle: 'toruabii.ee — торуаби и выезд в Харьюмаа 24/7',
@@ -400,7 +400,7 @@ const langData: Record<string, Record<string, string>> = {
     faq8Question: 'Есть ли у вас страховка?',
     faq8Answer: 'Да — работы застрахованы; страховка защищает клиента и объект во время выезда торуаби.',
     faq9Question: 'Как заказать сантехника в Ласнамяэ, Мустамяэ или Кесклинне?',
-    faq9Answer: 'Для заказа сантехника позвоните нам по телефону +372 5181 112. Мы предоставляем услуги сантехника в Ласнамяэ, Мустамяэ и Кесклинне. Наш сантехник приедет в течение 30-60 минут. Выезд бесплатный в пределах Таллина.',
+    faq9Answer: 'Для заказа сантехника позвоните нам по телефону +372 5633 3332. Мы предоставляем услуги сантехника в Ласнамяэ, Мустамяэ и Кесклинне. Наш сантехник приедет в течение 30-60 минут. Выезд бесплатный в пределах Таллина.',
     faq10Question: 'Какая средняя продолжительность работы сантехника?',
     faq10Answer: 'Средняя продолжительность работы сантехника зависит от типа проблемы. Простые работы сантехника (например, ремонт кранов) могут занять 30-60 минут. Работы по канализации и устранение засоров могут занять 1-3 часа. Крупные проекты сантехника могут занять несколько часов или дней. Наш сантехник даст точную оценку перед началом работы.',
     faq11Question: 'Делаете ли вы работы сантехника ночью?',

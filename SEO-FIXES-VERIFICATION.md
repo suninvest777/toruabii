@@ -5,7 +5,7 @@
 ### 1. ✅ Meta Description - Оптимизирована
 **Статус:** ИСПРАВЛЕНО
 **Файл:** `src/pages/index.astro` (строка 18)
-**Текущая:** "Toruabi Tallinnas ja Harjumaal 24/7 – professionaalne avarii toruabi, kanalisatsiooni toruabi, boileri toruabi ja küttesüsteemi remont. Kohale 30-60 minutiga, väljasõit 0€ Tallinna piires, garantii 2 aastat. Helista kohe: +372 5181 112"
+**Текущая:** "Toruabi Tallinnas ja Harjumaal 24/7 – professionaalne avarii toruabi, kanalisatsiooni toruabi, boileri toruabi ja küttesüsteemi remont. Kohale 30-60 minutiga, väljasõit 0€ Tallinna piires, garantii 2 aastat. Helista kohe: +372 5633 3332"
 **Длина:** ~160 символов (оптимально)
 **Изменения:** Расширена, добавлены ключевые слова, добавлен призыв к действию с телефоном
 
@@ -77,7 +77,7 @@
 **Статус:** ИСПРАВЛЕНО
 **Файл:** `public/.well-known/llm.txt`
 **Изменения:**
-- ✅ Телефон обновлен: +372 5181 112 (было +372 5829 4055)
+- ✅ Телефон обновлен: +372 5633 3332 (было +372 5829 4055)
 - ✅ Добавлены новые страницы: /toruabi-pirita, /toruabi-viimsi, /sitemap
 - ✅ Добавлены все новые статьи блога (12 статей)
 - ✅ Добавлены категории блога

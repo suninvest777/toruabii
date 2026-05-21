@@ -4,7 +4,7 @@
 
 District and Harjumaa municipality toruabi landings: unique ET/RU titles, meta descriptions, H1, hero intros, neighbor cross-links (`toruabi [district]`), BreadcrumbList (via `BaseLayout`), and `areaServed` in JSON-LD.
 
-Phone unchanged: **+372 5181 112**. No Telegram/AI bot copy added.
+Phone unchanged: **+372 5633 3332**. No Telegram/AI bot copy added.
 
 ## Title format
 
@@ -65,7 +65,7 @@ Phone unchanged: **+372 5181 112**. No Telegram/AI bot copy added.
 
 ## SEO patterns
 
-- **Meta description:** toruabi + district + Tallinn or Harjumaa + `+372 5181 112`
+- **Meta description:** toruabi + district + Tallinn or Harjumaa + `+372 5633 3332`
 - **Hero:** 2–3 unique sentences per district/municipality (not one shared template)
 - **Cross-links:** e.g. `toruabi mustamäe`, `торуаби мустамяэ` — neighbors only on district pages
 - **JSON-LD:** `BreadcrumbList` from `breadcrumbJsonLdOverride`; Tallinn `PlumbingService.areaServed`; Harju `areaServed` as AdministrativeArea + Harjumaa

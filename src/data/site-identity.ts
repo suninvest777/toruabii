@@ -2,8 +2,8 @@
 export const SITE_IDENTITY = {
   brand: 'toruabii.ee',
   email: 'info@toruabii.ee',
-  phoneDisplay: '+372 5181 112',
-  phoneTel: '+3725181112',
+  phoneDisplay: '+372 5633 3332',
+  phoneTel: '+37256333332',
   areaEt: 'Tallinn ja Harjumaa',
   areaRu: 'Таллин и Харьюмаа',
   legalEntityName: '' as string,

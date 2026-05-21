@@ -8,7 +8,7 @@ import {
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   let body: {
     name?: string;
     phone?: string;
@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
     timestamp: body.timestamp || formatTallinnTimestamp(),
   });
 
-  const sent = await sendTelegramMessage(message);
+  const sent = await sendTelegramMessage(message, locals.runtime?.env);
 
   if (!sent.ok) {
     if (sent.skipped) {

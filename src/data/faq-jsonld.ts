@@ -76,7 +76,7 @@ export const faqJsonLdMainEntityEt: FaqQuestion[] = [
     name: 'Kuidas tellida toruabi Lasnamäel, Mustamäel või Kesklinnas?',
     acceptedAnswer: {
       '@type': 'Answer',
-      text: 'Toruabi tellimiseks helistage meile telefonil +372 5181 112. Pakume toruabi teenuseid Lasnamäel, Mustamäel ja Kesklinnas. Meie torumees jõuab kohale 30-60 minutiga. Väljasõit on tasuta Tallinna piires.',
+      text: 'Toruabi tellimiseks helistage meile telefonil +372 5633 3332. Pakume toruabi teenuseid Lasnamäel, Mustamäel ja Kesklinnas. Meie torumees jõuab kohale 30-60 minutiga. Väljasõit on tasuta Tallinna piires.',
     },
   },
   {
@@ -132,7 +132,7 @@ export const faqJsonLdMainEntityEt: FaqQuestion[] = [
     name: 'Kus tellida toruabi Lasnamäes?',
     acceptedAnswer: {
       '@type': 'Answer',
-      text: 'Toruabi Lasnamäes tellite helistades +372 5181 112 või külastades toruabii.ee/toruabi-lasnamae. Avarii toruabi on saadaval 24/7; väljasõit Tallinna piires on 0 €.',
+      text: 'Toruabi Lasnamäes tellite helistades +372 5633 3332 või külastades toruabii.ee/toruabi-lasnamae. Avarii toruabi on saadaval 24/7; väljasõit Tallinna piires on 0 €.',
     },
   },
   {
@@ -215,7 +215,7 @@ export const faqJsonLdMainEntityRu: FaqQuestion[] = [
     name: 'Как вызвать сантехника в Ласнамяэ, Мустамяэ или центре?',
     acceptedAnswer: {
       '@type': 'Answer',
-      text: 'Позвоните +372 5181 112. Обслуживаем Ласнамяэ, Мустамяэ и центр. Обычно приезд за 30–60 минут, выезд в Таллинне бесплатно.',
+      text: 'Позвоните +372 5633 3332. Обслуживаем Ласнамяэ, Мустамяэ и центр. Обычно приезд за 30–60 минут, выезд в Таллинне бесплатно.',
     },
   },
   {
@@ -271,7 +271,7 @@ export const faqJsonLdMainEntityRu: FaqQuestion[] = [
     name: 'Где заказать торуаби в Ласнамяэ?',
     acceptedAnswer: {
       '@type': 'Answer',
-      text: 'Позвоните +372 5181 112 или откройте toruabii.ee/toruabi-lasnamae. Аварийный торуаби 24/7; выезд в пределах Таллина — 0 €.',
+      text: 'Позвоните +372 5633 3332 или откройте toruabii.ee/toruabi-lasnamae. Аварийный торуаби 24/7; выезд в пределах Таллина — 0 €.',
     },
   },
   {

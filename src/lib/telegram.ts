@@ -54,19 +54,41 @@ export function pagePathFromUrl(url: string): string {
   }
 }
 
-export function getTelegramConfig(): { token: string; chatId: string } | null {
-  const token = TELEGRAM_BOT_TOKEN?.trim();
-  const chatId = TELEGRAM_CHAT_ID?.trim();
+function readEnvString(
+  source: Record<string, unknown> | undefined,
+  key: 'TELEGRAM_BOT_TOKEN' | 'TELEGRAM_CHAT_ID',
+): string {
+  const value = source?.[key];
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+/** Cloudflare Worker `env` from `locals.runtime.env` (API routes). */
+export type TelegramRuntimeEnv = Record<string, unknown>;
+
+export function getTelegramConfig(
+  runtimeEnv?: TelegramRuntimeEnv,
+): { token: string; chatId: string } | null {
+  let token = TELEGRAM_BOT_TOKEN?.trim() ?? '';
+  let chatId = TELEGRAM_CHAT_ID?.trim() ?? '';
+
+  if (!token || !chatId) {
+    token = readEnvString(runtimeEnv, 'TELEGRAM_BOT_TOKEN') || token;
+    chatId = readEnvString(runtimeEnv, 'TELEGRAM_CHAT_ID') || chatId;
+  }
+
   if (!token || !chatId) return null;
   return { token, chatId };
 }
 
-export async function sendTelegramMessage(text: string): Promise<{
+export async function sendTelegramMessage(
+  text: string,
+  runtimeEnv?: TelegramRuntimeEnv,
+): Promise<{
   ok: boolean;
   error?: string;
   skipped?: boolean;
 }> {
-  const config = getTelegramConfig();
+  const config = getTelegramConfig(runtimeEnv);
   if (!config) {
     if (import.meta.env.DEV) {
       console.warn('[Telegram] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID missing');

@@ -192,7 +192,7 @@ export function buildPlumbingServiceSchema(opts: {
     image: `${siteUrl}/photos/maintoruabii.webp`,
     description:
       'toruabii.ee pakub toruabi, avarii toruabi, toruabi tallinn ja toruabi harjumaa teenuseid 24/7 — kanalisatsiooni ummistuste likvideerimine, lekked ja boiler.',
-    telephone: '+3725181112',
+    telephone: '+37256333332',
     priceRange: '€€',
     address: {
       '@type': 'PostalAddress',
@@ -228,7 +228,7 @@ export function buildPlumbingServiceSchema(opts: {
     email: 'info@toruabii.ee',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+3725181112',
+      telephone: '+37256333332',
       contactType: 'customer service',
       areaServed: 'EE',
       availableLanguage: ['et', 'ru'],

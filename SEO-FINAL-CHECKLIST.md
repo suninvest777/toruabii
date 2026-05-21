@@ -1,6 +1,6 @@
 # SEO final checklist — toruabii.ee
 
-Use after Agents 1–4 (toruabi, districts, ummistus, polish). Phone: **+372 5181 112**.
+Use after Agents 1–4 (toruabi, districts, ummistus, polish). Phone: **+372 5633 3332**.
 
 ## Technical (crawl & index)
 
